@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1220">
-  <title>Universal Event Timer</title>
+  <title>Solisium Pulse · TL EU Event Timer</title>
   <link rel="icon" href="data:,">
   <style>
     :root {
@@ -534,6 +534,186 @@
     .footer a { color: #9ce9ff; text-decoration: none; }
     .footer a:hover { text-decoration: underline; }
 
+    /* 2026 visual refresh: cinematic glass UI without changing timer behavior. */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      width: 44vw;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.18;
+      pointer-events: none;
+      animation: ambient-drift 18s ease-in-out infinite alternate;
+    }
+
+    body::before {
+      top: -18vw;
+      left: -12vw;
+      background: #3ca6ff;
+    }
+
+    body::after {
+      right: -14vw;
+      bottom: -22vw;
+      background: #aa5cff;
+      animation-delay: -7s;
+    }
+
+    @keyframes ambient-drift {
+      to { transform: translate3d(7vw, 5vh, 0) scale(1.12); }
+    }
+
+    .topbar {
+      min-height: 66px;
+      padding: 11px clamp(14px, 3vw, 28px);
+      background: linear-gradient(180deg, #07101dee, #07101dca);
+      border-bottom-color: #80dfff2b;
+      box-shadow: 0 14px 40px #0007;
+    }
+
+    .mark {
+      border: 0;
+      border-radius: 9px;
+      background: linear-gradient(145deg, #91efff, #6c8dff 56%, #b06dff);
+      color: #07101d;
+      box-shadow: 0 0 26px #69dfff5c, inset 0 1px 0 #fff9;
+    }
+
+    .brand strong {
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .layout {
+      max-width: 540px;
+      gap: 14px;
+    }
+
+    .hero,
+    .controls,
+    .stack,
+    .calendar,
+    .footer,
+    .editor,
+    .toast-wrap {
+      border-color: #b9e9ff24;
+      background-color: #0c1726d9;
+      box-shadow: 0 20px 55px #00000052, inset 0 1px 0 #ffffff0d;
+      backdrop-filter: blur(18px) saturate(125%);
+    }
+
+    .hero {
+      min-height: 270px;
+      border-radius: 20px;
+      padding: 20px;
+      background-position: center 22%;
+      box-shadow: 0 24px 70px #0008, inset 0 -90px 90px #06101ec7;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #8decff20, transparent 40%, #b866ff16);
+      pointer-events: none;
+    }
+
+    .hero b {
+      display: inline-flex;
+      width: max-content;
+      padding: 5px 9px;
+      border: 1px solid #9aeaff40;
+      border-radius: 999px;
+      background: #07111fc2;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 8vw, 48px);
+      letter-spacing: -0.035em;
+      background: linear-gradient(100deg, #fff 10%, #a9edff 52%, #d0b5ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p { font-size: 14px; line-height: 1.55; }
+
+    .controls,
+    .calendar,
+    .footer,
+    .editor,
+    .stack { border-radius: 17px; }
+
+    .controls { padding: 14px; }
+
+    select,
+    input,
+    textarea,
+    .toggle label,
+    .pill {
+      min-height: 40px;
+      border-color: #9cdbf52b;
+      background: linear-gradient(180deg, #0c1727, #08111e);
+      box-shadow: inset 0 1px 0 #ffffff08;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      outline: 2px solid #72dcff4d;
+      border-color: #72dcff8a;
+    }
+
+    .btn {
+      min-height: 36px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #1f5c85, #273d72 55%, #533b79);
+      box-shadow: inset 0 1px 0 #ffffff20, 0 8px 22px #0003;
+    }
+
+    .btn.alt { background: linear-gradient(180deg, #111e30, #0a1422); }
+
+    .card {
+      border-radius: 15px;
+      padding: 14px;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #bdeeff40;
+      box-shadow: inset 0 1px 0 #ffffff16, 0 20px 42px #0006;
+    }
+
+    .card.is-primary {
+      transform: none;
+      border-color: #83dfff55;
+      box-shadow: inset 0 1px 0 #ffffff18, 0 18px 42px #0006, 0 0 34px #56cfff13;
+    }
+
+    .count {
+      font-size: clamp(32px, 9vw, 44px);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.025em;
+    }
+
+    .calendar-group {
+      border-radius: 13px;
+      padding: 12px;
+      background: linear-gradient(145deg, #111e30e8, #08111ee8);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body::before,
+      body::after { animation: none; }
+      .btn,
+      .card { transition: none; }
+    }
+
     @media (max-width: 980px) {
       body { justify-content: center; padding-top: 92px; }
       .layout { max-width: 100%; }
@@ -559,8 +739,8 @@
     <div class="brand">
       <div class="mark"><b>TL</b></div>
       <div>
-        <strong id="brandTitle">Universal Event Timer</strong>
-        <small id="brandSub">Local overrides + Git defaults</small>
+        <strong id="brandTitle">Solisium Pulse</strong>
+        <small id="brandSub">TL EU · Live Event Intelligence</small>
       </div>
     </div>
     <div class="clocks">
@@ -609,7 +789,7 @@
     </div>
     <div class="row">
       <div class="label" id="editRulesLabel">Rules</div>
-      <textarea id="editRules" placeholder="30 3,14,19 * * 1-5&#10;30 3,14,19,23 * * 0,6&#10;@every 197m"></textarea>
+      <textarea id="editRules" placeholder="30 3,14,19 * * 1-5&#10;30 3,14,19,23 * * 0,6&#10;@every 11808s"></textarea>
       <div class="editor-help" id="editRulesHelp"></div>
       <div class="calendar-group">
         <h3 id="builderTitle">Schedule builder</h3>
@@ -645,9 +825,9 @@
 
   <main class="layout">
     <section class="hero">
-      <b id="heroTag">GENERIC TIMER PLATFORM</b>
-      <h1 id="heroTitle">Universal Event Watch</h1>
-      <p id="heroText">Cron, intervals, categories, local overrides, export and reminders in one compact sidebar.</p>
+      <b id="heroTag">THRONE AND LIBERTY · EU LIVE</b>
+      <h1 id="heroTitle">Solisium Pulse</h1>
+      <p id="heroText">Alle wichtigen Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.</p>
     </section>
 
     <section class="controls">
@@ -718,8 +898,9 @@
       de: {
         editorTitle: "Timer-Editor",
         editorNote: "Git enthaelt die Standard-Konfiguration. Deine Aenderungen werden lokal im Browser gespeichert und koennen per Export wieder ins Repo uebernommen werden.",
-        heroTitle: "Universal Event Watch",
-        heroText: "Cron, Intervalle, Kategorien, lokale Overrides, Export und Erinnerungen in einer kompakten Sidebar.",
+        brandSub: "EU-Event-Timer · sekundengenau",
+        heroTitle: "Solisium Pulse",
+        heroText: "Alle wichtigen Eventfenster, praezise Countdowns und Erinnerungen auf einen Blick.",
         category: "Kategorie",
         displayZone: "Anzeige-Zeitzone",
         defaultReminder: "Standard-Erinnerung",
@@ -784,8 +965,9 @@
       en: {
         editorTitle: "Timer Editor",
         editorNote: "Git keeps the default configuration. Your changes are stored locally in this browser and can be exported back into the repo.",
-        heroTitle: "Universal Event Watch",
-        heroText: "Cron, intervals, categories, local overrides, export and reminders in one compact sidebar.",
+        brandSub: "EU event timer · second-precise",
+        heroTitle: "Solisium Pulse",
+        heroText: "Important event windows, precise countdowns and reminders at a glance.",
         category: "Category",
         displayZone: "Display timezone",
         defaultReminder: "Default reminder",
@@ -847,92 +1029,6 @@
         builderAdded: "Cron line(s) added",
         anchorNowSaved: "Anchor set to current UTC time and saved locally"
       }
-    };
-
-    const FALLBACK_CONFIG = {
-      schemaVersion: 2,
-      categories: [
-        { id: "tl_eu", label: { de: "Throne and Liberty EU", en: "Throne and Liberty EU" }, region: "eu", timezone: "Europe/Berlin" },
-        { id: "personal", label: { de: "Persoenlich", en: "Personal" }, region: "custom", timezone: "Europe/Berlin" }
-      ],
-      timers: [
-        {
-          id: "arkeum_eu",
-          categoryId: "tl_eu",
-          name: { de: "Arkeum-Invasion", en: "Arkeum Invasion" },
-          description: { de: "UTC-Plan, Aktionszeitraum laut Patchnotes.", en: "UTC schedule, active period from patch notes." },
-          motif: "radial-gradient(950px 340px at 100% 0%, #f9b54f55 0%, transparent 62%), radial-gradient(700px 280px at 0% 100%, #8a5b1f4a 0%, transparent 60%)",
-          timezone: "UTC",
-          durationMinutes: 30,
-          activeFrom: "2026-07-01T00:00:00Z",
-          activeUntil: "2026-09-30T23:59:59Z",
-          rules: ["30 1,12,17 * * 1-5", "30 1,12,17,21 * * 0,6"],
-          notifications: { enabled: true, minutes: [5], channels: ["browser", "popup"] }
-        },
-        {
-          id: "gate_memory_eu",
-          categoryId: "tl_eu",
-          name: { de: "Tor der Erinnerung", en: "Gate of Memory" },
-          description: { de: "Deterministisches Intervall 11808 Sekunden mit festem Anchor.", en: "Deterministic 11808-second interval with fixed anchor." },
-          motif: "radial-gradient(900px 360px at 95% 10%, #4cc6fa52 0%, transparent 64%), radial-gradient(760px 300px at 0% 100%, #0a6b9d4f 0%, transparent 60%)",
-          durationMinutes: 4,
-          activeFrom: "2026-01-01T00:00:00Z",
-          activeUntil: "2026-12-31T23:59:59Z",
-          rules: ["@every 11808s"],
-          anchorUtc: "2026-07-19T00:03:00Z",
-          notifications: { enabled: true, minutes: [5], channels: ["browser", "popup", "beep"] }
-        },
-        {
-          id: "summer_festival_eu",
-          categoryId: "tl_eu",
-          name: { de: "Solisium Sommerfest", en: "Solisium Summer Festival" },
-          description: { de: "Geschenksterne (Starbloom/Summer Splash) nach UTC-Slots.", en: "Gift stars (Starbloom/Summer Splash) with UTC slots." },
-          motif: "radial-gradient(920px 320px at 90% 0%, #ff7bac66 0%, transparent 64%), radial-gradient(750px 260px at 0% 100%, #ffcc6e54 0%, transparent 61%)",
-          timezone: "UTC",
-          durationMinutes: 25,
-          activeFrom: "2026-07-19T00:00:00Z",
-          activeUntil: "2026-07-31T23:59:59Z",
-          rules: ["30 1,5,12,21 * * 1-5", "30 1,5,12,16,21 * * 0,6"],
-          notifications: { enabled: true, minutes: [10, 5], channels: ["browser", "popup"] }
-        },
-        {
-          id: "archboss_eu",
-          categoryId: "tl_eu",
-          name: { de: "Archboss Portal", en: "Archboss Portal" },
-          description: { de: "Portal-Version Mi/Sa: 19:00 und 22:00 Europe/Berlin.", en: "Portal version Wed/Sat: 19:00 and 22:00 Europe/Berlin." },
-          durationMinutes: 35,
-          rules: ["0 19,22 * * 3,6"],
-          notifications: { enabled: true, minutes: [10, 5, 2], channels: ["browser", "popup", "beep"] }
-        },
-        {
-          id: "archboss_guild_eu",
-          categoryId: "tl_eu",
-          name: { de: "Archboss Gilde", en: "Archboss Guild" },
-          description: { de: "Gilden-Version: Di 19:00, Mi 22:00, Fr 19:00, Sa 22:00.", en: "Guild version: Tue 19:00, Wed 22:00, Fri 19:00, Sat 22:00." },
-          durationMinutes: 35,
-          rules: ["0 19 * * 2,5", "0 22 * * 3,6"],
-          notifications: { enabled: true, minutes: [10, 5, 2], channels: ["browser", "popup", "beep"] }
-        },
-        {
-          id: "innerspace_guild_boss",
-          categoryId: "tl_eu",
-          name: { de: "InnerSpace Gildenboss", en: "InnerSpace Guild Boss" },
-          description: { de: "Standard: Donnerstag 20:15.", en: "Default: Thursday 20:15." },
-          durationMinutes: 45,
-          rules: ["15 20 * * 4"],
-          notifications: { enabled: true, minutes: [15, 5, 2], channels: ["browser", "popup", "beep"] }
-        },
-        {
-          id: "clean_room",
-          categoryId: "personal",
-          name: { de: "Wohnung putzen", en: "Clean apartment" },
-          description: { de: "Persoenlicher Beispiel-Timer.", en: "Personal example timer." },
-          motif: "radial-gradient(900px 300px at 90% 0%, #80e9ff52 0%, transparent 62%), radial-gradient(760px 280px at 0% 100%, #43b0b84d 0%, transparent 60%)",
-          durationMinutes: 30,
-          rules: ["0 18 * * 6"],
-          notifications: { enabled: true, minutes: [10], channels: ["popup"] }
-        }
-      ]
     };
 
     const state = {
@@ -1078,9 +1174,11 @@
 
     function loadVisibleIds() {
       try {
-        return new Set(JSON.parse(localStorage.getItem("timer_visible_ids") || "[]"));
+        const stored = localStorage.getItem("timer_visible_ids");
+        if (stored === null) return null;
+        return new Set(JSON.parse(stored));
       } catch {
-        return new Set();
+        return null;
       }
     }
 
@@ -1115,10 +1213,10 @@
     }
 
     function normalizeConfig(raw) {
-      if (raw && Array.isArray(raw.categories) && Array.isArray(raw.timers)) {
-        return raw;
+      if (!raw || !Array.isArray(raw.categories) || !Array.isArray(raw.timers)) {
+        throw new Error("Invalid timer configuration");
       }
-      return FALLBACK_CONFIG;
+      return raw;
     }
 
     function parseIniBoolean(value, fallback = false) {
@@ -1172,9 +1270,9 @@
             label: {
               de: data["label.de"] || id,
               en: data["label.en"] || data["label.de"] || id
-              description: { de: "Portal-Version Mi/Sa: 19:00 und 22:00 Europe/Berlin.", en: "Portal version Wed/Sat: 19:00 and 22:00 Europe/Berlin." },
+            },
             region: data.region || "custom",
-              rules: ["0 19,22 * * 3,6"],
+            timezone: data.timezone || "Europe/Berlin"
           });
         }
         if (sectionName.startsWith("timer:")) {
@@ -1487,18 +1585,11 @@
     }
 
     function ensureVisibleIds() {
-      const timers = filteredTimers();
-      const ids = new Set(timers.map((x) => x.id));
+      const ids = new Set(state.mergedConfig.timers.map((timer) => timer.id));
       let changed = false;
       for (const id of Array.from(state.visibleIds)) {
         if (!ids.has(id)) {
           state.visibleIds.delete(id);
-          changed = true;
-        }
-      }
-      for (const timer of timers) {
-        if (!state.visibleIds.has(timer.id)) {
-          state.visibleIds.add(timer.id);
           changed = true;
         }
       }
@@ -1512,7 +1603,7 @@
     function renderLabels() {
       document.documentElement.lang = state.lang;
       dom.brandTitle.textContent = text("heroTitle");
-      dom.brandSub.textContent = text("footerSummary");
+      dom.brandSub.textContent = text("brandSub");
       dom.heroTitle.textContent = text("heroTitle");
       dom.heroText.textContent = text("heroText");
       dom.editorTitle.textContent = text("editorTitle");
@@ -1879,7 +1970,7 @@
         osc.frequency.value = 880;
         gain.gain.value = 0.02;
         osc.connect(gain);
-          rules: ["0 10,16,22 * * 1-5", "0 10,14,18,22 * * 0,6"],
+        gain.connect(ctx.destination);
         osc.start();
         osc.stop(ctx.currentTime + 0.14);
       } catch {
@@ -2037,24 +2128,9 @@
     }
 
     async function loadConfig() {
-      let loadedConfig = null;
-      try {
-        const iniResponse = await fetch("config.ini", { cache: "no-cache" });
-        if (iniResponse.ok) {
-          loadedConfig = normalizeConfig(parseIniConfig(await iniResponse.text()));
-        }
-      } catch {
-        // Ignore and continue with JSON fallback.
-      }
-      if (!loadedConfig) {
-        try {
-          const response = await fetch("events.json", { cache: "no-cache" });
-          if (!response.ok) throw new Error("Failed to load events.json");
-          loadedConfig = normalizeConfig(await response.json());
-        } catch {
-          loadedConfig = normalizeConfig(FALLBACK_CONFIG);
-        }
-      }
+      const iniResponse = await fetch("config.ini", { cache: "no-cache" });
+      if (!iniResponse.ok) throw new Error("Failed to load config.ini");
+      const loadedConfig = normalizeConfig(parseIniConfig(await iniResponse.text()));
       state.baseConfig = loadedConfig;
       state.localConfig = loadLocalConfig() || { categories: [], timers: [] };
       if (normalizeSummerFestivalRules(state.localConfig)) {
@@ -2070,7 +2146,9 @@
       state.categoryId = localStorage.getItem("timer_category_id") || state.mergedConfig.categories[0]?.id || "";
       state.displayTimezone = localStorage.getItem("timer_display_timezone") || selectedCategory()?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
       state.defaultLead = Number(localStorage.getItem("timer_default_lead") || "5");
-      state.visibleIds = loadVisibleIds();
+      const storedVisibleIds = loadVisibleIds();
+      state.visibleIds = storedVisibleIds || new Set(state.mergedConfig.timers.map((timer) => timer.id));
+      if (!storedVisibleIds) saveVisibleIds();
       if (!state.mergedConfig.categories.find((x) => x.id === state.categoryId)) {
         state.categoryId = state.mergedConfig.categories[0]?.id || "";
       }

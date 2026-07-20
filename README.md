@@ -1,65 +1,57 @@
-# Throne and Liberty Community Event Timer
+# Solisium Pulse
 
-Konfigurationsbasiertes GitHub-Pages Tool fuer Throne and Liberty Events.
+Kompakter, konfigurationsbasierter Event-Timer fuer Throne and Liberty EU. Die Seite laeuft statisch auf GitHub Pages und liest ihre Standard-Timer ausschliesslich aus `config.ini`.
 
 ## Features
 
-- Mehrsprachig: Deutsch und Englisch
-- Auto-Sprache ueber Browser/Windows-Sprache (de -> Deutsch, sonst Englisch)
-- Region-Auswahl (Default: EU) mit lokaler Zeitdarstellung fuer jeden Nutzer
-- Dynamische Event-Timer per Checkbox ein/ausblendbar
-- Sticky-Bar mit naechstem Event und Live-Countdown
-- Saisonale Events werden nur im gueltigen Datumsfenster angezeigt
-- ICS-Export pro Event-Slot
-- Browser-Benachrichtigungen 5 Minuten vor Event
-- Schmale Sidebar-Ansicht fuer angedocktes Fenster rechts
+- Deutsch und Englisch, automatisch nach Browsersprache
+- Live-Countdowns fuer Cron-Zeitplaene und sekundengenaue Intervalle
+- Automatische Anzeige in der lokalen Zeitzone des Nutzers
+- Timer pro Kategorie ein- und ausblendbar
+- Saisonale Timer mit optionalem Gueltigkeitszeitraum
+- Browser-, Popup- und Audio-Erinnerungen
+- ICS-Export einzelner Termine
+- Lokale Anpassungen mit Import und Export
+- Responsive Sidebar-Ansicht
 
 ## Dateien
 
-- `index.html`: UI, Rendering, Timer-Engine, Notifications
-- `events.json`: Regionen und Event-Konfiguration
+- `index.html`: Oberflaeche, Timer-Engine und Benachrichtigungen
+- `config.ini`: einzige Standard-Konfiguration fuer Kategorien und Timer
 
-## Event-Konfiguration (`events.json`)
+## Timer in `config.ini`
 
-Jedes Event ist ueber einen JSON-Eintrag pflegbar.
+Jeder Timer besitzt einen eigenen Abschnitt:
 
-Wichtige Felder:
+```ini
+[timer:gate_memory_eu]
+categoryId=tl_eu
+name.de=Tor der Erinnerung
+name.en=Gate of Memory
+durationMinutes=4
+activeFrom=2026-01-01T00:00:00Z
+activeUntil=2026-12-31T23:59:59Z
+rules=@every 11808s
+anchorUtc=2026-07-19T00:03:00Z
+notifications.enabled=true
+notifications.minutes=5
+notifications.channels=browser,popup,beep
+```
 
-- `id`: eindeutige ID
-- `enabled`: `true` oder `false`
-- `type`: `fixedTimes` oder `interval`
-- `regions`: erlaubte Regionen (z. B. `eu`, `nae`, `naw`)
-- `activeFrom`, `activeUntil`: UTC-Zeitfenster (`YYYY-MM-DDTHH:mm:ssZ`)
-- `names.de` / `names.en`
-- `descriptions.de` / `descriptions.en`
-- `source.de` / `source.en`
-- `durationMinutes`: Dauer fuer ICS
+Zeitplanformate:
 
-Fuer `fixedTimes`:
-
-- `timesByWeekday.default`: Tageszeiten als `HH:mm`
-- `timesByWeekday.weekend`: optionale Wochenend-Slots
-
-Fuer `interval`:
-
-- `intervalMinutes`
-- `anchorUtc` oder `anchorUtcByRegion`
-
-## Neue Events einfuegen
-
-1. In `events.json` einen neuen Eintrag in `events` anlegen.
-2. Falls noetig Region in `regions` erweitern.
-3. `enabled` auf `true` setzen, sobald Zeiten bestaetigt sind.
-4. Commit und Push auf `main`.
+- Cron: `Minute Stunde Tag Monat Wochentag`
+- Mehrere Regeln: mit `||` trennen
+- Intervall: `@every 11808s`, `@every 90m` oder `@every 2h`
+- Bei Intervallen legt `anchorUtc` den exakten Startpunkt fest
+- `activeFrom` und `activeUntil` sind optionale ISO-UTC-Grenzen
 
 ## Deployment
 
-Die GitHub Page aktualisiert sich nach einem Push auf den verwendeten Pages-Branch (hier `main`).
-
-Beispiel:
+Ein Push auf `main` startet den vorhandenen GitHub-Pages-Workflow.
 
 ```powershell
-git add index.html events.json README.md
-git commit -m "Add universal config-driven event timer"
+git add index.html config.ini README.md
+git commit -m "Update Solisium Pulse"
 git push origin main
 ```
