@@ -899,9 +899,9 @@
           id: "archboss_eu",
           categoryId: "tl_eu",
           name: { de: "Archboss Portal", en: "Archboss Portal" },
-          description: { de: "Portal-Version Di/Mi/Fr/Sa: 19:00 und 22:00 Europe/Berlin.", en: "Portal version Tue/Wed/Fri/Sat: 19:00 and 22:00 Europe/Berlin." },
+          description: { de: "Portal-Version Mi/Sa: 19:00 und 22:00 Europe/Berlin.", en: "Portal version Wed/Sat: 19:00 and 22:00 Europe/Berlin." },
           durationMinutes: 35,
-          rules: ["0 19,22 * * 2,3,5,6"],
+          rules: ["0 19,22 * * 3,6"],
           notifications: { enabled: true, minutes: [10, 5, 2], channels: ["browser", "popup", "beep"] }
         },
         {
@@ -1172,9 +1172,9 @@
             label: {
               de: data["label.de"] || id,
               en: data["label.en"] || data["label.de"] || id
-            },
+              description: { de: "Portal-Version Mi/Sa: 19:00 und 22:00 Europe/Berlin.", en: "Portal version Wed/Sat: 19:00 and 22:00 Europe/Berlin." },
             region: data.region || "custom",
-            timezone: data.timezone || "Europe/Berlin"
+              rules: ["0 19,22 * * 3,6"],
           });
         }
         if (sectionName.startsWith("timer:")) {

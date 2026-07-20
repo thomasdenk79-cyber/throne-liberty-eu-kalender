@@ -38,12 +38,12 @@
         "en": "Arkeum Invasion"
       },
       "description": {
-        "de": "UTC-Plan, Aktionszeitraum laut Patchnotes.",
-        "en": "UTC schedule, active period from patch notes."
+        "de": "Portal-Version Mi/Sa: 19:00 und 22:00 Europe/Berlin.",
+        "en": "Portal version Wed/Sat: 19:00 and 22:00 Europe/Berlin."
       },
       "motif": "radial-gradient(950px 340px at 100% 0%, #f9b54f55 0%, transparent 62%), radial-gradient(700px 280px at 0% 100%, #8a5b1f4a 0%, transparent 60%)",
       "timezone": "UTC",
-      "durationMinutes": 30,
+        "0 19,22 * * 3,6"
       "activeFrom": "2026-07-01T00:00:00Z",
       "activeUntil": "2026-09-30T23:59:59Z",
       "rules": [
@@ -115,15 +115,15 @@
         "en": "Archboss Portal"
       },
       "description": {
-        "de": "Portal-Version Di/Mi/Fr/Sa: 19:00 und 22:00 Europe/Berlin.",
-        "en": "Portal version Tue/Wed/Fri/Sat: 19:00 and 22:00 Europe/Berlin."
+        "de": "Portal-Version Mi/Sa: 19:00 und 22:00 Europe/Berlin.",
+        "en": "Portal version Wed/Sat: 19:00 and 22:00 Europe/Berlin."
       },
       "motif": "radial-gradient(940px 360px at 88% 10%, #b37dff5a 0%, transparent 64%), radial-gradient(780px 300px at 0% 100%, #43286a4c 0%, transparent 62%)",
       "durationMinutes": 35,
       "activeFrom": "2026-01-01T00:00:00Z",
       "activeUntil": "2026-12-31T23:59:59Z",
       "rules": [
-        "0 19,22 * * 2,3,5,6"
+        "0 19,22 * * 3,6"
       ],
       "notifications": {
         "enabled": true,
