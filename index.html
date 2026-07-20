@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1220">
-  <title>Solisium Pulse · TL EU Event Timer</title>
+  <title>Linny's Astral Solisium Pulse · TL EU Event Timer</title>
   <link rel="icon" href="data:,">
   <style>
     :root {
@@ -903,6 +903,11 @@
       gap: 10px;
     }
 
+    #cardStack {
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      align-items: start;
+    }
+
     #calendarGroups {
       grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
       align-items: start;
@@ -1052,7 +1057,12 @@
       position: sticky;
       top: 78px;
       max-height: calc(100vh - 96px);
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      scrollbar-color: #4b7896 #08111e;
+      scrollbar-width: thin;
     }
 
     .calendar,
@@ -1172,7 +1182,11 @@
     }
 
     .current-events[hidden] { display: none; }
-    #currentEventsList { display: grid; gap: 8px; }
+    #currentEventsList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr));
+      gap: 8px;
+    }
 
     .current-event {
       display: grid;
@@ -1252,16 +1266,155 @@
     .live-column .stack {
       min-width: 0;
       min-height: 0;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .live-column #cardStack {
-      max-height: calc(100vh - 150px);
-      overflow-x: hidden;
-      overflow-y: auto;
-      padding-right: 4px;
-      scrollbar-color: #4b7896 #08111e;
-      scrollbar-width: thin;
+      max-height: none;
+      overflow: visible;
+      padding-right: 0;
+    }
+
+    /* Compact timer cards: details live in the title tooltip. */
+    .stack { padding: 9px; }
+
+    .card {
+      gap: 6px;
+      min-width: 0;
+      padding: 10px 11px 9px;
+      overflow: visible;
+    }
+
+    .card:hover,
+    .card:focus-within { z-index: 6; }
+
+    .card-head {
+      align-items: flex-start;
+      flex-wrap: nowrap;
+    }
+
+    .card-title {
+      position: relative;
+      min-width: 0;
+      cursor: help;
+      outline: none;
+    }
+
+    .card-title b {
+      font-size: 16px;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+
+    .card-title:focus-visible b {
+      text-decoration: underline;
+      text-decoration-color: #72dcff;
+      text-underline-offset: 4px;
+    }
+
+    .card-tooltip {
+      position: absolute;
+      z-index: 30;
+      top: calc(100% + 8px);
+      left: 0;
+      display: grid;
+      width: min(340px, 82vw);
+      gap: 7px;
+      padding: 10px 11px;
+      border: 1px solid #8ee7ff4a;
+      border-radius: 11px;
+      background: #07111ff5;
+      box-shadow: 0 18px 48px #000c, inset 0 1px 0 #ffffff14;
+      color: #dbe8f7;
+      font-size: 11px;
+      line-height: 1.42;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-3px);
+      transition: opacity 130ms ease, transform 130ms ease, visibility 130ms ease;
+    }
+
+    .card-title:hover .card-tooltip,
+    .card-title:focus .card-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .card-tooltip p { margin: 0; }
+    .card-tooltip-row { display: grid; gap: 2px; }
+    .card-tooltip-label {
+      color: #86e8ff;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .card-tooltip code {
+      color: #eef8ff;
+      font: 10px/1.4 Consolas, "Cascadia Mono", monospace;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+
+    .icon-btn {
+      width: 30px;
+      min-width: 30px;
+      height: 30px;
+      min-height: 30px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid #9cdbf52b;
+      border-radius: 9px;
+      background: #0a1422c7;
+      color: #cdefff;
+      cursor: pointer;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+    }
+
+    .icon-btn:hover,
+    .icon-btn:focus-visible {
+      transform: translateY(-1px);
+      border-color: #8ee7ff73;
+      background: #17314a;
+      outline: none;
+    }
+
+    .icon-btn svg { width: 15px; height: 15px; }
+
+    .count {
+      font-size: clamp(29px, 4vw, 37px);
+      line-height: 0.95;
+    }
+
+    .meta {
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px 7px;
+      font-size: 11px;
+    }
+
+    .card-when { color: #d4deef; }
+
+    .card-status,
+    .reminder-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 3px 7px;
+      border: 1px solid #ffffff12;
+      border-radius: 999px;
+      background: #ffffff0c;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .reminder-chip {
+      color: #b9c6d8;
+      margin-left: auto;
     }
 
     html.dock-mode body {
@@ -1297,14 +1450,22 @@
       overflow: visible;
     }
 
+    html.dock-mode #cardStack {
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      max-height: none;
+      overflow: visible;
+    }
+
+    html.dock-mode #currentEventsList {
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    }
+
     html.dock-mode .stack,
     html.dock-mode .current-events {
       border-radius: 13px;
     }
 
-    html.dock-mode .card { padding: 11px; }
-    html.dock-mode .card:not(.is-primary) .card-title small,
-    html.dock-mode .card:not(.is-primary) .card-chips { display: none; }
+    html.dock-mode .card { padding: 9px 10px; }
 
     @media (min-width: 1360px) {
       body.editor-open .layout {
@@ -1328,6 +1489,11 @@
         grid-template-columns: minmax(0, 1fr);
       }
       .live-column { grid-column: 1; grid-row: 1; }
+      .live-column {
+        position: static;
+        max-height: none;
+        overflow: visible;
+      }
       .dashboard-main { grid-column: 1; grid-row: 2; }
       .calendar,
       .footer { grid-column: 1; }
@@ -1367,7 +1533,7 @@
     <div class="brand">
       <div class="mark"><b>TL</b></div>
       <div>
-        <strong id="brandTitle">Solisium Pulse</strong>
+        <strong id="brandTitle">Linny's Astral Solisium Pulse</strong>
         <small id="brandSub">TL EU · Live Event Intelligence</small>
       </div>
     </div>
@@ -1481,7 +1647,7 @@
       <section class="hero">
         <b id="heroTag">THRONE AND LIBERTY · EU LIVE</b>
         <span class="hero-character" id="heroCharacter">Linny · Server Sophia</span>
-        <h1 id="heroTitle">Solisium Pulse</h1>
+        <h1 id="heroTitle">Linny's Astral Solisium Pulse</h1>
         <p id="heroText">Alle wichtigen Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.</p>
       </section>
 
@@ -1603,8 +1769,8 @@
       de: {
         editorTitle: "Timer bearbeiten",
         editorNote: "Die Standardkonfiguration kommt aus Git. Änderungen werden in diesem Browser gespeichert und lassen sich als INI exportieren.",
-        brandSub: "EU-Event-Timer · v2.1",
-        heroTitle: "Solisium Pulse",
+        brandSub: "EU-Event-Timer · v2.2",
+        heroTitle: "Linny's Astral Solisium Pulse",
         heroCharacter: "Linny · Server Sophia",
         heroText: "Wichtige Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.",
         category: "Kategorie",
@@ -1660,6 +1826,10 @@
         popupChannel: "In-App-Popup",
         soundChannel: "Ton",
         notificationsOff: "Erinnerungen aus",
+        notificationsOffShort: "aus",
+        reminder: "Erinnerung",
+        tooltipSchedule: "Zeitplan",
+        tooltipDuration: "Dauer",
         saveLocal: "Änderungen speichern",
         duplicate: "Duplizieren",
         deleteLocal: "Timer lokal entfernen",
@@ -1711,8 +1881,8 @@
       en: {
         editorTitle: "Edit timer",
         editorNote: "The default configuration comes from Git. Changes stay in this browser and can be exported as INI.",
-        brandSub: "EU event timer · v2.1",
-        heroTitle: "Solisium Pulse",
+        brandSub: "EU event timer · v2.2",
+        heroTitle: "Linny's Astral Solisium Pulse",
         heroCharacter: "Linny · Sophia server",
         heroText: "Important event windows, precise countdowns and reminders at a glance.",
         category: "Category",
@@ -1768,6 +1938,10 @@
         popupChannel: "In-app popup",
         soundChannel: "Sound",
         notificationsOff: "Reminders off",
+        notificationsOffShort: "off",
+        reminder: "Reminder",
+        tooltipSchedule: "Schedule",
+        tooltipDuration: "Duration",
         saveLocal: "Save changes",
         duplicate: "Duplicate",
         deleteLocal: "Remove timer locally",
@@ -2142,7 +2316,7 @@
     function serializeIniConfig(rawConfig) {
       const config = normalizeConfig(rawConfig);
       const lines = [
-        "; Solisium Pulse timer configuration",
+        "; Linny's Astral Solisium Pulse timer configuration",
         "; Import this file directly in the timer UI.",
         "",
         "[meta]",
@@ -2297,12 +2471,33 @@
       return category?.label?.[state.lang] || category?.label?.de || category?.id || "";
     }
 
+    function localizedTimerValue(timer, field) {
+      const values = timer?.[field] || {};
+      const baseTimer = state.baseConfig?.timers?.find((candidate) => candidate.id === timer?.id);
+      const baseValues = baseTimer?.[field] || {};
+      const localized = values[state.lang];
+
+      // Older local edits wrote the German name into both languages. Prefer the
+      // translated Git value when that legacy duplicate is detected.
+      if (
+        state.lang === "en"
+        && localized
+        && localized === values.de
+        && baseValues.en
+        && baseValues.en !== baseValues.de
+      ) {
+        return baseValues.en;
+      }
+
+      return localized || baseValues[state.lang] || values.de || baseValues.de || "";
+    }
+
     function timerName(timer) {
-      return timer.name?.[state.lang] || timer.name?.de || timer.id;
+      return localizedTimerValue(timer, "name") || timer.id;
     }
 
     function timerDescription(timer) {
-      return timer.description?.[state.lang] || timer.description?.de || "";
+      return localizedTimerValue(timer, "description");
     }
 
     function selectedCategory() {
@@ -2733,7 +2928,7 @@
       state.editingTimerId = timerId;
       dom.editorPanel.dataset.open = "true";
       document.body.classList.add("editor-open");
-      dom.editName.value = timer.name?.de || timer.name?.en || timer.id;
+      dom.editName.value = timerName(timer);
       dom.editCategory.value = timer.categoryId || state.categoryId;
       dom.editTimezone.value = timer.timezone || selectedCategory().timezone || state.displayTimezone;
       dom.editFrom.value = toDateTimeLocal(timer.activeFrom);
@@ -2783,7 +2978,10 @@
       if (dom.channelPopup.checked) channels.push("popup");
       if (dom.channelBeep.checked) channels.push("beep");
       const timer = clone(base);
-      timer.name = { de: dom.editName.value || timer.id, en: dom.editName.value || timer.id };
+      timer.name = { ...(timer.name || {}) };
+      timer.name[state.lang] = dom.editName.value || timer.id;
+      if (!timer.name.de) timer.name.de = timer.name[state.lang];
+      if (!timer.name.en) timer.name.en = timer.name.de;
       timer.categoryId = dom.editCategory.value || timer.categoryId;
       timer.timezone = dom.editTimezone.value.trim() || selectedCategory().timezone || state.displayTimezone;
       timer.activeFrom = parseDateTimeLocal(dom.editFrom.value) || "";
@@ -3251,13 +3449,82 @@
         el.style.setProperty("--card-overlay", accent.overlay);
         el.style.setProperty("--card-glow", accent.glow);
         el.style.setProperty("--pattern-angle", accent.patternAngle);
-        el.innerHTML = ""
-          + "<div class=\"card-head\"><div class=\"card-title\"><b>" + timerName(timer) + "</b><small>" + timerDescription(timer) + "</small></div></div>"
-          + "<div class=\"count\">" + countdown(next) + "</div>"
-          + "<div class=\"meta\"><span>" + formatDate(next, state.displayTimezone) + " · " + formatTime(next, state.displayTimezone, false) + "</span><span class=\"card-status\">" + text(statusKey) + "</span></div>"
-          + "<div class=\"card-chips\"><span class=\"chip\">" + (timer.rules || []).join(" | ") + "</span></div>"
-          + "<div class=\"card-foot\"><button class=\"btn alt edit-btn\" type=\"button\" data-id=\"" + timer.id + "\">" + text("edit") + "</button><span class=\"chip\">" + (timer.notifications?.enabled === false ? text("notificationsOff") : (timer.notifications?.minutes || [state.defaultLead]).join(",") + "m") + "</span></div>";
-        el.querySelector(".edit-btn").addEventListener("click", () => openEditor(timer.id));
+
+        const head = document.createElement("div");
+        head.className = "card-head";
+
+        const title = document.createElement("div");
+        title.className = "card-title";
+        title.tabIndex = 0;
+        title.setAttribute("aria-label", timerName(timer));
+        const heading = document.createElement("b");
+        heading.textContent = timerName(timer);
+        title.appendChild(heading);
+
+        const tooltip = document.createElement("div");
+        tooltip.className = "card-tooltip";
+        tooltip.setAttribute("role", "tooltip");
+        const description = document.createElement("p");
+        description.textContent = timerDescription(timer) || text("noSchedule");
+        tooltip.appendChild(description);
+
+        const scheduleRow = document.createElement("div");
+        scheduleRow.className = "card-tooltip-row";
+        const scheduleLabel = document.createElement("span");
+        scheduleLabel.className = "card-tooltip-label";
+        scheduleLabel.textContent = text("tooltipSchedule");
+        const schedule = document.createElement("code");
+        schedule.textContent = (timer.rules || []).join(" | ") || text("noSchedule");
+        scheduleRow.append(scheduleLabel, schedule);
+        tooltip.appendChild(scheduleRow);
+
+        const durationRow = document.createElement("div");
+        durationRow.className = "card-tooltip-row";
+        const durationLabel = document.createElement("span");
+        durationLabel.className = "card-tooltip-label";
+        durationLabel.textContent = text("tooltipDuration");
+        const durationValue = document.createElement("span");
+        durationValue.textContent = String(timer.durationMinutes || 10) + " min";
+        durationRow.append(durationLabel, durationValue);
+        tooltip.appendChild(durationRow);
+        title.appendChild(tooltip);
+
+        const editButton = document.createElement("button");
+        editButton.className = "icon-btn edit-btn";
+        editButton.type = "button";
+        editButton.dataset.id = timer.id;
+        editButton.title = text("edit");
+        editButton.setAttribute("aria-label", text("edit") + ": " + timerName(timer));
+        editButton.innerHTML = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z\"/></svg>";
+        editButton.addEventListener("click", () => openEditor(timer.id));
+        head.append(title, editButton);
+
+        const count = document.createElement("div");
+        count.className = "count";
+        count.textContent = countdown(next);
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        const when = document.createElement("span");
+        when.className = "card-when";
+        when.textContent = formatDate(next, state.displayTimezone) + " · " + formatTime(next, state.displayTimezone, false);
+        const status = document.createElement("span");
+        status.className = "card-status";
+        status.textContent = text(statusKey);
+
+        const reminderMinutes = timer.notifications?.minutes || [state.defaultLead];
+        const reminder = document.createElement("span");
+        reminder.className = "reminder-chip";
+        if (timer.notifications?.enabled === false) {
+          reminder.textContent = text("notificationsOffShort");
+          reminder.title = text("notificationsOff");
+        } else {
+          reminder.textContent = reminderMinutes.join(",") + "m";
+          reminder.title = text("reminder") + ": " + reminderMinutes.join(", ") + " min";
+        }
+        meta.append(when, status, reminder);
+
+        el.append(head, count, meta);
         dom.cardStack.appendChild(el);
       });
     }
@@ -3312,10 +3579,10 @@
       const lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        "PRODID:-//Solisium Pulse//TL EU Event Timer//DE",
+        "PRODID:-//Linny's Astral Solisium Pulse//TL EU Event Timer//DE",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
-        "X-WR-CALNAME:Solisium Pulse"
+        "X-WR-CALNAME:Linny's Astral Solisium Pulse"
       ];
       const sorted = entries.slice().sort((a, b) => a.start - b.start);
       for (const entry of sorted) {
@@ -3323,7 +3590,7 @@
         const end = new Date(start.getTime() + (entry.timer.durationMinutes || 10) * 60000);
         lines.push(
           "BEGIN:VEVENT",
-          "UID:" + entry.timer.id + "-" + start.getTime() + "@solisium-pulse",
+          "UID:" + entry.timer.id + "-" + start.getTime() + "@linny-astral-solisium-pulse",
           "DTSTAMP:" + createdAt,
           "DTSTART:" + formatIcsDate(start),
           "DTEND:" + formatIcsDate(end),
@@ -3521,7 +3788,7 @@
           toast(text("noIcsSelection"));
           return;
         }
-        downloadIcs(entries, "solisium-pulse-events.ics");
+        downloadIcs(entries, "linny-astral-solisium-pulse-events.ics");
         toast(text("icsExported").replace("{count}", String(entries.length)));
       });
 

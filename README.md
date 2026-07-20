@@ -1,4 +1,4 @@
-# Solisium Pulse
+# Linny's Astral Solisium Pulse
 
 Kompakter, konfigurationsbasierter Event-Timer fuer Throne and Liberty EU. Die Seite laeuft statisch auf GitHub Pages und liest ihre Standard-Timer ausschliesslich aus `config.ini`.
 
@@ -17,6 +17,7 @@ Kompakter, konfigurationsbasierter Event-Timer fuer Throne and Liberty EU. Die S
 - Kompakte zweispaltige Auswahl der sichtbaren Timer
 - Lokale Anpassungen als lesbare INI importieren und exportieren
 - Responsives Dashboard mit grossem Linny-Intro und kompakter Timer-Ansicht
+- Kompakte Timerkarten mit Info-Tooltip und responsivem Ein-, Zwei- oder Dreispaltenlayout
 
 ## Dateien
 
@@ -62,6 +63,6 @@ Ein Push auf `main` startet den vorhandenen GitHub-Pages-Workflow.
 
 ```powershell
 git add index.html config.ini README.md
-git commit -m "Update Solisium Pulse"
+git commit -m "Update Linny's Astral Solisium Pulse"
 git push origin main
 ```
