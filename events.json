@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 2,
+  "categories": [
+    {
+      "id": "tl_eu",
+      "label": {
+        "de": "Throne and Liberty EU",
+        "en": "Throne and Liberty EU"
+      },
+      "region": "eu",
+      "timezone": "Europe/Berlin"
+    },
+    {
+      "id": "tl_us_east",
+      "label": {
+        "de": "Throne and Liberty US East",
+        "en": "Throne and Liberty US East"
+      },
+      "region": "nae",
+      "timezone": "America/New_York"
+    },
+    {
+      "id": "personal",
+      "label": {
+        "de": "Persoenlich",
+        "en": "Personal"
+      },
+      "region": "custom",
+      "timezone": "Europe/Berlin"
+    }
+  ],
+  "timers": [
+    {
+      "id": "arkeum_eu",
+      "categoryId": "tl_eu",
+      "name": {
+        "de": "Arkeum-Invasion",
+        "en": "Arkeum Invasion"
+      },
+      "description": {
+        "de": "UTC-Plan, Aktionszeitraum laut Patchnotes.",
+        "en": "UTC schedule, active period from patch notes."
+      },
+      "motif": "radial-gradient(950px 340px at 100% 0%, #f9b54f55 0%, transparent 62%), radial-gradient(700px 280px at 0% 100%, #8a5b1f4a 0%, transparent 60%)",
+      "timezone": "UTC",
+      "durationMinutes": 30,
+      "activeFrom": "2026-07-01T00:00:00Z",
+      "activeUntil": "2026-09-30T23:59:59Z",
+      "rules": [
+        "30 1,12,17 * * 1-5",
+        "30 1,12,17,21 * * 0,6"
+      ],
+      "notifications": {
+        "enabled": true,
+        "minutes": [5],
+        "channels": ["browser", "popup"]
+      }
+    },
+    {
+      "id": "gate_memory_eu",
+      "categoryId": "tl_eu",
+      "name": {
+        "de": "Tor der Erinnerung",
+        "en": "Gate of Memory"
+      },
+      "description": {
+        "de": "Deterministisches Intervall 11808 Sekunden mit festem Anchor.",
+        "en": "Deterministic 11808-second interval with fixed anchor."
+      },
+      "motif": "radial-gradient(900px 360px at 95% 10%, #4cc6fa52 0%, transparent 64%), radial-gradient(760px 300px at 0% 100%, #0a6b9d4f 0%, transparent 60%)",
+      "durationMinutes": 4,
+      "activeFrom": "2026-01-01T00:00:00Z",
+      "activeUntil": "2026-12-31T23:59:59Z",
+      "rules": [
+        "@every 11808s"
+      ],
+      "anchorUtc": "2026-07-19T00:03:00Z",
+      "notifications": {
+        "enabled": true,
+        "minutes": [5],
+        "channels": ["browser", "popup", "beep"]
+      }
+    },
+    {
+      "id": "summer_festival_eu",
+      "categoryId": "tl_eu",
+      "name": {
+        "de": "Solisium Sommerfest",
+        "en": "Solisium Summer Festival"
+      },
+      "description": {
+        "de": "Geschenksterne (Starbloom/Summer Splash) nach UTC-Slots.",
+        "en": "Gift stars (Starbloom/Summer Splash) with UTC slots."
+      },
+      "motif": "radial-gradient(920px 320px at 90% 0%, #ff7bac66 0%, transparent 64%), radial-gradient(750px 260px at 0% 100%, #ffcc6e54 0%, transparent 61%)",
+      "timezone": "UTC",
+      "durationMinutes": 25,
+      "activeFrom": "2026-07-19T00:00:00Z",
+      "activeUntil": "2026-07-31T23:59:59Z",
+      "rules": [
+        "30 1,5,12,21 * * 1-5",
+        "30 1,5,12,16,21 * * 0,6"
+      ],
+      "notifications": {
+        "enabled": true,
+        "minutes": [10, 5],
+        "channels": ["browser", "popup"]
+      }
+    },
+    {
+      "id": "archboss_eu",
+      "categoryId": "tl_eu",
+      "name": {
+        "de": "Archboss Portal",
+        "en": "Archboss Portal"
+      },
+      "description": {
+        "de": "Portal-Version Di/Mi/Fr/Sa: 19:00 und 22:00 Europe/Berlin.",
+        "en": "Portal version Tue/Wed/Fri/Sat: 19:00 and 22:00 Europe/Berlin."
+      },
+      "motif": "radial-gradient(940px 360px at 88% 10%, #b37dff5a 0%, transparent 64%), radial-gradient(780px 300px at 0% 100%, #43286a4c 0%, transparent 62%)",
+      "durationMinutes": 35,
+      "activeFrom": "2026-01-01T00:00:00Z",
+      "activeUntil": "2026-12-31T23:59:59Z",
+      "rules": [
+        "0 19,22 * * 2,3,5,6"
+      ],
+      "notifications": {
+        "enabled": true,
+        "minutes": [10, 5, 2],
+        "channels": ["browser", "popup", "beep"]
+      }
+    },
+    {
+      "id": "archboss_guild_eu",
+      "categoryId": "tl_eu",
+      "name": {
+        "de": "Archboss Gilde",
+        "en": "Archboss Guild"
+      },
+      "description": {
+        "de": "Gilden-Version: Di 19:00, Mi 22:00, Fr 19:00, Sa 22:00.",
+        "en": "Guild version: Tue 19:00, Wed 22:00, Fri 19:00, Sat 22:00."
+      },
+      "motif": "radial-gradient(920px 340px at 90% 6%, #7dd8ff4d 0%, transparent 62%), radial-gradient(760px 280px at 0% 100%, #365f9d45 0%, transparent 62%)",
+      "durationMinutes": 35,
+      "activeFrom": "2026-01-01T00:00:00Z",
+      "activeUntil": "2026-12-31T23:59:59Z",
+      "rules": [
+        "0 19 * * 2,5",
+        "0 22 * * 3,6"
+      ],
+      "notifications": {
+        "enabled": true,
+        "minutes": [10, 5, 2],
+        "channels": ["browser", "popup", "beep"]
+      }
+    },
+    {
+      "id": "boonstones_eu",
+      "categoryId": "tl_eu",
+      "name": {
+        "de": "Boonsteine PvP",
+        "en": "Boonstones PvP"
+      },
+      "description": {
+        "de": "Geschaetzte PvP-Gildenfenster.",
+        "en": "Estimated guild PvP windows."
+      },
+      "motif": "radial-gradient(940px 340px at 90% 6%, #4df0d462 0%, transparent 62%), radial-gradient(760px 280px at 0% 100%, #20776f4d 0%, transparent 62%)",
+      "durationMinutes": 40,
+      "activeFrom": "2026-01-01T00:00:00Z",
+      "activeUntil": "2026-12-31T23:59:59Z",
+      "rules": [
+        "0 20 * * 2,4",
+        "0 18 * * 0"
+      ],
+      "notifications": {
+        "enabled": false,
+        "minutes": [10, 5],
+        "channels": ["popup"]
+      }
+    },
+    {
+      "id": "tax_delivery_eu",
+      "categoryId": "tl_eu",
+      "name": {
+        "de": "Steuer-Event",
+        "en": "Tax Delivery"
+      },
+      "description": {
+        "de": "Geschaetztes Wochenrhythmus-Event.",
+        "en": "Estimated weekly cadence."
+      },
+      "motif": "radial-gradient(920px 340px at 86% 8%, #d1b56357 0%, transparent 63%), radial-gradient(760px 280px at 0% 100%, #6d51244c 0%, transparent 62%)",
+      "durationMinutes": 45,
+      "activeFrom": "2026-01-01T00:00:00Z",
+      "activeUntil": "2026-12-31T23:59:59Z",
+      "rules": [
+        "0 19 * * 0"
+      ],
+      "notifications": {
+        "enabled": false,
+        "minutes": [10, 5],
+        "channels": ["popup"]
+      }
+    },
+    {
+      "id": "castle_event_eu",
+      "categoryId": "tl_eu",
+      "name": {
+        "de": "Burg-Event",
+        "en": "Castle Event"
+      },
+      "description": {
+        "de": "Woechentlicher Burgkampf als Platzhalter.",
+        "en": "Weekly castle battle placeholder."
+      },
+      "motif": "radial-gradient(940px 360px at 90% 10%, #8aa6ff60 0%, transparent 62%), radial-gradient(780px 300px at 0% 100%, #394b8f4d 0%, transparent 62%)",
+      "durationMinutes": 60,
+      "activeFrom": "2026-01-01T00:00:00Z",
+      "activeUntil": "2026-12-31T23:59:59Z",
+      "rules": [
+        "0 20 * * 6"
+      ],
+      "notifications": {
+        "enabled": false,
+        "minutes": [10, 5],
+        "channels": ["popup"]
+      }
+    },
+    {
+      "id": "innerspace_guild_boss",
+      "categoryId": "tl_eu",
+      "name": {
+        "de": "InnerSpace Gildenboss",
+        "en": "InnerSpace Guild Boss"
+      },
+      "description": {
+        "de": "Standard: Donnerstag 20:15.",
+        "en": "Default: Thursday 20:15."
+      },
+      "motif": "radial-gradient(940px 340px at 90% 10%, #ff9f5055 0%, transparent 62%), radial-gradient(780px 300px at 0% 100%, #7c3a124d 0%, transparent 62%)",
+      "durationMinutes": 45,
+      "activeFrom": "2026-01-01T00:00:00Z",
+      "activeUntil": "2026-12-31T23:59:59Z",
+      "rules": [
+        "15 20 * * 4"
+      ],
+      "notifications": {
+        "enabled": true,
+        "minutes": [15, 5, 2],
+        "channels": ["browser", "popup", "beep"]
+      }
+    },
+    {
+      "id": "clean_room",
+      "categoryId": "personal",
+      "name": {
+        "de": "Wohnung putzen",
+        "en": "Clean apartment"
+      },
+      "description": {
+        "de": "Beispiel fuer einen persoenlichen Timer.",
+        "en": "Example of a personal timer."
+      },
+      "motif": "radial-gradient(900px 300px at 90% 0%, #80e9ff52 0%, transparent 62%), radial-gradient(760px 280px at 0% 100%, #43b0b84d 0%, transparent 60%)",
+      "durationMinutes": 30,
+      "rules": [
+        "0 18 * * 6"
+      ],
+      "notifications": {
+        "enabled": true,
+        "minutes": [10],
+        "channels": ["popup"]
+      }
+    }
+  ]
+}
