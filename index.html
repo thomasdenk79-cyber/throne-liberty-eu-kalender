@@ -222,17 +222,38 @@
 
     .toggle {
       display: grid;
+      grid-template-columns: minmax(0, 1fr);
       gap: 6px;
       max-height: 180px;
-      overflow: auto;
+      overflow-x: hidden;
+      overflow-y: auto;
       padding-right: 4px;
     }
 
     .toggle label {
       display: flex;
       align-items: center;
+      justify-content: flex-start;
       gap: 8px;
+      min-width: 0;
+      min-height: 38px;
       cursor: pointer;
+      text-align: left;
+    }
+
+    .toggle input[type="checkbox"] {
+      width: 16px;
+      min-width: 16px;
+      height: 16px;
+      margin: 0;
+      padding: 0;
+      flex: 0 0 16px;
+      accent-color: var(--accent);
+    }
+
+    .toggle label span {
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
 
     .actions,
@@ -287,8 +308,27 @@
       background: #101927f6;
       backdrop-filter: blur(14px);
       overflow-y: auto;
+      overflow-x: hidden;
       overscroll-behavior: contain;
       display: none;
+    }
+
+    .editor > *,
+    .editor .row,
+    .editor .meta-grid,
+    .editor .calendar-group {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .builder-actions input {
+      flex: 1 1 100%;
+      min-width: 0;
+    }
+
+    .builder-line span {
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
 
     .editor[data-open="true"] {
@@ -514,6 +554,8 @@
       backdrop-filter: blur(14px);
     }
 
+    .toast-wrap:empty { display: none; }
+
     .toast {
       padding: 10px;
       border-radius: 10px;
@@ -707,6 +749,211 @@
       background: linear-gradient(145deg, #111e30e8, #08111ee8);
     }
 
+    /* Compact selection table and calendar export controls. */
+    .toggle {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      max-height: 230px;
+      padding: 0;
+      border: 1px solid #9cdbf52b;
+      border-radius: 13px;
+      background: #08111e;
+      box-shadow: inset 0 1px 0 #ffffff0a;
+    }
+
+    .toggle label {
+      min-height: 44px;
+      padding: 9px 11px;
+      border: 0;
+      border-radius: 0;
+      background: #0b1523;
+      box-shadow: none;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .toggle label:nth-child(4n + 3),
+    .toggle label:nth-child(4n + 4) { background: #101c2c; }
+
+    .toggle label:nth-child(odd) { border-right: 1px solid #ffffff12; }
+    .toggle label:nth-child(n + 3) { border-top: 1px solid #ffffff10; }
+
+    .toggle label.is-active {
+      color: #effbff;
+      box-shadow: inset 3px 0 0 #72dcff, inset 0 0 24px #5bdcff0c;
+    }
+
+    .toggle label:hover { background: #17263a; }
+
+    .toggle input[type="checkbox"],
+    .calendar-row input[type="checkbox"],
+    .calendar-select-all input[type="checkbox"] {
+      width: 16px;
+      min-width: 16px;
+      height: 16px;
+      min-height: 16px;
+      margin: 0;
+      padding: 0;
+      flex: 0 0 16px;
+      accent-color: var(--accent);
+      box-shadow: none;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .section-copy {
+      margin: 4px 0 0;
+      color: #aebbd0;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .calendar-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      padding: 9px;
+      border: 1px solid #9cdbf52b;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #0d1928, #10182a);
+      box-shadow: inset 0 1px 0 #ffffff0c;
+    }
+
+    .calendar-select-all {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      cursor: pointer;
+      color: #deebfa;
+      font-size: 12px;
+    }
+
+    .selection-count {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      border: 1px solid #86dcff2e;
+      border-radius: 999px;
+      background: #72dcff0d;
+      color: #aeeeff;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .calendar-group h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ffffff12;
+    }
+
+    .calendar-group h3::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #72dcff;
+      box-shadow: 0 0 12px #72dcffaa;
+    }
+
+    .calendar-row {
+      grid-template-columns: 18px 58px 58px minmax(0, 1fr) auto;
+      padding: 7px 6px;
+      border-bottom: 0;
+      border-radius: 8px;
+    }
+
+    .calendar-row:nth-child(odd) { background: #ffffff04; }
+    .calendar-row.is-selected { background: #5bdcff12; }
+    .calendar-row > span { min-width: 0; overflow-wrap: anywhere; }
+    .calendar-row .ics-btn { min-height: 29px; padding: 5px 8px; }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .controls,
+    .calendar {
+      background-image: linear-gradient(145deg, #0d1928d9, #091320d9);
+    }
+
+    #cardStack,
+    #calendarGroups {
+      display: grid;
+      gap: 10px;
+    }
+
+    .stack > .label,
+    .controls > .row > .label {
+      color: #bfeeff;
+    }
+
+    .footer {
+      border-top-color: #72dcff30;
+      line-height: 1.5;
+    }
+
+    .notification-setup {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px;
+      border: 1px solid #b6eaff25;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #132237, #0a1422);
+      box-shadow: inset 0 1px 0 #ffffff0c;
+    }
+
+    .notification-copy {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .notification-copy strong { font-size: 12px; color: #edf8ff; }
+    .notification-copy small { color: #9facbf; line-height: 1.4; }
+    .notification-copy small.is-ready { color: #86e9ac; }
+    .notification-copy small.is-blocked { color: #ffb074; }
+
+    .event-dialog {
+      width: min(420px, calc(100vw - 28px));
+      padding: 0;
+      border: 1px solid #9ee7ff4f;
+      border-radius: 18px;
+      color: var(--text);
+      background: linear-gradient(145deg, #13243a, #091321 70%);
+      box-shadow: 0 30px 100px #000c, inset 0 1px 0 #ffffff17;
+      overflow: hidden;
+    }
+
+    .event-dialog::backdrop {
+      background: #02071199;
+      backdrop-filter: blur(5px);
+    }
+
+    .event-dialog-content {
+      display: grid;
+      gap: 12px;
+      padding: 22px;
+      background: radial-gradient(480px 180px at 100% 0%, #6adeff26, transparent 64%);
+    }
+
+    .event-dialog h2 { margin: 0; font-size: 24px; }
+    .event-dialog p { margin: 0; color: #c7d5e8; line-height: 1.55; }
+    .event-dialog .btn { justify-self: start; }
+
     @media (prefers-reduced-motion: reduce) {
       body::before,
       body::after { animation: none; }
@@ -729,7 +976,8 @@
       body { padding-top: 124px; }
       .hero { min-height: 190px; }
       .meta-grid { grid-template-columns: 1fr; }
-      .calendar-row { grid-template-columns: 48px 56px 1fr auto; }
+      .calendar-row { grid-template-columns: 18px 48px 52px minmax(0, 1fr) auto; }
+      .notification-setup { grid-template-columns: 1fr; }
       .count { font-size: 26px; }
     }
   </style>
@@ -809,9 +1057,9 @@
         <input id="editNotifyMinutes" type="text" placeholder="10,5,2">
       </div>
       <div class="channel-row">
-        <label class="pill"><input id="channelBrowser" type="checkbox"> Browser</label>
-        <label class="pill"><input id="channelPopup" type="checkbox"> Popup</label>
-        <label class="pill"><input id="channelBeep" type="checkbox"> Beep</label>
+        <label class="pill"><input id="channelBrowser" type="checkbox"> <span id="channelBrowserLabel">Browser</span></label>
+        <label class="pill"><input id="channelPopup" type="checkbox"> <span id="channelPopupLabel">Popup</span></label>
+        <label class="pill"><input id="channelBeep" type="checkbox"> <span id="channelBeepLabel">Ton</span></label>
       </div>
     </div>
     <div class="editor-actions">
@@ -842,7 +1090,7 @@
         </div>
         <div class="row">
           <div class="label" id="displayZoneLabel">Display Timezone</div>
-          <input id="displayTimezone" type="text" placeholder="auto">
+          <select id="displayTimezone"></select>
         </div>
       </div>
       <div class="meta-grid">
@@ -860,15 +1108,22 @@
           <div class="label" id="quickActionsLabel">Config</div>
           <div class="actions">
             <button class="btn" id="newTimerBtn" type="button">New timer</button>
-            <button class="btn alt" id="exportBtn" type="button">Export</button>
-            <button class="btn alt" id="importBtn" type="button">Import</button>
-            <input id="importInput" type="file" accept="application/json" hidden>
+            <button class="btn alt" id="exportBtn" type="button">Export INI</button>
+            <button class="btn alt" id="importBtn" type="button">Import INI</button>
+            <input id="importInput" type="file" accept=".ini,text/plain" hidden>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="label" id="visibilityLabel">Visible Timers</div>
         <div class="toggle" id="timerToggle"></div>
+      </div>
+      <div class="notification-setup">
+        <div class="notification-copy">
+          <strong id="notificationSetupTitle">Benachrichtigungen</strong>
+          <small id="notificationPermissionStatus">Noch nicht für Windows freigegeben. Die Seite muss geöffnet bleiben.</small>
+        </div>
+        <button class="btn" id="enableNotificationsBtn" type="button">Aktivieren &amp; Ton testen</button>
       </div>
     </section>
 
@@ -878,12 +1133,25 @@
     </section>
 
     <section class="calendar">
-      <div class="label" id="calendarLabel">Upcoming Calendar</div>
+      <div class="section-heading">
+        <div>
+          <div class="label" id="calendarLabel">Kalenderexport</div>
+          <p class="section-copy" id="calendarHelp">Termine auswählen und gemeinsam als ICS-Datei herunterladen.</p>
+        </div>
+        <span class="selection-count" id="calendarSelectionStatus">0 ausgewählt</span>
+      </div>
+      <div class="calendar-toolbar">
+        <label class="calendar-select-all">
+          <input id="calendarSelectAll" type="checkbox">
+          <span id="calendarSelectAllLabel">Alle Termine auswählen</span>
+        </label>
+        <button class="btn" id="downloadSelectedIcsBtn" type="button" disabled>Auswahl als ICS</button>
+      </div>
       <div id="calendarGroups"></div>
     </section>
 
     <section class="footer">
-      <div id="footerSummary">Defaults come from Git. Personal changes stay local unless you export and save them back into the repo.</div>
+      <div id="footerSummary">Standarddaten: config.ini · Persönliche Anpassungen lassen sich als INI exportieren.</div>
       <div>thomas.denk79@gmail.com</div>
       <a href="https://questlog.gg/throne-and-liberty/en/event-calendar" target="_blank" rel="noreferrer">Questlog</a>
       <a href="https://throneandliberty.gameslantern.com/event-calendar" target="_blank" rel="noreferrer">GamesLantern</a>
@@ -891,124 +1159,175 @@
     </section>
   </main>
 
+  <dialog class="event-dialog" id="eventPopup">
+    <div class="event-dialog-content">
+      <span class="badge" id="eventPopupLabel">Event-Erinnerung</span>
+      <h2 id="eventPopupTitle"></h2>
+      <p id="eventPopupText"></p>
+      <button class="btn" id="eventPopupCloseBtn" type="button">Verstanden</button>
+    </div>
+  </dialog>
+
   <section class="toast-wrap" id="toastWrap"></section>
 
   <script>
     const UI = {
       de: {
-        editorTitle: "Timer-Editor",
-        editorNote: "Git enthaelt die Standard-Konfiguration. Deine Aenderungen werden lokal im Browser gespeichert und koennen per Export wieder ins Repo uebernommen werden.",
+        editorTitle: "Timer bearbeiten",
+        editorNote: "Die Standardkonfiguration kommt aus Git. Änderungen werden in diesem Browser gespeichert und lassen sich als INI exportieren.",
         brandSub: "EU-Event-Timer · sekundengenau",
         heroTitle: "Solisium Pulse",
-        heroText: "Alle wichtigen Eventfenster, praezise Countdowns und Erinnerungen auf einen Blick.",
-        category: "Kategorie",
-        displayZone: "Anzeige-Zeitzone",
-        defaultReminder: "Standard-Erinnerung",
-        config: "Konfiguration",
-        visibleTimers: "Sichtbare Timer",
-        upcomingTimers: "Bevorstehende Timer",
-        upcomingCalendar: "Naechste Kalendereintraege",
-        footerSummary: "Defaults kommen aus Git. Persoenliche Aenderungen bleiben lokal, bis du sie exportierst und wieder ins Repo speicherst.",
-        localClock: "Lokal",
-        serverClock: "Kategorie",
+        heroText: "Wichtige Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.",
+        category: "Bereich",
+        displayZone: "Zeiten anzeigen in",
+        defaultReminder: "Standard-Vorlauf",
+        config: "Timer-Verwaltung",
+        visibleTimers: "Timer anzeigen",
+        upcomingTimers: "Nächste Events",
+        upcomingCalendar: "Kalenderexport",
+        calendarHelp: "Termine auswählen und gemeinsam als ICS-Datei herunterladen.",
+        selectAllDates: "Alle Termine auswählen",
+        exportSelectedIcs: "Auswahl als ICS",
+        selectedCount: "{count} ausgewählt",
+        noIcsSelection: "Bitte mindestens einen Termin auswählen.",
+        icsExported: "{count} Termine als ICS exportiert.",
+        footerSummary: "Standarddaten: config.ini · Persönliche Anpassungen bleiben lokal, bis du sie als INI exportierst.",
+        localClock: "Ortszeit",
+        serverClock: "Anzeige",
         name: "Name",
-        categoryLabel: "Kategorie",
-        timezone: "Zeitzone",
-        activeFrom: "Aktiv ab",
-        activeUntil: "Aktiv bis",
-        duration: "Dauer Minuten",
-        anchor: "Anchor UTC",
-        setAnchorNow: "Anchor jetzt setzen",
-        rules: "Regeln",
-        rulesHelp: "Cron: Minute Stunde Tag Monat Wochentag. Beispiele: */15 * * * * (alle 15 Min), 0 */4 * * * (alle 4 Stunden), 15 20 * * 4 (Do 20:15). Mehrere Regeln: je Zeile eine Regel. Intervalle zusaetzlich per @every 11808s, @every 90m oder @every 2h.",
+        categoryLabel: "Bereich",
+        timezone: "Event-Zeitzone",
+        activeFrom: "Gültig ab",
+        activeUntil: "Gültig bis",
+        duration: "Dauer (Minuten)",
+        anchor: "Intervall-Anker (UTC)",
+        setAnchorNow: "Aktuelle UTC-Zeit verwenden",
+        rules: "Zeitplan",
+        rulesHelp: "Cron: Minute Stunde Tag Monat Wochentag. Eine Regel pro Zeile. Exakte Intervalle sind z. B. mit @every 11808s möglich.",
         notifications: "Benachrichtigungen",
-        notificationsEnabled: "Aktiv",
-        saveLocal: "Lokal speichern",
+        notificationsEnabled: "Erinnerungen aktiv",
+        notificationSetupTitle: "Benachrichtigungen",
+        notificationEnable: "Aktivieren & Ton testen",
+        notificationTestSound: "Ton testen",
+        notificationStatusDefault: "Windows-Benachrichtigungen sind noch nicht freigegeben. Die Seite muss geöffnet bleiben.",
+        notificationStatusGranted: "Windows-Benachrichtigungen sind aktiv. Die Seite muss geöffnet bleiben.",
+        notificationStatusDenied: "Im Browser blockiert. Über das Schloss-Symbol der Website wieder freigeben.",
+        notificationStatusUnsupported: "Dieser Browser unterstützt keine Windows-Benachrichtigungen.",
+        eventAlert: "Event-Erinnerung",
+        eventStarts: "Start um {time} · noch {lead} Min.",
+        acknowledge: "Verstanden",
+        browserChannel: "Browser",
+        popupChannel: "In-App-Popup",
+        soundChannel: "Ton",
+        notificationsOff: "Erinnerungen aus",
+        saveLocal: "Änderungen speichern",
         duplicate: "Duplizieren",
-        deleteLocal: "Lokal loeschen",
-        resetDefault: "Auf Default zurueck",
-        close: "Schliessen",
+        deleteLocal: "Timer lokal entfernen",
+        resetDefault: "Standard wiederherstellen",
+        close: "Schließen",
         newTimer: "Neuer Timer",
-        exportConfig: "Export",
-        importConfig: "Import",
-        nextStart: "Naechster Start",
+        exportConfig: "INI exportieren",
+        importConfig: "INI importieren",
+        nextStart: "Nächster Start",
         edit: "Bearbeiten",
-        deleteTimerConfirm: "Diesen lokalen Timer wirklich loeschen?",
-        deleted: "Timer lokal geloescht",
+        deleteTimerConfirm: "Diesen Timer wirklich lokal entfernen?",
+        deleted: "Timer lokal entfernt",
         saved: "Timer lokal gespeichert",
-        imported: "Konfiguration importiert",
-        exported: "Konfiguration exportiert",
+        imported: "INI-Konfiguration importiert",
+        exported: "INI-Konfiguration exportiert",
+        importFailed: "INI-Datei konnte nicht importiert werden.",
         browserBlocked: "Browser-Benachrichtigungen sind blockiert.",
-        browserUnsupported: "Browser-Benachrichtigungen werden hier nicht unterstuetzt.",
-        noTimers: "Keine Timer in dieser Kategorie.",
-        noSchedule: "Keine kommenden Termine.",
+        browserUnsupported: "Browser-Benachrichtigungen werden hier nicht unterstützt.",
+        noTimers: "Keine aktiven Termine für die ausgewählten Timer.",
+        noSchedule: "Keine kommenden Termine verfügbar.",
         urgencyNow: "Jetzt gleich",
         urgencyVerySoon: "Gleich",
         urgencySoon: "Bald",
-        urgencyLater: "Spaeter",
-        urgencyMuchLater: "Sehr viel spaeter",
+        urgencyLater: "Später",
+        urgencyMuchLater: "Deutlich später",
         urgencyToday: "Heute",
         newCategory: "Neue Kategorie",
-        deleteCategory: "Kategorie loeschen",
-        categoryCreated: "Kategorie lokal erstellt",
-        categoryDeleted: "Kategorie lokal geloescht",
-        categoryDeleteConfirm: "Kategorie wirklich lokal loeschen?",
+        deleteCategory: "Bereich löschen",
+        categoryCreated: "Bereich lokal erstellt",
+        categoryDeleted: "Bereich lokal gelöscht",
+        categoryDeleteConfirm: "Diesen Bereich wirklich lokal löschen?",
         cannotDeleteLastCategory: "Mindestens eine Kategorie muss bleiben.",
-        builderTitle: "GUI Zeitplan-Builder",
-        builderAdd: "Cron-Zeile hinzufuegen",
-        builderClear: "Zeilen leeren",
-        builderPickDay: "Bitte mindestens einen Tag waehlen.",
-        builderBadTime: "Zeitformat ungueltig (HH:MM, z. B. 20:15,22:30)",
-        builderAdded: "Cron-Zeile(n) hinzugefuegt",
-        anchorNowSaved: "Anchor auf aktuelle UTC-Zeit gesetzt und lokal gespeichert"
+        builderTitle: "Zeitplan-Assistent",
+        builderAdd: "Zeitplan hinzufügen",
+        builderClear: "Zeitplan leeren",
+        builderPickDay: "Bitte mindestens einen Tag wählen.",
+        builderBadTime: "Ungültiges Zeitformat (HH:MM, z. B. 20:15,22:30)",
+        builderAdded: "Zeitplan hinzugefügt",
+        anchorNowSaved: "Intervall-Anker auf die aktuelle UTC-Zeit gesetzt"
       },
       en: {
-        editorTitle: "Timer Editor",
-        editorNote: "Git keeps the default configuration. Your changes are stored locally in this browser and can be exported back into the repo.",
+        editorTitle: "Edit timer",
+        editorNote: "The default configuration comes from Git. Changes stay in this browser and can be exported as INI.",
         brandSub: "EU event timer · second-precise",
         heroTitle: "Solisium Pulse",
         heroText: "Important event windows, precise countdowns and reminders at a glance.",
         category: "Category",
-        displayZone: "Display timezone",
-        defaultReminder: "Default reminder",
-        config: "Config",
-        visibleTimers: "Visible timers",
-        upcomingTimers: "Upcoming timers",
-        upcomingCalendar: "Upcoming calendar",
-        footerSummary: "Defaults come from Git. Personal changes stay local until you export and save them back into the repo.",
-        localClock: "Local",
-        serverClock: "Category",
+        displayZone: "Show times in",
+        defaultReminder: "Default reminder lead",
+        config: "Timer management",
+        visibleTimers: "Show timers",
+        upcomingTimers: "Next events",
+        upcomingCalendar: "Calendar export",
+        calendarHelp: "Select dates and download them together in one ICS file.",
+        selectAllDates: "Select all dates",
+        exportSelectedIcs: "Export selection as ICS",
+        selectedCount: "{count} selected",
+        noIcsSelection: "Please select at least one date.",
+        icsExported: "Exported {count} dates as ICS.",
+        footerSummary: "Defaults: config.ini · Personal changes stay in this browser until exported as INI.",
+        localClock: "Local time",
+        serverClock: "Display",
         name: "Name",
         categoryLabel: "Category",
-        timezone: "Timezone",
-        activeFrom: "Active from",
-        activeUntil: "Active until",
-        duration: "Duration minutes",
-        anchor: "Anchor UTC",
-        setAnchorNow: "Set anchor now",
-        rules: "Rules",
-        rulesHelp: "Cron: minute hour day month weekday. Examples: */15 * * * * (every 15 min), 0 */4 * * * (every 4 hours), 15 20 * * 4 (Thu 20:15). Multiple rules: one rule per line. Intervals are also supported via @every 11808s, @every 90m or @every 2h.",
+        timezone: "Event timezone",
+        activeFrom: "Valid from",
+        activeUntil: "Valid until",
+        duration: "Duration (minutes)",
+        anchor: "Interval anchor (UTC)",
+        setAnchorNow: "Use current UTC time",
+        rules: "Schedule",
+        rulesHelp: "Cron: minute hour day month weekday. Use one rule per line. Exact intervals are supported, for example @every 11808s.",
         notifications: "Notifications",
-        notificationsEnabled: "Enabled",
-        saveLocal: "Save locally",
+        notificationsEnabled: "Reminders enabled",
+        notificationSetupTitle: "Notifications",
+        notificationEnable: "Enable & test sound",
+        notificationTestSound: "Test sound",
+        notificationStatusDefault: "Windows notifications are not enabled yet. Keep this page open.",
+        notificationStatusGranted: "Windows notifications are active. Keep this page open.",
+        notificationStatusDenied: "Blocked in the browser. Re-enable them from the site's lock icon.",
+        notificationStatusUnsupported: "This browser does not support Windows notifications.",
+        eventAlert: "Event reminder",
+        eventStarts: "Starts at {time} · {lead} min remaining.",
+        acknowledge: "Got it",
+        browserChannel: "Browser",
+        popupChannel: "In-app popup",
+        soundChannel: "Sound",
+        notificationsOff: "Reminders off",
+        saveLocal: "Save changes",
         duplicate: "Duplicate",
-        deleteLocal: "Delete local",
-        resetDefault: "Reset to default",
+        deleteLocal: "Remove timer locally",
+        resetDefault: "Restore default",
         close: "Close",
         newTimer: "New timer",
-        exportConfig: "Export",
-        importConfig: "Import",
+        exportConfig: "Export INI",
+        importConfig: "Import INI",
         nextStart: "Next start",
         edit: "Edit",
-        deleteTimerConfirm: "Really delete this local timer?",
-        deleted: "Local timer deleted",
+        deleteTimerConfirm: "Remove this timer locally?",
+        deleted: "Timer removed locally",
         saved: "Timer saved locally",
-        imported: "Configuration imported",
-        exported: "Configuration exported",
+        imported: "INI configuration imported",
+        exported: "INI configuration exported",
+        importFailed: "INI file could not be imported.",
         browserBlocked: "Browser notifications are blocked.",
         browserUnsupported: "Browser notifications are not supported here.",
-        noTimers: "No timers in this category.",
-        noSchedule: "No upcoming dates.",
+        noTimers: "No active dates for the selected timers.",
+        noSchedule: "No upcoming dates available.",
         urgencyNow: "Now",
         urgencyVerySoon: "Very soon",
         urgencySoon: "Soon",
@@ -1021,13 +1340,13 @@
         categoryDeleted: "Category deleted locally",
         categoryDeleteConfirm: "Delete this category locally?",
         cannotDeleteLastCategory: "At least one category must remain.",
-        builderTitle: "GUI schedule builder",
-        builderAdd: "Add cron line",
-        builderClear: "Clear lines",
+        builderTitle: "Schedule assistant",
+        builderAdd: "Add schedule",
+        builderClear: "Clear schedule",
         builderPickDay: "Please select at least one day.",
         builderBadTime: "Invalid time format (HH:MM, e.g. 20:15,22:30)",
-        builderAdded: "Cron line(s) added",
-        anchorNowSaved: "Anchor set to current UTC time and saved locally"
+        builderAdded: "Schedule added",
+        anchorNowSaved: "Interval anchor set to the current UTC time"
       }
     };
 
@@ -1037,12 +1356,16 @@
       localConfig: null,
       mergedConfig: null,
       categoryId: "",
-      displayTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      displayTimezone: "Europe/Berlin",
       visibleIds: new Set(),
+      calendarSelection: new Set(),
+      calendarEntries: new Map(),
       defaultLead: 5,
       editingTimerId: "",
       notified: new Set(),
-      audioContext: null
+      audioContext: null,
+      popupTimer: null,
+      lastNotificationCheck: Date.now() - 1500
     };
 
     const dom = {
@@ -1099,8 +1422,11 @@
       editNotifyEnabled: document.getElementById("editNotifyEnabled"),
       editNotifyMinutes: document.getElementById("editNotifyMinutes"),
       channelBrowser: document.getElementById("channelBrowser"),
+      channelBrowserLabel: document.getElementById("channelBrowserLabel"),
       channelPopup: document.getElementById("channelPopup"),
+      channelPopupLabel: document.getElementById("channelPopupLabel"),
       channelBeep: document.getElementById("channelBeep"),
+      channelBeepLabel: document.getElementById("channelBeepLabel"),
       builderTitle: document.getElementById("builderTitle"),
       builderDays: document.getElementById("builderDays"),
       builderTimes: document.getElementById("builderTimes"),
@@ -1111,7 +1437,20 @@
       duplicateTimerBtn: document.getElementById("duplicateTimerBtn"),
       deleteTimerBtn: document.getElementById("deleteTimerBtn"),
       resetTimerBtn: document.getElementById("resetTimerBtn"),
-      closeEditorBtn: document.getElementById("closeEditorBtn")
+      closeEditorBtn: document.getElementById("closeEditorBtn"),
+      calendarHelp: document.getElementById("calendarHelp"),
+      calendarSelectionStatus: document.getElementById("calendarSelectionStatus"),
+      calendarSelectAll: document.getElementById("calendarSelectAll"),
+      calendarSelectAllLabel: document.getElementById("calendarSelectAllLabel"),
+      downloadSelectedIcsBtn: document.getElementById("downloadSelectedIcsBtn"),
+      notificationSetupTitle: document.getElementById("notificationSetupTitle"),
+      notificationPermissionStatus: document.getElementById("notificationPermissionStatus"),
+      enableNotificationsBtn: document.getElementById("enableNotificationsBtn"),
+      eventPopup: document.getElementById("eventPopup"),
+      eventPopupLabel: document.getElementById("eventPopupLabel"),
+      eventPopupTitle: document.getElementById("eventPopupTitle"),
+      eventPopupText: document.getElementById("eventPopupText"),
+      eventPopupCloseBtn: document.getElementById("eventPopupCloseBtn")
     };
 
     function text(key) {
@@ -1305,6 +1644,83 @@
         }
       }
       return { schemaVersion, categories, timers };
+    }
+
+    function iniValue(value) {
+      return String(value ?? "").replace(/\r?\n/g, " ").trim();
+    }
+
+    function serializeIniConfig(rawConfig) {
+      const config = normalizeConfig(rawConfig);
+      const lines = [
+        "; Solisium Pulse timer configuration",
+        "; Import this file directly in the timer UI.",
+        "",
+        "[meta]",
+        "schemaVersion=" + (Number(config.schemaVersion) || 2)
+      ];
+
+      for (const category of config.categories) {
+        lines.push(
+          "",
+          "[category:" + iniValue(category.id) + "]",
+          "label.de=" + iniValue(category.label?.de || category.id),
+          "label.en=" + iniValue(category.label?.en || category.label?.de || category.id),
+          "region=" + iniValue(category.region || "custom"),
+          "timezone=" + iniValue(category.timezone || "Europe/Berlin")
+        );
+      }
+
+      for (const timer of config.timers) {
+        lines.push(
+          "",
+          "[timer:" + iniValue(timer.id) + "]",
+          "categoryId=" + iniValue(timer.categoryId || "personal"),
+          "name.de=" + iniValue(timer.name?.de || timer.id),
+          "name.en=" + iniValue(timer.name?.en || timer.name?.de || timer.id),
+          "description.de=" + iniValue(timer.description?.de || ""),
+          "description.en=" + iniValue(timer.description?.en || timer.description?.de || "")
+        );
+        if (timer.motif) lines.push("motif=" + iniValue(timer.motif));
+        if (timer.timezone) lines.push("timezone=" + iniValue(timer.timezone));
+        lines.push("durationMinutes=" + (Number(timer.durationMinutes) || 10));
+        if (timer.activeFrom) lines.push("activeFrom=" + iniValue(timer.activeFrom));
+        if (timer.activeUntil) lines.push("activeUntil=" + iniValue(timer.activeUntil));
+        lines.push("rules=" + (timer.rules || []).map(iniValue).filter(Boolean).join(" || "));
+        if (timer.anchorUtc) lines.push("anchorUtc=" + iniValue(timer.anchorUtc));
+        lines.push(
+          "notifications.enabled=" + (timer.notifications?.enabled !== false ? "true" : "false"),
+          "notifications.minutes=" + (timer.notifications?.minutes || []).join(","),
+          "notifications.channels=" + (timer.notifications?.channels || []).map(iniValue).filter(Boolean).join(",")
+        );
+      }
+
+      return lines.join("\n") + "\n";
+    }
+
+    function supportedTimezones() {
+      let zones = [];
+      try {
+        if (typeof Intl.supportedValuesOf === "function") zones = Intl.supportedValuesOf("timeZone");
+      } catch {
+        // Use the compact fallback below.
+      }
+      if (!zones.length) {
+        zones = [
+          "Europe/Berlin", "Europe/London", "Europe/Paris", "Europe/Rome", "Europe/Vienna",
+          "Europe/Warsaw", "Europe/Athens", "UTC", "America/New_York", "America/Chicago",
+          "America/Denver", "America/Los_Angeles", "Asia/Tokyo", "Asia/Seoul", "Australia/Sydney"
+        ];
+      }
+      const unique = Array.from(new Set(["Europe/Berlin", "UTC", ...zones]));
+      return unique.sort((a, b) => {
+        if (a === b) return 0;
+        if (a === "Europe/Berlin") return -1;
+        if (b === "Europe/Berlin") return 1;
+        if (a === "UTC") return -1;
+        if (b === "UTC") return 1;
+        return a.localeCompare(b);
+      });
     }
 
     function migrateLegacyMemoryInterval(localConfig) {
@@ -1620,6 +2036,9 @@
       dom.editRulesHelp.textContent = text("rulesHelp");
       dom.editNotifLabel.textContent = text("notifications");
       dom.editNotifyEnabledLabel.textContent = text("notificationsEnabled");
+      dom.channelBrowserLabel.textContent = text("browserChannel");
+      dom.channelPopupLabel.textContent = text("popupChannel");
+      dom.channelBeepLabel.textContent = text("soundChannel");
       dom.categoryLabel.textContent = text("category");
       dom.displayZoneLabel.textContent = text("displayZone");
       dom.defaultNotifLabel.textContent = text("defaultReminder");
@@ -1627,6 +2046,12 @@
       dom.visibilityLabel.textContent = text("visibleTimers");
       dom.stackLabel.textContent = text("upcomingTimers");
       dom.calendarLabel.textContent = text("upcomingCalendar");
+      dom.calendarHelp.textContent = text("calendarHelp");
+      dom.calendarSelectAllLabel.textContent = text("selectAllDates");
+      dom.downloadSelectedIcsBtn.textContent = text("exportSelectedIcs");
+      dom.notificationSetupTitle.textContent = text("notificationSetupTitle");
+      dom.eventPopupLabel.textContent = text("eventAlert");
+      dom.eventPopupCloseBtn.textContent = text("acknowledge");
       dom.footerSummary.textContent = text("footerSummary");
       dom.saveTimerBtn.textContent = text("saveLocal");
       dom.duplicateTimerBtn.textContent = text("duplicate");
@@ -1656,7 +2081,17 @@
         const opt2 = opt.cloneNode(true);
         dom.editCategory.appendChild(opt2);
       }
-      dom.displayTimezone.value = state.displayTimezone;
+      const selectedTimezone = state.displayTimezone || "Europe/Berlin";
+      const timezones = supportedTimezones();
+      if (!timezones.includes(selectedTimezone)) timezones.unshift(selectedTimezone);
+      dom.displayTimezone.innerHTML = "";
+      for (const timezone of timezones) {
+        const option = document.createElement("option");
+        option.value = timezone;
+        option.textContent = timezone;
+        option.selected = timezone === selectedTimezone;
+        dom.displayTimezone.appendChild(option);
+      }
     }
 
     function renderToggles() {
@@ -1668,6 +2103,7 @@
         const input = document.createElement("input");
         input.type = "checkbox";
         input.checked = state.visibleIds.has(timer.id);
+        label.classList.toggle("is-active", input.checked);
         input.addEventListener("change", () => {
           if (input.checked) state.visibleIds.add(timer.id);
           else state.visibleIds.delete(timer.id);
@@ -1675,7 +2111,9 @@
           renderAll();
         });
         label.appendChild(input);
-        label.appendChild(document.createTextNode(timerName(timer)));
+        const name = document.createElement("span");
+        name.textContent = timerName(timer);
+        label.appendChild(name);
         dom.timerToggle.appendChild(label);
       }
     }
@@ -1934,11 +2372,11 @@
     }
 
     function exportConfig() {
-      const blob = new Blob([JSON.stringify(state.mergedConfig, null, 2)], { type: "application/json" });
+      const blob = new Blob([serializeIniConfig(state.mergedConfig)], { type: "text/plain;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "timer-config.json";
+      a.download = "timer-config.ini";
       a.click();
       URL.revokeObjectURL(url);
       toast(text("exported"));
@@ -1946,7 +2384,8 @@
 
     async function importConfig(file) {
       const textContent = await file.text();
-      const parsed = normalizeConfig(JSON.parse(textContent));
+      const parsed = normalizeConfig(parseIniConfig(textContent));
+      if (!parsed.categories.length) throw new Error("INI configuration has no categories");
       state.localConfig = {
         categories: parsed.categories,
         timers: parsed.timers
@@ -1964,41 +2403,98 @@
       try {
         const ctx = state.audioContext || new (window.AudioContext || window.webkitAudioContext)();
         state.audioContext = ctx;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.value = 880;
-        gain.gain.value = 0.02;
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.14);
+        if (ctx.state === "suspended") void ctx.resume();
+        const startAt = ctx.currentTime + 0.03;
+        const notes = [
+          { offset: 0.00, frequency: 659.25, duration: 0.24 },
+          { offset: 0.28, frequency: 880.00, duration: 0.28 },
+          { offset: 0.62, frequency: 1046.50, duration: 0.38 },
+          { offset: 1.15, frequency: 880.00, duration: 0.24 },
+          { offset: 1.43, frequency: 1046.50, duration: 0.42 }
+        ];
+        for (const note of notes) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const noteStart = startAt + note.offset;
+          const noteEnd = noteStart + note.duration;
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(note.frequency, noteStart);
+          gain.gain.setValueAtTime(0.0001, noteStart);
+          gain.gain.exponentialRampToValueAtTime(0.055, noteStart + 0.035);
+          gain.gain.exponentialRampToValueAtTime(0.0001, noteEnd);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(noteStart);
+          osc.stop(noteEnd + 0.03);
+        }
       } catch {
         // Ignore audio errors.
       }
     }
 
     function showPopup(timer, next, lead) {
-      toast(timerName(timer) + " · " + lead + "m · " + formatTime(next, state.displayTimezone, false));
+      const title = timerName(timer);
+      const message = text("eventStarts")
+        .replace("{time}", formatTime(next, state.displayTimezone, false))
+        .replace("{lead}", String(lead));
+      toast(title + " · " + message);
+      dom.eventPopupTitle.textContent = title;
+      dom.eventPopupText.textContent = message;
+      try {
+        if (!dom.eventPopup.open && typeof dom.eventPopup.showModal === "function") dom.eventPopup.showModal();
+        if (state.popupTimer) clearTimeout(state.popupTimer);
+        state.popupTimer = setTimeout(() => {
+          if (dom.eventPopup.open) dom.eventPopup.close();
+        }, 20000);
+      } catch {
+        // The toast above remains as a safe in-app fallback.
+      }
     }
 
-    async function ensureBrowserPermission() {
+    function renderNotificationPermissionStatus() {
       if (!("Notification" in window)) {
-        toast(text("browserUnsupported"));
-        return false;
+        dom.notificationPermissionStatus.textContent = text("notificationStatusUnsupported");
+        dom.notificationPermissionStatus.className = "is-blocked";
+        dom.enableNotificationsBtn.textContent = text("notificationTestSound");
+        dom.channelBrowser.disabled = true;
+        return;
       }
-      if (Notification.permission === "default") {
+      dom.channelBrowser.disabled = false;
+      if (Notification.permission === "granted") {
+        dom.notificationPermissionStatus.textContent = text("notificationStatusGranted");
+        dom.notificationPermissionStatus.className = "is-ready";
+        dom.enableNotificationsBtn.textContent = text("notificationTestSound");
+      } else if (Notification.permission === "denied") {
+        dom.notificationPermissionStatus.textContent = text("notificationStatusDenied");
+        dom.notificationPermissionStatus.className = "is-blocked";
+        dom.enableNotificationsBtn.textContent = text("notificationTestSound");
+      } else {
+        dom.notificationPermissionStatus.textContent = text("notificationStatusDefault");
+        dom.notificationPermissionStatus.className = "";
+        dom.enableNotificationsBtn.textContent = text("notificationEnable");
+      }
+    }
+
+    async function activateNotifications() {
+      try {
+        const ctx = state.audioContext || new (window.AudioContext || window.webkitAudioContext)();
+        state.audioContext = ctx;
+        if (ctx.state === "suspended") await ctx.resume();
+        beep();
+      } catch {
+        // The browser may not expose Web Audio.
+      }
+      if ("Notification" in window && Notification.permission === "default") {
         await Notification.requestPermission();
       }
-      if (Notification.permission !== "granted") {
-        toast(text("browserBlocked"));
-        return false;
-      }
-      return true;
+      renderNotificationPermissionStatus();
+      if ("Notification" in window && Notification.permission === "denied") toast(text("browserBlocked"));
     }
 
-    async function maybeNotify(timers) {
+    function maybeNotify(timers) {
       const now = Date.now();
+      const checkedFrom = Math.min(state.lastNotificationCheck || now - 1500, now);
+      state.lastNotificationCheck = now;
       for (const timer of timers) {
         const notifications = timer.notifications || {};
         if (notifications.enabled === false) continue;
@@ -2007,18 +2503,25 @@
         const leads = (notifications.minutes && notifications.minutes.length ? notifications.minutes : [state.defaultLead]).slice().sort((a, b) => b - a);
         for (const lead of leads) {
           const key = timer.id + ":" + next.toISOString() + ":" + lead;
-          const ms = next.getTime() - now;
-          if (ms > 0 && ms <= lead * 60000 && !state.notified.has(key)) {
+          const triggerAt = next.getTime() - lead * 60000;
+          if (triggerAt > checkedFrom && triggerAt <= now && !state.notified.has(key)) {
             state.notified.add(key);
             const channels = notifications.channels || ["popup"];
             if (channels.includes("popup")) showPopup(timer, next, lead);
             if (channels.includes("beep")) beep();
-            if (channels.includes("browser") && await ensureBrowserPermission()) {
-              new Notification(timerName(timer), {
-                body: text("nextStart") + ": " + formatTime(next, state.displayTimezone, false) + " · " + lead + "m",
-                tag: key,
-                renotify: false
-              });
+            if (channels.includes("browser") && "Notification" in window && Notification.permission === "granted") {
+              try {
+                new Notification(timerName(timer), {
+                  body: text("eventStarts")
+                    .replace("{time}", formatTime(next, state.displayTimezone, false))
+                    .replace("{lead}", String(lead)),
+                  tag: key,
+                  renotify: false,
+                  requireInteraction: true
+                });
+              } catch {
+                toast(text("browserBlocked"));
+              }
             }
           }
         }
@@ -2069,14 +2572,88 @@
           + "<div class=\"count\">" + countdown(next) + "</div>"
           + "<div class=\"meta\"><span>" + formatDate(next, state.displayTimezone) + " · " + formatTime(next, state.displayTimezone, false) + "</span><span class=\"card-status\">" + text(statusKey) + "</span></div>"
           + "<div class=\"card-chips\"><span class=\"chip\">" + (timer.rules || []).join(" | ") + "</span></div>"
-          + "<div class=\"card-foot\"><button class=\"btn alt edit-btn\" type=\"button\" data-id=\"" + timer.id + "\">" + text("edit") + "</button><span class=\"chip\">" + (timer.notifications?.enabled === false ? "Notifications off" : (timer.notifications?.minutes || [state.defaultLead]).join(",") + "m") + "</span></div>";
+          + "<div class=\"card-foot\"><button class=\"btn alt edit-btn\" type=\"button\" data-id=\"" + timer.id + "\">" + text("edit") + "</button><span class=\"chip\">" + (timer.notifications?.enabled === false ? text("notificationsOff") : (timer.notifications?.minutes || [state.defaultLead]).join(",") + "m") + "</span></div>";
         el.querySelector(".edit-btn").addEventListener("click", () => openEditor(timer.id));
         dom.cardStack.appendChild(el);
       });
     }
 
+    function calendarEntryKey(timerId, timestamp) {
+      return timerId + "|" + timestamp;
+    }
+
+    function formatIcsDate(date) {
+      return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    }
+
+    function escapeIcsText(value) {
+      return String(value || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/\r?\n/g, "\\n")
+        .replace(/,/g, "\\,")
+        .replace(/;/g, "\\;");
+    }
+
+    function buildIcs(entries) {
+      const createdAt = formatIcsDate(new Date());
+      const lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Solisium Pulse//TL EU Event Timer//DE",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        "X-WR-CALNAME:Solisium Pulse"
+      ];
+      const sorted = entries.slice().sort((a, b) => a.start - b.start);
+      for (const entry of sorted) {
+        const start = new Date(entry.start);
+        const end = new Date(start.getTime() + (entry.timer.durationMinutes || 10) * 60000);
+        lines.push(
+          "BEGIN:VEVENT",
+          "UID:" + entry.timer.id + "-" + start.getTime() + "@solisium-pulse",
+          "DTSTAMP:" + createdAt,
+          "DTSTART:" + formatIcsDate(start),
+          "DTEND:" + formatIcsDate(end),
+          "SUMMARY:" + escapeIcsText(timerName(entry.timer)),
+          "DESCRIPTION:" + escapeIcsText(timerDescription(entry.timer)),
+          "STATUS:CONFIRMED",
+          "END:VEVENT"
+        );
+      }
+      lines.push("END:VCALENDAR", "");
+      return lines.join("\r\n");
+    }
+
+    function downloadIcs(entries, filename) {
+      const blob = new Blob([buildIcs(entries)], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function updateCalendarSelectionUi() {
+      const availableKeys = Array.from(state.calendarEntries.keys());
+      const selectedKeys = availableKeys.filter((key) => state.calendarSelection.has(key));
+      const selectedCount = selectedKeys.length;
+      const totalCount = availableKeys.length;
+      dom.calendarSelectionStatus.textContent = text("selectedCount").replace("{count}", String(selectedCount));
+      dom.calendarSelectAll.checked = totalCount > 0 && selectedCount === totalCount;
+      dom.calendarSelectAll.indeterminate = selectedCount > 0 && selectedCount < totalCount;
+      dom.calendarSelectAll.disabled = totalCount === 0;
+      dom.downloadSelectedIcsBtn.disabled = selectedCount === 0;
+      dom.calendarGroups.querySelectorAll(".calendar-select").forEach((checkbox) => {
+        const checked = state.calendarSelection.has(checkbox.dataset.key);
+        checkbox.checked = checked;
+        checkbox.closest(".calendar-row")?.classList.toggle("is-selected", checked);
+      });
+    }
+
     function renderCalendar() {
       dom.calendarGroups.innerHTML = "";
+      state.calendarEntries = new Map();
       const category = selectedCategory();
       const timers = filteredTimers().filter((timer) => state.visibleIds.has(timer.id));
       for (const timer of timers) {
@@ -2085,37 +2662,48 @@
         const wrap = document.createElement("div");
         wrap.className = "calendar-group";
         const rows = occurrences.map((date) => {
-          return "<div class=\"calendar-row\"><b>" + formatDate(date, state.displayTimezone) + "</b><strong>" + formatTime(date, state.displayTimezone, false) + "</strong><span>" + timerName(timer) + "</span><button class=\"btn alt ics-btn\" type=\"button\" data-ts=\"" + date.getTime() + "\">ICS</button></div>";
+          const key = calendarEntryKey(timer.id, date.getTime());
+          state.calendarEntries.set(key, { timer, start: date.getTime() });
+          const checked = state.calendarSelection.has(key) ? " checked" : "";
+          return "<div class=\"calendar-row" + (checked ? " is-selected" : "") + "\">"
+            + "<input class=\"calendar-select\" type=\"checkbox\" data-key=\"" + key + "\"" + checked + ">"
+            + "<b>" + formatDate(date, state.displayTimezone) + "</b>"
+            + "<strong>" + formatTime(date, state.displayTimezone, false) + "</strong>"
+            + "<span>" + timerName(timer) + "</span>"
+            + "<button class=\"btn alt ics-btn\" type=\"button\" data-key=\"" + key + "\">ICS</button>"
+            + "</div>";
         }).join("");
         wrap.innerHTML = "<h3>" + timerName(timer) + "</h3>" + rows;
-        wrap.querySelectorAll(".ics-btn").forEach((button) => {
-          button.addEventListener("click", () => {
-            const start = new Date(Number(button.dataset.ts));
-            const end = new Date(start.getTime() + (timer.durationMinutes || 10) * 60000);
-            const fmt = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-            const body = [
-              "BEGIN:VCALENDAR",
-              "VERSION:2.0",
-              "BEGIN:VEVENT",
-              "UID:" + Math.random().toString(36).slice(2) + "@timer-app",
-              "DTSTAMP:" + fmt(new Date()),
-              "DTSTART:" + fmt(start),
-              "DTEND:" + fmt(end),
-              "SUMMARY:" + timerName(timer),
-              "END:VEVENT",
-              "END:VCALENDAR"
-            ].join("\r\n");
-            const blob = new Blob([body], { type: "text/calendar" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = timer.id + ".ics";
-            a.click();
-            URL.revokeObjectURL(url);
-          });
-        });
         dom.calendarGroups.appendChild(wrap);
       }
+
+      for (const key of Array.from(state.calendarSelection)) {
+        if (!state.calendarEntries.has(key)) state.calendarSelection.delete(key);
+      }
+
+      if (!state.calendarEntries.size) {
+        const empty = document.createElement("div");
+        empty.className = "calendar-group";
+        empty.textContent = text("noSchedule");
+        dom.calendarGroups.appendChild(empty);
+      }
+
+      dom.calendarGroups.querySelectorAll(".calendar-select").forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          if (checkbox.checked) state.calendarSelection.add(checkbox.dataset.key);
+          else state.calendarSelection.delete(checkbox.dataset.key);
+          updateCalendarSelectionUi();
+        });
+      });
+
+      dom.calendarGroups.querySelectorAll(".ics-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          const entry = state.calendarEntries.get(button.dataset.key);
+          if (entry) downloadIcs([entry], entry.timer.id + ".ics");
+        });
+      });
+
+      updateCalendarSelectionUi();
     }
 
     function renderAll() {
@@ -2124,6 +2712,7 @@
       renderToggles();
       renderCards();
       renderCalendar();
+      renderNotificationPermissionStatus();
       updateClocks();
     }
 
@@ -2144,7 +2733,7 @@
       }
       state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
       state.categoryId = localStorage.getItem("timer_category_id") || state.mergedConfig.categories[0]?.id || "";
-      state.displayTimezone = localStorage.getItem("timer_display_timezone") || selectedCategory()?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+      state.displayTimezone = localStorage.getItem("timer_display_timezone") || "Europe/Berlin";
       state.defaultLead = Number(localStorage.getItem("timer_default_lead") || "5");
       const storedVisibleIds = loadVisibleIds();
       state.visibleIds = storedVisibleIds || new Set(state.mergedConfig.timers.map((timer) => timer.id));
@@ -2158,13 +2747,11 @@
       dom.categorySelect.addEventListener("change", () => {
         state.categoryId = dom.categorySelect.value;
         localStorage.setItem("timer_category_id", state.categoryId);
-        const category = selectedCategory();
-        if (!localStorage.getItem("timer_display_timezone")) state.displayTimezone = category?.timezone || state.displayTimezone;
         renderAll();
       });
 
       dom.displayTimezone.addEventListener("change", () => {
-        state.displayTimezone = dom.displayTimezone.value.trim() || Intl.DateTimeFormat().resolvedOptions().timeZone;
+        state.displayTimezone = dom.displayTimezone.value || "Europe/Berlin";
         localStorage.setItem("timer_display_timezone", state.displayTimezone);
         renderAll();
       });
@@ -2181,9 +2768,43 @@
       dom.importBtn.addEventListener("click", () => dom.importInput.click());
       dom.importInput.addEventListener("change", async () => {
         if (dom.importInput.files && dom.importInput.files[0]) {
-          await importConfig(dom.importInput.files[0]);
+          try {
+            await importConfig(dom.importInput.files[0]);
+          } catch (error) {
+            console.error(error);
+            toast(text("importFailed"));
+          }
           dom.importInput.value = "";
         }
+      });
+
+      dom.calendarSelectAll.addEventListener("change", () => {
+        state.calendarSelection.clear();
+        if (dom.calendarSelectAll.checked) {
+          for (const key of state.calendarEntries.keys()) state.calendarSelection.add(key);
+        }
+        updateCalendarSelectionUi();
+      });
+
+      dom.downloadSelectedIcsBtn.addEventListener("click", () => {
+        const entries = Array.from(state.calendarSelection)
+          .map((key) => state.calendarEntries.get(key))
+          .filter(Boolean);
+        if (!entries.length) {
+          toast(text("noIcsSelection"));
+          return;
+        }
+        downloadIcs(entries, "solisium-pulse-events.ics");
+        toast(text("icsExported").replace("{count}", String(entries.length)));
+      });
+
+      dom.enableNotificationsBtn.addEventListener("click", () => {
+        void activateNotifications();
+      });
+
+      dom.eventPopupCloseBtn.addEventListener("click", () => {
+        if (state.popupTimer) clearTimeout(state.popupTimer);
+        if (dom.eventPopup.open) dom.eventPopup.close();
       });
 
       dom.saveTimerBtn.addEventListener("click", saveEditor);
@@ -2231,10 +2852,8 @@
       setInterval(() => {
         renderCards();
         updateClocks();
+        maybeNotify(filteredTimers().filter((timer) => state.visibleIds.has(timer.id)));
       }, 1000);
-      setInterval(() => {
-        void maybeNotify(filteredTimers().filter((timer) => state.visibleIds.has(timer.id)));
-      }, 15000);
     }
 
     start();

@@ -10,8 +10,10 @@ Kompakter, konfigurationsbasierter Event-Timer fuer Throne and Liberty EU. Die S
 - Timer pro Kategorie ein- und ausblendbar
 - Saisonale Timer mit optionalem Gueltigkeitszeitraum
 - Browser-, Popup- und Audio-Erinnerungen
-- ICS-Export einzelner Termine
-- Lokale Anpassungen mit Import und Export
+- Explizite Browserfreigabe mit Statusanzeige und testbarer Mehrton-Erinnerung
+- ICS-Export einzelner oder beliebig vieler ausgewaehlter Termine in einer Datei
+- Kompakte zweispaltige Auswahl der sichtbaren Timer
+- Lokale Anpassungen als lesbare INI importieren und exportieren
 - Responsive Sidebar-Ansicht
 
 ## Dateien
@@ -45,6 +47,10 @@ Zeitplanformate:
 - Intervall: `@every 11808s`, `@every 90m` oder `@every 2h`
 - Bei Intervallen legt `anchorUtc` den exakten Startpunkt fest
 - `activeFrom` und `activeUntil` sind optionale ISO-UTC-Grenzen
+
+Der Export-Button erzeugt eine vollstaendige `timer-config.ini`. Dieselbe Datei kann ohne JSON-Zwischenschritt wieder importiert oder als neue `config.ini` ins Repository uebernommen werden.
+
+Windows-/Browserbenachrichtigungen werden ueber den Button in der Oberflaeche freigegeben. Die Seite muss fuer Timer, In-App-Popups und Audio-Erinnerungen geoeffnet bleiben.
 
 ## Deployment
 
