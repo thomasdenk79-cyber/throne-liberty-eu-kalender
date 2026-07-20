@@ -321,6 +321,15 @@
       max-width: 100%;
     }
 
+    .editor .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .editor input,
+    .editor select,
+    .editor textarea {
+      min-width: 0;
+      max-width: 100%;
+    }
+
     .builder-actions input {
       flex: 1 1 100%;
       min-width: 0;
@@ -894,6 +903,11 @@
       gap: 10px;
     }
 
+    #calendarGroups {
+      grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+      align-items: start;
+    }
+
     .stack > .label,
     .controls > .row > .label {
       color: #bfeeff;
@@ -954,6 +968,352 @@
     .event-dialog p { margin: 0; color: #c7d5e8; line-height: 1.55; }
     .event-dialog .btn { justify-self: start; }
 
+    /* Wide dashboard: controls in the center, live timers on the right. */
+    body {
+      display: block;
+      padding: 82px 16px 22px;
+    }
+
+    .layout {
+      width: min(1480px, 100%);
+      max-width: 1480px;
+      margin: 0 auto;
+      grid-template-columns: minmax(0, 2fr) minmax(390px, 1fr);
+      align-items: start;
+      gap: 14px;
+    }
+
+    .dashboard-main {
+      grid-column: 1;
+      grid-row: 1;
+      display: grid;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .dashboard-main > .hero { grid-column: 1; grid-row: 1; }
+
+    .controls {
+      grid-column: 1;
+      grid-row: 2;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      align-content: start;
+    }
+
+    .control-cluster {
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid #9cdbf520;
+      border-radius: 13px;
+      background: linear-gradient(145deg, #101d2e, #091421);
+    }
+
+    .control-settings {
+      display: grid;
+      gap: 9px;
+    }
+
+    .control-settings .meta-grid { grid-template-columns: 1fr; }
+    .control-visibility { align-content: start; }
+
+    .controls .notification-setup {
+      grid-template-columns: 1fr;
+      align-content: start;
+      align-self: start;
+    }
+
+    .controls .notification-setup .btn { justify-self: start; }
+
+    .notification-actions {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .dock-launch {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 7px;
+    }
+
+    .dock-launch select,
+    .dock-launch .btn {
+      min-height: 36px;
+      width: 100%;
+    }
+
+    .live-column {
+      grid-column: 2;
+      grid-row: 1;
+      display: grid;
+      gap: 12px;
+      min-width: 0;
+      position: sticky;
+      top: 78px;
+      max-height: calc(100vh - 96px);
+      overflow: hidden;
+    }
+
+    .calendar,
+    .footer { grid-column: 1 / -1; }
+
+    .calendar { padding: 15px; }
+
+    .topbar-tools {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .language-switch {
+      display: inline-flex;
+      padding: 3px;
+      border: 1px solid #9cdbf52b;
+      border-radius: 10px;
+      background: #08111e;
+    }
+
+    .language-switch button {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 28px;
+      padding: 4px 7px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: #aebbd0;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .language-flag {
+      width: 18px;
+      height: 12px;
+      border-radius: 2px;
+      box-shadow: 0 0 0 1px #ffffff2b;
+      flex: 0 0 auto;
+    }
+
+    .language-switch button.is-active {
+      background: #1c3d57;
+      color: #ffffff;
+      box-shadow: inset 0 1px 0 #ffffff1c;
+    }
+
+    body.editor-open .layout {
+      transition: width 180ms ease, margin 180ms ease;
+    }
+
+    select {
+      color-scheme: dark;
+      background-color: #0b1422;
+      color: #f1f7ff;
+    }
+
+    select option,
+    select optgroup {
+      background: #0b1422;
+      color: #f1f7ff;
+    }
+
+    .field-caption {
+      color: #c7d5e8;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .inline-field-action {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .builder-time-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .builder-time-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin: 8px 0;
+    }
+
+    .builder-time-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 34px;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .builder-time-row .btn {
+      min-height: 40px;
+      padding: 7px;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .current-events {
+      display: grid;
+      gap: 9px;
+      padding: 12px;
+      border: 1px solid #71e4c843;
+      border-radius: 16px;
+      background: linear-gradient(145deg, #0e2027e8, #08141fe8);
+      box-shadow: 0 14px 36px #0005, inset 0 1px 0 #ffffff10;
+    }
+
+    .current-events[hidden] { display: none; }
+    #currentEventsList { display: grid; gap: 8px; }
+
+    .current-event {
+      display: grid;
+      gap: 9px;
+      padding: 11px;
+      border: 1px solid #ffffff16;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #122c30, #0b1923);
+    }
+
+    .current-event.is-running {
+      border-color: #6fe5b74d;
+      box-shadow: inset 3px 0 0 #6fe59f, 0 0 28px #55e3b012;
+    }
+
+    .current-event.is-ended {
+      filter: saturate(0.35);
+      opacity: 0.62;
+      background: #101721;
+    }
+
+    .current-event-head,
+    .current-event-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .current-event-head > div { display: grid; gap: 2px; min-width: 0; }
+    .current-event-head b { overflow-wrap: anywhere; }
+    .current-event-head small { color: #8ee7bd; }
+    .current-event-head strong { color: #dffdf0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    .current-event-meta {
+      color: #9eb0c4;
+      font-size: 10px;
+    }
+
+    .event-progress {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #050c13;
+      box-shadow: inset 0 1px 3px #000a;
+    }
+
+    .event-progress span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #5fd99b, #77e7ff);
+      box-shadow: 0 0 15px #6ce3b873;
+      transition: width 900ms linear;
+    }
+
+    .dashboard-main > .hero {
+      min-height: 370px;
+      background-position: center 18%;
+    }
+
+    .hero-character {
+      position: relative;
+      z-index: 1;
+      justify-self: start;
+      width: max-content;
+      padding: 5px 9px;
+      border: 1px solid #ffd49b52;
+      border-radius: 999px;
+      background: #130d15bf;
+      color: #ffe2bb;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      box-shadow: 0 8px 24px #0005;
+    }
+
+    .live-column .stack {
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .live-column #cardStack {
+      max-height: calc(100vh - 150px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding-right: 4px;
+      scrollbar-color: #4b7896 #08111e;
+      scrollbar-width: thin;
+    }
+
+    html.dock-mode body {
+      display: block;
+      min-width: 0;
+      padding: 10px;
+      background: linear-gradient(160deg, #050b13, #0b1421);
+    }
+
+    html.dock-mode .topbar,
+    html.dock-mode .editor,
+    html.dock-mode .dashboard-main,
+    html.dock-mode .controls,
+    html.dock-mode .calendar,
+    html.dock-mode .footer,
+    html.dock-mode .toast-wrap {
+      display: none !important;
+    }
+
+    html.dock-mode .layout {
+      display: block;
+      width: 100%;
+      max-width: none;
+      margin: 0;
+    }
+
+    html.dock-mode .live-column {
+      display: grid;
+      width: 100%;
+      gap: 10px;
+      position: static;
+      max-height: none;
+      overflow: visible;
+    }
+
+    html.dock-mode .stack,
+    html.dock-mode .current-events {
+      border-radius: 13px;
+    }
+
+    html.dock-mode .card { padding: 11px; }
+    html.dock-mode .card:not(.is-primary) .card-title small,
+    html.dock-mode .card:not(.is-primary) .card-chips { display: none; }
+
+    @media (min-width: 1360px) {
+      body.editor-open .layout {
+        width: min(1420px, calc(100% - 410px));
+        margin-left: 410px;
+        margin-right: auto;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       body::before,
       body::after { animation: none; }
@@ -961,12 +1321,21 @@
       .card { transition: none; }
     }
 
-    @media (max-width: 980px) {
-      body { justify-content: center; padding-top: 92px; }
-      .layout { max-width: 100%; }
+    @media (max-width: 1100px) {
+      body { padding-top: 92px; }
+      .layout {
+        max-width: 760px;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .live-column { grid-column: 1; grid-row: 1; }
+      .dashboard-main { grid-column: 1; grid-row: 2; }
+      .calendar,
+      .footer { grid-column: 1; }
       .editor {
         position: static;
         width: auto;
+        max-height: none;
+        margin: 0 auto 14px;
       }
     }
 
@@ -974,10 +1343,21 @@
       .topbar { flex-wrap: wrap; }
       .clocks { width: 100%; text-align: left; }
       body { padding-top: 124px; }
-      .hero { min-height: 190px; }
+      .dashboard-main > .hero { display: none; }
+      .topbar-tools { width: 100%; justify-content: space-between; }
       .meta-grid { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: 1fr; }
+      .toggle { grid-template-columns: 1fr; }
+      .toggle label:nth-child(n) { border-right: 0; border-top: 1px solid #ffffff10; }
+      .toggle label:first-child { border-top: 0; }
+      .toggle label:nth-child(odd),
+      .toggle label:nth-child(even) { background: #0b1523; }
+      .toggle label:nth-child(even) { background: #101c2c; }
       .calendar-row { grid-template-columns: 18px 48px 52px minmax(0, 1fr) auto; }
       .notification-setup { grid-template-columns: 1fr; }
+      .calendar-toolbar,
+      .inline-field-action { grid-template-columns: 1fr; }
+      .builder-time-list { grid-template-columns: 1fr; }
       .count { font-size: 26px; }
     }
   </style>
@@ -991,9 +1371,19 @@
         <small id="brandSub">TL EU · Live Event Intelligence</small>
       </div>
     </div>
-    <div class="clocks">
-      <div id="localClock"></div>
-      <div id="serverClock"></div>
+    <div class="topbar-tools">
+      <div class="clocks">
+        <div id="localClock"></div>
+        <div id="serverClock"></div>
+      </div>
+      <div class="language-switch" role="group" aria-label="Language">
+        <button id="langDeBtn" type="button" title="Deutsch" aria-label="Deutsch">
+          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><path fill="#171717" d="M0 0h18v4H0z"/><path fill="#d5232f" d="M0 4h18v4H0z"/><path fill="#f2c500" d="M0 8h18v4H0z"/></svg><span>DE</span>
+        </button>
+        <button id="langEnBtn" type="button" title="English" aria-label="English">
+          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><path fill="#183c78" d="M0 0h18v12H0z"/><path stroke="#fff" stroke-width="3" d="M0 0l18 12M18 0L0 12"/><path stroke="#c9233c" stroke-width="1.5" d="M0 0l18 12M18 0L0 12"/><path fill="#fff" d="M7 0h4v12H7zM0 4h18v4H0z"/><path fill="#c9233c" d="M8 0h2v12H8zM0 5h18v2H0z"/></svg><span>EN</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -1028,12 +1418,21 @@
       <div class="row">
         <div class="label" id="editDurationLabel">Duration Minutes</div>
         <input id="editDuration" type="number" min="1" step="1">
+        <div class="editor-help" id="editDurationHelp"></div>
       </div>
       <div class="row">
         <div class="label" id="editAnchorLabel">Anchor UTC</div>
         <input id="editAnchor" type="text" placeholder="2026-07-18T07:39:00Z">
         <button class="btn alt" id="setAnchorNowBtn" type="button">Set anchor now</button>
       </div>
+    </div>
+    <div class="row interval-editor">
+      <div class="label" id="editIntervalLabel">Interval Seconds</div>
+      <div class="inline-field-action">
+        <input id="editIntervalSeconds" type="number" min="1" step="1" placeholder="11808">
+        <button class="btn alt" id="applyIntervalBtn" type="button">Apply interval</button>
+      </div>
+      <div class="editor-help" id="editIntervalHelp"></div>
     </div>
     <div class="row">
       <div class="label" id="editRulesLabel">Rules</div>
@@ -1042,8 +1441,12 @@
       <div class="calendar-group">
         <h3 id="builderTitle">Schedule builder</h3>
         <div class="builder-days" id="builderDays"></div>
+        <div class="builder-time-heading">
+          <span class="label" id="builderTimesLabel">Times</span>
+          <button class="btn alt" id="builderAddTimeBtn" type="button">Add time</button>
+        </div>
+        <div class="builder-time-list" id="builderTimeList"></div>
         <div class="builder-actions">
-          <input id="builderTimes" type="text" value="20:15" placeholder="20:15,22:30">
           <button class="btn" id="builderAddBtn" type="button">Add cron line</button>
           <button class="btn alt" id="builderClearBtn" type="button">Clear lines</button>
         </div>
@@ -1054,8 +1457,10 @@
       <div class="label" id="editNotifLabel">Notifications</div>
       <div class="notify-row">
         <label class="pill"><input id="editNotifyEnabled" type="checkbox"> <span id="editNotifyEnabledLabel"></span></label>
-        <input id="editNotifyMinutes" type="text" placeholder="10,5,2">
       </div>
+      <label class="field-caption" id="editNotifyMinutesLabel" for="editNotifyMinutes">Reminder times</label>
+      <input id="editNotifyMinutes" type="text" inputmode="numeric" placeholder="10,5,2">
+      <div class="editor-help" id="editNotifyMinutesHelp"></div>
       <div class="channel-row">
         <label class="pill"><input id="channelBrowser" type="checkbox"> <span id="channelBrowserLabel">Browser</span></label>
         <label class="pill"><input id="channelPopup" type="checkbox"> <span id="channelPopupLabel">Popup</span></label>
@@ -1072,65 +1477,88 @@
   </section>
 
   <main class="layout">
-    <section class="hero">
-      <b id="heroTag">THRONE AND LIBERTY · EU LIVE</b>
-      <h1 id="heroTitle">Solisium Pulse</h1>
-      <p id="heroText">Alle wichtigen Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.</p>
-    </section>
+    <div class="dashboard-main">
+      <section class="hero">
+        <b id="heroTag">THRONE AND LIBERTY · EU LIVE</b>
+        <span class="hero-character" id="heroCharacter">Linny · Server Sophia</span>
+        <h1 id="heroTitle">Solisium Pulse</h1>
+        <p id="heroText">Alle wichtigen Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.</p>
+      </section>
 
-    <section class="controls">
-      <div class="meta-grid">
-        <div class="row">
-          <div class="label" id="categoryLabel">Category</div>
-          <select id="categorySelect"></select>
-          <div class="category-row">
-            <button class="btn alt" id="newCategoryBtn" type="button">New category</button>
-            <button class="btn danger" id="deleteCategoryBtn" type="button">Delete category</button>
+      <section class="controls">
+      <div class="control-cluster control-settings">
+        <div class="meta-grid">
+          <div class="row">
+            <div class="label" id="categoryLabel">Category</div>
+            <select id="categorySelect"></select>
+            <div class="category-row">
+              <button class="btn alt" id="newCategoryBtn" type="button">New category</button>
+              <button class="btn danger" id="deleteCategoryBtn" type="button">Delete category</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="label" id="displayZoneLabel">Display Timezone</div>
+            <select id="displayTimezone"></select>
           </div>
         </div>
-        <div class="row">
-          <div class="label" id="displayZoneLabel">Display Timezone</div>
-          <select id="displayTimezone"></select>
-        </div>
-      </div>
-      <div class="meta-grid">
-        <div class="row">
-          <div class="label" id="defaultNotifLabel">Default Reminder</div>
-          <select id="defaultLeadSelect">
-            <option value="1">1m</option>
-            <option value="3">3m</option>
-            <option value="5" selected>5m</option>
-            <option value="10">10m</option>
-            <option value="15">15m</option>
-          </select>
-        </div>
-        <div class="row">
-          <div class="label" id="quickActionsLabel">Config</div>
-          <div class="actions">
-            <button class="btn" id="newTimerBtn" type="button">New timer</button>
-            <button class="btn alt" id="exportBtn" type="button">Export INI</button>
-            <button class="btn alt" id="importBtn" type="button">Import INI</button>
-            <input id="importInput" type="file" accept=".ini,text/plain" hidden>
+        <div class="meta-grid compact-settings">
+          <div class="row">
+            <div class="label" id="defaultNotifLabel">Default Reminder</div>
+            <select id="defaultLeadSelect">
+              <option value="1">1m</option>
+              <option value="3">3m</option>
+              <option value="5" selected>5m</option>
+              <option value="10">10m</option>
+              <option value="15">15m</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="label" id="quickActionsLabel">Config</div>
+            <div class="actions">
+              <button class="btn" id="newTimerBtn" type="button">New timer</button>
+              <button class="btn alt" id="exportBtn" type="button">Export INI</button>
+              <button class="btn alt" id="importBtn" type="button">Import INI</button>
+              <input id="importInput" type="file" accept=".ini,text/plain" hidden>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row">
+
+      <div class="control-cluster control-visibility row">
         <div class="label" id="visibilityLabel">Visible Timers</div>
         <div class="toggle" id="timerToggle"></div>
       </div>
-      <div class="notification-setup">
+
+      <div class="control-cluster notification-setup">
         <div class="notification-copy">
           <strong id="notificationSetupTitle">Benachrichtigungen</strong>
           <small id="notificationPermissionStatus">Noch nicht für Windows freigegeben. Die Seite muss geöffnet bleiben.</small>
         </div>
-        <button class="btn" id="enableNotificationsBtn" type="button">Aktivieren &amp; Ton testen</button>
+        <div class="notification-actions">
+          <button class="btn" id="enableNotificationsBtn" type="button">Aktivieren &amp; Ton testen</button>
+          <div class="dock-launch">
+            <select id="dockSideSelect" aria-label="Andockseite">
+              <option value="right" selected>Rechts</option>
+              <option value="left">Links</option>
+            </select>
+            <button class="btn alt" id="dockModeBtn" type="button">Statusleiste öffnen</button>
+          </div>
+        </div>
       </div>
-    </section>
+      </section>
+    </div>
 
-    <section class="stack">
-      <div class="label" id="stackLabel">Upcoming Timers</div>
-      <div id="cardStack"></div>
-    </section>
+    <div class="live-column">
+      <section class="current-events" id="currentEventsSection" hidden>
+        <div class="label" id="currentEventsLabel">Currently running</div>
+        <div id="currentEventsList"></div>
+      </section>
+
+      <section class="stack">
+        <div class="label" id="stackLabel">Upcoming Timers</div>
+        <div id="cardStack"></div>
+      </section>
+    </div>
 
     <section class="calendar">
       <div class="section-heading">
@@ -1175,10 +1603,11 @@
       de: {
         editorTitle: "Timer bearbeiten",
         editorNote: "Die Standardkonfiguration kommt aus Git. Änderungen werden in diesem Browser gespeichert und lassen sich als INI exportieren.",
-        brandSub: "EU-Event-Timer · sekundengenau",
+        brandSub: "EU-Event-Timer · v2.1",
         heroTitle: "Solisium Pulse",
+        heroCharacter: "Linny · Server Sophia",
         heroText: "Wichtige Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.",
-        category: "Bereich",
+        category: "Kategorie",
         displayZone: "Zeiten anzeigen in",
         defaultReminder: "Standard-Vorlauf",
         config: "Timer-Verwaltung",
@@ -1195,17 +1624,23 @@
         localClock: "Ortszeit",
         serverClock: "Anzeige",
         name: "Name",
-        categoryLabel: "Bereich",
+        categoryLabel: "Kategorie",
         timezone: "Event-Zeitzone",
         activeFrom: "Gültig ab",
         activeUntil: "Gültig bis",
-        duration: "Dauer (Minuten)",
+        duration: "Event-Dauer (Minuten)",
+        durationHelp: "Wie lange das Event nach dem Start läuft. Wird für Fortschritt, Historie und das ICS-Ende verwendet.",
         anchor: "Intervall-Anker (UTC)",
         setAnchorNow: "Aktuelle UTC-Zeit verwenden",
-        rules: "Zeitplan",
-        rulesHelp: "Cron: Minute Stunde Tag Monat Wochentag. Eine Regel pro Zeile. Exakte Intervalle sind z. B. mit @every 11808s möglich.",
+        intervalSeconds: "Intervall (Sekunden)",
+        intervalHelp: "Nur für regelmäßige Abstände. Erzeugt eine @every-Regel und benötigt einen Intervall-Anker.",
+        applyInterval: "Intervall übernehmen",
+        rules: "Zeitplan – Crontab",
+        rulesHelp: "Cron: Minute Stunde Tag Monat Wochentag. Eine Regel pro Zeile. Exakte Intervalle stehen als @every 11808s im Zeitplan.",
         notifications: "Benachrichtigungen",
         notificationsEnabled: "Erinnerungen aktiv",
+        reminderMinutes: "Erinnerungszeitpunkte (Minuten vor Start)",
+        reminderMinutesHelp: "Mehrere Zeitpunkte mit Komma trennen, z. B. 10,5,2.",
         notificationSetupTitle: "Benachrichtigungen",
         notificationEnable: "Aktivieren & Ton testen",
         notificationTestSound: "Ton testen",
@@ -1213,6 +1648,11 @@
         notificationStatusGranted: "Windows-Benachrichtigungen sind aktiv. Die Seite muss geöffnet bleiben.",
         notificationStatusDenied: "Im Browser blockiert. Über das Schloss-Symbol der Website wieder freigeben.",
         notificationStatusUnsupported: "Dieser Browser unterstützt keine Windows-Benachrichtigungen.",
+        dockMode: "Statusleiste öffnen",
+        dockSide: "Andockseite",
+        dockRight: "Rechts",
+        dockLeft: "Links",
+        dockBlocked: "Das Statusfenster wurde vom Browser blockiert. Bitte Popups für diese Seite erlauben.",
         eventAlert: "Event-Erinnerung",
         eventStarts: "Start um {time} · noch {lead} Min.",
         acknowledge: "Verstanden",
@@ -1240,6 +1680,11 @@
         browserUnsupported: "Browser-Benachrichtigungen werden hier nicht unterstützt.",
         noTimers: "Keine aktiven Termine für die ausgewählten Timer.",
         noSchedule: "Keine kommenden Termine verfügbar.",
+        currentEvents: "Aktuell laufend",
+        currentRunning: "Läuft gerade",
+        recentlyEnded: "Kürzlich beendet",
+        eventRemaining: "noch {time}",
+        eventEndedAgo: "vor {time} beendet",
         urgencyNow: "Jetzt gleich",
         urgencyVerySoon: "Gleich",
         urgencySoon: "Bald",
@@ -1247,24 +1692,28 @@
         urgencyMuchLater: "Deutlich später",
         urgencyToday: "Heute",
         newCategory: "Neue Kategorie",
-        deleteCategory: "Bereich löschen",
-        categoryCreated: "Bereich lokal erstellt",
-        categoryDeleted: "Bereich lokal gelöscht",
-        categoryDeleteConfirm: "Diesen Bereich wirklich lokal löschen?",
+        deleteCategory: "Kategorie löschen",
+        categoryCreated: "Kategorie lokal erstellt",
+        categoryDeleted: "Kategorie lokal gelöscht",
+        categoryDeleteConfirm: "Diese Kategorie wirklich lokal löschen?",
         cannotDeleteLastCategory: "Mindestens eine Kategorie muss bleiben.",
         builderTitle: "Zeitplan-Assistent",
+        builderTimes: "Uhrzeiten",
+        builderAddTime: "Uhrzeit hinzufügen",
+        builderRemoveTime: "Uhrzeit entfernen",
         builderAdd: "Zeitplan hinzufügen",
         builderClear: "Zeitplan leeren",
         builderPickDay: "Bitte mindestens einen Tag wählen.",
-        builderBadTime: "Ungültiges Zeitformat (HH:MM, z. B. 20:15,22:30)",
+        builderBadTime: "Bitte mindestens eine gültige Uhrzeit auswählen.",
         builderAdded: "Zeitplan hinzugefügt",
         anchorNowSaved: "Intervall-Anker auf die aktuelle UTC-Zeit gesetzt"
       },
       en: {
         editorTitle: "Edit timer",
         editorNote: "The default configuration comes from Git. Changes stay in this browser and can be exported as INI.",
-        brandSub: "EU event timer · second-precise",
+        brandSub: "EU event timer · v2.1",
         heroTitle: "Solisium Pulse",
+        heroCharacter: "Linny · Sophia server",
         heroText: "Important event windows, precise countdowns and reminders at a glance.",
         category: "Category",
         displayZone: "Show times in",
@@ -1287,13 +1736,19 @@
         timezone: "Event timezone",
         activeFrom: "Valid from",
         activeUntil: "Valid until",
-        duration: "Duration (minutes)",
+        duration: "Event duration (minutes)",
+        durationHelp: "How long the event runs after its start. Used for progress, recent history and the ICS end time.",
         anchor: "Interval anchor (UTC)",
         setAnchorNow: "Use current UTC time",
-        rules: "Schedule",
-        rulesHelp: "Cron: minute hour day month weekday. Use one rule per line. Exact intervals are supported, for example @every 11808s.",
+        intervalSeconds: "Interval (seconds)",
+        intervalHelp: "Only for regular intervals. Creates an @every rule and requires an interval anchor.",
+        applyInterval: "Apply interval",
+        rules: "Schedule – crontab",
+        rulesHelp: "Cron: minute hour day month weekday. Use one rule per line. Exact intervals appear as @every 11808s in the schedule.",
         notifications: "Notifications",
         notificationsEnabled: "Reminders enabled",
+        reminderMinutes: "Reminder times (minutes before start)",
+        reminderMinutesHelp: "Separate multiple reminder times with commas, for example 10,5,2.",
         notificationSetupTitle: "Notifications",
         notificationEnable: "Enable & test sound",
         notificationTestSound: "Test sound",
@@ -1301,6 +1756,11 @@
         notificationStatusGranted: "Windows notifications are active. Keep this page open.",
         notificationStatusDenied: "Blocked in the browser. Re-enable them from the site's lock icon.",
         notificationStatusUnsupported: "This browser does not support Windows notifications.",
+        dockMode: "Open status bar",
+        dockSide: "Dock side",
+        dockRight: "Right",
+        dockLeft: "Left",
+        dockBlocked: "The browser blocked the status window. Please allow popups for this site.",
         eventAlert: "Event reminder",
         eventStarts: "Starts at {time} · {lead} min remaining.",
         acknowledge: "Got it",
@@ -1328,6 +1788,11 @@
         browserUnsupported: "Browser notifications are not supported here.",
         noTimers: "No active dates for the selected timers.",
         noSchedule: "No upcoming dates available.",
+        currentEvents: "Currently running",
+        currentRunning: "Running now",
+        recentlyEnded: "Recently ended",
+        eventRemaining: "{time} remaining",
+        eventEndedAgo: "ended {time} ago",
         urgencyNow: "Now",
         urgencyVerySoon: "Very soon",
         urgencySoon: "Soon",
@@ -1341,17 +1806,20 @@
         categoryDeleteConfirm: "Delete this category locally?",
         cannotDeleteLastCategory: "At least one category must remain.",
         builderTitle: "Schedule assistant",
+        builderTimes: "Times",
+        builderAddTime: "Add time",
+        builderRemoveTime: "Remove time",
         builderAdd: "Add schedule",
         builderClear: "Clear schedule",
         builderPickDay: "Please select at least one day.",
-        builderBadTime: "Invalid time format (HH:MM, e.g. 20:15,22:30)",
+        builderBadTime: "Please select at least one valid time.",
         builderAdded: "Schedule added",
         anchorNowSaved: "Interval anchor set to the current UTC time"
       }
     };
 
     const state = {
-      lang: (navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en",
+      lang: localStorage.getItem("timer_language") || ((navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en"),
       baseConfig: null,
       localConfig: null,
       mergedConfig: null,
@@ -1365,8 +1833,12 @@
       notified: new Set(),
       audioContext: null,
       popupTimer: null,
-      lastNotificationCheck: Date.now() - 1500
+      lastNotificationCheck: Date.now() - 1500,
+      dockMode: new URLSearchParams(window.location.search).get("mode") === "dock",
+      dockSide: localStorage.getItem("timer_dock_side") || "right"
     };
+
+    if (state.dockMode) document.documentElement.classList.add("dock-mode");
 
     const dom = {
       brandTitle: document.getElementById("brandTitle"),
@@ -1374,7 +1846,10 @@
       localClock: document.getElementById("localClock"),
       serverClock: document.getElementById("serverClock"),
       heroTitle: document.getElementById("heroTitle"),
+      heroCharacter: document.getElementById("heroCharacter"),
       heroText: document.getElementById("heroText"),
+      langDeBtn: document.getElementById("langDeBtn"),
+      langEnBtn: document.getElementById("langEnBtn"),
       editorPanel: document.getElementById("editorPanel"),
       editorTitle: document.getElementById("editorTitle"),
       editorNote: document.getElementById("editorNote"),
@@ -1384,11 +1859,18 @@
       editFromLabel: document.getElementById("editFromLabel"),
       editUntilLabel: document.getElementById("editUntilLabel"),
       editDurationLabel: document.getElementById("editDurationLabel"),
+      editDurationHelp: document.getElementById("editDurationHelp"),
       editAnchorLabel: document.getElementById("editAnchorLabel"),
+      editIntervalLabel: document.getElementById("editIntervalLabel"),
+      editIntervalSeconds: document.getElementById("editIntervalSeconds"),
+      editIntervalHelp: document.getElementById("editIntervalHelp"),
+      applyIntervalBtn: document.getElementById("applyIntervalBtn"),
       editRulesLabel: document.getElementById("editRulesLabel"),
       editRulesHelp: document.getElementById("editRulesHelp"),
       editNotifLabel: document.getElementById("editNotifLabel"),
       editNotifyEnabledLabel: document.getElementById("editNotifyEnabledLabel"),
+      editNotifyMinutesLabel: document.getElementById("editNotifyMinutesLabel"),
+      editNotifyMinutesHelp: document.getElementById("editNotifyMinutesHelp"),
       categoryLabel: document.getElementById("categoryLabel"),
       displayZoneLabel: document.getElementById("displayZoneLabel"),
       defaultNotifLabel: document.getElementById("defaultNotifLabel"),
@@ -1408,6 +1890,9 @@
       newCategoryBtn: document.getElementById("newCategoryBtn"),
       deleteCategoryBtn: document.getElementById("deleteCategoryBtn"),
       cardStack: document.getElementById("cardStack"),
+      currentEventsSection: document.getElementById("currentEventsSection"),
+      currentEventsLabel: document.getElementById("currentEventsLabel"),
+      currentEventsList: document.getElementById("currentEventsList"),
       calendarGroups: document.getElementById("calendarGroups"),
       toastWrap: document.getElementById("toastWrap"),
       editName: document.getElementById("editName"),
@@ -1429,7 +1914,9 @@
       channelBeepLabel: document.getElementById("channelBeepLabel"),
       builderTitle: document.getElementById("builderTitle"),
       builderDays: document.getElementById("builderDays"),
-      builderTimes: document.getElementById("builderTimes"),
+      builderTimesLabel: document.getElementById("builderTimesLabel"),
+      builderTimeList: document.getElementById("builderTimeList"),
+      builderAddTimeBtn: document.getElementById("builderAddTimeBtn"),
       builderAddBtn: document.getElementById("builderAddBtn"),
       builderClearBtn: document.getElementById("builderClearBtn"),
       builderLines: document.getElementById("builderLines"),
@@ -1446,6 +1933,8 @@
       notificationSetupTitle: document.getElementById("notificationSetupTitle"),
       notificationPermissionStatus: document.getElementById("notificationPermissionStatus"),
       enableNotificationsBtn: document.getElementById("enableNotificationsBtn"),
+      dockSideSelect: document.getElementById("dockSideSelect"),
+      dockModeBtn: document.getElementById("dockModeBtn"),
       eventPopup: document.getElementById("eventPopup"),
       eventPopupLabel: document.getElementById("eventPopupLabel"),
       eventPopupTitle: document.getElementById("eventPopupTitle"),
@@ -1761,6 +2250,36 @@
       return localConfig.timers.length !== before;
     }
 
+    function migrateUpdatedDefaultDurations(localConfig) {
+      const durationUpdates = new Map([
+        ["arkeum_eu", [30, 25]],
+        ["gate_memory_eu", [4, 5]],
+        ["summer_festival_eu", [25, 5]],
+        ["archboss_eu", [35, 5]],
+        ["archboss_guild_eu", [35, 5]],
+        ["boonstones_eu", [40, 30]],
+        ["castle_event_eu", [60, 45]],
+        ["innerspace_guild_boss", [45, 20]]
+      ]);
+      let changed = false;
+      for (const timer of localConfig.timers || []) {
+        const update = durationUpdates.get(timer.id);
+        if (update && Number(timer.durationMinutes) === update[0]) {
+          timer.durationMinutes = update[1];
+          changed = true;
+        }
+        if (timer.id === "clean_room" && (timer.name?.de === "Wohnung putzen" || timer.name?.en === "Clean apartment")) {
+          timer.name = { de: "Linnys Amitoi-Haus putzen", en: "Clean Linny's Amitoi house" };
+          timer.description = {
+            de: "Damit sich Linnys Amitoi wieder rundum wohlfühlen.",
+            en: "Make Linny's Amitoi house sparkle again."
+          };
+          changed = true;
+        }
+      }
+      return changed;
+    }
+
     function normalizeSummerFestivalRules(localConfig) {
       let changed = false;
       for (const timer of localConfig.timers || []) {
@@ -1964,16 +2483,27 @@
       return results.slice(0, count);
     }
 
-    function upcomingFromInterval(timer, count) {
-      const rule = (timer.rules || []).find((x) => x.startsWith("@every"));
-      if (!rule) return [];
-      const match = rule.match(/^@every\s+(\d+)(s|m|h)$/i);
-      const amount = match ? Number(match[1]) : 60;
-      const unit = match ? match[2].toLowerCase() : "m";
-      const intervalMs = unit === "h" ? amount * 3600000 : (unit === "m" ? amount * 60000 : amount * 1000);
+    function intervalSecondsFromRules(rules) {
+      const rule = (rules || []).find((value) => /^@every\s+/i.test(value));
+      const match = rule?.match(/^@every\s+(\d+)(s|m|h)$/i);
+      if (!match) return 0;
+      const amount = Number(match[1]);
+      const unit = match[2].toLowerCase();
+      return unit === "h" ? amount * 3600 : (unit === "m" ? amount * 60 : amount);
+    }
+
+    function intervalSchedule(timer) {
+      const seconds = intervalSecondsFromRules(timer.rules);
+      if (!seconds) return null;
       const anchor = Date.parse(timer.anchorUtc || timer.activeFrom || new Date().toISOString());
-      if (!Number.isFinite(anchor)) return [];
-      const step = intervalMs;
+      if (!Number.isFinite(anchor)) return null;
+      return { anchor, step: seconds * 1000, seconds };
+    }
+
+    function upcomingFromInterval(timer, count) {
+      const schedule = intervalSchedule(timer);
+      if (!schedule) return [];
+      const { anchor, step } = schedule;
       const now = Date.now();
       let first = anchor;
       if (now > anchor) first = anchor + Math.ceil((now - anchor) / step) * step;
@@ -2000,6 +2530,61 @@
       return out.slice(0, count);
     }
 
+    function cronRuleMatches(rule, date, timeZone) {
+      const bits = rule.trim().split(/\s+/);
+      if (bits.length !== 5) return false;
+      const parts = zonedParts(date, timeZone);
+      return parseCronField(bits[0], 0, 59).includes(parts.minute)
+        && parseCronField(bits[1], 0, 23).includes(parts.hour)
+        && parseCronField(bits[2], 1, 31).includes(parts.day)
+        && parseCronField(bits[3], 1, 12).includes(parts.month)
+        && parseCronField(bits[4], 0, 6).includes(zoneWeekday(date, timeZone));
+    }
+
+    function recentTimerState(timer, category, nowMs = Date.now()) {
+      const durationMs = Math.max(1, Number(timer.durationMinutes) || 10) * 60000;
+      const historyMs = 15 * 60000;
+      const timeZone = timer.timezone || category.timezone || state.displayTimezone;
+      const interval = intervalSchedule(timer);
+      let startMs = NaN;
+
+      if (interval && nowMs >= interval.anchor) {
+        startMs = interval.anchor + Math.floor((nowMs - interval.anchor) / interval.step) * interval.step;
+      } else if (!interval) {
+        const currentMinute = Math.floor(nowMs / 60000) * 60000;
+        const lookbackMinutes = Math.ceil((durationMs + historyMs) / 60000) + 1;
+        for (let offset = 0; offset <= lookbackMinutes; offset += 1) {
+          const candidate = new Date(currentMinute - offset * 60000);
+          if ((timer.rules || []).some((rule) => cronRuleMatches(rule, candidate, timeZone))) {
+            startMs = candidate.getTime();
+            break;
+          }
+        }
+      }
+
+      if (!Number.isFinite(startMs)) return null;
+      const activeFrom = timer.activeFrom ? Date.parse(timer.activeFrom) : -Infinity;
+      const activeUntil = timer.activeUntil ? Date.parse(timer.activeUntil) : Infinity;
+      if (startMs < activeFrom || startMs > activeUntil) return null;
+      const endMs = startMs + durationMs;
+      if (nowMs >= startMs && nowMs < endMs) {
+        return { status: "running", startMs, endMs, durationMs, progress: (nowMs - startMs) / durationMs };
+      }
+      if (nowMs >= endMs && nowMs <= endMs + historyMs) {
+        return { status: "ended", startMs, endMs, durationMs, progress: 1 };
+      }
+      return null;
+    }
+
+    function compactDuration(ms) {
+      const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      if (hours) return String(hours).padStart(2, "0") + ":" + String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+      return String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+    }
+
     function ensureVisibleIds() {
       const ids = new Set(state.mergedConfig.timers.map((timer) => timer.id));
       let changed = false;
@@ -2021,7 +2606,12 @@
       dom.brandTitle.textContent = text("heroTitle");
       dom.brandSub.textContent = text("brandSub");
       dom.heroTitle.textContent = text("heroTitle");
+      dom.heroCharacter.textContent = text("heroCharacter");
       dom.heroText.textContent = text("heroText");
+      dom.langDeBtn.classList.toggle("is-active", state.lang === "de");
+      dom.langEnBtn.classList.toggle("is-active", state.lang === "en");
+      dom.langDeBtn.setAttribute("aria-pressed", String(state.lang === "de"));
+      dom.langEnBtn.setAttribute("aria-pressed", String(state.lang === "en"));
       dom.editorTitle.textContent = text("editorTitle");
       dom.editorNote.textContent = text("editorNote");
       dom.editNameLabel.textContent = text("name");
@@ -2030,12 +2620,18 @@
       dom.editFromLabel.textContent = text("activeFrom");
       dom.editUntilLabel.textContent = text("activeUntil");
       dom.editDurationLabel.textContent = text("duration");
+      dom.editDurationHelp.textContent = text("durationHelp");
       dom.editAnchorLabel.textContent = text("anchor");
       dom.setAnchorNowBtn.textContent = text("setAnchorNow");
+      dom.editIntervalLabel.textContent = text("intervalSeconds");
+      dom.editIntervalHelp.textContent = text("intervalHelp");
+      dom.applyIntervalBtn.textContent = text("applyInterval");
       dom.editRulesLabel.textContent = text("rules");
       dom.editRulesHelp.textContent = text("rulesHelp");
       dom.editNotifLabel.textContent = text("notifications");
       dom.editNotifyEnabledLabel.textContent = text("notificationsEnabled");
+      dom.editNotifyMinutesLabel.textContent = text("reminderMinutes");
+      dom.editNotifyMinutesHelp.textContent = text("reminderMinutesHelp");
       dom.channelBrowserLabel.textContent = text("browserChannel");
       dom.channelPopupLabel.textContent = text("popupChannel");
       dom.channelBeepLabel.textContent = text("soundChannel");
@@ -2045,11 +2641,17 @@
       dom.quickActionsLabel.textContent = text("config");
       dom.visibilityLabel.textContent = text("visibleTimers");
       dom.stackLabel.textContent = text("upcomingTimers");
+      dom.currentEventsLabel.textContent = text("currentEvents");
       dom.calendarLabel.textContent = text("upcomingCalendar");
       dom.calendarHelp.textContent = text("calendarHelp");
       dom.calendarSelectAllLabel.textContent = text("selectAllDates");
       dom.downloadSelectedIcsBtn.textContent = text("exportSelectedIcs");
       dom.notificationSetupTitle.textContent = text("notificationSetupTitle");
+      dom.dockModeBtn.textContent = text("dockMode");
+      dom.dockSideSelect.setAttribute("aria-label", text("dockSide"));
+      dom.dockSideSelect.options[0].textContent = text("dockRight");
+      dom.dockSideSelect.options[1].textContent = text("dockLeft");
+      dom.dockSideSelect.value = state.dockSide;
       dom.eventPopupLabel.textContent = text("eventAlert");
       dom.eventPopupCloseBtn.textContent = text("acknowledge");
       dom.footerSummary.textContent = text("footerSummary");
@@ -2064,6 +2666,13 @@
       dom.newCategoryBtn.textContent = text("newCategory");
       dom.deleteCategoryBtn.textContent = text("deleteCategory");
       dom.builderTitle.textContent = text("builderTitle");
+      dom.builderTimesLabel.textContent = text("builderTimes");
+      dom.builderAddTimeBtn.textContent = text("builderAddTime");
+      dom.builderTimeList.querySelectorAll(".builder-time-input").forEach((input) => input.setAttribute("aria-label", text("builderTimes")));
+      dom.builderTimeList.querySelectorAll(".builder-remove-time").forEach((button) => {
+        button.title = text("builderRemoveTime");
+        button.setAttribute("aria-label", text("builderRemoveTime"));
+      });
       dom.builderAddBtn.textContent = text("builderAdd");
       dom.builderClearBtn.textContent = text("builderClear");
     }
@@ -2123,6 +2732,7 @@
       if (!timer) return;
       state.editingTimerId = timerId;
       dom.editorPanel.dataset.open = "true";
+      document.body.classList.add("editor-open");
       dom.editName.value = timer.name?.de || timer.name?.en || timer.id;
       dom.editCategory.value = timer.categoryId || state.categoryId;
       dom.editTimezone.value = timer.timezone || selectedCategory().timezone || state.displayTimezone;
@@ -2131,18 +2741,29 @@
       dom.editDuration.value = String(timer.durationMinutes || 10);
       dom.editAnchor.value = timer.anchorUtc || "";
       dom.editRules.value = (timer.rules || []).join("\n");
+      dom.editIntervalSeconds.value = intervalSecondsFromRules(timer.rules) || "";
       dom.editNotifyEnabled.checked = timer.notifications?.enabled !== false;
       dom.editNotifyMinutes.value = (timer.notifications?.minutes || [state.defaultLead]).join(",");
       const channels = timer.notifications?.channels || [];
       dom.channelBrowser.checked = channels.includes("browser");
       dom.channelPopup.checked = channels.includes("popup");
       dom.channelBeep.checked = channels.includes("beep");
+      const simpleTimes = (timer.rules || []).map((rule) => {
+        const bits = rule.trim().split(/\s+/);
+        if (bits.length !== 5 || bits[0].includes("*") || bits[1].includes("*")) return "";
+        const minute = Number(bits[0]);
+        const hour = Number(bits[1]);
+        if (!Number.isInteger(minute) || !Number.isInteger(hour) || minute < 0 || minute > 59 || hour < 0 || hour > 23) return "";
+        return String(hour).padStart(2, "0") + ":" + String(minute).padStart(2, "0");
+      }).filter(Boolean);
+      renderBuilderTimes(simpleTimes.length ? simpleTimes : ["20:15"]);
       renderBuilderLines();
     }
 
     function closeEditor() {
       state.editingTimerId = "";
       dom.editorPanel.dataset.open = "false";
+      document.body.classList.remove("editor-open");
     }
 
     function upsertLocalTimer(timer) {
@@ -2313,7 +2934,9 @@
         toast(text("builderPickDay"));
         return [];
       }
-      const rawTimes = (dom.builderTimes.value || "").split(",").map((x) => x.trim()).filter(Boolean);
+      const rawTimes = Array.from(dom.builderTimeList.querySelectorAll(".builder-time-input"))
+        .map((input) => input.value.trim())
+        .filter(Boolean);
       if (!rawTimes.length) {
         toast(text("builderBadTime"));
         return [];
@@ -2336,7 +2959,38 @@
       return lines;
     }
 
+    function addBuilderTime(value = "20:15") {
+      const row = document.createElement("div");
+      row.className = "builder-time-row";
+      const input = document.createElement("input");
+      input.className = "builder-time-input";
+      input.type = "time";
+      input.step = "60";
+      input.value = value;
+      input.setAttribute("aria-label", text("builderTimes"));
+      const remove = document.createElement("button");
+      remove.className = "btn alt builder-remove-time";
+      remove.type = "button";
+      remove.textContent = "×";
+      remove.title = text("builderRemoveTime");
+      remove.setAttribute("aria-label", text("builderRemoveTime"));
+      remove.addEventListener("click", () => {
+        row.remove();
+        if (!dom.builderTimeList.children.length) addBuilderTime();
+      });
+      row.append(input, remove);
+      dom.builderTimeList.appendChild(row);
+    }
+
+    function renderBuilderTimes(values = ["20:15"]) {
+      dom.builderTimeList.innerHTML = "";
+      const uniqueTimes = Array.from(new Set(values.filter(Boolean)));
+      for (const value of (uniqueTimes.length ? uniqueTimes : ["20:15"])) addBuilderTime(value);
+    }
+
     function renderBuilderDays() {
+      const previous = new Set(Array.from(dom.builderDays.querySelectorAll("input:checked")).map((input) => Number(input.value)));
+      const useDefault = dom.builderDays.children.length === 0;
       const labels = state.lang === "de"
         ? ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
         : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -2347,11 +3001,12 @@
         const input = document.createElement("input");
         input.type = "checkbox";
         input.value = String(i);
-        if (i === 4) input.checked = true;
+        input.checked = useDefault ? i === 4 : previous.has(i);
         label.appendChild(input);
         label.appendChild(document.createTextNode(labels[i]));
         dom.builderDays.appendChild(label);
       }
+      if (!dom.builderTimeList.children.length) renderBuilderTimes();
     }
 
     function renderBuilderLines() {
@@ -2491,6 +3146,35 @@
       if ("Notification" in window && Notification.permission === "denied") toast(text("browserBlocked"));
     }
 
+    function openDockWindow() {
+      const width = 460;
+      const height = Math.max(640, window.screen.availHeight || 900);
+      const left = state.dockSide === "left"
+        ? (window.screen.availLeft || 0)
+        : (window.screen.availLeft || 0) + (window.screen.availWidth || width) - width;
+      const top = window.screen.availTop || 0;
+      const url = new URL(window.location.href);
+      url.searchParams.set("mode", "dock");
+      const dockWindow = window.open(
+        url.toString(),
+        "solisiumPulseStatus",
+        "popup=yes,width=" + width + ",height=" + height + ",left=" + left + ",top=" + top
+      );
+      if (!dockWindow) {
+        toast(text("dockBlocked"));
+        return;
+      }
+      window.setTimeout(() => {
+        try {
+          dockWindow.moveTo(left, top);
+          dockWindow.resizeTo(width, height);
+          dockWindow.focus();
+        } catch {
+          // Some browsers keep the requested popup size but block screen positioning.
+        }
+      }, 250);
+    }
+
     function maybeNotify(timers) {
       const now = Date.now();
       const checkedFrom = Math.min(state.lastNotificationCheck || now - 1500, now);
@@ -2576,6 +3260,35 @@
         el.querySelector(".edit-btn").addEventListener("click", () => openEditor(timer.id));
         dom.cardStack.appendChild(el);
       });
+    }
+
+    function renderCurrentEvents() {
+      const now = Date.now();
+      const category = selectedCategory();
+      const items = filteredTimers()
+        .filter((timer) => state.visibleIds.has(timer.id))
+        .map((timer) => ({ timer, timing: recentTimerState(timer, category, now) }))
+        .filter((item) => item.timing)
+        .sort((a, b) => {
+          if (a.timing.status !== b.timing.status) return a.timing.status === "running" ? -1 : 1;
+          return b.timing.startMs - a.timing.startMs;
+        });
+
+      dom.currentEventsSection.hidden = items.length === 0;
+      dom.currentEventsList.innerHTML = "";
+      for (const { timer, timing } of items) {
+        const isRunning = timing.status === "running";
+        const remainingText = isRunning
+          ? text("eventRemaining").replace("{time}", compactDuration(timing.endMs - now))
+          : text("eventEndedAgo").replace("{time}", compactDuration(now - timing.endMs));
+        const row = document.createElement("article");
+        row.className = "current-event " + (isRunning ? "is-running" : "is-ended");
+        row.innerHTML = ""
+          + "<div class=\"current-event-head\"><div><b>" + timerName(timer) + "</b><small>" + (isRunning ? text("currentRunning") : text("recentlyEnded")) + "</small></div><strong>" + remainingText + "</strong></div>"
+          + "<div class=\"event-progress\"><span style=\"width:" + Math.min(100, Math.max(0, timing.progress * 100)).toFixed(2) + "%\"></span></div>"
+          + "<div class=\"current-event-meta\"><span>" + formatTime(new Date(timing.startMs), state.displayTimezone, false) + "</span><span>" + (timer.durationMinutes || 10) + " min</span></div>";
+        dom.currentEventsList.appendChild(row);
+      }
     }
 
     function calendarEntryKey(timerId, timestamp) {
@@ -2710,6 +3423,7 @@
       renderLabels();
       renderCategories();
       renderToggles();
+      renderCurrentEvents();
       renderCards();
       renderCalendar();
       renderNotificationPermissionStatus();
@@ -2731,6 +3445,9 @@
       if (migrateLegacyMemoryInterval(state.localConfig)) {
         saveLocalConfig();
       }
+      if (migrateUpdatedDefaultDurations(state.localConfig)) {
+        saveLocalConfig();
+      }
       state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
       state.categoryId = localStorage.getItem("timer_category_id") || state.mergedConfig.categories[0]?.id || "";
       state.displayTimezone = localStorage.getItem("timer_display_timezone") || "Europe/Berlin";
@@ -2743,7 +3460,17 @@
       }
     }
 
+    function setLanguage(language, persist = true) {
+      state.lang = language === "de" ? "de" : "en";
+      if (persist) localStorage.setItem("timer_language", state.lang);
+      renderBuilderDays();
+      renderAll();
+    }
+
     function bind() {
+      dom.langDeBtn.addEventListener("click", () => setLanguage("de"));
+      dom.langEnBtn.addEventListener("click", () => setLanguage("en"));
+
       dom.categorySelect.addEventListener("change", () => {
         state.categoryId = dom.categorySelect.value;
         localStorage.setItem("timer_category_id", state.categoryId);
@@ -2802,6 +3529,12 @@
         void activateNotifications();
       });
 
+      dom.dockSideSelect.addEventListener("change", () => {
+        state.dockSide = dom.dockSideSelect.value === "left" ? "left" : "right";
+        localStorage.setItem("timer_dock_side", state.dockSide);
+      });
+      dom.dockModeBtn.addEventListener("click", openDockWindow);
+
       dom.eventPopupCloseBtn.addEventListener("click", () => {
         if (state.popupTimer) clearTimeout(state.popupTimer);
         if (dom.eventPopup.open) dom.eventPopup.close();
@@ -2819,27 +3552,42 @@
         toast(text("anchorNowSaved"));
       });
 
+      dom.applyIntervalBtn.addEventListener("click", () => {
+        const seconds = Math.floor(Number(dom.editIntervalSeconds.value));
+        if (!Number.isFinite(seconds) || seconds < 1) return;
+        dom.editRules.value = "@every " + seconds + "s";
+        if (!dom.editAnchor.value) dom.editAnchor.value = new Date().toISOString();
+        renderBuilderLines();
+      });
+
+      dom.builderAddTimeBtn.addEventListener("click", () => addBuilderTime("20:15"));
+
       dom.builderAddBtn.addEventListener("click", () => {
         const cronLines = cronFromBuilder();
         if (!cronLines.length) return;
         const lines = dom.editRules.value.split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
-        lines.push(...cronLines);
-        dom.editRules.value = lines.join("\n");
+        dom.editRules.value = Array.from(new Set([...lines, ...cronLines])).join("\n");
         renderBuilderLines();
         toast(text("builderAdded"));
       });
 
       dom.builderClearBtn.addEventListener("click", () => {
         dom.editRules.value = "";
+        dom.editIntervalSeconds.value = "";
         renderBuilderLines();
       });
 
-      dom.editRules.addEventListener("input", renderBuilderLines);
+      dom.editRules.addEventListener("input", () => {
+        dom.editIntervalSeconds.value = intervalSecondsFromRules(
+          dom.editRules.value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean)
+        ) || "";
+        renderBuilderLines();
+      });
 
       window.addEventListener("languagechange", () => {
-        state.lang = (navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en";
-        renderBuilderDays();
-        renderAll();
+        if (!localStorage.getItem("timer_language")) {
+          setLanguage((navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en", false);
+        }
       });
     }
 
@@ -2850,9 +3598,12 @@
       renderBuilderDays();
       renderAll();
       setInterval(() => {
+        renderCurrentEvents();
         renderCards();
         updateClocks();
-        maybeNotify(filteredTimers().filter((timer) => state.visibleIds.has(timer.id)));
+        if (!state.dockMode || !window.opener || window.opener.closed) {
+          maybeNotify(filteredTimers().filter((timer) => state.visibleIds.has(timer.id)));
+        }
       }, 1000);
     }
 

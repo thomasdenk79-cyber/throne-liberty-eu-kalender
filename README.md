@@ -4,17 +4,19 @@ Kompakter, konfigurationsbasierter Event-Timer fuer Throne and Liberty EU. Die S
 
 ## Features
 
-- Deutsch und Englisch, automatisch nach Browsersprache
-- Live-Countdowns fuer Cron-Zeitplaene und sekundengenaue Intervalle
+- Deutsch und Englisch, automatisch nach Browsersprache und manuell umschaltbar
+- Live-Countdowns fuer Cron-Zeitplaene und exakte Intervalle
 - Automatische Anzeige in der lokalen Zeitzone des Nutzers
 - Timer pro Kategorie ein- und ausblendbar
 - Saisonale Timer mit optionalem Gueltigkeitszeitraum
+- Laufende Events mit Fortschrittsbalken und 15 Minuten Rueckblick
+- Separates Statusfenster fuer die linke oder rechte Bildschirmseite
 - Browser-, Popup- und Audio-Erinnerungen
 - Explizite Browserfreigabe mit Statusanzeige und testbarer Mehrton-Erinnerung
 - ICS-Export einzelner oder beliebig vieler ausgewaehlter Termine in einer Datei
 - Kompakte zweispaltige Auswahl der sichtbaren Timer
 - Lokale Anpassungen als lesbare INI importieren und exportieren
-- Responsive Sidebar-Ansicht
+- Responsives Dashboard mit grossem Linny-Intro und kompakter Timer-Ansicht
 
 ## Dateien
 
@@ -30,7 +32,7 @@ Jeder Timer besitzt einen eigenen Abschnitt:
 categoryId=tl_eu
 name.de=Tor der Erinnerung
 name.en=Gate of Memory
-durationMinutes=4
+durationMinutes=5
 activeFrom=2026-01-01T00:00:00Z
 activeUntil=2026-12-31T23:59:59Z
 rules=@every 11808s
@@ -47,6 +49,8 @@ Zeitplanformate:
 - Intervall: `@every 11808s`, `@every 90m` oder `@every 2h`
 - Bei Intervallen legt `anchorUtc` den exakten Startpunkt fest
 - `activeFrom` und `activeUntil` sind optionale ISO-UTC-Grenzen
+
+`durationMinutes` ist die Laufzeit des Events, nicht das Wiederholungsintervall. Sie steuert Fortschrittsbalken, Rueckblick und das Ende eines ICS-Termins. Das Wiederholungsintervall steht ausschliesslich in der `@every`-Regel.
 
 Der Export-Button erzeugt eine vollstaendige `timer-config.ini`. Dieselbe Datei kann ohne JSON-Zwischenschritt wieder importiert oder als neue `config.ini` ins Repository uebernommen werden.
 
