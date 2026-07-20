@@ -904,7 +904,7 @@
     }
 
     #cardStack {
-      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
       align-items: start;
     }
 
@@ -983,7 +983,7 @@
       width: min(1480px, 100%);
       max-width: 1480px;
       margin: 0 auto;
-      grid-template-columns: minmax(0, 2fr) minmax(390px, 1fr);
+      grid-template-columns: minmax(0, 1fr) minmax(330px, 390px);
       align-items: start;
       gap: 14px;
     }
@@ -1270,18 +1270,19 @@
     }
 
     .live-column #cardStack {
+      grid-template-columns: minmax(0, 1fr);
       max-height: none;
       overflow: visible;
       padding-right: 0;
     }
 
     /* Compact timer cards: details live in the title tooltip. */
-    .stack { padding: 9px; }
+    .stack { padding: 8px; }
 
     .card {
-      gap: 6px;
+      gap: 5px;
       min-width: 0;
-      padding: 10px 11px 9px;
+      padding: 9px 10px 8px;
       overflow: visible;
     }
 
@@ -1289,13 +1290,17 @@
     .card:focus-within { z-index: 6; }
 
     .card-head {
+      justify-content: flex-start;
       align-items: flex-start;
       flex-wrap: nowrap;
+      max-width: 100%;
     }
 
     .card-title {
       position: relative;
+      flex: 0 1 auto;
       min-width: 0;
+      max-width: calc(100% - 38px);
       cursor: help;
       outline: none;
     }
@@ -1303,7 +1308,9 @@
     .card-title b {
       font-size: 16px;
       line-height: 1.2;
-      overflow-wrap: anywhere;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      word-break: normal;
     }
 
     .card-title:focus-visible b {
@@ -1386,13 +1393,14 @@
     .icon-btn svg { width: 15px; height: 15px; }
 
     .count {
-      font-size: clamp(29px, 4vw, 37px);
+      font-size: clamp(28px, 4vw, 34px);
       line-height: 0.95;
     }
 
     .meta {
       justify-content: flex-start;
       align-items: center;
+      max-width: 100%;
       gap: 5px 7px;
       font-size: 11px;
     }
@@ -1409,12 +1417,14 @@
       border-radius: 999px;
       background: #ffffff0c;
       font-size: 10px;
-      white-space: nowrap;
+      line-height: 1.15;
+      text-align: center;
+      white-space: normal;
     }
 
     .reminder-chip {
       color: #b9c6d8;
-      margin-left: auto;
+      white-space: nowrap;
     }
 
     html.dock-mode body {
@@ -1451,7 +1461,7 @@
     }
 
     html.dock-mode #cardStack {
-      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
       max-height: none;
       overflow: visible;
     }
@@ -1493,6 +1503,9 @@
         position: static;
         max-height: none;
         overflow: visible;
+      }
+      .live-column #cardStack {
+        grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
       }
       .dashboard-main { grid-column: 1; grid-row: 2; }
       .calendar,
@@ -1769,7 +1782,7 @@
       de: {
         editorTitle: "Timer bearbeiten",
         editorNote: "Die Standardkonfiguration kommt aus Git. Änderungen werden in diesem Browser gespeichert und lassen sich als INI exportieren.",
-        brandSub: "EU-Event-Timer · v2.2",
+        brandSub: "EU-Event-Timer · v2.3",
         heroTitle: "Linny's Astral Solisium Pulse",
         heroCharacter: "Linny · Server Sophia",
         heroText: "Wichtige Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.",
@@ -1858,8 +1871,11 @@
         urgencyNow: "Jetzt gleich",
         urgencyVerySoon: "Gleich",
         urgencySoon: "Bald",
-        urgencyLater: "Später",
-        urgencyMuchLater: "Deutlich später",
+        urgencyLater: "Später-ish",
+        urgencyMuchLater: "Viel später",
+        urgencyEvenLater: "Einfach noch viel später",
+        urgencyWayLater: "Viel viel später",
+        urgencyEpicLater: "Sehr sehr sehr viel später",
         urgencyToday: "Heute",
         newCategory: "Neue Kategorie",
         deleteCategory: "Kategorie löschen",
@@ -1881,7 +1897,7 @@
       en: {
         editorTitle: "Edit timer",
         editorNote: "The default configuration comes from Git. Changes stay in this browser and can be exported as INI.",
-        brandSub: "EU event timer · v2.2",
+        brandSub: "EU event timer · v2.3",
         heroTitle: "Linny's Astral Solisium Pulse",
         heroCharacter: "Linny · Sophia server",
         heroText: "Important event windows, precise countdowns and reminders at a glance.",
@@ -1970,8 +1986,11 @@
         urgencyNow: "Now",
         urgencyVerySoon: "Very soon",
         urgencySoon: "Soon",
-        urgencyLater: "Later",
+        urgencyLater: "Later-ish",
         urgencyMuchLater: "Much later",
+        urgencyEvenLater: "Just more much later",
+        urgencyWayLater: "Much much later",
+        urgencyEpicLater: "Much much very much later",
         urgencyToday: "Today",
         newCategory: "New category",
         deleteCategory: "Delete category",
@@ -2549,7 +2568,11 @@
       danger: 2 * 60 * 1000,
       verySoon: 5 * 60 * 1000,
       soon: 10 * 60 * 1000,
-      day: 12 * 60 * 60 * 1000
+      day: 12 * 60 * 60 * 1000,
+      later: 24 * 60 * 60 * 1000,
+      muchLater: 48 * 60 * 60 * 1000,
+      evenLater: 72 * 60 * 60 * 1000,
+      wayLater: 7 * 24 * 60 * 60 * 1000
     };
 
     function urgencyClass(ms) {
@@ -2566,7 +2589,11 @@
       if (ms <= URGENCY_MS.danger) return "urgencyVerySoon";
       if (ms <= URGENCY_MS.soon) return "urgencySoon";
       if (ms <= URGENCY_MS.day) return "urgencyToday";
-      return "urgencyMuchLater";
+      if (ms <= URGENCY_MS.later) return "urgencyLater";
+      if (ms <= URGENCY_MS.muchLater) return "urgencyMuchLater";
+      if (ms <= URGENCY_MS.evenLater) return "urgencyEvenLater";
+      if (ms <= URGENCY_MS.wayLater) return "urgencyWayLater";
+      return "urgencyEpicLater";
     }
 
     function parseCronField(field, min, max) {
@@ -3345,7 +3372,7 @@
     }
 
     function openDockWindow() {
-      const width = 460;
+      const width = 360;
       const height = Math.max(640, window.screen.availHeight || 900);
       const left = state.dockSide === "left"
         ? (window.screen.availLeft || 0)
