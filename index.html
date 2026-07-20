@@ -351,6 +351,82 @@
       line-height: 1.45;
     }
 
+    .notification-level-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .notification-level-card {
+      display: grid;
+      gap: 8px;
+      padding: 9px;
+      border: 1px solid #9cdbf52b;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #0d1929, #08111e);
+    }
+
+    .notification-level-card.is-disabled { opacity: 0.62; }
+
+    .notification-level-head,
+    .sound-control {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .notification-level-head .pill { width: auto; }
+    .sound-control select { flex: 1 1 auto; }
+    .sound-test-btn { flex: 0 0 auto; min-width: 42px; padding-inline: 9px; }
+
+    .alarm-test-btn { flex: 0 0 auto; padding-inline: 8px; white-space: nowrap; }
+
+    .config-health {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 12px;
+      align-items: center;
+      padding: 8px 10px;
+      border: 1px solid #9cdbf51f;
+      border-radius: 10px;
+      background: #07111d9c;
+      color: #93a7bd;
+      font-size: 10px;
+    }
+
+    .config-health .is-warning { color: #ffc06b; }
+    .config-health .is-ok { color: #79dda1; }
+
+    .activity-status::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 9px currentColor;
+    }
+
+    html.colorblind-mode .card-status::before {
+      content: "◈";
+      margin-right: 4px;
+      font-weight: 900;
+    }
+
+    html.colorblind-mode .card.is-soon .card-status::before,
+    html.colorblind-mode .card.is-verysoon .card-status::before { content: "▲"; }
+    html.colorblind-mode .card.is-danger .card-status::before { content: "!"; }
+    html.colorblind-mode .card.is-critical .card-status::before { content: "!!"; }
+
+    html[data-density="comfortable"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); }
+    html[data-density="comfortable"] .card { padding: 13px; gap: 11px; }
+    html[data-density="compact"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+    html[data-density="ultra"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 6px; }
+    html[data-density="ultra"] .card { padding: 7px 8px; gap: 5px; }
+    html[data-density="ultra"] .card-title b { font-size: 14px; }
+    html[data-density="ultra"] .count { font-size: clamp(25px, 4vw, 30px); }
+    html[data-density="ultra"] .meta { font-size: 10px; }
+
     .stack {
       padding: 10px;
       display: grid;
@@ -390,12 +466,41 @@
       box-shadow: inset 0 1px 0 #ffffff14, 0 16px 28px #00000030;
     }
 
-    .card.is-soon .count { color: var(--warn); text-shadow: 0 0 14px #f8c35b2b; }
-    .card.is-verysoon .count { color: #ff9961; text-shadow: 0 0 16px #ff99613a; }
-    .card.is-danger .count { color: var(--danger); text-shadow: 0 0 18px #ff6f6f40; }
-    .card.is-critical .count { color: var(--lilac); text-shadow: 0 0 18px #b892ff48; }
-    .card.is-day .count { color: var(--ok); text-shadow: 0 0 14px #6fe59f2e; }
-    .card.is-far .count { color: #a6b2c4; text-shadow: 0 0 12px #a6b2c422; }
+    .card .count {
+      color: var(--urgency-color, #a6b2c4);
+      text-shadow: 0 0 17px var(--urgency-glow, #a6b2c42e);
+      transition: color 300ms linear, text-shadow 300ms linear;
+    }
+
+    @keyframes critical-card-pulse {
+      0%, 100% {
+        border-color: #b892ff80;
+        box-shadow: inset 0 1px 0 #ffffff1a, 0 0 12px #b892ff35;
+      }
+      50% {
+        border-color: #eadfff;
+        box-shadow: inset 0 1px 0 #ffffff38, 0 0 0 2px #b892ff52, 0 0 34px #b892ff9c;
+      }
+    }
+
+    @keyframes critical-count-blink {
+      0%, 44%, 100% { opacity: 1; filter: brightness(1.25); }
+      45%, 78% { opacity: 0.3; filter: brightness(0.75); }
+    }
+
+    .card.is-critical {
+      animation: critical-card-pulse 760ms ease-in-out infinite;
+    }
+
+    .card.is-critical .count {
+      animation: critical-count-blink 380ms steps(2, end) infinite;
+    }
+
+    .card.is-critical .card-status {
+      border-color: #d8c2ff73;
+      background: #b892ff26;
+      box-shadow: 0 0 14px #b892ff4d;
+    }
 
     .card-head,
     .card-foot,
@@ -452,21 +557,34 @@
       transition: color 180ms ease;
     }
 
-    .card.is-soon .card-title b,
-    .card.is-soon .card-status { color: var(--warn); }
-    .card.is-verysoon .card-title b,
-    .card.is-verysoon .card-status { color: #ff9961; }
-    .card.is-danger .card-title b,
-    .card.is-danger .card-status { color: var(--danger); }
-    .card.is-critical .card-title b,
-    .card.is-critical .card-status { color: var(--lilac); }
-    .card.is-day .card-title b,
-    .card.is-day .card-status { color: var(--ok); }
-    .card.is-far .card-title b,
-    .card.is-far .card-status { color: #a6b2c4; }
+    .card .card-title b,
+    .card .card-status {
+      color: var(--urgency-color, #a6b2c4);
+      transition: color 300ms linear;
+    }
 
     .card-status {
       font-weight: 700;
+    }
+
+    .card-phase-progress {
+      width: 100%;
+      height: 5px;
+      margin-top: 2px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #030810b8;
+      box-shadow: inset 0 1px 3px #000c, 0 0 0 1px #ffffff0b;
+    }
+
+    .card-phase-progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--urgency-color), #ffffffd9);
+      box-shadow: 0 0 12px var(--urgency-glow);
+      transition: width 300ms linear, background 300ms linear;
     }
 
     .meta {
@@ -862,6 +980,20 @@
       gap: 8px;
       padding-bottom: 8px;
       border-bottom: 1px solid #ffffff12;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .calendar-group h3:hover { color: #9deaff; }
+
+    .calendar-group h3::after {
+      content: attr(data-toggle-hint);
+      margin-left: auto;
+      color: #8293aa;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: none;
     }
 
     .calendar-group h3::before {
@@ -983,7 +1115,7 @@
       width: min(1480px, 100%);
       max-width: 1480px;
       margin: 0 auto;
-      grid-template-columns: minmax(0, 1fr) minmax(330px, 390px);
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
       align-items: start;
       gap: 14px;
     }
@@ -1179,6 +1311,19 @@
       border-radius: 16px;
       background: linear-gradient(145deg, #0e2027e8, #08141fe8);
       box-shadow: 0 14px 36px #0005, inset 0 1px 0 #ffffff10;
+    }
+
+    .current-events-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .history-toggle {
+      min-height: 28px;
+      padding: 4px 8px;
+      font-size: 10px;
     }
 
     .current-events[hidden] { display: none; }
@@ -1407,8 +1552,7 @@
 
     .card-when { color: #d4deef; }
 
-    .card-status,
-    .reminder-chip {
+    .card-status {
       display: inline-flex;
       align-items: center;
       min-height: 22px;
@@ -1420,11 +1564,6 @@
       line-height: 1.15;
       text-align: center;
       white-space: normal;
-    }
-
-    .reminder-chip {
-      color: #b9c6d8;
-      white-space: nowrap;
     }
 
     html.dock-mode body {
@@ -1461,7 +1600,7 @@
     }
 
     html.dock-mode #cardStack {
-      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
       max-height: none;
       overflow: visible;
     }
@@ -1490,6 +1629,8 @@
       body::after { animation: none; }
       .btn,
       .card { transition: none; }
+      .card.is-critical,
+      .card.is-critical .count { animation: none; }
     }
 
     @media (max-width: 1100px) {
@@ -1561,6 +1702,9 @@
         </button>
         <button id="langEnBtn" type="button" title="English" aria-label="English">
           <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><path fill="#183c78" d="M0 0h18v12H0z"/><path stroke="#fff" stroke-width="3" d="M0 0l18 12M18 0L0 12"/><path stroke="#c9233c" stroke-width="1.5" d="M0 0l18 12M18 0L0 12"/><path fill="#fff" d="M7 0h4v12H7zM0 4h18v4H0z"/><path fill="#c9233c" d="M8 0h2v12H8zM0 5h18v2H0z"/></svg><span>EN</span>
+        </button>
+        <button id="langBarBtn" type="button" title="Boarisch" aria-label="Boarisch">
+          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><defs><pattern id="bavariaPattern" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="6" fill="#1685c8"/><rect x="3" width="3" height="6" fill="#fff"/></pattern></defs><rect width="18" height="12" fill="url(#bavariaPattern)"/></svg><span>BY</span>
         </button>
       </div>
     </div>
@@ -1634,16 +1778,47 @@
     </div>
     <div class="row">
       <div class="label" id="editNotifLabel">Notifications</div>
-      <div class="notify-row">
-        <label class="pill"><input id="editNotifyEnabled" type="checkbox"> <span id="editNotifyEnabledLabel"></span></label>
+      <div class="notification-level-grid">
+        <div class="notification-level-card" id="warningNotificationCard">
+          <div class="notification-level-head">
+            <label class="pill"><input id="editNotifyWarningEnabled" type="checkbox"> <span id="editNotifyWarningEnabledLabel">Warning enabled</span></label>
+          </div>
+          <div class="row">
+            <label class="field-caption" id="editNotifyWarningLabel" for="editNotifyWarningSeconds">Warning</label>
+            <input id="editNotifyWarningSeconds" type="number" min="1" step="1" placeholder="300">
+            <div class="editor-help" id="editNotifyWarningHelp"></div>
+          </div>
+          <div class="row">
+            <label class="field-caption" id="editNotifyWarningSoundLabel" for="editNotifyWarningSound">Warning sound</label>
+            <div class="sound-control">
+              <select id="editNotifyWarningSound"></select>
+              <button class="btn alt sound-test-btn" id="testWarningSoundBtn" type="button" aria-label="Test warning sound">▶</button>
+              <button class="btn alt alarm-test-btn" id="testWarningAlarmBtn" type="button">+10s</button>
+            </div>
+          </div>
+        </div>
+        <div class="notification-level-card" id="criticalNotificationCard">
+          <div class="notification-level-head">
+            <label class="pill"><input id="editNotifyCriticalEnabled" type="checkbox"> <span id="editNotifyCriticalEnabledLabel">Critical enabled</span></label>
+          </div>
+          <div class="row">
+            <label class="field-caption" id="editNotifyCriticalLabel" for="editNotifyCriticalSeconds">Critical</label>
+            <input id="editNotifyCriticalSeconds" type="number" min="1" step="1" placeholder="90">
+            <div class="editor-help" id="editNotifyCriticalHelp"></div>
+          </div>
+          <div class="row">
+            <label class="field-caption" id="editNotifyCriticalSoundLabel" for="editNotifyCriticalSound">Critical sound</label>
+            <div class="sound-control">
+              <select id="editNotifyCriticalSound"></select>
+              <button class="btn alt sound-test-btn" id="testCriticalSoundBtn" type="button" aria-label="Test critical sound">▶</button>
+              <button class="btn alt alarm-test-btn" id="testCriticalAlarmBtn" type="button">+10s</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <label class="field-caption" id="editNotifyMinutesLabel" for="editNotifyMinutes">Reminder times</label>
-      <input id="editNotifyMinutes" type="text" inputmode="numeric" placeholder="10,5,2">
-      <div class="editor-help" id="editNotifyMinutesHelp"></div>
       <div class="channel-row">
         <label class="pill"><input id="channelBrowser" type="checkbox"> <span id="channelBrowserLabel">Browser</span></label>
         <label class="pill"><input id="channelPopup" type="checkbox"> <span id="channelPopupLabel">Popup</span></label>
-        <label class="pill"><input id="channelBeep" type="checkbox"> <span id="channelBeepLabel">Ton</span></label>
       </div>
     </div>
     <div class="editor-actions">
@@ -1682,14 +1857,9 @@
         </div>
         <div class="meta-grid compact-settings">
           <div class="row">
-            <div class="label" id="defaultNotifLabel">Default Reminder</div>
-            <select id="defaultLeadSelect">
-              <option value="1">1m</option>
-              <option value="3">3m</option>
-              <option value="5" selected>5m</option>
-              <option value="10">10m</option>
-              <option value="15">15m</option>
-            </select>
+            <label class="label" id="historyMinutesLabel" for="historyMinutesInput">History after event</label>
+            <input id="historyMinutesInput" type="number" min="0" max="1440" step="1" value="30">
+            <div class="editor-help" id="historyMinutesHelp"></div>
           </div>
           <div class="row">
             <div class="label" id="quickActionsLabel">Config</div>
@@ -1700,6 +1870,24 @@
               <input id="importInput" type="file" accept=".ini,text/plain" hidden>
             </div>
           </div>
+        </div>
+        <div class="meta-grid compact-settings">
+          <div class="row">
+            <label class="label" id="cardDensityLabel" for="cardDensitySelect">Card density</label>
+            <select id="cardDensitySelect">
+              <option value="comfortable">Comfortable</option>
+              <option value="compact" selected>Compact</option>
+              <option value="ultra">Ultra compact</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="label" id="accessibilityLabel">Accessibility</div>
+            <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span id="colorblindModeLabel">Colorblind symbols</span></label>
+          </div>
+        </div>
+        <div class="config-health" id="configHealth">
+          <span id="configUpdatedStatus"></span>
+          <span id="configExpiryStatus"></span>
         </div>
       </div>
 
@@ -1712,6 +1900,7 @@
         <div class="notification-copy">
           <strong id="notificationSetupTitle">Benachrichtigungen</strong>
           <small id="notificationPermissionStatus">Noch nicht für Windows freigegeben. Die Seite muss geöffnet bleiben.</small>
+          <small class="activity-status" id="pageActivityStatus"></small>
         </div>
         <div class="notification-actions">
           <button class="btn" id="enableNotificationsBtn" type="button">Aktivieren &amp; Ton testen</button>
@@ -1729,7 +1918,10 @@
 
     <div class="live-column">
       <section class="current-events" id="currentEventsSection" hidden>
-        <div class="label" id="currentEventsLabel">Currently running</div>
+        <div class="current-events-heading">
+          <div class="label" id="currentEventsLabel">Currently running</div>
+          <button class="btn alt history-toggle" id="historyToggleBtn" type="button"></button>
+        </div>
         <div id="currentEventsList"></div>
       </section>
 
@@ -1782,13 +1974,27 @@
       de: {
         editorTitle: "Timer bearbeiten",
         editorNote: "Die Standardkonfiguration kommt aus Git. Änderungen werden in diesem Browser gespeichert und lassen sich als INI exportieren.",
-        brandSub: "EU-Event-Timer · v2.3",
+        brandSub: "EU-Event-Timer · v2.5",
         heroTitle: "Linny's Astral Solisium Pulse",
         heroCharacter: "Linny · Server Sophia",
         heroText: "Wichtige Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.",
         category: "Kategorie",
         displayZone: "Zeiten anzeigen in",
         defaultReminder: "Standard-Vorlauf",
+        historyMinutes: "Historie nach Eventende (Minuten)",
+        historyMinutesHelp: "Beendete Events bleiben so lange ausgegraut sichtbar. 0 blendet die Historie aus.",
+        cardDensity: "Kartendichte",
+        densityComfortable: "Komfortabel",
+        densityCompact: "Kompakt",
+        densityUltra: "Ultrakompakt",
+        accessibility: "Barrierefreiheit",
+        colorblindMode: "Farbenblind-Symbole",
+        activityActive: "Seite aktiv · Alarme laufen sekundengenau.",
+        activityHidden: "Seite im Hintergrund · Energiesparen kann Alarme verzögern.",
+        configUpdated: "Konfiguration aktualisiert: {date}",
+        configExpired: "{count} Event-Zeitraum/-räume abgelaufen",
+        configExpiresSoon: "Nächster Zeitraum endet am {date}",
+        configRangesValid: "Keine abgelaufenen Event-Zeiträume",
         config: "Timer-Verwaltung",
         visibleTimers: "Timer anzeigen",
         upcomingTimers: "Nächste Events",
@@ -1817,9 +2023,23 @@
         rules: "Zeitplan – Crontab",
         rulesHelp: "Cron: Minute Stunde Tag Monat Wochentag. Eine Regel pro Zeile. Exakte Intervalle stehen als @every 11808s im Zeitplan.",
         notifications: "Benachrichtigungen",
-        notificationsEnabled: "Erinnerungen aktiv",
-        reminderMinutes: "Erinnerungszeitpunkte (Minuten vor Start)",
-        reminderMinutesHelp: "Mehrere Zeitpunkte mit Komma trennen, z. B. 10,5,2.",
+        warningEnabled: "Warning aktiv",
+        warningReminder: "Vorlauf (Sekunden)",
+        warningReminderHelp: "Frühe, optional aktivierbare Vorwarnung – sekundengenau.",
+        criticalEnabled: "Critical aktiv",
+        criticalReminder: "Vorlauf (Sekunden)",
+        criticalReminderHelp: "Letzter, unabhängig aktivierbarer Alarm – sekundengenau.",
+        warningSound: "Warning-Sound",
+        criticalSound: "Critical-Sound",
+        testSound: "Sound testen",
+        testAlarm10: "Vollständigen Alarm in 10 Sekunden testen",
+        alarmTestScheduled: "{level}-Testalarm startet in 10 Sekunden.",
+        soundNone: "Kein Sound",
+        soundGentle: "Sanftes Glockenspiel",
+        soundCrystal: "Kristall-Ping",
+        soundBell: "Doppelglocke",
+        soundUrgent: "Dringender Alarm",
+        soundSiren: "Solisium-Sirene",
         notificationSetupTitle: "Benachrichtigungen",
         notificationEnable: "Aktivieren & Ton testen",
         notificationTestSound: "Ton testen",
@@ -1833,7 +2053,9 @@
         dockLeft: "Links",
         dockBlocked: "Das Statusfenster wurde vom Browser blockiert. Bitte Popups für diese Seite erlauben.",
         eventAlert: "Event-Erinnerung",
-        eventStarts: "Start um {time} · noch {lead} Min.",
+        warningAlert: "Warning-Erinnerung",
+        criticalAlert: "Critical-Erinnerung",
+        eventStarts: "Start um {time} · noch {lead}.",
         acknowledge: "Verstanden",
         browserChannel: "Browser",
         popupChannel: "In-App-Popup",
@@ -1843,6 +2065,15 @@
         reminder: "Erinnerung",
         tooltipSchedule: "Zeitplan",
         tooltipDuration: "Dauer",
+        tooltipWarningTimer: "Benachrichtigungstimer · Warning",
+        tooltipWarningActive: "Frühe Vorwarnung {lead} vor dem Eventstart · Sound: {sound}.",
+        tooltipCriticalTimer: "Benachrichtigungstimer · Critical",
+        tooltipCriticalActive: "Dringender Alarm {lead} vor dem Eventstart · Sound: {sound}.",
+        tooltipNotificationDisabled: "Deaktiviert – für dieses Event wird keine Erinnerung ausgelöst.",
+        phaseProgress: "Farbphase: {percent}% bis zur nächsten Alarmfarbe.",
+        calendarToggleHint: "Doppelklick: alle an/aus",
+        calendarEventSelected: "Alle {count} Termine für {event} ausgewählt.",
+        calendarEventCleared: "Alle Termine für {event} abgewählt.",
         saveLocal: "Änderungen speichern",
         duplicate: "Duplizieren",
         deleteLocal: "Timer lokal entfernen",
@@ -1866,6 +2097,8 @@
         currentEvents: "Aktuell laufend",
         currentRunning: "Läuft gerade",
         recentlyEnded: "Kürzlich beendet",
+        showHistory: "Historie zeigen ({count})",
+        hideHistory: "Historie ausblenden ({count})",
         eventRemaining: "noch {time}",
         eventEndedAgo: "vor {time} beendet",
         urgencyNow: "Jetzt gleich",
@@ -1897,13 +2130,27 @@
       en: {
         editorTitle: "Edit timer",
         editorNote: "The default configuration comes from Git. Changes stay in this browser and can be exported as INI.",
-        brandSub: "EU event timer · v2.3",
+        brandSub: "EU event timer · v2.5",
         heroTitle: "Linny's Astral Solisium Pulse",
         heroCharacter: "Linny · Sophia server",
         heroText: "Important event windows, precise countdowns and reminders at a glance.",
         category: "Category",
         displayZone: "Show times in",
         defaultReminder: "Default reminder lead",
+        historyMinutes: "History after event (minutes)",
+        historyMinutesHelp: "Ended events remain dimmed for this long. Set to 0 to hide history.",
+        cardDensity: "Card density",
+        densityComfortable: "Comfortable",
+        densityCompact: "Compact",
+        densityUltra: "Ultra compact",
+        accessibility: "Accessibility",
+        colorblindMode: "Colour-blind symbols",
+        activityActive: "Page active · alarms are running with second-level precision.",
+        activityHidden: "Page in background · power saving may delay alarms.",
+        configUpdated: "Configuration updated: {date}",
+        configExpired: "{count} event validity range(s) expired",
+        configExpiresSoon: "Next validity range ends on {date}",
+        configRangesValid: "No expired event validity ranges",
         config: "Timer management",
         visibleTimers: "Show timers",
         upcomingTimers: "Next events",
@@ -1932,9 +2179,23 @@
         rules: "Schedule – crontab",
         rulesHelp: "Cron: minute hour day month weekday. Use one rule per line. Exact intervals appear as @every 11808s in the schedule.",
         notifications: "Notifications",
-        notificationsEnabled: "Reminders enabled",
-        reminderMinutes: "Reminder times (minutes before start)",
-        reminderMinutesHelp: "Separate multiple reminder times with commas, for example 10,5,2.",
+        warningEnabled: "Warning enabled",
+        warningReminder: "Lead time (seconds)",
+        warningReminderHelp: "Early, optional warning with second-level precision.",
+        criticalEnabled: "Critical enabled",
+        criticalReminder: "Lead time (seconds)",
+        criticalReminderHelp: "Final, independently optional alert with second-level precision.",
+        warningSound: "Warning sound",
+        criticalSound: "Critical sound",
+        testSound: "Test sound",
+        testAlarm10: "Test the complete alarm in 10 seconds",
+        alarmTestScheduled: "{level} test alarm will fire in 10 seconds.",
+        soundNone: "No sound",
+        soundGentle: "Gentle chime",
+        soundCrystal: "Crystal ping",
+        soundBell: "Double bell",
+        soundUrgent: "Urgent alarm",
+        soundSiren: "Solisium siren",
         notificationSetupTitle: "Notifications",
         notificationEnable: "Enable & test sound",
         notificationTestSound: "Test sound",
@@ -1948,7 +2209,9 @@
         dockLeft: "Left",
         dockBlocked: "The browser blocked the status window. Please allow popups for this site.",
         eventAlert: "Event reminder",
-        eventStarts: "Starts at {time} · {lead} min remaining.",
+        warningAlert: "Warning reminder",
+        criticalAlert: "Critical reminder",
+        eventStarts: "Starts at {time} · {lead} remaining.",
         acknowledge: "Got it",
         browserChannel: "Browser",
         popupChannel: "In-app popup",
@@ -1958,6 +2221,15 @@
         reminder: "Reminder",
         tooltipSchedule: "Schedule",
         tooltipDuration: "Duration",
+        tooltipWarningTimer: "Notification timer · Warning",
+        tooltipWarningActive: "Early warning {lead} before the event starts · sound: {sound}.",
+        tooltipCriticalTimer: "Notification timer · Critical",
+        tooltipCriticalActive: "Urgent alert {lead} before the event starts · sound: {sound}.",
+        tooltipNotificationDisabled: "Disabled – no reminder will be triggered for this event.",
+        phaseProgress: "Colour phase: {percent}% until the next alert colour.",
+        calendarToggleHint: "Double-click: all on/off",
+        calendarEventSelected: "Selected all {count} dates for {event}.",
+        calendarEventCleared: "Cleared all dates for {event}.",
         saveLocal: "Save changes",
         duplicate: "Duplicate",
         deleteLocal: "Remove timer locally",
@@ -1981,6 +2253,8 @@
         currentEvents: "Currently running",
         currentRunning: "Running now",
         recentlyEnded: "Recently ended",
+        showHistory: "Show history ({count})",
+        hideHistory: "Hide history ({count})",
         eventRemaining: "{time} remaining",
         eventEndedAgo: "ended {time} ago",
         urgencyNow: "Now",
@@ -2011,17 +2285,189 @@
       }
     };
 
+    UI.bar = {
+      ...UI.de,
+      editorTitle: "Timer herrichtn",
+      editorNote: "D'Grundkonfiguration kimmt aus Git. Dei Änderungen bleim in dem Browser und lossn se als INI exportiern.",
+      brandSub: "Boarischer EU-Event-Timer · v2.5",
+      heroText: "De wichtigsten Eventfenster, Countdowns und Erinnerungen auf oan Blick.",
+      category: "Kategorie",
+      displayZone: "Zeiten zoagn in",
+      defaultReminder: "Standard-Vorlauf",
+      historyMinutes: "Historie nachm Event in Minutn",
+      historyMinutesHelp: "So lang bleibt a fertigs Event grau stehn. Mit 0 is d'Historie aus.",
+      cardDensity: "Kartndichtn",
+      densityComfortable: "Gmiatlich",
+      densityCompact: "Kompakt",
+      densityUltra: "Sakrisch kompakt",
+      accessibility: "Barrierefreiheit",
+      colorblindMode: "Farbnblind-Symbole",
+      activityActive: "D'Seitn is aktiv · d'Alarme laffa sekundngenau.",
+      activityHidden: "D'Seitn is im Hintergrund · Energiesparn ko Alarme verzögern.",
+      configUpdated: "Konfiguration aktualisiert: {date}",
+      configExpired: "{count} Event-Zeitraum/-räum san abglaffa",
+      configExpiresSoon: "Da nächste Zeitraum endet am {date}",
+      configRangesValid: "Koa Event-Zeitraum is abglaffa",
+      config: "Timer-Werkstatt",
+      visibleTimers: "Timer zoagn",
+      upcomingTimers: "De nächsten Events",
+      upcomingCalendar: "Kalender-Export",
+      calendarHelp: "Termine aussuacha und olle mitanand als ICS-Datei oba-ladn.",
+      selectAllDates: "Olle Termine aussuacha",
+      exportSelectedIcs: "Auswahl als ICS",
+      selectedCount: "{count} ausgsuacht",
+      noIcsSelection: "Bittschee mindestens an Termin aussuacha.",
+      icsExported: "{count} Termine san als ICS exportiert.",
+      footerSummary: "Grunddaten: config.ini · Dei Änderungen bleim lokal, bis'd as als INI exportierst.",
+      localClock: "Ortszeit",
+      serverClock: "Anzeige",
+      name: "Nam",
+      categoryLabel: "Kategorie",
+      timezone: "Event-Zeitzon",
+      activeFrom: "Gültig ab",
+      activeUntil: "Gültig bis",
+      duration: "Event-Dauer in Minuten",
+      durationHelp: "So lang lafft des Event nachm Start. Des brauch ma für Fortschritt, Historie und Kalender-Ende.",
+      anchor: "Intervall-Anker in UTC",
+      setAnchorNow: "Jetzige UTC-Zeit hernehma",
+      intervalSeconds: "Intervall in Sekunden",
+      intervalHelp: "Bloß für regelmäßige Abständ. Des baut a @every-Regel und braucht an Intervall-Anker.",
+      applyInterval: "Intervall übernehma",
+      rules: "Zeitplan – Crontab",
+      rulesHelp: "Cron: Minute Stund Tag Monat Wochentag. Oa Regel pro Zeil.",
+      notifications: "Benachrichtigungen",
+      warningEnabled: "Warning is o",
+      warningReminder: "Vorlauf in Sekundn",
+      warningReminderHelp: "A frühe, einzeln eischaltbare Vorwarnung – sekundngenau.",
+      criticalEnabled: "Critical is o",
+      criticalReminder: "Vorlauf in Sekundn",
+      criticalReminderHelp: "Da letzte Alarm is separat eischaltbar und sekundngenau.",
+      warningSound: "Warning-Klang",
+      criticalSound: "Critical-Klang",
+      testSound: "Klang ausprobiern",
+      testAlarm10: "Den ganzen Alarm in 10 Sekundn ausprobiern",
+      alarmTestScheduled: "Da {level}-Testalarm kimmt in 10 Sekundn.",
+      soundNone: "Koa Klang",
+      soundGentle: "A sanfts Glocknspui",
+      soundCrystal: "Kristall-Ping",
+      soundBell: "Doppelte Glockn",
+      soundUrgent: "Dringender Alarm",
+      soundSiren: "Solisium-Sirenn",
+      notificationSetupTitle: "Benachrichtigungen",
+      notificationEnable: "Eischaltn & Klang testn",
+      notificationTestSound: "Klang testn",
+      notificationStatusDefault: "Windows-Benachrichtigungen san no ned freigegeben. D'Seitn muaß offn bleim.",
+      notificationStatusGranted: "Windows-Benachrichtigungen laffa. D'Seitn muaß offn bleim.",
+      notificationStatusDenied: "Im Browser blockiert. Übers Schloss-Symbol wieda freigebn.",
+      notificationStatusUnsupported: "Der Browser ko des mit de Windows-Benachrichtigungen ned.",
+      dockMode: "Statusleistn aufmocha",
+      dockSide: "Andock-Seitn",
+      dockRight: "Rechts",
+      dockLeft: "Links",
+      dockBlocked: "Des Statusfenster is vom Browser blockiert. Popups für de Seitn erlaubn.",
+      eventAlert: "Event-Alarm",
+      warningAlert: "Warning – langsam hi!",
+      criticalAlert: "Critical – jetz pressiert's!",
+      eventStarts: "Start um {time} · no {lead}.",
+      acknowledge: "Bassd scho",
+      browserChannel: "Browser",
+      popupChannel: "Popup",
+      soundChannel: "Klang",
+      notificationsOff: "Erinnerungen aus",
+      notificationsOffShort: "aus",
+      reminder: "Erinnerung",
+      tooltipSchedule: "Zeitplan",
+      tooltipDuration: "Dauer",
+      tooltipWarningTimer: "Benachrichtigungstimer · Warning",
+      tooltipWarningActive: "Sagt da {lead} vorher, dass'd langsam hi muaßt · Klang: {sound}.",
+      tooltipCriticalTimer: "Benachrichtigungstimer · Critical",
+      tooltipCriticalActive: "Jetz pressiert's: no {lead} bis zum Event · Klang: {sound}!",
+      tooltipNotificationDisabled: "Ausgschalt – für des Event gibt's koa Erinnerung.",
+      phaseProgress: "Farbphasn: {percent}% bis zur nächsten Alarmfarb.",
+      calendarToggleHint: "Doppelklick: olle o/aus",
+      calendarEventSelected: "Olle {count} Termine für {event} san ausgsuacht.",
+      calendarEventCleared: "Olle Termine für {event} san abgwählt.",
+      saveLocal: "Änderungen speichan",
+      duplicate: "Verdoppeln",
+      deleteLocal: "Timer lokal rauswerfn",
+      resetDefault: "Auf Standard zrucksetzn",
+      close: "Zumacha",
+      newTimer: "Neia Timer",
+      exportConfig: "INI exportiern",
+      importConfig: "INI importiern",
+      nextStart: "Nächster Start",
+      edit: "Bearbeitn",
+      deleteTimerConfirm: "Den Timer wirklich lokal rauswerfn?",
+      deleted: "Timer is lokal weg",
+      saved: "Timer is lokal gspeichert",
+      imported: "INI-Konfiguration is importiert",
+      exported: "INI-Konfiguration is exportiert",
+      importFailed: "De INI-Datei hot se ned importiern lossn.",
+      browserBlocked: "Browser-Benachrichtigungen san blockiert.",
+      browserUnsupported: "Browser-Benachrichtigungen gehng do ned.",
+      noTimers: "Für de ausgwählten Timer gibt's grad koane Termine.",
+      noSchedule: "Grad gibt's koane kommenden Termine.",
+      currentEvents: "Grad am Laffa",
+      currentRunning: "Lafft grod",
+      recentlyEnded: "Grad erst vorbei",
+      showHistory: "Historie zoagn ({count})",
+      hideHistory: "Historie eiklappn ({count})",
+      eventRemaining: "no {time}",
+      eventEndedAgo: "vor {time} vorbei ganga",
+      urgencyNow: "Jetzad!",
+      urgencyVerySoon: "Glei!",
+      urgencySoon: "Boid",
+      urgencyLater: "A bisserl späda",
+      urgencyMuchLater: "Scho vui späda",
+      urgencyEvenLater: "No vui vui späda",
+      urgencyWayLater: "Sakradi vui späda",
+      urgencyEpicLater: "Ja mei, des dauert!",
+      urgencyToday: "Heid",
+      newCategory: "Neie Kategorie",
+      deleteCategory: "Kategorie löschn",
+      categoryCreated: "Kategorie is lokal oglegt",
+      categoryDeleted: "Kategorie is lokal glöscht",
+      categoryDeleteConfirm: "De Kategorie wirklich lokal löschn?",
+      cannotDeleteLastCategory: "Oa Kategorie muaß mindestens bleim.",
+      builderTitle: "Zeitplan-Helfer",
+      builderTimes: "Uhrzeiten",
+      builderAddTime: "Uhrzeit dazu",
+      builderRemoveTime: "Uhrzeit weg",
+      builderAdd: "Zeitplan dazu",
+      builderClear: "Zeitplan ausleern",
+      builderPickDay: "Bittschee mindestens an Tag aussuacha.",
+      builderBadTime: "Bittschee mindestens a gscheide Uhrzeit aussuacha.",
+      builderAdded: "Zeitplan is drin",
+      anchorNowSaved: "Intervall-Anker is auf de jetzige UTC-Zeit gsetzt"
+    };
+
+    const BAVARIA_TIMEZONE = "Bayern/Munich";
+    const CONFIG_UPDATED_AT = "2026-07-20T00:00:00Z";
+    const germanClient = (navigator.language || "").toLowerCase().startsWith("de");
+    const clientDefaultLanguage = germanClient ? "bar" : "en";
+    const clientDefaultTimezone = germanClient ? BAVARIA_TIMEZONE : "Europe/Berlin";
+    const localeDefaultsKey = "timer_locale_defaults_v24";
+
+    if (!localStorage.getItem(localeDefaultsKey)) {
+      localStorage.setItem("timer_language", clientDefaultLanguage);
+      localStorage.setItem("timer_display_timezone", clientDefaultTimezone);
+      localStorage.setItem(localeDefaultsKey, "1");
+    }
+
     const state = {
-      lang: localStorage.getItem("timer_language") || ((navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en"),
+      lang: localStorage.getItem("timer_language") || clientDefaultLanguage,
       baseConfig: null,
       localConfig: null,
       mergedConfig: null,
       categoryId: "",
-      displayTimezone: "Europe/Berlin",
+      displayTimezone: clientDefaultTimezone,
       visibleIds: new Set(),
       calendarSelection: new Set(),
       calendarEntries: new Map(),
-      defaultLead: 5,
+      historyMinutes: 30,
+      historyCollapsed: false,
+      cardDensity: "compact",
+      colorblindMode: false,
       editingTimerId: "",
       notified: new Set(),
       audioContext: null,
@@ -2043,6 +2489,7 @@
       heroText: document.getElementById("heroText"),
       langDeBtn: document.getElementById("langDeBtn"),
       langEnBtn: document.getElementById("langEnBtn"),
+      langBarBtn: document.getElementById("langBarBtn"),
       editorPanel: document.getElementById("editorPanel"),
       editorTitle: document.getElementById("editorTitle"),
       editorNote: document.getElementById("editorNote"),
@@ -2061,12 +2508,25 @@
       editRulesLabel: document.getElementById("editRulesLabel"),
       editRulesHelp: document.getElementById("editRulesHelp"),
       editNotifLabel: document.getElementById("editNotifLabel"),
-      editNotifyEnabledLabel: document.getElementById("editNotifyEnabledLabel"),
-      editNotifyMinutesLabel: document.getElementById("editNotifyMinutesLabel"),
-      editNotifyMinutesHelp: document.getElementById("editNotifyMinutesHelp"),
+      editNotifyWarningEnabledLabel: document.getElementById("editNotifyWarningEnabledLabel"),
+      editNotifyWarningLabel: document.getElementById("editNotifyWarningLabel"),
+      editNotifyWarningHelp: document.getElementById("editNotifyWarningHelp"),
+      editNotifyWarningSoundLabel: document.getElementById("editNotifyWarningSoundLabel"),
+      editNotifyCriticalEnabledLabel: document.getElementById("editNotifyCriticalEnabledLabel"),
+      editNotifyCriticalLabel: document.getElementById("editNotifyCriticalLabel"),
+      editNotifyCriticalHelp: document.getElementById("editNotifyCriticalHelp"),
+      editNotifyCriticalSoundLabel: document.getElementById("editNotifyCriticalSoundLabel"),
       categoryLabel: document.getElementById("categoryLabel"),
       displayZoneLabel: document.getElementById("displayZoneLabel"),
-      defaultNotifLabel: document.getElementById("defaultNotifLabel"),
+      historyMinutesLabel: document.getElementById("historyMinutesLabel"),
+      historyMinutesHelp: document.getElementById("historyMinutesHelp"),
+      cardDensityLabel: document.getElementById("cardDensityLabel"),
+      cardDensitySelect: document.getElementById("cardDensitySelect"),
+      accessibilityLabel: document.getElementById("accessibilityLabel"),
+      colorblindModeInput: document.getElementById("colorblindModeInput"),
+      colorblindModeLabel: document.getElementById("colorblindModeLabel"),
+      configUpdatedStatus: document.getElementById("configUpdatedStatus"),
+      configExpiryStatus: document.getElementById("configExpiryStatus"),
       quickActionsLabel: document.getElementById("quickActionsLabel"),
       visibilityLabel: document.getElementById("visibilityLabel"),
       stackLabel: document.getElementById("stackLabel"),
@@ -2074,7 +2534,7 @@
       footerSummary: document.getElementById("footerSummary"),
       categorySelect: document.getElementById("categorySelect"),
       displayTimezone: document.getElementById("displayTimezone"),
-      defaultLeadSelect: document.getElementById("defaultLeadSelect"),
+      historyMinutesInput: document.getElementById("historyMinutesInput"),
       timerToggle: document.getElementById("timerToggle"),
       newTimerBtn: document.getElementById("newTimerBtn"),
       exportBtn: document.getElementById("exportBtn"),
@@ -2085,6 +2545,7 @@
       cardStack: document.getElementById("cardStack"),
       currentEventsSection: document.getElementById("currentEventsSection"),
       currentEventsLabel: document.getElementById("currentEventsLabel"),
+      historyToggleBtn: document.getElementById("historyToggleBtn"),
       currentEventsList: document.getElementById("currentEventsList"),
       calendarGroups: document.getElementById("calendarGroups"),
       toastWrap: document.getElementById("toastWrap"),
@@ -2097,14 +2558,22 @@
       editAnchor: document.getElementById("editAnchor"),
       setAnchorNowBtn: document.getElementById("setAnchorNowBtn"),
       editRules: document.getElementById("editRules"),
-      editNotifyEnabled: document.getElementById("editNotifyEnabled"),
-      editNotifyMinutes: document.getElementById("editNotifyMinutes"),
+      warningNotificationCard: document.getElementById("warningNotificationCard"),
+      criticalNotificationCard: document.getElementById("criticalNotificationCard"),
+      editNotifyWarningEnabled: document.getElementById("editNotifyWarningEnabled"),
+      editNotifyWarningSeconds: document.getElementById("editNotifyWarningSeconds"),
+      editNotifyWarningSound: document.getElementById("editNotifyWarningSound"),
+      testWarningSoundBtn: document.getElementById("testWarningSoundBtn"),
+      testWarningAlarmBtn: document.getElementById("testWarningAlarmBtn"),
+      editNotifyCriticalEnabled: document.getElementById("editNotifyCriticalEnabled"),
+      editNotifyCriticalSeconds: document.getElementById("editNotifyCriticalSeconds"),
+      editNotifyCriticalSound: document.getElementById("editNotifyCriticalSound"),
+      testCriticalSoundBtn: document.getElementById("testCriticalSoundBtn"),
+      testCriticalAlarmBtn: document.getElementById("testCriticalAlarmBtn"),
       channelBrowser: document.getElementById("channelBrowser"),
       channelBrowserLabel: document.getElementById("channelBrowserLabel"),
       channelPopup: document.getElementById("channelPopup"),
       channelPopupLabel: document.getElementById("channelPopupLabel"),
-      channelBeep: document.getElementById("channelBeep"),
-      channelBeepLabel: document.getElementById("channelBeepLabel"),
       builderTitle: document.getElementById("builderTitle"),
       builderDays: document.getElementById("builderDays"),
       builderTimesLabel: document.getElementById("builderTimesLabel"),
@@ -2125,6 +2594,7 @@
       downloadSelectedIcsBtn: document.getElementById("downloadSelectedIcsBtn"),
       notificationSetupTitle: document.getElementById("notificationSetupTitle"),
       notificationPermissionStatus: document.getElementById("notificationPermissionStatus"),
+      pageActivityStatus: document.getElementById("pageActivityStatus"),
       enableNotificationsBtn: document.getElementById("enableNotificationsBtn"),
       dockSideSelect: document.getElementById("dockSideSelect"),
       dockModeBtn: document.getElementById("dockModeBtn"),
@@ -2136,7 +2606,94 @@
     };
 
     function text(key) {
-      return UI[state.lang][key] || key;
+      return UI[state.lang]?.[key] || UI.de[key] || key;
+    }
+
+    function resolveTimeZone(timeZone) {
+      return timeZone === BAVARIA_TIMEZONE ? "Europe/Berlin" : timeZone;
+    }
+
+    function displayTimeZoneName(timeZone) {
+      if (timeZone !== BAVARIA_TIMEZONE) return timeZone;
+      if (state.lang === "bar") return "Bayern/Munich · Minga 🥨";
+      if (state.lang === "de") return "Bayern/Munich · München 🥨";
+      return "Bavaria/Munich 🥨";
+    }
+
+    const NOTIFICATION_SOUNDS = ["none", "gentle", "crystal", "bell", "urgent", "siren"];
+
+    function positiveSeconds(value, fallback) {
+      const seconds = Math.round(Number(value));
+      return Number.isFinite(seconds) && seconds > 0 ? seconds : fallback;
+    }
+
+    function notificationSettings(timerOrNotifications, fallbackWarning = 300, fallbackCritical = 60) {
+      const notifications = timerOrNotifications?.notifications || timerOrNotifications || {};
+      const legacyMinutes = Array.from(new Set((notifications.minutes || [])
+        .map((value) => Number(value))
+        .filter((value) => Number.isFinite(value) && value > 0)))
+        .sort((a, b) => b - a);
+      const legacyEnabled = notifications.enabled !== false;
+      const legacyHasSound = (notifications.channels || []).includes("beep");
+      const warningSeconds = positiveSeconds(
+        notifications.warning?.seconds,
+        Math.round((legacyMinutes[0] || fallbackWarning / 60) * 60)
+      );
+      const derivedCriticalMinutes = legacyMinutes.length > 1
+        ? legacyMinutes[legacyMinutes.length - 1]
+        : Math.max(1 / 2, Math.min((legacyMinutes[0] || fallbackWarning / 60) / 5, 2));
+      const criticalSeconds = positiveSeconds(
+        notifications.critical?.seconds,
+        Math.round(derivedCriticalMinutes * 60) || fallbackCritical
+      );
+      const normalizeSound = (value, fallback) => NOTIFICATION_SOUNDS.includes(value) ? value : fallback;
+      return {
+        channels: (notifications.channels || ["popup"]).filter((channel) => ["browser", "popup"].includes(channel)),
+        warning: {
+          enabled: notifications.warning?.enabled ?? legacyEnabled,
+          seconds: warningSeconds,
+          sound: normalizeSound(notifications.warning?.sound, legacyHasSound ? "gentle" : "none")
+        },
+        critical: {
+          enabled: notifications.critical?.enabled ?? legacyEnabled,
+          seconds: criticalSeconds,
+          sound: normalizeSound(notifications.critical?.sound, legacyHasSound ? "urgent" : "none")
+        }
+      };
+    }
+
+    function notificationLevels(timer) {
+      const settings = notificationSettings(timer);
+      return [
+        { id: "warning", ...settings.warning },
+        { id: "critical", ...settings.critical }
+      ].filter((level) => level.enabled).sort((a, b) => b.seconds - a.seconds);
+    }
+
+    function notificationLevelKey(levelId) {
+      return levelId === "critical" ? "criticalAlert" : "warningAlert";
+    }
+
+    function formatLeadTime(seconds) {
+      const value = Math.max(1, Math.round(Number(seconds) || 1));
+      const minuteUnit = "min";
+      const secondUnit = state.lang === "en" ? "sec" : "Sek";
+      if (value < 60) return value + " " + secondUnit;
+      const minutes = Math.floor(value / 60);
+      const remainder = value % 60;
+      return remainder ? minutes + " " + minuteUnit + " " + remainder + " " + secondUnit : minutes + " " + minuteUnit;
+    }
+
+    function notificationSoundName(soundId) {
+      const keys = {
+        none: "soundNone",
+        gentle: "soundGentle",
+        crystal: "soundCrystal",
+        bell: "soundBell",
+        urgent: "soundUrgent",
+        siren: "soundSiren"
+      };
+      return text(keys[soundId] || "soundNone");
     }
 
     function clone(value) {
@@ -2280,6 +2837,18 @@
     function parseIniConfig(text) {
       const sections = parseIni(text);
       const schemaVersion = Number((sections.get("meta") || {}).schemaVersion || "2") || 2;
+      const settingsData = sections.get("settings") || {};
+      const settings = Object.keys(settingsData).length ? {
+        language: settingsData.language || "",
+        displayTimezone: settingsData.displayTimezone || "",
+        categoryId: settingsData.categoryId || "",
+        visibleTimerIds: parseIniList(settingsData.visibleTimerIds, ","),
+        dockSide: settingsData.dockSide || "",
+        historyMinutes: Number(settingsData.historyMinutes),
+        historyCollapsed: parseIniBoolean(settingsData.historyCollapsed, false),
+        cardDensity: settingsData.cardDensity || "",
+        colorblindMode: parseIniBoolean(settingsData.colorblindMode, false)
+      } : null;
       const categories = [];
       const timers = [];
       for (const [sectionName, data] of sections.entries()) {
@@ -2299,6 +2868,23 @@
         if (sectionName.startsWith("timer:")) {
           const id = sectionName.slice("timer:".length).trim();
           if (!id) continue;
+          const legacyEnabled = parseIniBoolean(data["notifications.enabled"], true);
+          const legacyMinutes = parseIniList(data["notifications.minutes"], ",").map((x) => Number(x)).filter(Number.isFinite);
+          const notificationData = {
+            enabled: legacyEnabled,
+            minutes: legacyMinutes,
+            channels: parseIniList(data["notifications.channels"], ","),
+            warning: {
+              enabled: parseIniBoolean(data["notifications.warning.enabled"], legacyEnabled),
+              seconds: Number(data["notifications.warning.seconds"] || "") || undefined,
+              sound: data["notifications.warning.sound"] || undefined
+            },
+            critical: {
+              enabled: parseIniBoolean(data["notifications.critical.enabled"], legacyEnabled),
+              seconds: Number(data["notifications.critical.seconds"] || "") || undefined,
+              sound: data["notifications.critical.sound"] || undefined
+            }
+          };
           timers.push({
             id,
             categoryId: data.categoryId || "personal",
@@ -2317,15 +2903,11 @@
             activeUntil: data.activeUntil || "",
             rules: parseIniList(data.rules, "||"),
             anchorUtc: data.anchorUtc || "",
-            notifications: {
-              enabled: parseIniBoolean(data["notifications.enabled"], true),
-              minutes: parseIniList(data["notifications.minutes"], ",").map((x) => Number(x)).filter(Number.isFinite),
-              channels: parseIniList(data["notifications.channels"], ",")
-            }
+            notifications: notificationSettings(notificationData)
           });
         }
       }
-      return { schemaVersion, categories, timers };
+      return { schemaVersion, categories, timers, settings };
     }
 
     function iniValue(value) {
@@ -2339,8 +2921,24 @@
         "; Import this file directly in the timer UI.",
         "",
         "[meta]",
-        "schemaVersion=" + (Number(config.schemaVersion) || 2)
+        "schemaVersion=" + Math.max(3, Number(config.schemaVersion) || 3)
       ];
+
+      if (config.settings) {
+        lines.push(
+          "",
+          "[settings]",
+          "language=" + iniValue(config.settings.language || ""),
+          "displayTimezone=" + iniValue(config.settings.displayTimezone || ""),
+          "categoryId=" + iniValue(config.settings.categoryId || ""),
+          "visibleTimerIds=" + (config.settings.visibleTimerIds || []).map(iniValue).filter(Boolean).join(","),
+          "dockSide=" + iniValue(config.settings.dockSide || "right"),
+          "historyMinutes=" + Math.max(0, Number(config.settings.historyMinutes) || 0),
+          "historyCollapsed=" + (config.settings.historyCollapsed ? "true" : "false"),
+          "cardDensity=" + iniValue(config.settings.cardDensity || "compact"),
+          "colorblindMode=" + (config.settings.colorblindMode ? "true" : "false")
+        );
+      }
 
       for (const category of config.categories) {
         lines.push(
@@ -2354,6 +2952,7 @@
       }
 
       for (const timer of config.timers) {
+        const notifications = notificationSettings(timer);
         lines.push(
           "",
           "[timer:" + iniValue(timer.id) + "]",
@@ -2371,9 +2970,13 @@
         lines.push("rules=" + (timer.rules || []).map(iniValue).filter(Boolean).join(" || "));
         if (timer.anchorUtc) lines.push("anchorUtc=" + iniValue(timer.anchorUtc));
         lines.push(
-          "notifications.enabled=" + (timer.notifications?.enabled !== false ? "true" : "false"),
-          "notifications.minutes=" + (timer.notifications?.minutes || []).join(","),
-          "notifications.channels=" + (timer.notifications?.channels || []).map(iniValue).filter(Boolean).join(",")
+          "notifications.warning.enabled=" + (notifications.warning.enabled ? "true" : "false"),
+          "notifications.warning.seconds=" + notifications.warning.seconds,
+          "notifications.warning.sound=" + iniValue(notifications.warning.sound),
+          "notifications.critical.enabled=" + (notifications.critical.enabled ? "true" : "false"),
+          "notifications.critical.seconds=" + notifications.critical.seconds,
+          "notifications.critical.sound=" + iniValue(notifications.critical.sound),
+          "notifications.channels=" + notifications.channels.map(iniValue).filter(Boolean).join(",")
         );
       }
 
@@ -2394,9 +2997,11 @@
           "America/Denver", "America/Los_Angeles", "Asia/Tokyo", "Asia/Seoul", "Australia/Sydney"
         ];
       }
-      const unique = Array.from(new Set(["Europe/Berlin", "UTC", ...zones]));
+      const unique = Array.from(new Set([BAVARIA_TIMEZONE, "Europe/Berlin", "UTC", ...zones]));
       return unique.sort((a, b) => {
         if (a === b) return 0;
+        if (a === BAVARIA_TIMEZONE) return -1;
+        if (b === BAVARIA_TIMEZONE) return 1;
         if (a === "Europe/Berlin") return -1;
         if (b === "Europe/Berlin") return 1;
         if (a === "UTC") return -1;
@@ -2473,6 +3078,32 @@
       return changed;
     }
 
+    function migrateNotificationSettings(localConfig) {
+      const defaults = new Map([
+        ["arkeum_eu", [300, 90]],
+        ["gate_memory_eu", [300, 90]],
+        ["summer_festival_eu", [600, 30]],
+        ["archboss_eu", [600, 120]],
+        ["archboss_guild_eu", [600, 120]],
+        ["innerspace_guild_boss", [600, 120]]
+      ]);
+      let changed = false;
+      for (const timer of localConfig.timers || []) {
+        if (timer.deleted) continue;
+        const current = timer.notifications || {};
+        if (current.warning && current.critical) continue;
+        const configured = defaults.get(timer.id);
+        const migrated = notificationSettings(timer);
+        if (configured) {
+          migrated.warning = { enabled: true, seconds: configured[0], sound: "gentle" };
+          migrated.critical = { enabled: true, seconds: configured[1], sound: "urgent" };
+        }
+        timer.notifications = migrated;
+        changed = true;
+      }
+      return changed;
+    }
+
     function normalizeSummerFestivalRules(localConfig) {
       let changed = false;
       for (const timer of localConfig.timers || []) {
@@ -2538,20 +3169,20 @@
     }
 
     function formatTime(date, timeZone, withSeconds = true) {
-      return date.toLocaleTimeString(state.lang === "de" ? "de-DE" : "en-GB", {
+      return date.toLocaleTimeString(state.lang === "en" ? "en-GB" : "de-DE", {
         hour: "2-digit",
         minute: "2-digit",
         second: withSeconds ? "2-digit" : undefined,
-        timeZone
+        timeZone: resolveTimeZone(timeZone)
       });
     }
 
     function formatDate(date, timeZone) {
-      return date.toLocaleDateString(state.lang === "de" ? "de-DE" : "en-GB", {
+      return date.toLocaleDateString(state.lang === "en" ? "en-GB" : "de-DE", {
         weekday: "short",
         day: "2-digit",
         month: "2-digit",
-        timeZone
+        timeZone: resolveTimeZone(timeZone)
       });
     }
 
@@ -2596,6 +3227,66 @@
       return "urgencyEpicLater";
     }
 
+    const URGENCY_COLOR_STOPS = [
+      { ms: 72 * 60 * 60 * 1000, rgb: [166, 178, 196] },
+      { ms: 24 * 60 * 60 * 1000, rgb: [103, 132, 118] },
+      { ms: 12 * 60 * 60 * 1000, rgb: [46, 112, 70] },
+      { ms: 2 * 60 * 60 * 1000, rgb: [111, 229, 159] },
+      { ms: 30 * 60 * 1000, rgb: [184, 222, 72] },
+      { ms: 10 * 60 * 1000, rgb: [248, 195, 91] },
+      { ms: 5 * 60 * 1000, rgb: [255, 153, 97] },
+      { ms: 2 * 60 * 1000, rgb: [255, 111, 111] },
+      { ms: 1 * 60 * 1000, rgb: [224, 90, 151] },
+      { ms: 0, rgb: [184, 146, 255] }
+    ];
+
+    // The colour itself flows through every intermediate shade. The progress
+    // bar resets only when a new base colour phase starts.
+    const URGENCY_PHASE_STOPS = [
+      72 * 60 * 60 * 1000,
+      12 * 60 * 60 * 1000,
+      30 * 60 * 1000,
+      10 * 60 * 1000,
+      5 * 60 * 1000,
+      1 * 60 * 1000,
+      0
+    ];
+
+    function urgencyTone(ms) {
+      const remaining = Math.max(0, Number(ms) || 0);
+      let rgb = URGENCY_COLOR_STOPS[0].rgb;
+      if (remaining < URGENCY_COLOR_STOPS[0].ms) {
+        for (let index = 0; index < URGENCY_COLOR_STOPS.length - 1; index += 1) {
+          const upper = URGENCY_COLOR_STOPS[index];
+          const lower = URGENCY_COLOR_STOPS[index + 1];
+          if (remaining > upper.ms || remaining < lower.ms) continue;
+          const progress = (upper.ms - remaining) / (upper.ms - lower.ms || 1);
+          rgb = upper.rgb.map((channel, channelIndex) => Math.round(
+            channel + (lower.rgb[channelIndex] - channel) * progress
+          ));
+          break;
+        }
+      }
+      return {
+        color: "rgb(" + rgb.join(", ") + ")",
+        glow: "rgba(" + rgb.join(", ") + ", 0.38)"
+      };
+    }
+
+    function urgencyPhaseProgress(ms) {
+      const remaining = Math.max(0, Number(ms) || 0);
+      if (remaining >= URGENCY_PHASE_STOPS[0]) return 0;
+      for (let index = 0; index < URGENCY_PHASE_STOPS.length - 1; index += 1) {
+        const upper = URGENCY_PHASE_STOPS[index];
+        const lower = URGENCY_PHASE_STOPS[index + 1];
+        if (remaining > upper || remaining <= lower) continue;
+        return Math.min(1, Math.max(0,
+          (upper - remaining) / (upper - lower || 1)
+        ));
+      }
+      return 1;
+    }
+
     function parseCronField(field, min, max) {
       const out = new Set();
       const parts = field.split(",");
@@ -2627,7 +3318,7 @@
 
     function zonedParts(date, timeZone) {
       const parts = new Intl.DateTimeFormat("en-GB", {
-        timeZone,
+        timeZone: resolveTimeZone(timeZone),
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -2664,7 +3355,7 @@
     }
 
     function zoneWeekday(date, timeZone) {
-      const wd = new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone }).format(date);
+      const wd = new Intl.DateTimeFormat("en-US", { weekday: "short", timeZone: resolveTimeZone(timeZone) }).format(date);
       return ({ Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 })[wd] ?? 0;
     }
 
@@ -2765,7 +3456,7 @@
 
     function recentTimerState(timer, category, nowMs = Date.now()) {
       const durationMs = Math.max(1, Number(timer.durationMinutes) || 10) * 60000;
-      const historyMs = 15 * 60000;
+      const historyMs = Math.max(0, Number(state.historyMinutes) || 0) * 60000;
       const timeZone = timer.timezone || category.timezone || state.displayTimezone;
       const interval = intervalSchedule(timer);
       let startMs = NaN;
@@ -2823,6 +3514,44 @@
       return state.mergedConfig.timers.filter((timer) => timer.categoryId === state.categoryId);
     }
 
+    function applyAppearanceSettings() {
+      const density = ["comfortable", "compact", "ultra"].includes(state.cardDensity) ? state.cardDensity : "compact";
+      document.documentElement.dataset.density = density;
+      document.documentElement.classList.toggle("colorblind-mode", state.colorblindMode);
+      dom.cardDensitySelect.value = density;
+      dom.colorblindModeInput.checked = state.colorblindMode;
+    }
+
+    function renderPageActivityStatus() {
+      const active = document.visibilityState === "visible";
+      dom.pageActivityStatus.textContent = text(active ? "activityActive" : "activityHidden");
+      dom.pageActivityStatus.className = "activity-status " + (active ? "is-ready" : "is-blocked");
+    }
+
+    function configDate(date) {
+      return date.toLocaleDateString(state.lang === "en" ? "en-GB" : "de-DE", {
+        day: "2-digit", month: "2-digit", year: "numeric", timeZone: "Europe/Berlin"
+      });
+    }
+
+    function renderConfigHealth() {
+      dom.configUpdatedStatus.textContent = text("configUpdated").replace("{date}", configDate(new Date(CONFIG_UPDATED_AT)));
+      const now = Date.now();
+      const ranges = (state.mergedConfig?.timers || [])
+        .map((timer) => timer.activeUntil ? Date.parse(timer.activeUntil) : NaN)
+        .filter(Number.isFinite);
+      const expiredCount = ranges.filter((until) => until < now).length;
+      const nextExpiry = ranges.filter((until) => until >= now).sort((a, b) => a - b)[0];
+      dom.configExpiryStatus.className = expiredCount ? "is-warning" : "is-ok";
+      if (expiredCount) {
+        dom.configExpiryStatus.textContent = text("configExpired").replace("{count}", String(expiredCount));
+      } else if (nextExpiry) {
+        dom.configExpiryStatus.textContent = text("configExpiresSoon").replace("{date}", configDate(new Date(nextExpiry)));
+      } else {
+        dom.configExpiryStatus.textContent = text("configRangesValid");
+      }
+    }
+
     function renderLabels() {
       document.documentElement.lang = state.lang;
       dom.brandTitle.textContent = text("heroTitle");
@@ -2832,8 +3561,10 @@
       dom.heroText.textContent = text("heroText");
       dom.langDeBtn.classList.toggle("is-active", state.lang === "de");
       dom.langEnBtn.classList.toggle("is-active", state.lang === "en");
+      dom.langBarBtn.classList.toggle("is-active", state.lang === "bar");
       dom.langDeBtn.setAttribute("aria-pressed", String(state.lang === "de"));
       dom.langEnBtn.setAttribute("aria-pressed", String(state.lang === "en"));
+      dom.langBarBtn.setAttribute("aria-pressed", String(state.lang === "bar"));
       dom.editorTitle.textContent = text("editorTitle");
       dom.editorNote.textContent = text("editorNote");
       dom.editNameLabel.textContent = text("name");
@@ -2851,15 +3582,37 @@
       dom.editRulesLabel.textContent = text("rules");
       dom.editRulesHelp.textContent = text("rulesHelp");
       dom.editNotifLabel.textContent = text("notifications");
-      dom.editNotifyEnabledLabel.textContent = text("notificationsEnabled");
-      dom.editNotifyMinutesLabel.textContent = text("reminderMinutes");
-      dom.editNotifyMinutesHelp.textContent = text("reminderMinutesHelp");
+      dom.editNotifyWarningEnabledLabel.textContent = text("warningEnabled");
+      dom.editNotifyWarningLabel.textContent = text("warningReminder");
+      dom.editNotifyWarningHelp.textContent = text("warningReminderHelp");
+      dom.editNotifyWarningSoundLabel.textContent = text("warningSound");
+      dom.editNotifyCriticalEnabledLabel.textContent = text("criticalEnabled");
+      dom.editNotifyCriticalLabel.textContent = text("criticalReminder");
+      dom.editNotifyCriticalHelp.textContent = text("criticalReminderHelp");
+      dom.editNotifyCriticalSoundLabel.textContent = text("criticalSound");
+      dom.testWarningSoundBtn.title = text("testSound");
+      dom.testWarningSoundBtn.setAttribute("aria-label", text("testSound") + ": " + text("warningSound"));
+      dom.testCriticalSoundBtn.title = text("testSound");
+      dom.testCriticalSoundBtn.setAttribute("aria-label", text("testSound") + ": " + text("criticalSound"));
+      dom.testWarningAlarmBtn.title = text("testAlarm10");
+      dom.testWarningAlarmBtn.setAttribute("aria-label", text("testAlarm10") + ": " + text("warningSound"));
+      dom.testCriticalAlarmBtn.title = text("testAlarm10");
+      dom.testCriticalAlarmBtn.setAttribute("aria-label", text("testAlarm10") + ": " + text("criticalSound"));
       dom.channelBrowserLabel.textContent = text("browserChannel");
       dom.channelPopupLabel.textContent = text("popupChannel");
-      dom.channelBeepLabel.textContent = text("soundChannel");
       dom.categoryLabel.textContent = text("category");
       dom.displayZoneLabel.textContent = text("displayZone");
-      dom.defaultNotifLabel.textContent = text("defaultReminder");
+      dom.historyMinutesLabel.textContent = text("historyMinutes");
+      dom.historyMinutesHelp.textContent = text("historyMinutesHelp");
+      if (document.activeElement !== dom.historyMinutesInput) {
+        dom.historyMinutesInput.value = String(state.historyMinutes);
+      }
+      dom.cardDensityLabel.textContent = text("cardDensity");
+      dom.cardDensitySelect.options[0].textContent = text("densityComfortable");
+      dom.cardDensitySelect.options[1].textContent = text("densityCompact");
+      dom.cardDensitySelect.options[2].textContent = text("densityUltra");
+      dom.accessibilityLabel.textContent = text("accessibility");
+      dom.colorblindModeLabel.textContent = text("colorblindMode");
       dom.quickActionsLabel.textContent = text("config");
       dom.visibilityLabel.textContent = text("visibleTimers");
       dom.stackLabel.textContent = text("upcomingTimers");
@@ -2882,6 +3635,29 @@
       dom.deleteTimerBtn.textContent = text("deleteLocal");
       dom.resetTimerBtn.textContent = text("resetDefault");
       dom.closeEditorBtn.textContent = text("close");
+
+      const soundLabels = {
+        none: text("soundNone"),
+        gentle: text("soundGentle"),
+        crystal: text("soundCrystal"),
+        bell: text("soundBell"),
+        urgent: text("soundUrgent"),
+        siren: text("soundSiren")
+      };
+      for (const select of [dom.editNotifyWarningSound, dom.editNotifyCriticalSound]) {
+        const selected = select.value;
+        select.innerHTML = "";
+        for (const sound of NOTIFICATION_SOUNDS) {
+          const option = document.createElement("option");
+          option.value = sound;
+          option.textContent = soundLabels[sound];
+          select.appendChild(option);
+        }
+        if (NOTIFICATION_SOUNDS.includes(selected)) select.value = selected;
+      }
+      applyAppearanceSettings();
+      renderPageActivityStatus();
+      renderConfigHealth();
       dom.newTimerBtn.textContent = text("newTimer");
       dom.exportBtn.textContent = text("exportConfig");
       dom.importBtn.textContent = text("importConfig");
@@ -2919,7 +3695,7 @@
       for (const timezone of timezones) {
         const option = document.createElement("option");
         option.value = timezone;
-        option.textContent = timezone;
+        option.textContent = displayTimeZoneName(timezone);
         option.selected = timezone === selectedTimezone;
         dom.displayTimezone.appendChild(option);
       }
@@ -2964,12 +3740,18 @@
       dom.editAnchor.value = timer.anchorUtc || "";
       dom.editRules.value = (timer.rules || []).join("\n");
       dom.editIntervalSeconds.value = intervalSecondsFromRules(timer.rules) || "";
-      dom.editNotifyEnabled.checked = timer.notifications?.enabled !== false;
-      dom.editNotifyMinutes.value = (timer.notifications?.minutes || [state.defaultLead]).join(",");
-      const channels = timer.notifications?.channels || [];
+      const notifications = notificationSettings(timer);
+      dom.editNotifyWarningEnabled.checked = notifications.warning.enabled;
+      dom.editNotifyWarningSeconds.value = String(notifications.warning.seconds);
+      dom.editNotifyWarningSound.value = notifications.warning.sound;
+      dom.editNotifyCriticalEnabled.checked = notifications.critical.enabled;
+      dom.editNotifyCriticalSeconds.value = String(notifications.critical.seconds);
+      dom.editNotifyCriticalSound.value = notifications.critical.sound;
+      dom.warningNotificationCard.classList.toggle("is-disabled", !notifications.warning.enabled);
+      dom.criticalNotificationCard.classList.toggle("is-disabled", !notifications.critical.enabled);
+      const channels = notifications.channels;
       dom.channelBrowser.checked = channels.includes("browser");
       dom.channelPopup.checked = channels.includes("popup");
-      dom.channelBeep.checked = channels.includes("beep");
       const simpleTimes = (timer.rules || []).map((rule) => {
         const bits = rule.trim().split(/\s+/);
         if (bits.length !== 5 || bits[0].includes("*") || bits[1].includes("*")) return "";
@@ -3003,7 +3785,6 @@
       const channels = [];
       if (dom.channelBrowser.checked) channels.push("browser");
       if (dom.channelPopup.checked) channels.push("popup");
-      if (dom.channelBeep.checked) channels.push("beep");
       const timer = clone(base);
       timer.name = { ...(timer.name || {}) };
       timer.name[state.lang] = dom.editName.value || timer.id;
@@ -3020,9 +3801,17 @@
         timer.anchorUtc = new Date().toISOString();
       }
       timer.notifications = {
-        enabled: dom.editNotifyEnabled.checked,
-        minutes: dom.editNotifyMinutes.value.split(",").map((x) => Number(x.trim())).filter(Number.isFinite),
-        channels
+        channels,
+        warning: {
+          enabled: dom.editNotifyWarningEnabled.checked,
+          seconds: positiveSeconds(dom.editNotifyWarningSeconds.value, 300),
+          sound: NOTIFICATION_SOUNDS.includes(dom.editNotifyWarningSound.value) ? dom.editNotifyWarningSound.value : "gentle"
+        },
+        critical: {
+          enabled: dom.editNotifyCriticalEnabled.checked,
+          seconds: positiveSeconds(dom.editNotifyCriticalSeconds.value, 60),
+          sound: NOTIFICATION_SOUNDS.includes(dom.editNotifyCriticalSound.value) ? dom.editNotifyCriticalSound.value : "urgent"
+        }
       };
       upsertLocalTimer(timer);
       toast(text("saved"));
@@ -3080,7 +3869,11 @@
         description: { de: "Lokal angelegter Timer.", en: "Locally created timer." },
         durationMinutes: 15,
         rules: ["0 20 * * 4"],
-        notifications: { enabled: true, minutes: [5], channels: ["popup"] }
+        notifications: {
+          channels: ["popup"],
+          warning: { enabled: true, seconds: 300, sound: "gentle" },
+          critical: { enabled: true, seconds: 60, sound: "urgent" }
+        }
       };
       upsertLocalTimer(timer);
       state.visibleIds.add(id);
@@ -3216,7 +4009,7 @@
     function renderBuilderDays() {
       const previous = new Set(Array.from(dom.builderDays.querySelectorAll("input:checked")).map((input) => Number(input.value)));
       const useDefault = dom.builderDays.children.length === 0;
-      const labels = state.lang === "de"
+      const labels = state.lang !== "en"
         ? ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]
         : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
       dom.builderDays.innerHTML = "";
@@ -3251,8 +4044,46 @@
       });
     }
 
+    function currentUserSettings() {
+      return {
+        language: state.lang,
+        displayTimezone: state.displayTimezone,
+        categoryId: state.categoryId,
+        visibleTimerIds: Array.from(state.visibleIds),
+        dockSide: state.dockSide,
+        historyMinutes: state.historyMinutes,
+        historyCollapsed: state.historyCollapsed,
+        cardDensity: state.cardDensity,
+        colorblindMode: state.colorblindMode
+      };
+    }
+
+    function applyImportedSettings(settings) {
+      if (!settings) return;
+      if (["de", "en", "bar"].includes(settings.language)) state.lang = settings.language;
+      if (settings.displayTimezone) state.displayTimezone = settings.displayTimezone;
+      if (settings.categoryId) state.categoryId = settings.categoryId;
+      if (Array.isArray(settings.visibleTimerIds)) state.visibleIds = new Set(settings.visibleTimerIds);
+      if (["left", "right"].includes(settings.dockSide)) state.dockSide = settings.dockSide;
+      if (Number.isFinite(settings.historyMinutes)) state.historyMinutes = Math.max(0, Math.min(1440, Math.round(settings.historyMinutes)));
+      state.historyCollapsed = Boolean(settings.historyCollapsed);
+      if (["comfortable", "compact", "ultra"].includes(settings.cardDensity)) state.cardDensity = settings.cardDensity;
+      state.colorblindMode = Boolean(settings.colorblindMode);
+      localStorage.setItem("timer_language", state.lang);
+      localStorage.setItem("timer_display_timezone", state.displayTimezone);
+      localStorage.setItem("timer_category_id", state.categoryId);
+      localStorage.setItem("timer_visible_ids", JSON.stringify(Array.from(state.visibleIds)));
+      localStorage.setItem("timer_dock_side", state.dockSide);
+      localStorage.setItem("timer_history_minutes", String(state.historyMinutes));
+      localStorage.setItem("timer_history_collapsed", String(state.historyCollapsed));
+      localStorage.setItem("timer_card_density", state.cardDensity);
+      localStorage.setItem("timer_colorblind_mode", String(state.colorblindMode));
+      localStorage.setItem(localeDefaultsKey, "1");
+    }
+
     function exportConfig() {
-      const blob = new Blob([serializeIniConfig(state.mergedConfig)], { type: "text/plain;charset=utf-8" });
+      const exportData = { ...state.mergedConfig, settings: currentUserSettings() };
+      const blob = new Blob([serializeIniConfig(exportData)], { type: "text/plain;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -3272,35 +4103,41 @@
       };
       saveLocalConfig();
       state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
+      applyImportedSettings(parsed.settings);
       if (!state.mergedConfig.categories.find((x) => x.id === state.categoryId)) {
         state.categoryId = state.mergedConfig.categories[0]?.id || "";
+        localStorage.setItem("timer_category_id", state.categoryId);
       }
+      ensureVisibleIds();
       toast(text("imported"));
       renderAll();
     }
 
-    function beep() {
+    function playNotificationSound(soundId = "gentle") {
+      if (soundId === "none") return;
       try {
         const ctx = state.audioContext || new (window.AudioContext || window.webkitAudioContext)();
         state.audioContext = ctx;
         if (ctx.state === "suspended") void ctx.resume();
         const startAt = ctx.currentTime + 0.03;
-        const notes = [
-          { offset: 0.00, frequency: 659.25, duration: 0.24 },
-          { offset: 0.28, frequency: 880.00, duration: 0.28 },
-          { offset: 0.62, frequency: 1046.50, duration: 0.38 },
-          { offset: 1.15, frequency: 880.00, duration: 0.24 },
-          { offset: 1.43, frequency: 1046.50, duration: 0.42 }
-        ];
-        for (const note of notes) {
+        const patterns = {
+          gentle: { type: "sine", gain: 0.038, notes: [[0, 659.25, 0.32], [0.38, 880, 0.46]] },
+          crystal: { type: "triangle", gain: 0.042, notes: [[0, 1046.5, 0.22], [0.24, 1318.5, 0.3], [0.58, 1568, 0.42]] },
+          bell: { type: "sine", gain: 0.055, notes: [[0, 783.99, 0.38], [0.48, 783.99, 0.5]] },
+          urgent: { type: "square", gain: 0.052, notes: [[0, 740, 0.18], [0.23, 988, 0.18], [0.46, 740, 0.18], [0.69, 988, 0.34]] },
+          siren: { type: "sawtooth", gain: 0.045, notes: [[0, 520, 0.42, 940], [0.46, 940, 0.42, 520], [0.92, 520, 0.55, 1040]] }
+        };
+        const pattern = patterns[soundId] || patterns.gentle;
+        for (const [offset, frequency, duration, endFrequency] of pattern.notes) {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
-          const noteStart = startAt + note.offset;
-          const noteEnd = noteStart + note.duration;
-          osc.type = "sine";
-          osc.frequency.setValueAtTime(note.frequency, noteStart);
+          const noteStart = startAt + offset;
+          const noteEnd = noteStart + duration;
+          osc.type = pattern.type;
+          osc.frequency.setValueAtTime(frequency, noteStart);
+          if (endFrequency) osc.frequency.exponentialRampToValueAtTime(endFrequency, noteEnd);
           gain.gain.setValueAtTime(0.0001, noteStart);
-          gain.gain.exponentialRampToValueAtTime(0.055, noteStart + 0.035);
+          gain.gain.exponentialRampToValueAtTime(pattern.gain, noteStart + 0.035);
           gain.gain.exponentialRampToValueAtTime(0.0001, noteEnd);
           osc.connect(gain);
           gain.connect(ctx.destination);
@@ -3312,12 +4149,14 @@
       }
     }
 
-    function showPopup(timer, next, lead) {
+    function showPopup(timer, next, level) {
       const title = timerName(timer);
+      const alertLevel = text(notificationLevelKey(level.id));
       const message = text("eventStarts")
         .replace("{time}", formatTime(next, state.displayTimezone, false))
-        .replace("{lead}", String(lead));
-      toast(title + " · " + message);
+        .replace("{lead}", formatLeadTime(level.seconds));
+      toast(alertLevel + " · " + title + " · " + message);
+      dom.eventPopupLabel.textContent = alertLevel;
       dom.eventPopupTitle.textContent = title;
       dom.eventPopupText.textContent = message;
       try {
@@ -3360,7 +4199,7 @@
         const ctx = state.audioContext || new (window.AudioContext || window.webkitAudioContext)();
         state.audioContext = ctx;
         if (ctx.state === "suspended") await ctx.resume();
-        beep();
+        playNotificationSound("gentle");
       } catch {
         // The browser may not expose Web Audio.
       }
@@ -3371,8 +4210,55 @@
       if ("Notification" in window && Notification.permission === "denied") toast(text("browserBlocked"));
     }
 
+    function deliverNotification(timer, next, level, channels, key) {
+      if (channels.includes("popup")) showPopup(timer, next, level);
+      playNotificationSound(level.sound);
+      if (channels.includes("browser") && "Notification" in window && Notification.permission === "granted") {
+        try {
+          new Notification(text(notificationLevelKey(level.id)) + " · " + timerName(timer), {
+            body: text("eventStarts")
+              .replace("{time}", formatTime(next, state.displayTimezone, false))
+              .replace("{lead}", formatLeadTime(level.seconds)),
+            tag: key,
+            renotify: false,
+            requireInteraction: true
+          });
+        } catch {
+          toast(text("browserBlocked"));
+        }
+      }
+    }
+
+    async function scheduleAlarmTest(levelId) {
+      if (!state.editingTimerId) return;
+      if (dom.channelBrowser.checked && "Notification" in window && Notification.permission === "default") {
+        await Notification.requestPermission();
+        renderNotificationPermissionStatus();
+      }
+      const isCritical = levelId === "critical";
+      const level = {
+        id: isCritical ? "critical" : "warning",
+        enabled: true,
+        seconds: positiveSeconds(isCritical ? dom.editNotifyCriticalSeconds.value : dom.editNotifyWarningSeconds.value, isCritical ? 60 : 300),
+        sound: isCritical ? dom.editNotifyCriticalSound.value : dom.editNotifyWarningSound.value
+      };
+      const base = state.mergedConfig.timers.find((timer) => timer.id === state.editingTimerId);
+      if (!base) return;
+      const timer = clone(base);
+      timer.name = { ...(timer.name || {}), [state.lang]: dom.editName.value || timerName(base) };
+      const channels = [];
+      if (dom.channelBrowser.checked) channels.push("browser");
+      if (dom.channelPopup.checked) channels.push("popup");
+      const fireAt = Date.now() + 10000;
+      const simulatedNext = new Date(fireAt + level.seconds * 1000);
+      toast(text("alarmTestScheduled").replace("{level}", text(notificationLevelKey(level.id))));
+      window.setTimeout(() => {
+        deliverNotification(timer, simulatedNext, level, channels, "test:" + level.id + ":" + fireAt);
+      }, 10000);
+    }
+
     function openDockWindow() {
-      const width = 360;
+      const width = 320;
       const height = Math.max(640, window.screen.availHeight || 900);
       const left = state.dockSide === "left"
         ? (window.screen.availLeft || 0)
@@ -3405,33 +4291,17 @@
       const checkedFrom = Math.min(state.lastNotificationCheck || now - 1500, now);
       state.lastNotificationCheck = now;
       for (const timer of timers) {
-        const notifications = timer.notifications || {};
-        if (notifications.enabled === false) continue;
+        const notifications = notificationSettings(timer);
         const next = timerOccurrences(timer, selectedCategory(), 1)[0];
         if (!next) continue;
-        const leads = (notifications.minutes && notifications.minutes.length ? notifications.minutes : [state.defaultLead]).slice().sort((a, b) => b - a);
-        for (const lead of leads) {
-          const key = timer.id + ":" + next.toISOString() + ":" + lead;
-          const triggerAt = next.getTime() - lead * 60000;
+        const levels = notificationLevels(timer);
+        for (const level of levels) {
+          const key = timer.id + ":" + next.toISOString() + ":" + level.id + ":" + level.seconds;
+          const triggerAt = next.getTime() - level.seconds * 1000;
           if (triggerAt > checkedFrom && triggerAt <= now && !state.notified.has(key)) {
             state.notified.add(key);
-            const channels = notifications.channels || ["popup"];
-            if (channels.includes("popup")) showPopup(timer, next, lead);
-            if (channels.includes("beep")) beep();
-            if (channels.includes("browser") && "Notification" in window && Notification.permission === "granted") {
-              try {
-                new Notification(timerName(timer), {
-                  body: text("eventStarts")
-                    .replace("{time}", formatTime(next, state.displayTimezone, false))
-                    .replace("{lead}", String(lead)),
-                  tag: key,
-                  renotify: false,
-                  requireInteraction: true
-                });
-              } catch {
-                toast(text("browserBlocked"));
-              }
-            }
+            const channels = notifications.channels;
+            deliverNotification(timer, next, level, channels, key);
           }
         }
       }
@@ -3469,6 +4339,8 @@
         const motif = dynamicMotif(timer, categoryRef);
         const delta = next.getTime() - Date.now();
         const statusKey = urgencyLabelKey(delta);
+        const tone = urgencyTone(delta);
+        const phaseProgress = urgencyPhaseProgress(delta);
         const el = document.createElement("article");
         el.className = "card " + urgencyClass(delta) + (index === 0 ? " is-primary" : "");
         el.style.setProperty("--motif", motif);
@@ -3476,6 +4348,8 @@
         el.style.setProperty("--card-overlay", accent.overlay);
         el.style.setProperty("--card-glow", accent.glow);
         el.style.setProperty("--pattern-angle", accent.patternAngle);
+        el.style.setProperty("--urgency-color", tone.color);
+        el.style.setProperty("--urgency-glow", tone.glow);
 
         const head = document.createElement("div");
         head.className = "card-head";
@@ -3514,6 +4388,36 @@
         durationValue.textContent = String(timer.durationMinutes || 10) + " min";
         durationRow.append(durationLabel, durationValue);
         tooltip.appendChild(durationRow);
+
+        const notifications = notificationSettings(timer);
+
+        const warningRow = document.createElement("div");
+        warningRow.className = "card-tooltip-row";
+        const warningLabel = document.createElement("span");
+        warningLabel.className = "card-tooltip-label";
+        warningLabel.textContent = text("tooltipWarningTimer");
+        const warningValue = document.createElement("span");
+        warningValue.textContent = !notifications.warning.enabled
+          ? text("tooltipNotificationDisabled")
+          : text("tooltipWarningActive")
+              .replace("{lead}", formatLeadTime(notifications.warning.seconds))
+              .replace("{sound}", notificationSoundName(notifications.warning.sound));
+        warningRow.append(warningLabel, warningValue);
+        tooltip.appendChild(warningRow);
+
+        const criticalRow = document.createElement("div");
+        criticalRow.className = "card-tooltip-row";
+        const criticalLabel = document.createElement("span");
+        criticalLabel.className = "card-tooltip-label";
+        criticalLabel.textContent = text("tooltipCriticalTimer");
+        const criticalValue = document.createElement("span");
+        criticalValue.textContent = !notifications.critical.enabled
+          ? text("tooltipNotificationDisabled")
+          : text("tooltipCriticalActive")
+              .replace("{lead}", formatLeadTime(notifications.critical.seconds))
+              .replace("{sound}", notificationSoundName(notifications.critical.sound));
+        criticalRow.append(criticalLabel, criticalValue);
+        tooltip.appendChild(criticalRow);
         title.appendChild(tooltip);
 
         const editButton = document.createElement("button");
@@ -3524,7 +4428,8 @@
         editButton.setAttribute("aria-label", text("edit") + ": " + timerName(timer));
         editButton.innerHTML = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z\"/></svg>";
         editButton.addEventListener("click", () => openEditor(timer.id));
-        head.append(title, editButton);
+        head.appendChild(title);
+        if (!state.dockMode) head.appendChild(editButton);
 
         const count = document.createElement("div");
         count.className = "count";
@@ -3538,20 +4443,23 @@
         const status = document.createElement("span");
         status.className = "card-status";
         status.textContent = text(statusKey);
+        meta.append(when, status);
 
-        const reminderMinutes = timer.notifications?.minutes || [state.defaultLead];
-        const reminder = document.createElement("span");
-        reminder.className = "reminder-chip";
-        if (timer.notifications?.enabled === false) {
-          reminder.textContent = text("notificationsOffShort");
-          reminder.title = text("notificationsOff");
-        } else {
-          reminder.textContent = reminderMinutes.join(",") + "m";
-          reminder.title = text("reminder") + ": " + reminderMinutes.join(", ") + " min";
-        }
-        meta.append(when, status, reminder);
+        const phaseBar = document.createElement("div");
+        phaseBar.className = "card-phase-progress";
+        const phasePercent = Math.round(phaseProgress * 100);
+        const phaseLabel = text("phaseProgress").replace("{percent}", String(phasePercent));
+        phaseBar.title = phaseLabel;
+        phaseBar.setAttribute("role", "progressbar");
+        phaseBar.setAttribute("aria-label", phaseLabel);
+        phaseBar.setAttribute("aria-valuemin", "0");
+        phaseBar.setAttribute("aria-valuemax", "100");
+        phaseBar.setAttribute("aria-valuenow", String(phasePercent));
+        const phaseFill = document.createElement("span");
+        phaseFill.style.width = phasePercent + "%";
+        phaseBar.appendChild(phaseFill);
 
-        el.append(head, count, meta);
+        el.append(head, count, meta, phaseBar);
         dom.cardStack.appendChild(el);
       });
     }
@@ -3570,8 +4478,14 @@
 
       dom.currentEventsSection.hidden = items.length === 0;
       dom.currentEventsList.innerHTML = "";
+      const historyCount = items.filter((item) => item.timing.status === "ended").length;
+      dom.historyToggleBtn.hidden = historyCount === 0;
+      dom.historyToggleBtn.textContent = text(state.historyCollapsed ? "showHistory" : "hideHistory")
+        .replace("{count}", String(historyCount));
+      dom.historyToggleBtn.setAttribute("aria-expanded", String(!state.historyCollapsed));
       for (const { timer, timing } of items) {
         const isRunning = timing.status === "running";
+        if (!isRunning && state.historyCollapsed) continue;
         const remainingText = isRunning
           ? text("eventRemaining").replace("{time}", compactDuration(timing.endMs - now))
           : text("eventEndedAgo").replace("{time}", compactDuration(now - timing.endMs));
@@ -3681,6 +4595,10 @@
             + "</div>";
         }).join("");
         wrap.innerHTML = "<h3>" + timerName(timer) + "</h3>" + rows;
+        const heading = wrap.querySelector("h3");
+        heading.dataset.timerId = timer.id;
+        heading.dataset.toggleHint = text("calendarToggleHint");
+        heading.title = text("calendarToggleHint");
         dom.calendarGroups.appendChild(wrap);
       }
 
@@ -3707,6 +4625,26 @@
         button.addEventListener("click", () => {
           const entry = state.calendarEntries.get(button.dataset.key);
           if (entry) downloadIcs([entry], entry.timer.id + ".ics");
+        });
+      });
+
+      dom.calendarGroups.querySelectorAll(".calendar-group h3[data-timer-id]").forEach((heading) => {
+        heading.addEventListener("dblclick", () => {
+          const timerId = heading.dataset.timerId;
+          const keys = Array.from(state.calendarEntries.entries())
+            .filter(([, entry]) => entry.timer.id === timerId)
+            .map(([key]) => key);
+          if (!keys.length) return;
+          const allSelected = keys.every((key) => state.calendarSelection.has(key));
+          for (const key of keys) {
+            if (allSelected) state.calendarSelection.delete(key);
+            else state.calendarSelection.add(key);
+          }
+          updateCalendarSelectionUi();
+          const timer = state.calendarEntries.get(keys[0])?.timer;
+          toast(text(allSelected ? "calendarEventCleared" : "calendarEventSelected")
+            .replace("{count}", String(keys.length))
+            .replace("{event}", timer ? timerName(timer) : timerId));
         });
       });
 
@@ -3742,10 +4680,18 @@
       if (migrateUpdatedDefaultDurations(state.localConfig)) {
         saveLocalConfig();
       }
+      if (migrateNotificationSettings(state.localConfig)) {
+        saveLocalConfig();
+      }
       state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
       state.categoryId = localStorage.getItem("timer_category_id") || state.mergedConfig.categories[0]?.id || "";
-      state.displayTimezone = localStorage.getItem("timer_display_timezone") || "Europe/Berlin";
-      state.defaultLead = Number(localStorage.getItem("timer_default_lead") || "5");
+      state.displayTimezone = localStorage.getItem("timer_display_timezone") || clientDefaultTimezone;
+      state.historyMinutes = Math.max(0, Number(localStorage.getItem("timer_history_minutes") ?? "30") || 0);
+      state.historyCollapsed = localStorage.getItem("timer_history_collapsed") === "true";
+      state.cardDensity = ["comfortable", "compact", "ultra"].includes(localStorage.getItem("timer_card_density"))
+        ? localStorage.getItem("timer_card_density")
+        : "compact";
+      state.colorblindMode = localStorage.getItem("timer_colorblind_mode") === "true";
       const storedVisibleIds = loadVisibleIds();
       state.visibleIds = storedVisibleIds || new Set(state.mergedConfig.timers.map((timer) => timer.id));
       if (!storedVisibleIds) saveVisibleIds();
@@ -3755,7 +4701,7 @@
     }
 
     function setLanguage(language, persist = true) {
-      state.lang = language === "de" ? "de" : "en";
+      state.lang = ["de", "en", "bar"].includes(language) ? language : clientDefaultLanguage;
       if (persist) localStorage.setItem("timer_language", state.lang);
       renderBuilderDays();
       renderAll();
@@ -3764,6 +4710,7 @@
     function bind() {
       dom.langDeBtn.addEventListener("click", () => setLanguage("de"));
       dom.langEnBtn.addEventListener("click", () => setLanguage("en"));
+      dom.langBarBtn.addEventListener("click", () => setLanguage("bar"));
 
       dom.categorySelect.addEventListener("change", () => {
         state.categoryId = dom.categorySelect.value;
@@ -3772,15 +4719,39 @@
       });
 
       dom.displayTimezone.addEventListener("change", () => {
-        state.displayTimezone = dom.displayTimezone.value || "Europe/Berlin";
+        state.displayTimezone = dom.displayTimezone.value || clientDefaultTimezone;
         localStorage.setItem("timer_display_timezone", state.displayTimezone);
         renderAll();
       });
 
-      dom.defaultLeadSelect.addEventListener("change", () => {
-        state.defaultLead = Number(dom.defaultLeadSelect.value) || 5;
-        localStorage.setItem("timer_default_lead", String(state.defaultLead));
+      dom.historyMinutesInput.addEventListener("change", () => {
+        state.historyMinutes = Math.max(0, Math.min(1440, Math.round(Number(dom.historyMinutesInput.value) || 0)));
+        dom.historyMinutesInput.value = String(state.historyMinutes);
+        localStorage.setItem("timer_history_minutes", String(state.historyMinutes));
+        renderCurrentEvents();
       });
+
+      dom.historyToggleBtn.addEventListener("click", () => {
+        state.historyCollapsed = !state.historyCollapsed;
+        localStorage.setItem("timer_history_collapsed", String(state.historyCollapsed));
+        renderCurrentEvents();
+      });
+
+      dom.cardDensitySelect.addEventListener("change", () => {
+        state.cardDensity = ["comfortable", "compact", "ultra"].includes(dom.cardDensitySelect.value)
+          ? dom.cardDensitySelect.value
+          : "compact";
+        localStorage.setItem("timer_card_density", state.cardDensity);
+        applyAppearanceSettings();
+      });
+
+      dom.colorblindModeInput.addEventListener("change", () => {
+        state.colorblindMode = dom.colorblindModeInput.checked;
+        localStorage.setItem("timer_colorblind_mode", String(state.colorblindMode));
+        applyAppearanceSettings();
+      });
+
+      document.addEventListener("visibilitychange", renderPageActivityStatus);
 
       dom.newTimerBtn.addEventListener("click", createNewTimer);
       dom.newCategoryBtn.addEventListener("click", createCategory);
@@ -3822,6 +4793,17 @@
       dom.enableNotificationsBtn.addEventListener("click", () => {
         void activateNotifications();
       });
+
+      dom.editNotifyWarningEnabled.addEventListener("change", () => {
+        dom.warningNotificationCard.classList.toggle("is-disabled", !dom.editNotifyWarningEnabled.checked);
+      });
+      dom.editNotifyCriticalEnabled.addEventListener("change", () => {
+        dom.criticalNotificationCard.classList.toggle("is-disabled", !dom.editNotifyCriticalEnabled.checked);
+      });
+      dom.testWarningSoundBtn.addEventListener("click", () => playNotificationSound(dom.editNotifyWarningSound.value));
+      dom.testCriticalSoundBtn.addEventListener("click", () => playNotificationSound(dom.editNotifyCriticalSound.value));
+      dom.testWarningAlarmBtn.addEventListener("click", () => void scheduleAlarmTest("warning"));
+      dom.testCriticalAlarmBtn.addEventListener("click", () => void scheduleAlarmTest("critical"));
 
       dom.dockSideSelect.addEventListener("change", () => {
         state.dockSide = dom.dockSideSelect.value === "left" ? "left" : "right";
@@ -3880,14 +4862,17 @@
 
       window.addEventListener("languagechange", () => {
         if (!localStorage.getItem("timer_language")) {
-          setLanguage((navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en", false);
+          setLanguage((navigator.language || "").toLowerCase().startsWith("de") ? "bar" : "en", false);
         }
+      });
+
+      window.addEventListener("storage", (event) => {
+        if (state.dockMode && event.key?.startsWith("timer_")) window.location.reload();
       });
     }
 
     async function start() {
       await loadConfig();
-      dom.defaultLeadSelect.value = String(state.defaultLead);
       bind();
       renderBuilderDays();
       renderAll();
