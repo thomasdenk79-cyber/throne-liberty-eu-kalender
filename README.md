@@ -4,20 +4,26 @@ Kompakter, konfigurationsbasierter Event-Timer fuer Throne and Liberty EU. Die S
 
 ## Features
 
-- Deutsch und Englisch, automatisch nach Browsersprache und manuell umschaltbar
+- Boarisch, Deutsch und Englisch; deutsche Clients starten boarisch, alle anderen englisch
+- Eigene Anzeigezeitzone `Bayern/Munich`, intern DST-sicher auf `Europe/Berlin` abgebildet
 - Live-Countdowns fuer Cron-Zeitplaene und exakte Intervalle
 - Automatische Anzeige in der lokalen Zeitzone des Nutzers
 - Timer pro Kategorie ein- und ausblendbar
 - Saisonale Timer mit optionalem Gueltigkeitszeitraum
-- Laufende Events mit Fortschrittsbalken und 15 Minuten Rueckblick
-- Separates Statusfenster fuer die linke oder rechte Bildschirmseite
-- Browser-, Popup- und Audio-Erinnerungen
-- Explizite Browserfreigabe mit Statusanzeige und testbarer Mehrton-Erinnerung
-- ICS-Export einzelner oder beliebig vieler ausgewaehlter Termine in einer Datei
+- Laufende Events mit Fortschrittsbalken, einklappbarer Historie und lokal gespeichertem 30-Minuten-Rueckblick
+- Separates, editierfreies Statusfenster fuer die linke oder rechte Bildschirmseite
+- Unabhaengig aktivierbare Warning- und Critical-Erinnerungen mit sekundengenauem Vorlauf
+- Mehrere separat waehl- und testbare Sounds: sanftes Glockenspiel bis Solisium-Sirene
+- Vollstaendiger 10-Sekunden-Test fuer Warning und Critical inklusive Sound, Popup und Browsermeldung
+- ICS-Export einzelner oder beliebig vieler ausgewaehlter Termine; Doppelklick auf einen Eventnamen waehlt dessen Termine an oder ab
 - Kompakte zweispaltige Auswahl der sichtbaren Timer
 - Lokale Anpassungen als lesbare INI importieren und exportieren
 - Responsives Dashboard mit grossem Linny-Intro und kompakter Timer-Ansicht
 - Kompakte Timerkarten mit Info-Tooltip und responsivem Ein-, Zwei- oder Dreispaltenlayout
+- Kontinuierlicher Farbübergang samt neu startendem Fortschrittsbalken je Alarmphase
+- Violetter Puls- und Blinkalarm in der letzten Minute
+- Komfortable, kompakte und ultrakompakte Kartendichte plus Farbenblind-Symbole
+- Aktivitaetswarnung fuer Hintergrund-Tabs sowie Konfigurations- und Ablaufstatus
 
 ## Dateien
 
@@ -38,9 +44,13 @@ activeFrom=2026-01-01T00:00:00Z
 activeUntil=2026-12-31T23:59:59Z
 rules=@every 11808s
 anchorUtc=2026-07-19T00:03:00Z
-notifications.enabled=true
-notifications.minutes=5
-notifications.channels=browser,popup,beep
+notifications.warning.enabled=true
+notifications.warning.seconds=300
+notifications.warning.sound=gentle
+notifications.critical.enabled=true
+notifications.critical.seconds=90
+notifications.critical.sound=urgent
+notifications.channels=browser,popup
 ```
 
 Zeitplanformate:
@@ -55,7 +65,11 @@ Zeitplanformate:
 
 Der Export-Button erzeugt eine vollstaendige `timer-config.ini`. Dieselbe Datei kann ohne JSON-Zwischenschritt wieder importiert oder als neue `config.ini` ins Repository uebernommen werden.
 
-Windows-/Browserbenachrichtigungen werden ueber den Button in der Oberflaeche freigegeben. Die Seite muss fuer Timer, In-App-Popups und Audio-Erinnerungen geoeffnet bleiben.
+Warning und Critical besitzen jeweils einen eigenen Ein-/Ausschalter, sekundengenauen Vorlauf und Sound. Gueltige Sounds sind `none`, `gentle`, `crystal`, `bell`, `urgent` und `siren`. `notifications.channels` steuert unabhaengig davon Browser- und In-App-Popups. Alte `notifications.minutes`-Eintraege werden weiterhin gelesen und beim Export in das neue Format umgewandelt.
+
+Windows-/Browserbenachrichtigungen werden ueber den Button in der Oberflaeche freigegeben. Die Seite muss fuer Timer, In-App-Popups und Audio-Erinnerungen geoeffnet bleiben. Hintergrund-Tabs koennen durch Browser-Energiesparen verzoegert werden; der Aktivitaetsstatus weist darauf hin.
+
+Sprache, Anzeigezeitzone, sichtbare Timer, Andockseite, Historienlaenge und eingeklappter Zustand, Kartendichte, Farbenblind-Modus sowie lokale Timer-Aenderungen werden dauerhaft im Browser gespeichert. Der normale INI-Export nimmt diese Einstellungen in einem `[settings]`-Abschnitt mit und stellt sie beim Import wieder her.
 
 ## Deployment
 
