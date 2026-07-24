@@ -32,6 +32,9 @@ Dieses Protokoll verhindert, dass Menschen oder Agenten bereits geklärte Grunds
 | ADR-0006 | accepted | Restart-sensitive Anchor werden als validierte INI-Überlagerung beim Pages-Build aktualisiert. | Serverneustarts dürfen den Countdown nicht dauerhaft verschieben; INI bleibt das einzige Konfigurationsformat |
 | ADR-0007 | accepted | Die Anwendung wird als PWA mit kleiner Offline-App-Shell ausgeliefert. | app-ähnliche Installation ohne APK oder Backend |
 | ADR-0008 | accepted | Ein Repository-Taskboard bleibt die portable Quelle; Teams darf nur spiegeln. | nachvollziehbar, versioniert und unabhängig von einem einzelnen Kollaborationstool |
+| ADR-0009 | accepted | Anwender-Neuigkeiten, technisches Changelog und Git-Commit erfüllen getrennte Zwecke. | verständliche Produktkommunikation ohne Verlust technischer Nachvollziehbarkeit |
+| ADR-0010 | accepted | Themes sind vollständige visuelle Themenwelten; Bilder bleiben austauschbare, kategorisierte Assets. | konsistentes Erlebnis ohne Abhängigkeit von einer sofort vollständigen Bildbibliothek |
+| ADR-0011 | accepted | Discord-Zugangsdaten werden niemals in Browsercode oder Repository gespeichert. | öffentliche GitHub-Pages-Dateien dürfen keine sendefähigen Secrets enthalten |
 
 ## ADR-0001: Markdown als Quelle, HTML als Ausgabe
 

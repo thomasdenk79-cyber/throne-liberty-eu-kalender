@@ -49,6 +49,13 @@ await new Promise((resolve) => setTimeout(resolve, 150));
 assert.equal(window.document.querySelector("#xssProbe"), null, "imported INI values never become HTML");
 assert.match(window.document.body.textContent, /<img id="xssProbe"/, "untrusted name is rendered as text");
 assert(window.document.querySelectorAll("#cardStack .card").length >= 4, "timer cards render");
+const firstCardBeforeTick = window.document.querySelector("#cardStack .card");
+await new Promise((resolve) => setTimeout(resolve, 1100));
+assert.equal(window.document.querySelector("#cardStack .card"), firstCardBeforeTick, "second tick updates cards without rebuilding DOM");
+assert.equal(window.document.querySelectorAll("#cardStack .edit-btn").length, 0, "status cards stay edit-free");
+assert(window.document.querySelectorAll("#timerToggle .toggle-edit").length >= 4, "timer selection exposes compact edit actions");
+assert.equal(window.document.querySelectorAll("#themeSelect option").length, 6, "theme worlds are selectable");
+assert.equal(window.document.querySelectorAll("#cardDensitySelect option").length, 5, "all density modes are selectable");
 assert(window.document.querySelectorAll("#calendarGroups .calendar-group").length >= 4, "calendar groups render");
 assert.equal(window.document.documentElement.lang, "en", "stored language is applied");
 assert.equal(window.document.querySelector("#storageConsent").open, false, "accepted consent is not shown again");
@@ -61,6 +68,7 @@ assert.match(config, /\[timer:boonstones_eu\][\s\S]*?rules=0 21 \* \* 1,5/, "Boo
 assert.match(config, /\[timer:riftstones_eu\][\s\S]*?rules=0 21 \* \* 2,6/, "Riftstone weekly schedule");
 assert.match(config, /\[timer:innerspace_guild_boss\][\s\S]*?rules=10 20 \* \* 4/, "Guild Raid weekly schedule");
 assert.match(config, /\[timer:interserver_eu\][\s\S]*?rules=30 21 \* \* 5,6/, "conditional Interserver schedule");
+assert.match(config, /\[timer:gate_memory_eu\][\s\S]*?notifications\.warning\.seconds=360[\s\S]*?notifications\.critical\.seconds=120/, "Gate reminders allow login and travel time");
 assert.match(liveTimers, /rules=@every 11806s[\s\S]*?anchorUtc=2026-07-24T14:56:16Z[\s\S]*?durationMinutes=4/, "Gate live values");
 
 console.log("runtime smoke: cards, schedules, calendar, consent, localization and XSS guard OK");

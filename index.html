@@ -7,7 +7,7 @@
   <meta name="description" content="Linny's installierbarer Throne and Liberty EU Event-Timer mit Offline-Modus.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Linny's Astral Solisium Pulse · TL EU Event Timer</title>
+  <title>Linny's Epic Time Portal · TL EU Event Timer</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icons/linny-192.png">
   <link rel="apple-touch-icon" href="assets/icons/linny-192.png">
@@ -140,7 +140,7 @@
         radial-gradient(600px 220px at 78% 10%, #72dcff1e 0%, transparent 65%),
         radial-gradient(480px 200px at 14% 100%, #ff8fc61f 0%, transparent 68%),
         linear-gradient(95deg, #081223f3 0%, #081223c8 45%, #0812233a 100%),
-        url('assets/images/linny/linny-hero-v1.png') center 22% / cover;
+        var(--hero-image, url('assets/images/linny/linny-hero-v2.webp')) center 22% / cover;
     }
 
     .hero::after {
@@ -286,6 +286,44 @@
       transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
     }
 
+    .icon-action {
+      width: 42px;
+      min-width: 42px;
+      min-height: 40px;
+      padding: 8px;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .category-row,
+    .actions {
+      align-items: center;
+    }
+
+    .settings-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .settings-heading::after {
+      content: "⚙";
+      color: var(--accent);
+      font-size: 18px;
+      filter: drop-shadow(0 0 8px #72dcff55);
+    }
+
+    .notification-level-card:first-child {
+      border-color: #ffc85a66;
+      background: linear-gradient(145deg, #2a210fdd, #111a28dd);
+    }
+
+    .notification-level-card:last-child {
+      border-color: #dc61ff66;
+      background: linear-gradient(145deg, #32122add, #161125dd);
+    }
+
     .btn.alt {
       background: #0b1220;
       color: #c8d4e8;
@@ -426,10 +464,10 @@
     html.colorblind-mode .card {
       border-width: 2px;
       border-color: #f8fbffb8;
-      background-image:
-        repeating-linear-gradient(var(--cb-angle, 135deg), #ffffff14 0 3px, transparent 3px 11px),
-        var(--card-overlay),
-        var(--motif);
+      box-shadow:
+        inset 0 0 0 2px color-mix(in srgb, var(--urgency-color) 34%, transparent),
+        inset 0 1px 0 #ffffff18,
+        0 12px 28px var(--card-glow, #0004);
     }
 
     html.colorblind-mode .card::before {
@@ -470,17 +508,42 @@
 
     html.colorblind-mode .card-phase-progress {
       height: 9px;
-      border: 1px solid #fff;
-      border-radius: 2px;
+      border: 2px solid #f7fbff;
+      border-radius: 999px;
     }
 
     html.colorblind-mode .card-phase-progress span {
-      background: repeating-linear-gradient(90deg, var(--urgency-color) 0 8px, #fff 8px 11px);
+      background: linear-gradient(90deg,
+        color-mix(in srgb, var(--urgency-color) 58%, #fff),
+        var(--urgency-color) 62%,
+        color-mix(in srgb, var(--urgency-color) 72%, #111));
     }
 
     html[data-density="comfortable"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); }
     html[data-density="comfortable"] .card { padding: 13px; gap: 11px; }
     html[data-density="compact"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+    html[data-density="cinematic"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(390px, 100%), 1fr)); }
+    html[data-density="cinematic"] .card { min-height: 210px; padding: 15px; gap: 10px; }
+    html[data-density="cinematic"] .card.has-thumbnail {
+      grid-template-columns: minmax(155px, 42%) minmax(0, 1fr);
+    }
+    html[data-density="cinematic"] .card-thumbnail,
+    html[data-density="cinematic"] .card-thumbnail img { min-height: 170px; }
+    html[data-density="big-picture"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); }
+    html[data-density="big-picture"] .card {
+      grid-template-columns: 1fr;
+      grid-template-areas: "thumb" "head" "count" "meta" "phase";
+      min-height: 360px;
+      padding: 14px;
+      gap: 10px;
+    }
+    html[data-density="big-picture"] .card-thumbnail {
+      width: 100%;
+      min-height: 230px;
+      aspect-ratio: 16 / 7;
+    }
+    html[data-density="big-picture"] .card-thumbnail img { min-height: 230px; }
+    html[data-density="big-picture"] .count { font-size: clamp(38px, 7vw, 58px); }
     html[data-density="ultra"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(185px, 100%), 1fr)); gap: 4px; }
     html[data-density="ultra"] .card {
       grid-template-columns: minmax(0, 1fr) auto;
@@ -524,7 +587,8 @@
       position: relative;
       overflow: hidden;
       background:
-        repeating-linear-gradient(var(--pattern-angle, 135deg), transparent 0 14px, #ffffff05 14px 15px),
+        radial-gradient(120% 140% at 8% 0%, color-mix(in srgb, var(--urgency-color, #72dcff) 10%, transparent), transparent 55%),
+        linear-gradient(118deg, #ffffff05, transparent 38%, #ffffff03 72%, transparent),
         var(--card-overlay, linear-gradient(110deg, rgba(10, 18, 31, 0.96) 0%, rgba(10, 18, 31, 0.87) 52%, rgba(10, 18, 31, 0.96) 100%)),
         var(--motif, radial-gradient(760px 260px at 90% 0%, #6ee1ff24 0%, transparent 64%));
       box-shadow: inset 0 1px 0 #ffffff10, 0 10px 24px var(--card-glow, #00000010);
@@ -663,7 +727,10 @@
       width: 0;
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--urgency-color), #ffffffd9);
+      background: linear-gradient(90deg,
+        color-mix(in srgb, var(--urgency-color) 55%, #f5fff8),
+        var(--urgency-color) 58%,
+        color-mix(in srgb, var(--urgency-color) 78%, #05080d));
       box-shadow: 0 0 12px var(--urgency-glow);
       transition: width 300ms linear, background 300ms linear;
     }
@@ -724,9 +791,111 @@
       font-weight: 800;
       line-height: 1.15;
       text-align: left;
-      text-overflow: ellipsis;
       white-space: nowrap;
       box-shadow: 0 2px 10px #000a;
+    }
+
+    .card-art-caption-track {
+      display: inline-block;
+      min-width: max-content;
+      padding-left: 100%;
+      animation: linny-caption-scroll var(--caption-speed, 15s) linear infinite;
+      will-change: transform;
+    }
+
+    .card-thumbnail:hover .card-art-caption-track,
+    .card-thumbnail:focus-visible .card-art-caption-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes linny-caption-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-100%); }
+    }
+
+    .image-hover-preview {
+      position: fixed;
+      z-index: 120;
+      right: clamp(12px, 3vw, 44px);
+      top: 50%;
+      width: min(58vw, 900px);
+      max-height: 76vh;
+      padding: 7px;
+      border: 1px solid #a8efff70;
+      border-radius: 18px;
+      background: #050b14ee;
+      box-shadow: 0 30px 90px #000e, 0 0 54px #66dcff32;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(-50%) scale(.94);
+      transition: opacity 150ms ease, transform 180ms ease, visibility 150ms ease;
+    }
+
+    .image-hover-preview.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-50%) scale(1);
+    }
+
+    .image-hover-preview img {
+      width: 100%;
+      max-height: 72vh;
+      display: block;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 760px), (hover: none) {
+      .image-hover-preview { display: none; }
+    }
+
+    /* Theme packs change the stage, not the timer semantics. */
+    html[data-theme="astral"] { --theme-a: #223762; --theme-b: #3c1f47; --theme-accent: #72dcff; }
+    html[data-theme="bavaria"] { --theme-a: #0d65a3; --theme-b: #e6f4ff; --theme-accent: #74c9ff; }
+    html[data-theme="time-vortex"] { --theme-a: #19356e; --theme-b: #6d208d; --theme-accent: #ff9df4; }
+    html[data-theme="arcade"] { --theme-a: #ff187a; --theme-b: #2149ff; --theme-accent: #67fff0; }
+    html[data-theme="solisium"] { --theme-a: #1b6055; --theme-b: #69451f; --theme-accent: #8fffd3; }
+    html[data-theme="executive"] { --theme-a: #1b2633; --theme-b: #202832; --theme-accent: #8eb3cf; }
+
+    html[data-theme] body {
+      background:
+        radial-gradient(1100px 620px at 10% 4%, color-mix(in srgb, var(--theme-a) 88%, transparent), transparent 63%),
+        radial-gradient(980px 560px at 94% 96%, color-mix(in srgb, var(--theme-b) 68%, transparent), transparent 61%),
+        linear-gradient(158deg, #050a12, #0b1421 48%, #101a28);
+    }
+
+    html[data-theme] {
+      --accent: var(--theme-accent);
+    }
+
+    html[data-theme="bavaria"] .controls,
+    html[data-theme="bavaria"] .stack,
+    html[data-theme="bavaria"] .calendar {
+      background:
+        linear-gradient(135deg, #ffffff05 25%, transparent 25%) -12px 0 / 24px 24px,
+        linear-gradient(225deg, #5bbcff10 25%, transparent 25%) -12px 0 / 24px 24px,
+        linear-gradient(145deg, #0a2237f2, #07131ff2);
+    }
+
+    html[data-theme="time-vortex"] .card {
+      box-shadow: inset 0 1px 0 #ffffff18, 0 0 28px #d95dff18, 0 14px 34px #0008;
+    }
+
+    html[data-theme="arcade"] .card,
+    html[data-theme="arcade"] .btn {
+      border-color: #69fff44a;
+      box-shadow: inset 0 1px 0 #ffffff1c, 0 0 18px #ff2e9b18;
+    }
+
+    html[data-theme="executive"] .hero,
+    html[data-theme="executive"] .card,
+    html[data-theme="executive"] .controls,
+    html[data-theme="executive"] .stack,
+    html[data-theme="executive"] .calendar {
+      border-radius: 6px;
+      filter: saturate(.55);
+      box-shadow: 0 12px 30px #0005;
     }
 
     .image-lightbox {
@@ -1126,6 +1295,8 @@
     }
 
     .toggle label {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
       min-height: 44px;
       padding: 9px 11px;
       border: 0;
@@ -1147,6 +1318,20 @@
     }
 
     .toggle label:hover { background: #17263a; }
+
+    .toggle-edit {
+      width: 28px;
+      min-width: 28px;
+      height: 28px;
+      padding: 4px;
+      border: 1px solid #83cfff40;
+      border-radius: 8px;
+      background: #08111ecf;
+      color: #d9f5ff;
+      cursor: pointer;
+    }
+
+    .toggle-edit svg { width: 17px; height: 17px; display: block; }
 
     .toggle input[type="checkbox"],
     .calendar-row input[type="checkbox"],
@@ -1274,7 +1459,7 @@
 
     #cardStack {
       grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-      align-items: start;
+      align-items: stretch;
     }
 
     #calendarGroups {
@@ -1341,6 +1526,28 @@
     .event-dialog h2 { margin: 0; font-size: 24px; }
     .event-dialog p { margin: 0; color: #c7d5e8; line-height: 1.55; }
     .event-dialog .btn { justify-self: start; }
+
+    .event-dialog[data-level="warning"] {
+      border-color: #ffc65d9c;
+      box-shadow: 0 30px 90px #000d, 0 0 42px #ffad3340;
+    }
+
+    .event-dialog[data-level="warning"] .badge {
+      color: #ffd267;
+      background: #ffad331c;
+    }
+
+    .event-dialog[data-level="critical"] {
+      border-color: #e36affb3;
+      background: radial-gradient(circle at 80% 0%, #9a21b840, transparent 48%), #0a0f1df5;
+      box-shadow: 0 30px 90px #000d, 0 0 55px #d946ef4f;
+      animation: critical-card-pulse 760ms ease-in-out infinite;
+    }
+
+    .event-dialog[data-level="critical"] .badge {
+      color: #ff79e8;
+      background: #d946ef24;
+    }
 
     /* Wide dashboard: controls in the center, live timers on the right. */
     body {
@@ -1423,15 +1630,8 @@
       display: grid;
       gap: 12px;
       min-width: 0;
-      position: sticky;
-      top: 78px;
-      max-height: calc(100vh - 96px);
-      overflow-x: hidden;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      scrollbar-gutter: stable;
-      scrollbar-color: #4b7896 #08111e;
-      scrollbar-width: thin;
+      position: relative;
+      align-self: start;
     }
 
     .calendar,
@@ -1626,7 +1826,7 @@
     }
 
     .dashboard-main > .hero {
-      min-height: 370px;
+      min-height: clamp(370px, 38vw, 480px);
       background-position: center 18%;
     }
 
@@ -1653,8 +1853,13 @@
 
     .live-column #cardStack {
       grid-template-columns: minmax(0, 1fr);
-      max-height: none;
-      overflow: visible;
+      max-height: min(72vh, 980px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      scrollbar-color: #4b7896 #08111e;
+      scrollbar-width: thin;
       padding-right: 0;
     }
 
@@ -1664,6 +1869,7 @@
     .card {
       gap: 5px;
       min-width: 0;
+      height: 100%;
       padding: 9px 10px 8px;
       overflow: visible;
     }
@@ -1688,11 +1894,17 @@
     }
 
     .card-title b {
+      display: -webkit-box;
+      min-height: 2.4em;
+      overflow: hidden;
       font-size: 16px;
       line-height: 1.2;
       hyphens: auto;
       overflow-wrap: break-word;
       word-break: normal;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
     }
 
     .card-title:focus-visible b {
@@ -1702,10 +1914,10 @@
     }
 
     .card-tooltip {
-      position: absolute;
-      z-index: 30;
-      top: calc(100% + 8px);
-      left: 0;
+      position: fixed;
+      z-index: 130;
+      top: var(--tooltip-top, 90px);
+      left: var(--tooltip-left, 12px);
       display: grid;
       width: min(340px, 82vw);
       gap: 7px;
@@ -1721,7 +1933,10 @@
       visibility: hidden;
       pointer-events: none;
       transform: translateY(-3px);
-      transition: opacity 130ms ease, transform 130ms ease, visibility 130ms ease;
+      transition:
+        opacity 130ms ease 5s,
+        transform 130ms ease 5s,
+        visibility 0s linear 5s;
     }
 
     .card-title:hover .card-tooltip,
@@ -1729,6 +1944,10 @@
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
+    }
+
+    .card-title:focus .card-tooltip {
+      transition-delay: 0s;
     }
 
     .card-tooltip p { margin: 0; }
@@ -1940,7 +2159,7 @@
     <div class="brand">
       <div class="mark"><b>TL</b></div>
       <div>
-        <strong id="brandTitle">Linny's Astral Solisium Pulse</strong>
+        <strong id="brandTitle">Linny's Epic Time Portal</strong>
         <small id="brandSub">TL EU · Live Event Intelligence</small>
       </div>
     </div>
@@ -2087,10 +2306,10 @@
 
   <main class="layout">
     <div class="dashboard-main">
-      <section class="hero">
+      <section class="hero" id="heroSection">
         <b id="heroTag">THRONE AND LIBERTY · EU LIVE</b>
         <span class="hero-character" id="heroCharacter">Linny · Server Sophia</span>
-        <h1 id="heroTitle">Linny's Astral Solisium Pulse</h1>
+        <h1 id="heroTitle">Linny's Epic Time Portal</h1>
         <p id="heroText">Alle wichtigen Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.</p>
       </section>
 
@@ -2098,11 +2317,11 @@
       <div class="control-cluster control-settings">
         <div class="meta-grid">
           <div class="row">
-            <div class="label" id="categoryLabel">Category</div>
+            <div class="label settings-heading" id="categoryLabel">Category</div>
             <select id="categorySelect"></select>
             <div class="category-row">
-              <button class="btn alt" id="newCategoryBtn" type="button">New category</button>
-              <button class="btn danger" id="deleteCategoryBtn" type="button">Delete category</button>
+              <button class="btn alt icon-action" id="newCategoryBtn" type="button" title="Neue Kategorie" aria-label="Neue Kategorie">＋</button>
+              <button class="btn danger icon-action" id="deleteCategoryBtn" type="button" title="Kategorie löschen" aria-label="Kategorie löschen">⌫</button>
             </div>
           </div>
           <div class="row">
@@ -2119,9 +2338,9 @@
           <div class="row">
             <div class="label" id="quickActionsLabel">Config</div>
             <div class="actions">
-              <button class="btn" id="newTimerBtn" type="button">New timer</button>
-              <button class="btn alt" id="exportBtn" type="button">Export INI</button>
-              <button class="btn alt" id="importBtn" type="button">Import INI</button>
+              <button class="btn icon-action" id="newTimerBtn" type="button" title="Neuer Timer" aria-label="Neuer Timer">＋</button>
+              <button class="btn alt icon-action" id="exportBtn" type="button" title="INI exportieren" aria-label="INI exportieren">⇩</button>
+              <button class="btn alt icon-action" id="importBtn" type="button" title="INI importieren" aria-label="INI importieren">⇧</button>
               <input id="importInput" type="file" accept=".ini,text/plain" hidden>
             </div>
           </div>
@@ -2133,6 +2352,19 @@
               <option value="comfortable">Comfortable</option>
               <option value="compact" selected>Compact</option>
               <option value="ultra">Ultra compact</option>
+              <option value="cinematic">Cinematic</option>
+              <option value="big-picture">Big Picture</option>
+            </select>
+          </div>
+          <div class="row">
+            <label class="label" id="themeLabel" for="themeSelect">Theme</label>
+            <select id="themeSelect">
+              <option value="astral">Astral</option>
+              <option value="bavaria">Bayern</option>
+              <option value="time-vortex">Zeitwirbel</option>
+              <option value="arcade">Arcade</option>
+              <option value="solisium">Solisium</option>
+              <option value="executive">Executive</option>
             </select>
           </div>
           <div class="row">
@@ -2160,13 +2392,26 @@
           <small class="activity-status" id="pageActivityStatus"></small>
         </div>
         <div class="notification-actions">
-          <button class="btn" id="enableNotificationsBtn" type="button">Aktivieren &amp; Ton testen</button>
+          <label class="label" id="notificationOverrideLabel" for="notificationOverrideSelect">Alarmsteuerung</label>
+          <select id="notificationOverrideSelect">
+            <option value="default">Timer-Standard</option>
+            <option value="all">Alle aktiv</option>
+            <option value="silent">Nur visuell</option>
+            <option value="off">Alle aus</option>
+          </select>
+          <button class="btn icon-action" id="enableNotificationsBtn" type="button" title="Benachrichtigungen aktivieren und Ton testen" aria-label="Benachrichtigungen aktivieren und Ton testen">🔊</button>
           <div class="dock-launch">
             <select id="dockSideSelect" aria-label="Andockseite">
               <option value="right" selected>Rechts</option>
               <option value="left">Links</option>
+              <option value="top">Oben</option>
+              <option value="bottom">Unten</option>
+              <option value="top-left">Oben links</option>
+              <option value="top-right">Oben rechts</option>
+              <option value="bottom-left">Unten links</option>
+              <option value="bottom-right">Unten rechts</option>
             </select>
-            <button class="btn alt" id="dockModeBtn" type="button">Statusleiste öffnen</button>
+            <button class="btn alt icon-action" id="dockModeBtn" type="button" title="Statusleiste positionieren" aria-label="Statusleiste positionieren">✥</button>
           </div>
         </div>
       </div>
@@ -2268,10 +2513,10 @@
       de: {
         editorTitle: "Timer bearbeiten",
         editorNote: "Die Standardkonfiguration kommt aus Git. Änderungen werden in diesem Browser gespeichert und lassen sich als INI exportieren.",
-        brandSub: "EU-Event-Timer · v3.0",
+        brandSub: "EU-Event-Timer · v3.1",
         installApp: "Als App installieren",
         helpDocs: "Hilfe",
-        heroTitle: "Linny's Astral Solisium Pulse",
+        heroTitle: "Linny's Epic Time Portal",
         heroCharacter: "Linny · Server Sophia",
         heroText: "Wichtige Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.",
         category: "Kategorie",
@@ -2280,6 +2525,20 @@
         historyMinutes: "Historie nach Eventende (Minuten)",
         historyMinutesHelp: "Beendete Events bleiben so lange ausgegraut sichtbar. 0 blendet die Historie aus.",
         cardDensity: "Kartendichte",
+        densityCinematic: "Kino",
+        densityBigPicture: "Großbild",
+        theme: "Themenwelt",
+        themeAstral: "Astrales Solisium",
+        themeBavaria: "Boarischer Zauber",
+        themeTimeVortex: "Gallifrey-Zeitwirbel",
+        themeArcade: "Linnys Arcade",
+        themeSolisium: "Solisium-Epos",
+        themeExecutive: "Executive Demo",
+        notificationOverride: "Alarmsteuerung",
+        notificationDefault: "Timer-Standard",
+        notificationAll: "Alle aktiv",
+        notificationSilent: "Nur visuell",
+        notificationOff: "Alle aus",
         densityComfortable: "Komfortabel",
         densityCompact: "Kompakt",
         densityUltra: "Ultrakompakt",
@@ -2364,6 +2623,12 @@
         dockSide: "Andockseite",
         dockRight: "Rechts",
         dockLeft: "Links",
+        dockTop: "Oben",
+        dockBottom: "Unten",
+        dockTopLeft: "Oben links",
+        dockTopRight: "Oben rechts",
+        dockBottomLeft: "Unten links",
+        dockBottomRight: "Unten rechts",
         dockBlocked: "Das Statusfenster wurde vom Browser blockiert. Bitte Popups für diese Seite erlauben.",
         eventAlert: "Event-Erinnerung",
         warningAlert: "Warning-Erinnerung",
@@ -2467,10 +2732,10 @@
       en: {
         editorTitle: "Edit timer",
         editorNote: "The default configuration comes from Git. Changes stay in this browser and can be exported as INI.",
-        brandSub: "EU event timer · v3.0",
+        brandSub: "EU event timer · v3.1",
         installApp: "Install app",
         helpDocs: "Help",
-        heroTitle: "Linny's Astral Solisium Pulse",
+        heroTitle: "Linny's Epic Time Portal",
         heroCharacter: "Linny · Sophia server",
         heroText: "Important event windows, precise countdowns and reminders at a glance.",
         category: "Category",
@@ -2479,6 +2744,20 @@
         historyMinutes: "History after event (minutes)",
         historyMinutesHelp: "Ended events remain dimmed for this long. Set to 0 to hide history.",
         cardDensity: "Card density",
+        densityCinematic: "Cinematic",
+        densityBigPicture: "Big picture",
+        theme: "Theme world",
+        themeAstral: "Astral Solisium",
+        themeBavaria: "Bavarian magic",
+        themeTimeVortex: "Gallifrey time vortex",
+        themeArcade: "Linny's arcade",
+        themeSolisium: "Solisium epic",
+        themeExecutive: "Executive demo",
+        notificationOverride: "Alert control",
+        notificationDefault: "Timer defaults",
+        notificationAll: "Enable all",
+        notificationSilent: "Visual only",
+        notificationOff: "Disable all",
         densityComfortable: "Comfortable",
         densityCompact: "Compact",
         densityUltra: "Ultra compact",
@@ -2563,6 +2842,12 @@
         dockSide: "Dock side",
         dockRight: "Right",
         dockLeft: "Left",
+        dockTop: "Top",
+        dockBottom: "Bottom",
+        dockTopLeft: "Top left",
+        dockTopRight: "Top right",
+        dockBottomLeft: "Bottom left",
+        dockBottomRight: "Bottom right",
         dockBlocked: "The browser blocked the status window. Please allow popups for this site.",
         eventAlert: "Event reminder",
         warningAlert: "Warning reminder",
@@ -2669,7 +2954,7 @@
       ...UI.de,
       editorTitle: "Timer herrichtn",
       editorNote: "D'Grundkonfiguration kimmt aus Git. Dei Änderungen bleim in dem Browser und lossn se als INI exportiern.",
-      brandSub: "Boarischer EU-Event-Timer · v3.0",
+      brandSub: "Boarischer EU-Event-Timer · v3.1",
       installApp: "Ois App installiern",
       helpDocs: "Hüf",
       heroText: "De wichtigsten Eventfenster, Countdowns und Erinnerungen auf oan Blick.",
@@ -2679,6 +2964,20 @@
       historyMinutes: "Historie nachm Event in Minutn",
       historyMinutesHelp: "So lang bleibt a fertigs Event grau stehn. Mit 0 is d'Historie aus.",
       cardDensity: "Kartndichtn",
+      densityCinematic: "Kinomodus",
+      densityBigPicture: "Riesnbuid",
+      theme: "Themenwelt",
+      themeAstral: "Astrals Solisium",
+      themeBavaria: "Boarischer Zauber",
+      themeTimeVortex: "Gallifrey-Zeitwirbl",
+      themeArcade: "Linnys Spuihoin",
+      themeSolisium: "Solisium-Epos",
+      themeExecutive: "Gscheida Demo-Modus",
+      notificationOverride: "Alarm-Steierong",
+      notificationDefault: "Wia beim Timer",
+      notificationAll: "Ois eischaltn",
+      notificationSilent: "Bloß zum Oschaun",
+      notificationOff: "Ois aus",
       densityComfortable: "Gmiatlich",
       densityCompact: "Kompakt",
       densityUltra: "Sakrisch kompakt",
@@ -2911,8 +3210,12 @@
       historyMinutes: 30,
       historyCollapsed: false,
       cardDensity: "compact",
+      theme: "astral",
+      notificationOverride: "default",
       colorblindMode: false,
       showThumbnails: true,
+      cardRenderKey: "",
+      artRotationBucket: Math.floor(Date.now() / 600000),
       editingTimerId: "",
       notified: new Set(),
       audioContext: null,
@@ -2930,6 +3233,7 @@
       localClock: document.getElementById("localClock"),
       serverClock: document.getElementById("serverClock"),
       heroTitle: document.getElementById("heroTitle"),
+      heroSection: document.getElementById("heroSection"),
       heroCharacter: document.getElementById("heroCharacter"),
       heroText: document.getElementById("heroText"),
       langDeBtn: document.getElementById("langDeBtn"),
@@ -2967,6 +3271,8 @@
       historyMinutesHelp: document.getElementById("historyMinutesHelp"),
       cardDensityLabel: document.getElementById("cardDensityLabel"),
       cardDensitySelect: document.getElementById("cardDensitySelect"),
+      themeLabel: document.getElementById("themeLabel"),
+      themeSelect: document.getElementById("themeSelect"),
       accessibilityLabel: document.getElementById("accessibilityLabel"),
       colorblindModeInput: document.getElementById("colorblindModeInput"),
       colorblindModeLabel: document.getElementById("colorblindModeLabel"),
@@ -3041,6 +3347,8 @@
       calendarSelectAllLabel: document.getElementById("calendarSelectAllLabel"),
       downloadSelectedIcsBtn: document.getElementById("downloadSelectedIcsBtn"),
       notificationSetupTitle: document.getElementById("notificationSetupTitle"),
+      notificationOverrideLabel: document.getElementById("notificationOverrideLabel"),
+      notificationOverrideSelect: document.getElementById("notificationOverrideSelect"),
       notificationPermissionStatus: document.getElementById("notificationPermissionStatus"),
       pageActivityStatus: document.getElementById("pageActivityStatus"),
       enableNotificationsBtn: document.getElementById("enableNotificationsBtn"),
@@ -3149,6 +3457,7 @@
       art("assets/events/gallery/linny-shadow-portal-v1.webp", "Linny betritt das Schattenportal – die Schatten gehen", "Linny enters the shadow portal – the shadows leave"),
       art("assets/events/gallery/linny-waterfall-sanctuary-v1.webp", "Linnys Wasserfall-Heiligtum akzeptiert nur epische Gäste", "Linny's waterfall sanctuary admits epic guests only"),
       art("assets/events/gallery/linny-gigantrite-airship-v1.webp", "Linny überholt den Gigantriten im Luftverkehr", "Linny overtakes the Gigantrite in mid-air"),
+      art("assets/events/themes/time-vortex/linny-time-lady-gallifrey-v1.webp", "Time Lady Linny rettet Gallifrey – schon wieder vor dem Frühstück", "Time Lady Linny saves Gallifrey – again, before breakfast", "Time Lady Linny rett Gallifrey – scho wieda vorm Frühstück"),
       art("assets/events/gallery/linny-aurora-ice-dragon-v1.webp", "Nordlicht, Eisdrache, Linny – in dieser Reihenfolge der Wichtigkeit", "Aurora, ice dragon, Linny – in ascending order of importance"),
       art("assets/events/gallery/linny-royal-victory-v1.webp", "Solisium feiert Linnys vollkommen überraschenden nächsten Sieg", "Solisium celebrates Linny's completely unexpected next victory")
     ];
@@ -3158,6 +3467,9 @@
       art("assets/events/fun/linny-grand-mmo-city-v1.webp", "Linny besucht die große MMO-Stadt – die Wachen wechseln die Seiten", "Linny visits the grand MMO city – the guards switch sides", "Linny kimmt in d'große MMO-Stodt – de Wacha wechsln d'Seitn"),
       art("assets/events/fun/linny-cel-kingdom-v1.webp", "Linny im Himmels-Königreich – der Held darf kurz mitlaufen", "Linny in the sky kingdom – the hero may tag along", "Linny im Himmels-Kinireich – da Held derf a weng mitlaffa"),
       art("assets/events/fun/linny-kart-race-v1.webp", "Linny Kart: Blaue Schale? Wird einfach weggeblitzt.", "Linny Kart: blue shell? Simply zapped away.", "Linny-Kart: Blaue Schoin? Wird hoid weggeblitzt.")
+      ,art("assets/events/fun/linny-slime-isekai-v1.webp", "Linny landet im Schleim-Isekai – und wird vorsorglich zur Königin gewählt", "Linny lands in a slime isekai – and is immediately elected queen", "Linny landet im Schleim-Isekai – und werd glei zur Kini")
+      ,art("assets/events/fun/linny-anime-energy-v1.webp", "Linnys Energiewelle: Der Endboss beantragt Urlaub", "Linny's energy wave: the final boss files for leave", "Linnys Energiewelln: Da Endboss nimmt Urlaub")
+      ,art("assets/events/themes/arcade/linny-turbo-hedgehog-v1.webp", "Linny und die Turbo-Crew drehen den Endboss durch den Ring", "Linny and the turbo crew run circles around the final boss", "Linny und d'Turbo-Truppn drahn an Endboss durch'n Ring")
     ];
     const FIXED_EVENT_ART_IDS = new Set(["arkeum_eu", "gate_memory_eu", "summer_festival_eu"]);
 
@@ -3172,12 +3484,11 @@
 
     function timerArt(timer) {
       const configured = EPIC_EVENT_ART.find((item) => item.src === timer?.image);
-      if (FIXED_EVENT_ART_IDS.has(timer?.id) && configured) return configured;
       const pool = timer?.categoryId === "personal" && FUN_EVENT_ART.length ? FUN_EVENT_ART : EPIC_EVENT_ART;
-      const day = new Intl.DateTimeFormat("en-CA", {
-        year: "numeric", month: "2-digit", day: "2-digit", timeZone: "Europe/Berlin"
-      }).format(new Date());
-      return pool[stableHash((timer?.id || "linny") + "|" + day) % pool.length] || configured || { src: timer?.image || "", title: {} };
+      if (FIXED_EVENT_ART_IDS.has(timer?.id) && configured && state.artRotationBucket % 3 !== 0) return configured;
+      return pool[stableHash((timer?.id || "linny") + "|" + state.artRotationBucket) % pool.length]
+        || configured
+        || { src: timer?.image || "", title: {} };
     }
 
     function artTitle(item, timer) {
@@ -3226,10 +3537,13 @@
 
     function notificationLevels(timer) {
       const settings = notificationSettings(timer);
+      if (state.notificationOverride === "off") return [];
       return [
-        { id: "warning", ...settings.warning },
-        { id: "critical", ...settings.critical }
-      ].filter((level) => level.enabled).sort((a, b) => b.seconds - a.seconds);
+        { id: "warning", ...settings.warning, enabled: state.notificationOverride === "all" ? true : settings.warning.enabled },
+        { id: "critical", ...settings.critical, enabled: state.notificationOverride === "all" ? true : settings.critical.enabled }
+      ].filter((level) => level.enabled)
+        .map((level) => state.notificationOverride === "silent" ? { ...level, sound: "none" } : level)
+        .sort((a, b) => b.seconds - a.seconds);
     }
 
     function notificationLevelKey(levelId) {
@@ -3409,6 +3723,8 @@
         historyMinutes: Number(settingsData.historyMinutes),
         historyCollapsed: parseIniBoolean(settingsData.historyCollapsed, false),
         cardDensity: settingsData.cardDensity || "",
+        theme: settingsData.theme || "",
+        notificationOverride: settingsData.notificationOverride || "",
         colorblindMode: parseIniBoolean(settingsData.colorblindMode, false),
         showThumbnails: parseIniBoolean(settingsData.showThumbnails, true)
       } : null;
@@ -3503,7 +3819,7 @@
     function serializeIniConfig(rawConfig) {
       const config = normalizeConfig(rawConfig);
       const lines = [
-        "; Linny's Astral Solisium Pulse timer configuration",
+        "; Linny's Epic Time Portal timer configuration",
         "; Import this file directly in the timer UI.",
         "",
         "[meta]",
@@ -3522,6 +3838,8 @@
           "historyMinutes=" + Math.max(0, Number(config.settings.historyMinutes) || 0),
           "historyCollapsed=" + (config.settings.historyCollapsed ? "true" : "false"),
           "cardDensity=" + iniValue(config.settings.cardDensity || "compact"),
+          "theme=" + iniValue(config.settings.theme || "astral"),
+          "notificationOverride=" + iniValue(config.settings.notificationOverride || "default"),
           "colorblindMode=" + (config.settings.colorblindMode ? "true" : "false"),
           "showThumbnails=" + (config.settings.showThumbnails !== false ? "true" : "false")
         );
@@ -4145,12 +4463,30 @@
     }
 
     function applyAppearanceSettings() {
-      const density = ["comfortable", "compact", "ultra"].includes(state.cardDensity) ? state.cardDensity : "compact";
+      const densityValues = ["comfortable", "compact", "ultra", "cinematic", "big-picture"];
+      const themeValues = ["astral", "bavaria", "time-vortex", "arcade", "solisium", "executive"];
+      const density = densityValues.includes(state.cardDensity) ? state.cardDensity : "compact";
+      const theme = themeValues.includes(state.theme) ? state.theme : "astral";
       document.documentElement.dataset.density = density;
+      document.documentElement.dataset.theme = theme;
       document.documentElement.classList.toggle("colorblind-mode", state.colorblindMode);
       dom.cardDensitySelect.value = density;
+      dom.themeSelect.value = theme;
+      dom.notificationOverrideSelect.value = state.notificationOverride;
       dom.colorblindModeInput.checked = state.colorblindMode;
       dom.showThumbnailsInput.checked = state.showThumbnails;
+      const heroByTheme = {
+        astral: "assets/events/gallery/linny-celestial-observatory-v1.webp",
+        bavaria: "assets/events/gallery/linny-white-stag-v1.webp",
+        "time-vortex": "assets/events/themes/time-vortex/linny-time-lady-gallifrey-v1.webp",
+        arcade: "assets/events/themes/arcade/linny-turbo-hedgehog-v1.webp",
+        solisium: "assets/events/gallery/linny-felswacht-conqueror-v1.webp",
+        executive: "assets/events/gallery/linny-astral-oracle-v1.webp"
+      };
+      const themePool = state.categoryId === "personal" ? FUN_EVENT_ART : EPIC_EVENT_ART;
+      const rotated = themePool[stableHash(theme + "|" + state.artRotationBucket) % themePool.length]?.src;
+      const heroImage = state.artRotationBucket % 2 === 0 ? rotated : heroByTheme[theme];
+      dom.heroSection.style.setProperty("--hero-image", "url('" + (heroImage || heroByTheme.astral) + "')");
     }
 
     function renderLegalContent() {
@@ -4310,6 +4646,14 @@
       dom.cardDensitySelect.options[0].textContent = text("densityComfortable");
       dom.cardDensitySelect.options[1].textContent = text("densityCompact");
       dom.cardDensitySelect.options[2].textContent = text("densityUltra");
+      dom.cardDensitySelect.options[3].textContent = text("densityCinematic");
+      dom.cardDensitySelect.options[4].textContent = text("densityBigPicture");
+      dom.themeLabel.textContent = text("theme");
+      ["themeAstral", "themeBavaria", "themeTimeVortex", "themeArcade", "themeSolisium", "themeExecutive"]
+        .forEach((key, index) => { dom.themeSelect.options[index].textContent = text(key); });
+      dom.notificationOverrideLabel.textContent = text("notificationOverride");
+      ["notificationDefault", "notificationAll", "notificationSilent", "notificationOff"]
+        .forEach((key, index) => { dom.notificationOverrideSelect.options[index].textContent = text(key); });
       dom.accessibilityLabel.textContent = text("accessibility");
       dom.colorblindModeLabel.textContent = text("colorblindMode");
       dom.showThumbnailsLabel.textContent = text("showThumbnails");
@@ -4322,10 +4666,12 @@
       dom.calendarSelectAllLabel.textContent = text("selectAllDates");
       dom.downloadSelectedIcsBtn.textContent = text("exportSelectedIcs");
       dom.notificationSetupTitle.textContent = text("notificationSetupTitle");
-      dom.dockModeBtn.textContent = text("dockMode");
+      dom.dockModeBtn.textContent = "✥";
+      dom.dockModeBtn.title = text("dockMode");
+      dom.dockModeBtn.setAttribute("aria-label", text("dockMode"));
       dom.dockSideSelect.setAttribute("aria-label", text("dockSide"));
-      dom.dockSideSelect.options[0].textContent = text("dockRight");
-      dom.dockSideSelect.options[1].textContent = text("dockLeft");
+      ["dockRight", "dockLeft", "dockTop", "dockBottom", "dockTopLeft", "dockTopRight", "dockBottomLeft", "dockBottomRight"]
+        .forEach((key, index) => { dom.dockSideSelect.options[index].textContent = text(key); });
       dom.dockSideSelect.value = state.dockSide;
       dom.eventPopupLabel.textContent = text("eventAlert");
       dom.eventPopupCloseBtn.textContent = text("acknowledge");
@@ -4351,11 +4697,18 @@
       applyAppearanceSettings();
       renderPageActivityStatus();
       renderConfigHealth();
-      dom.newTimerBtn.textContent = text("newTimer");
-      dom.exportBtn.textContent = text("exportConfig");
-      dom.importBtn.textContent = text("importConfig");
-      dom.newCategoryBtn.textContent = text("newCategory");
-      dom.deleteCategoryBtn.textContent = text("deleteCategory");
+      const iconActions = [
+        [dom.newTimerBtn, "＋", "newTimer"],
+        [dom.exportBtn, "⇩", "exportConfig"],
+        [dom.importBtn, "⇧", "importConfig"],
+        [dom.newCategoryBtn, "＋", "newCategory"],
+        [dom.deleteCategoryBtn, "⌫", "deleteCategory"]
+      ];
+      for (const [button, icon, labelKey] of iconActions) {
+        button.textContent = icon;
+        button.title = text(labelKey);
+        button.setAttribute("aria-label", text(labelKey));
+      }
       dom.builderTitle.textContent = text("builderTitle");
       dom.builderTimesLabel.textContent = text("builderTimes");
       dom.builderAddTimeBtn.textContent = text("builderAddTime");
@@ -4414,6 +4767,18 @@
         const name = document.createElement("span");
         name.textContent = timerName(timer);
         label.appendChild(name);
+        const editButton = document.createElement("button");
+        editButton.className = "toggle-edit";
+        editButton.type = "button";
+        editButton.title = text("edit") + ": " + timerName(timer);
+        editButton.setAttribute("aria-label", editButton.title);
+        editButton.innerHTML = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z\"/></svg>";
+        editButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          openEditor(timer.id);
+        });
+        label.appendChild(editButton);
         dom.timerToggle.appendChild(label);
       }
     }
@@ -4469,6 +4834,26 @@
       else state.localConfig.timers.push(timer);
       saveLocalConfig();
       state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
+    }
+
+    function migrateDraftAndReminderDefaults(localConfig) {
+      const before = localConfig.timers.length;
+      localConfig.timers = localConfig.timers.filter((timer) => {
+        const names = Object.values(timer.name || {});
+        return !/^timer_\d+$/.test(timer.id || "")
+          || !names.some((name) => /^(Neuer Timer|New Timer)$/i.test(String(name)));
+      });
+      let changed = localConfig.timers.length !== before;
+      const gate = localConfig.timers.find((timer) => timer.id === "gate_memory_eu");
+      if (gate?.notifications?.warning?.seconds === 300) {
+        gate.notifications.warning.seconds = 360;
+        changed = true;
+      }
+      if (gate?.notifications?.critical?.seconds === 90) {
+        gate.notifications.critical.seconds = 120;
+        changed = true;
+      }
+      return changed;
     }
 
     function saveEditor() {
@@ -4568,10 +4953,7 @@
           critical: { enabled: true, seconds: 60, sound: "urgent" }
         }
       };
-      upsertLocalTimer(timer);
-      state.visibleIds.add(id);
-      saveVisibleIds();
-      renderAll();
+      state.mergedConfig.timers.push(timer);
       openEditor(id);
     }
 
@@ -4754,6 +5136,8 @@
         historyMinutes: state.historyMinutes,
         historyCollapsed: state.historyCollapsed,
         cardDensity: state.cardDensity,
+        theme: state.theme,
+        notificationOverride: state.notificationOverride,
         colorblindMode: state.colorblindMode,
         showThumbnails: state.showThumbnails
       };
@@ -4765,10 +5149,14 @@
       if (settings.displayTimezone) state.displayTimezone = settings.displayTimezone;
       if (settings.categoryId) state.categoryId = settings.categoryId;
       if (Array.isArray(settings.visibleTimerIds)) state.visibleIds = new Set(settings.visibleTimerIds);
-      if (["left", "right"].includes(settings.dockSide)) state.dockSide = settings.dockSide;
+      if (["left", "right", "top", "bottom", "top-left", "top-right", "bottom-left", "bottom-right"].includes(settings.dockSide)) {
+        state.dockSide = settings.dockSide;
+      }
       if (Number.isFinite(settings.historyMinutes)) state.historyMinutes = Math.max(0, Math.min(1440, Math.round(settings.historyMinutes)));
       state.historyCollapsed = Boolean(settings.historyCollapsed);
-      if (["comfortable", "compact", "ultra"].includes(settings.cardDensity)) state.cardDensity = settings.cardDensity;
+      if (["comfortable", "compact", "ultra", "cinematic", "big-picture"].includes(settings.cardDensity)) state.cardDensity = settings.cardDensity;
+      if (["astral", "bavaria", "time-vortex", "arcade", "solisium", "executive"].includes(settings.theme)) state.theme = settings.theme;
+      if (["default", "all", "silent", "off"].includes(settings.notificationOverride)) state.notificationOverride = settings.notificationOverride;
       state.colorblindMode = Boolean(settings.colorblindMode);
       state.showThumbnails = settings.showThumbnails !== false;
       storageSet("timer_language", state.lang);
@@ -4779,6 +5167,8 @@
       storageSet("timer_history_minutes", String(state.historyMinutes));
       storageSet("timer_history_collapsed", String(state.historyCollapsed));
       storageSet("timer_card_density", state.cardDensity);
+      storageSet("timer_theme", state.theme);
+      storageSet("timer_notification_override", state.notificationOverride);
       storageSet("timer_colorblind_mode", String(state.colorblindMode));
       storageSet("timer_show_thumbnails", String(state.showThumbnails));
       storageSet(localeDefaultsKey, "1");
@@ -4866,14 +5256,20 @@
       }
     }
 
+    function notificationRemainingSeconds(next) {
+      return Math.max(0, Math.ceil((next.getTime() - Date.now()) / 1000));
+    }
+
     function showPopup(timer, next, level) {
       const title = timerName(timer);
       const alertLevel = text(notificationLevelKey(level.id));
+      const remainingSeconds = notificationRemainingSeconds(next);
       const message = text("eventStarts")
         .replace("{time}", formatTime(next, state.displayTimezone, false))
-        .replace("{lead}", formatLeadTime(level.seconds));
+        .replace("{lead}", formatLeadTime(remainingSeconds));
       toast(alertLevel + " · " + title + " · " + message);
       dom.eventPopupLabel.textContent = alertLevel;
+      dom.eventPopup.dataset.level = level.id;
       dom.eventPopupTitle.textContent = title;
       dom.eventPopupText.textContent = message;
       try {
@@ -4888,10 +5284,15 @@
     }
 
     function renderNotificationPermissionStatus() {
+      const setNotificationButton = (labelKey) => {
+        dom.enableNotificationsBtn.textContent = "🔊";
+        dom.enableNotificationsBtn.title = text(labelKey);
+        dom.enableNotificationsBtn.setAttribute("aria-label", text(labelKey));
+      };
       if (!("Notification" in window)) {
         dom.notificationPermissionStatus.textContent = text("notificationStatusUnsupported");
         dom.notificationPermissionStatus.className = "is-blocked";
-        dom.enableNotificationsBtn.textContent = text("notificationTestSound");
+        setNotificationButton("notificationTestSound");
         dom.channelBrowser.disabled = true;
         return;
       }
@@ -4899,15 +5300,15 @@
       if (Notification.permission === "granted") {
         dom.notificationPermissionStatus.textContent = text("notificationStatusGranted");
         dom.notificationPermissionStatus.className = "is-ready";
-        dom.enableNotificationsBtn.textContent = text("notificationTestSound");
+        setNotificationButton("notificationTestSound");
       } else if (Notification.permission === "denied") {
         dom.notificationPermissionStatus.textContent = text("notificationStatusDenied");
         dom.notificationPermissionStatus.className = "is-blocked";
-        dom.enableNotificationsBtn.textContent = text("notificationTestSound");
+        setNotificationButton("notificationTestSound");
       } else {
         dom.notificationPermissionStatus.textContent = text("notificationStatusDefault");
         dom.notificationPermissionStatus.className = "";
-        dom.enableNotificationsBtn.textContent = text("notificationEnable");
+        setNotificationButton("notificationEnable");
       }
     }
 
@@ -4930,12 +5331,13 @@
     function deliverNotification(timer, next, level, channels, key) {
       if (channels.includes("popup")) showPopup(timer, next, level);
       playNotificationSound(level.sound);
+      const remainingSeconds = notificationRemainingSeconds(next);
       if (channels.includes("browser") && "Notification" in window && Notification.permission === "granted") {
         try {
           new Notification(text(notificationLevelKey(level.id)) + " · " + timerName(timer), {
             body: text("eventStarts")
               .replace("{time}", formatTime(next, state.displayTimezone, false))
-              .replace("{lead}", formatLeadTime(level.seconds)),
+              .replace("{lead}", formatLeadTime(remainingSeconds)),
             tag: key,
             renotify: false,
             requireInteraction: true
@@ -4975,12 +5377,20 @@
     }
 
     function openDockWindow() {
-      const width = 320;
-      const height = Math.max(640, window.screen.availHeight || 900);
-      const left = state.dockSide === "left"
-        ? (window.screen.availLeft || 0)
-        : (window.screen.availLeft || 0) + (window.screen.availWidth || width) - width;
-      const top = window.screen.availTop || 0;
+      const screenLeft = window.screen.availLeft || 0;
+      const screenTop = window.screen.availTop || 0;
+      const screenWidth = window.screen.availWidth || 1280;
+      const screenHeight = window.screen.availHeight || 900;
+      const horizontal = state.dockSide === "top" || state.dockSide === "bottom";
+      const corner = state.dockSide.includes("-");
+      const width = horizontal ? Math.min(1100, screenWidth) : (corner ? Math.min(520, screenWidth) : 340);
+      const height = horizontal ? Math.min(380, screenHeight) : (corner ? Math.min(680, screenHeight) : Math.max(640, screenHeight));
+      const atLeft = state.dockSide.includes("left") || state.dockSide === "left";
+      const atTop = state.dockSide.includes("top") || state.dockSide === "top";
+      const atBottom = state.dockSide.includes("bottom") || state.dockSide === "bottom";
+      const left = horizontal ? screenLeft + Math.max(0, (screenWidth - width) / 2)
+        : (atLeft ? screenLeft : screenLeft + screenWidth - width);
+      const top = atBottom ? screenTop + screenHeight - height : screenTop;
       const url = new URL(window.location.href);
       url.searchParams.set("mode", "dock");
       const dockWindow = window.open(
@@ -5048,13 +5458,51 @@
     }
 
     function renderCards() {
-      dom.cardStack.innerHTML = "";
       const category = selectedCategory();
       const timers = filteredTimers().filter((timer) => state.visibleIds.has(timer.id));
       const cards = timers.map((timer) => {
         const next = timerOccurrences(timer, category, 8)[0];
         return { timer, next };
       }).filter((x) => x.next).sort((a, b) => a.next - b.next);
+      const renderKey = [
+        state.lang,
+        state.categoryId,
+        state.showThumbnails,
+        state.artRotationBucket,
+        cards.map(({ timer, next }) => timer.id + "@" + next.getTime()).join("|")
+      ].join("::");
+
+      if (state.cardRenderKey === renderKey) {
+        for (const item of cards) {
+          const el = dom.cardStack.querySelector('[data-timer-id="' + CSS.escape(item.timer.id) + '"]');
+          if (!el) continue;
+          const delta = item.next.getTime() - Date.now();
+          const tone = urgencyTone(delta);
+          const phasePercent = Math.round(urgencyPhaseProgress(delta) * 100);
+          el.className = "card " + urgencyClass(delta)
+            + (el.dataset.primary === "true" ? " is-primary" : "")
+            + (state.showThumbnails ? " has-thumbnail" : "");
+          el.style.setProperty("--urgency-color", tone.color);
+          el.style.setProperty("--urgency-glow", tone.glow);
+          const count = el.querySelector(".count");
+          const status = el.querySelector(".card-status");
+          const fill = el.querySelector(".card-phase-progress span");
+          const bar = el.querySelector(".card-phase-progress");
+          if (count) count.textContent = countdown(item.next);
+          if (status) status.textContent = text(urgencyLabelKey(delta));
+          if (fill) fill.style.width = phasePercent + "%";
+          if (bar) {
+            const phaseLabel = text("phaseProgress").replace("{percent}", String(phasePercent));
+            bar.title = phaseLabel;
+            bar.setAttribute("aria-label", phaseLabel);
+            bar.setAttribute("aria-valuenow", String(phasePercent));
+          }
+        }
+        return;
+      }
+
+      state.cardRenderKey = renderKey;
+      dom.cardStack.innerHTML = "";
 
       if (!cards.length) {
         const empty = document.createElement("div");
@@ -5077,6 +5525,8 @@
         const phaseProgress = urgencyPhaseProgress(delta);
         const el = document.createElement("article");
         el.className = "card " + urgencyClass(delta) + (index === 0 ? " is-primary" : "");
+        el.dataset.timerId = timer.id;
+        el.dataset.primary = String(index === 0);
         if (state.showThumbnails && selectedArt.src) el.classList.add("has-thumbnail");
         el.style.setProperty("--motif", motif);
         el.style.setProperty("--accent-bar", accent.bar);
@@ -5093,6 +5543,18 @@
         title.className = "card-title";
         title.tabIndex = 0;
         title.setAttribute("aria-label", timerName(timer));
+        title.addEventListener("mouseenter", () => {
+          const rect = title.getBoundingClientRect();
+          const tooltipWidth = Math.min(340, window.innerWidth - 24);
+          const left = Math.max(12, Math.min(rect.left, window.innerWidth - tooltipWidth - 12));
+          const estimatedHeight = 245;
+          const below = rect.bottom + 8;
+          const top = below + estimatedHeight <= window.innerHeight
+            ? below
+            : Math.max(12, rect.top - estimatedHeight - 8);
+          title.style.setProperty("--tooltip-left", left + "px");
+          title.style.setProperty("--tooltip-top", top + "px");
+        });
         const heading = document.createElement("b");
         heading.textContent = timerName(timer);
         title.appendChild(heading);
@@ -5155,16 +5617,7 @@
         tooltip.appendChild(criticalRow);
         title.appendChild(tooltip);
 
-        const editButton = document.createElement("button");
-        editButton.className = "icon-btn edit-btn";
-        editButton.type = "button";
-        editButton.dataset.id = timer.id;
-        editButton.title = text("edit");
-        editButton.setAttribute("aria-label", text("edit") + ": " + timerName(timer));
-        editButton.innerHTML = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z\"/></svg>";
-        editButton.addEventListener("click", () => openEditor(timer.id));
         head.appendChild(title);
-        if (!state.dockMode) head.appendChild(editButton);
 
         const count = document.createElement("div");
         count.className = "count";
@@ -5207,9 +5660,14 @@
           image.decoding = "async";
           const caption = document.createElement("span");
           caption.className = "card-art-caption";
-          caption.textContent = artTitle(selectedArt, timer);
+          const captionTrack = document.createElement("span");
+          captionTrack.className = "card-art-caption-track";
+          captionTrack.textContent = artTitle(selectedArt, timer);
+          caption.appendChild(captionTrack);
           thumbnail.append(image, caption);
-          thumbnail.addEventListener("dblclick", () => openEventImage(timer, selectedArt));
+          thumbnail.title = artTitle(selectedArt, timer);
+          thumbnail.setAttribute("aria-label", artTitle(selectedArt, timer));
+          thumbnail.addEventListener("click", () => openEventImage(timer, selectedArt));
           thumbnail.addEventListener("keydown", (event) => {
             if (event.key === "Enter" || event.key === " ") {
               event.preventDefault();
@@ -5299,10 +5757,10 @@
       const lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        "PRODID:-//Linny's Astral Solisium Pulse//TL EU Event Timer//DE",
+        "PRODID:-//Linny's Epic Time Portal//TL EU Event Timer//DE",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
-        "X-WR-CALNAME:Linny's Astral Solisium Pulse"
+        "X-WR-CALNAME:Linny's Epic Time Portal"
       ];
       const sorted = entries.slice().sort((a, b) => a.start - b.start);
       for (const entry of sorted) {
@@ -5310,7 +5768,7 @@
         const end = new Date(start.getTime() + (entry.timer.durationMinutes || 10) * 60000);
         lines.push(
           "BEGIN:VEVENT",
-          "UID:" + entry.timer.id + "-" + start.getTime() + "@linny-astral-solisium-pulse",
+          "UID:" + entry.timer.id + "-" + start.getTime() + "@linny-epic-time-portal",
           "DTSTAMP:" + createdAt,
           "DTSTART:" + formatIcsDate(start),
           "DTEND:" + formatIcsDate(end),
@@ -5488,15 +5946,24 @@
       if (migrateJulyGuildSchedule(state.localConfig)) {
         saveLocalConfig();
       }
+      if (migrateDraftAndReminderDefaults(state.localConfig)) {
+        saveLocalConfig();
+      }
       state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
       if (state.liveOverlayText) applyLiveTimerOverrides(state.mergedConfig, state.liveOverlayText);
       state.categoryId = storageGet("timer_category_id") || state.mergedConfig.categories[0]?.id || "";
       state.displayTimezone = storageGet("timer_display_timezone") || clientDefaultTimezone;
       state.historyMinutes = Math.max(0, Number(storageGet("timer_history_minutes") ?? "30") || 0);
       state.historyCollapsed = storageGet("timer_history_collapsed") === "true";
-      state.cardDensity = ["comfortable", "compact", "ultra"].includes(storageGet("timer_card_density"))
+      state.cardDensity = ["comfortable", "compact", "ultra", "cinematic", "big-picture"].includes(storageGet("timer_card_density"))
         ? storageGet("timer_card_density")
         : "compact";
+      state.theme = ["astral", "bavaria", "time-vortex", "arcade", "solisium", "executive"].includes(storageGet("timer_theme"))
+        ? storageGet("timer_theme")
+        : "astral";
+      state.notificationOverride = ["default", "all", "silent", "off"].includes(storageGet("timer_notification_override"))
+        ? storageGet("timer_notification_override")
+        : "default";
       state.colorblindMode = storageGet("timer_colorblind_mode") === "true";
       state.showThumbnails = storageGet("timer_show_thumbnails") !== "false";
       const storedVisibleIds = loadVisibleIds();
@@ -5574,11 +6041,26 @@
       });
 
       dom.cardDensitySelect.addEventListener("change", () => {
-        state.cardDensity = ["comfortable", "compact", "ultra"].includes(dom.cardDensitySelect.value)
+        state.cardDensity = ["comfortable", "compact", "ultra", "cinematic", "big-picture"].includes(dom.cardDensitySelect.value)
           ? dom.cardDensitySelect.value
           : "compact";
         storageSet("timer_card_density", state.cardDensity);
         applyAppearanceSettings();
+      });
+
+      dom.themeSelect.addEventListener("change", () => {
+        state.theme = ["astral", "bavaria", "time-vortex", "arcade", "solisium", "executive"].includes(dom.themeSelect.value)
+          ? dom.themeSelect.value
+          : "astral";
+        storageSet("timer_theme", state.theme);
+        applyAppearanceSettings();
+      });
+
+      dom.notificationOverrideSelect.addEventListener("change", () => {
+        state.notificationOverride = ["default", "all", "silent", "off"].includes(dom.notificationOverrideSelect.value)
+          ? dom.notificationOverrideSelect.value
+          : "default";
+        storageSet("timer_notification_override", state.notificationOverride);
       });
 
       dom.colorblindModeInput.addEventListener("change", () => {
@@ -5590,6 +6072,7 @@
       dom.showThumbnailsInput.addEventListener("change", () => {
         state.showThumbnails = dom.showThumbnailsInput.checked;
         storageSet("timer_show_thumbnails", String(state.showThumbnails));
+        state.cardRenderKey = "";
         renderCards();
       });
 
@@ -5628,7 +6111,7 @@
           toast(text("noIcsSelection"));
           return;
         }
-        downloadIcs(entries, "linny-astral-solisium-pulse-events.ics");
+        downloadIcs(entries, "linny-epic-time-portal-events.ics");
         toast(text("icsExported").replace("{count}", String(entries.length)));
       });
 
@@ -5648,7 +6131,8 @@
       dom.testCriticalAlarmBtn.addEventListener("click", () => void scheduleAlarmTest("critical"));
 
       dom.dockSideSelect.addEventListener("change", () => {
-        state.dockSide = dom.dockSideSelect.value === "left" ? "left" : "right";
+        const values = ["left", "right", "top", "bottom", "top-left", "top-right", "bottom-left", "bottom-right"];
+        state.dockSide = values.includes(dom.dockSideSelect.value) ? dom.dockSideSelect.value : "right";
         storageSet("timer_dock_side", state.dockSide);
       });
       dom.dockModeBtn.addEventListener("click", openDockWindow);
@@ -5771,6 +6255,11 @@
         dom.storageConsent.showModal();
       }
       window.setInterval(() => {
+        const artRotationBucket = Math.floor(Date.now() / 600000);
+        if (artRotationBucket !== state.artRotationBucket) {
+          state.artRotationBucket = artRotationBucket;
+          state.cardRenderKey = "";
+        }
         renderCurrentEvents();
         renderCards();
         updateClocks();

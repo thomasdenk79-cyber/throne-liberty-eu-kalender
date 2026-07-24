@@ -55,6 +55,25 @@ Grenzen:
 
 Neue oder geänderte Standardtimer sollen nach Möglichkeit in `config.ini` gepflegt werden. Die JavaScript-Logik soll generisch bleiben und nicht für jeden einzelnen Timer Spezialcode enthalten.
 
+### Rendering und Medien
+
+Statische Kartenelemente werden nicht im Sekundentakt neu erzeugt. Der Tick
+aktualisiert ausschließlich Countdown, Dringlichkeitsstatus und Phasenfortschritt.
+Die strukturelle Karte wird nur bei Kategorie-, Sprach-, Sichtbarkeits-,
+Termin- oder Bildwechsel neu aufgebaut. Eventbilder wechseln in einem stabilen
+Zehn-Minuten-Zeitfenster.
+
+Themes verändern die visuelle Inszenierung, nicht Timerdaten oder Alarmsemantik.
+Fehlende Theme-Bilder fallen auf den passenden Epic- oder Fun-Assetpool zurück.
+
+### Externe Benachrichtigungen
+
+Discord-Webhooks sind eine optionale Erweiterung außerhalb der statischen
+Browsergrenze. Sendefähige URLs und Tokens dürfen nie in ausgelieferten Dateien
+stehen. GitHub Pages zeigt und konfiguriert daher keine geheimen Webhook-Werte.
+Eine spätere minutengenaue Integration benötigt eine kleine serverseitige,
+geplante Alarmkomponente.
+
 ### Lokale Personalisierung
 
 Benutzereinstellungen und importierte Anpassungen werden im Browser gespeichert. Die kanonische Repository-Konfiguration bleibt davon getrennt.

@@ -1,4 +1,4 @@
-site_name: Linny's Astral Solisium Pulse – Hilfe und Entwicklerdoku
+site_name: Linny's Epic Time Portal – Hilfe und Entwicklerdoku
 site_description: Anwenderhilfe und Projektgedaechtnis fuer KI-gestuetzte Entwicklung
 site_author: Thomas Denk
 
@@ -70,6 +70,7 @@ nav:
     - Taskboard: project/taskboard.md
     - Rollen und Governance: project/team-governance.md
   - Anwenderhilfe:
+    - Was ist neu?: user/whats-new.md
     - Schnellstart: user/quickstart.md
     - Konfiguration und Import/Export: user/configuration.md
     - FAQ: user/faq.md
@@ -79,6 +80,8 @@ nav:
     - Entwicklungsrichtlinien: engineering/development-guidelines.md
     - KI-gestuetzte Entwicklung: engineering/ai-assisted-development.md
     - Dokumentationsrichtlinien: engineering/documentation-guidelines.md
+    - Designsystem und UX: engineering/design-system.md
+    - Discord-Webhook: engineering/discord-integration.md
     - Entscheidungsprotokoll: engineering/decision-log.md
     - Markdown-Kurzreferenz: reference/markdown-cheatsheet.md
     - Vorstellung fuer Kollegen: demo/colleague-demo.md

@@ -16,6 +16,7 @@ Dieses Projekt ist eine statische GitHub-Pages-Webseite: ein konfigurationsbasie
 - `docs/engineering/ai-assisted-development.md`
 - bei Dokumentationsarbeiten `docs/engineering/documentation-guidelines.md`
 - bei Grundsatzentscheidungen `docs/engineering/decision-log.md`
+- bei UI- und Theme-Arbeiten `docs/engineering/design-system.md`
 
 Lade anschließend nur die für die konkrete Aufgabe relevanten Implementierungsdateien und zusätzlichen Dokumente.
 
@@ -24,6 +25,9 @@ Lade anschließend nur die für die konkrete Aufgabe relevanten Implementierungs
 - Halte die Anwendung statisch und ohne Build-Abhängigkeit, solange nicht explizit anders beauftragt.
 - Verändere `config.ini` kompatibel: bestehende Timer-Definitionen dürfen nicht brechen.
 - UI-Änderungen müssen responsiv bleiben.
+- Verwende bei bekannten Aktionen bevorzugt verständliche Symbole mit Tooltip,
+  `aria-label`, Fokus- und Touchbedienung. Text bleibt bei unbekannten oder
+  riskanten Aktionen erhalten.
 - Accessibility beachten: Kontraste, Tastaturbedienung, reduzierte Bewegung und verständliche Beschriftungen.
 - Keine externen Tracking-Skripte oder unnötigen CDN-Abhängigkeiten ergänzen.
 - Keine Secrets oder personenbezogenen Daten committen.
@@ -52,6 +56,14 @@ Wenn Code oder Verhalten geändert wird, prüfe immer, ob diese Dateien aktualis
 - `docs/engineering/development-guidelines.md`
 - `docs/engineering/decision-log.md`
 - passende Referenz- oder Demo-Seiten
+- `docs/user/whats-new.md` bei sichtbaren Funktionen oder wichtigen Bugfixes
+- `docs/project/changelog.md` für die technische Release-Historie
+- `docs/project/taskboard.md` für Status und noch ausstehende Abnahmen
+
+Die verbindliche Zuordnung steht im
+`docs/engineering/documentation-guidelines.md#dokumentationsvertrag-fuer-agenten`.
+Akzeptierte Entscheidungen niemals still überschreiben; Widerspruch benennen und
+eine reviewbare Gedächtnisänderung vorschlagen.
 
 Markdown unter `docs/` ist die Quelle. `site/` ist generierte MkDocs-Ausgabe und darf nicht manuell bearbeitet werden. Neue sichtbare Seiten in `mkdocs.yml` einsortieren.
 

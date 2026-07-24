@@ -16,6 +16,8 @@ Vor jeder größeren Änderung zuerst lesen:
 6. `docs/engineering/ai-assisted-development.md` für den KI-Workflow
 7. bei Dokumentationsarbeiten `docs/engineering/documentation-guidelines.md`
 8. bei Grundsatzfragen `docs/engineering/decision-log.md`
+9. bei sichtbaren UI-Arbeiten `docs/engineering/design-system.md`
+10. bei Dokumentationswirkung `docs/engineering/documentation-guidelines.md#dokumentationsvertrag-fuer-agenten`
 
 ## Arbeitsprinzip
 
@@ -53,6 +55,7 @@ Eine Änderung ist erst fertig, wenn:
 - relevante Ansichten und Randfälle geprüft wurden,
 - und ein kurzer Testnachweis oder eine ehrliche Liste nicht geprüfter Punkte vorliegt.
 - sichtbare Änderungen im Changelog und betroffene Aufgaben im Taskboard gepflegt sind.
+- nutzerrelevante Änderungen zusätzlich unter `docs/user/whats-new.md` verständlich beschrieben sind.
 
 ## Umgang mit Kontext
 
@@ -65,6 +68,11 @@ Dieses Repository ist die gemeinsame Schnittstelle zwischen Mensch, ChatGPT und 
 - Demo und Wissenstransfer: `docs/demo/`
 
 Wenn eine neue Erkenntnis wichtig für spätere Arbeit ist, wird sie verdichtet in der passenden Markdown-Datei oder im Decision Log abgelegt. Rohe Chatprotokolle und lange Logs werden nicht ungefiltert zum Projektgedächtnis.
+
+Akzeptierte Architektur- oder Prozessentscheidungen werden nicht still
+überschrieben. Ein Agent benennt den Widerspruch, schlägt die Gedächtnisänderung
+reviewbar vor und fordert bei wesentlicher Abweichung eine fachliche Bestätigung
+an. Das Repository-Gedächtnis darf sich entwickeln, aber nicht zufällig driften.
 
 ## Dokumentationsausgabe
 
