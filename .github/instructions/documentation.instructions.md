@@ -29,3 +29,14 @@ applyTo: "README.md,AGENTS.md,docs/**/*.md,mkdocs.yml"
 - ist die Datei in `mkdocs.yml` auffindbar, falls sie zur sichtbaren Dokumentation gehört?
 - wurde bei einer Grundsatzentscheidung das Entscheidungsprotokoll aktualisiert?
 - passt die Dokumentation zum tatsächlich implementierten Verhalten?
+
+## Commit-Regel fuer Agenten
+
+Wenn bei Dokumentationsaenderungen ein Agent committet, muss die Commit Message enthalten:
+
+- was geaendert wurde
+- warum die Aenderung noetig war
+- agent: Name
+- agent_version
+- llm
+- llm_version

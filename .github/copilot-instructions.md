@@ -61,3 +61,17 @@ Markdown unter `docs/` ist die Quelle. `site/` ist generierte MkDocs-Ausgabe und
 - Begründe technische Entscheidungen kurz.
 - Lieber kleine, überprüfbare Schritte als große unübersichtliche Umbauten.
 - Verdichte dauerhaftes Wissen; übernimm keine rohen Chatprotokolle.
+
+## Commit-Metadaten (Pflicht fuer Agenten-Commits)
+
+Wenn ein Agent einen Commit erstellt, muss die Commit Message neben dem Aenderungsinhalt auch Folgendes enthalten:
+
+- warum die Aenderung gemacht wurde
+- Agentenname
+- Agentenversion
+- LLM-Name
+- LLM-Version
+
+Beispielzeile fuer den Commit-Body:
+
+`why: ... | agent: GitHub Copilot | agent_version: 1.0 | llm: GPT-5.3-Codex | llm_version: GPT-5.3-Codex`

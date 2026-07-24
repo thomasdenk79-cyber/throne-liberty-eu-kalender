@@ -70,3 +70,21 @@ Markdown unter `docs/` ist die gepflegte Quelle. `mkdocs.yml` erzeugt daraus bei
 - `site/` ist generierte Ausgabe und darf nicht manuell bearbeitet werden.
 - Neue sichtbare Dokumentationsseiten werden in `mkdocs.yml` einsortiert.
 - Interne Links innerhalb von `docs/` bleiben relativ.
+
+## Commit-Vorgaben fuer Agenten
+
+Wenn ein Agent Commits erstellt, muss die Commit Message immer enthalten:
+
+1. Ticket oder Kontextbezug (falls vorhanden)
+2. Was geaendert wurde
+3. Warum die Aenderung gemacht wurde
+4. Agentenname
+5. Agentenversion
+6. LLM-Name
+7. LLM-Version
+
+Beispiel (Kurzform):
+
+`docs/assets: move Linny images to structured folder and update references`
+`why: improve repository clarity and keep links consistent`
+`agent: GitHub Copilot | agent_version: 1.0 | llm: GPT-5.3-Codex | llm_version: GPT-5.3-Codex`
