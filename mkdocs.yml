@@ -1,5 +1,5 @@
-site_name: Linny's Astral Solisium Pulse – Entwicklungsdokumentation
-site_description: Projektgedächtnis und Demo für KI-gestützte Softwareentwicklung
+site_name: Linny's Astral Solisium Pulse – Hilfe und Entwicklerdoku
+site_description: Anwenderhilfe und Projektgedaechtnis fuer KI-gestuetzte Entwicklung
 site_author: Thomas Denk
 
 docs_dir: docs
@@ -26,16 +26,17 @@ markdown_extensions:
 
 nav:
   - Start: README.md
-  - Projekt:
-      - Projektüberblick: project/project-brief.md
-      - Architektur: project/architecture.md
-  - Entwicklung:
-      - Entwicklungsrichtlinien: engineering/development-guidelines.md
-      - KI-gestützte Entwicklung: engineering/ai-assisted-development.md
-      - Dokumentationsrichtlinien: engineering/documentation-guidelines.md
-      - Entscheidungsprotokoll: engineering/decision-log.md
-  - Referenz:
-      - Markdown-Kurzreferenz: reference/markdown-cheatsheet.md
-  - Demo:
-      - Vorstellung für Kollegen: demo/colleague-demo.md
-      - Prompt-Beispiele: demo/prompt-examples.md
+  - Anwenderhilfe:
+    - Schnellstart: user/quickstart.md
+    - Konfiguration und Import/Export: user/configuration.md
+    - FAQ: user/faq.md
+  - Entwicklerdoku:
+    - Projektueberblick: project/project-brief.md
+    - Architektur: project/architecture.md
+    - Entwicklungsrichtlinien: engineering/development-guidelines.md
+    - KI-gestuetzte Entwicklung: engineering/ai-assisted-development.md
+    - Dokumentationsrichtlinien: engineering/documentation-guidelines.md
+    - Entscheidungsprotokoll: engineering/decision-log.md
+    - Markdown-Kurzreferenz: reference/markdown-cheatsheet.md
+    - Vorstellung fuer Kollegen: demo/colleague-demo.md
+    - Prompt-Beispiele: demo/prompt-examples.md

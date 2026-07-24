@@ -34,8 +34,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-docs.txt
 
-      - name: Build MkDocs site
-        run: mkdocs build --clean
+      - name: Build MkDocs help site
+        run: mkdocs build --clean --site-dir .pages/help
+
+      - name: Assemble Pages artifact
+        run: |
+          mkdir -p .pages
+          cp index.html .pages/index.html
+          cp config.ini .pages/config.ini
+          cp -R assets .pages/assets
+          if [ -f 404.html ]; then cp 404.html .pages/404.html; fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -43,7 +51,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: .pages
 
       - name: Deploy to GitHub Pages
         id: deployment

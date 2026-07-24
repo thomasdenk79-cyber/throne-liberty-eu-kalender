@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="de">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,9 +23,12 @@
       --shadow: #00000042;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       min-height: 100%;
       color: var(--text);
@@ -76,7 +80,10 @@
       flex: 0 0 auto;
     }
 
-    .mark b { transform: rotate(-45deg); font-size: 10px; }
+    .mark b {
+      transform: rotate(-45deg);
+      font-size: 10px;
+    }
 
     .brand strong {
       display: block;
@@ -100,7 +107,9 @@
       color: #d8e4f8;
     }
 
-    .clocks b { color: #ffffff; }
+    .clocks b {
+      color: #ffffff;
+    }
 
     .layout {
       width: 100%;
@@ -185,7 +194,10 @@
       gap: 10px;
     }
 
-    .row { display: grid; gap: 6px; }
+    .row {
+      display: grid;
+      gap: 6px;
+    }
 
     .label {
       font-size: 10px;
@@ -298,6 +310,14 @@
       box-shadow: inset 0 1px 0 #ffffff16, 0 8px 18px #00000024;
     }
 
+    .topbar-help-link {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+
     .editor {
       position: fixed;
       top: 96px;
@@ -313,7 +333,7 @@
       display: none;
     }
 
-    .editor > *,
+    .editor>*,
     .editor .row,
     .editor .meta-grid,
     .editor .calendar-group {
@@ -321,7 +341,9 @@
       max-width: 100%;
     }
 
-    .editor .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .editor .meta-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
     .editor input,
     .editor select,
@@ -365,7 +387,9 @@
       background: linear-gradient(145deg, #0d1929, #08111e);
     }
 
-    .notification-level-card.is-disabled { opacity: 0.62; }
+    .notification-level-card.is-disabled {
+      opacity: 0.62;
+    }
 
     .notification-level-head,
     .sound-control {
@@ -374,11 +398,25 @@
       align-items: center;
     }
 
-    .notification-level-head .pill { width: auto; }
-    .sound-control select { flex: 1 1 auto; }
-    .sound-test-btn { flex: 0 0 auto; min-width: 42px; padding-inline: 9px; }
+    .notification-level-head .pill {
+      width: auto;
+    }
 
-    .alarm-test-btn { flex: 0 0 auto; padding-inline: 8px; white-space: nowrap; }
+    .sound-control select {
+      flex: 1 1 auto;
+    }
+
+    .sound-test-btn {
+      flex: 0 0 auto;
+      min-width: 42px;
+      padding-inline: 9px;
+    }
+
+    .alarm-test-btn {
+      flex: 0 0 auto;
+      padding-inline: 8px;
+      white-space: nowrap;
+    }
 
     .config-health {
       display: flex;
@@ -393,8 +431,13 @@
       font-size: 10px;
     }
 
-    .config-health .is-warning { color: #ffc06b; }
-    .config-health .is-ok { color: #79dda1; }
+    .config-health .is-warning {
+      color: #ffc06b;
+    }
+
+    .config-health .is-ok {
+      color: #79dda1;
+    }
 
     .activity-status::before {
       content: "";
@@ -414,18 +457,52 @@
     }
 
     html.colorblind-mode .card.is-soon .card-status::before,
-    html.colorblind-mode .card.is-verysoon .card-status::before { content: "▲"; }
-    html.colorblind-mode .card.is-danger .card-status::before { content: "!"; }
-    html.colorblind-mode .card.is-critical .card-status::before { content: "!!"; }
+    html.colorblind-mode .card.is-verysoon .card-status::before {
+      content: "▲";
+    }
 
-    html[data-density="comfortable"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); }
-    html[data-density="comfortable"] .card { padding: 13px; gap: 11px; }
-    html[data-density="compact"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
-    html[data-density="ultra"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 6px; }
-    html[data-density="ultra"] .card { padding: 7px 8px; gap: 5px; }
-    html[data-density="ultra"] .card-title b { font-size: 14px; }
-    html[data-density="ultra"] .count { font-size: clamp(25px, 4vw, 30px); }
-    html[data-density="ultra"] .meta { font-size: 10px; }
+    html.colorblind-mode .card.is-danger .card-status::before {
+      content: "!";
+    }
+
+    html.colorblind-mode .card.is-critical .card-status::before {
+      content: "!!";
+    }
+
+    html[data-density="comfortable"] #cardStack {
+      grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr));
+    }
+
+    html[data-density="comfortable"] .card {
+      padding: 13px;
+      gap: 11px;
+    }
+
+    html[data-density="compact"] #cardStack {
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    }
+
+    html[data-density="ultra"] #cardStack {
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: 6px;
+    }
+
+    html[data-density="ultra"] .card {
+      padding: 7px 8px;
+      gap: 5px;
+    }
+
+    html[data-density="ultra"] .card-title b {
+      font-size: 14px;
+    }
+
+    html[data-density="ultra"] .count {
+      font-size: clamp(25px, 4vw, 30px);
+    }
+
+    html[data-density="ultra"] .meta {
+      font-size: 10px;
+    }
 
     .stack {
       padding: 10px;
@@ -473,10 +550,13 @@
     }
 
     @keyframes critical-card-pulse {
-      0%, 100% {
+
+      0%,
+      100% {
         border-color: #b892ff80;
         box-shadow: inset 0 1px 0 #ffffff1a, 0 0 12px #b892ff35;
       }
+
       50% {
         border-color: #eadfff;
         box-shadow: inset 0 1px 0 #ffffff38, 0 0 0 2px #b892ff52, 0 0 34px #b892ff9c;
@@ -484,8 +564,19 @@
     }
 
     @keyframes critical-count-blink {
-      0%, 44%, 100% { opacity: 1; filter: brightness(1.25); }
-      45%, 78% { opacity: 0.3; filter: brightness(0.75); }
+
+      0%,
+      44%,
+      100% {
+        opacity: 1;
+        filter: brightness(1.25);
+      }
+
+      45%,
+      78% {
+        opacity: 0.3;
+        filter: brightness(0.75);
+      }
     }
 
     .card.is-critical {
@@ -666,7 +757,9 @@
       border-bottom: 1px dashed #ffffff18;
     }
 
-    .calendar-row:last-child { border-bottom: 0; }
+    .calendar-row:last-child {
+      border-bottom: 0;
+    }
 
     .toast-wrap {
       position: fixed;
@@ -681,7 +774,9 @@
       backdrop-filter: blur(14px);
     }
 
-    .toast-wrap:empty { display: none; }
+    .toast-wrap:empty {
+      display: none;
+    }
 
     .toast {
       padding: 10px;
@@ -700,8 +795,14 @@
       color: #c1cde0;
     }
 
-    .footer a { color: #9ce9ff; text-decoration: none; }
-    .footer a:hover { text-decoration: underline; }
+    .footer a {
+      color: #9ce9ff;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
 
     /* 2026 visual refresh: cinematic glass UI without changing timer behavior. */
     body::before,
@@ -732,7 +833,9 @@
     }
 
     @keyframes ambient-drift {
-      to { transform: translate3d(7vw, 5vh, 0) scale(1.12); }
+      to {
+        transform: translate3d(7vw, 5vh, 0) scale(1.12);
+      }
     }
 
     .topbar {
@@ -809,15 +912,22 @@
       color: transparent;
     }
 
-    .hero p { font-size: 14px; line-height: 1.55; }
+    .hero p {
+      font-size: 14px;
+      line-height: 1.55;
+    }
 
     .controls,
     .calendar,
     .footer,
     .editor,
-    .stack { border-radius: 17px; }
+    .stack {
+      border-radius: 17px;
+    }
 
-    .controls { padding: 14px; }
+    .controls {
+      padding: 14px;
+    }
 
     select,
     input,
@@ -844,7 +954,9 @@
       box-shadow: inset 0 1px 0 #ffffff20, 0 8px 22px #0003;
     }
 
-    .btn.alt { background: linear-gradient(180deg, #111e30, #0a1422); }
+    .btn.alt {
+      background: linear-gradient(180deg, #111e30, #0a1422);
+    }
 
     .card {
       border-radius: 15px;
@@ -899,17 +1011,26 @@
     }
 
     .toggle label:nth-child(4n + 3),
-    .toggle label:nth-child(4n + 4) { background: #101c2c; }
+    .toggle label:nth-child(4n + 4) {
+      background: #101c2c;
+    }
 
-    .toggle label:nth-child(odd) { border-right: 1px solid #ffffff12; }
-    .toggle label:nth-child(n + 3) { border-top: 1px solid #ffffff10; }
+    .toggle label:nth-child(odd) {
+      border-right: 1px solid #ffffff12;
+    }
+
+    .toggle label:nth-child(n + 3) {
+      border-top: 1px solid #ffffff10;
+    }
 
     .toggle label.is-active {
       color: #effbff;
       box-shadow: inset 3px 0 0 #72dcff, inset 0 0 24px #5bdcff0c;
     }
 
-    .toggle label:hover { background: #17263a; }
+    .toggle label:hover {
+      background: #17263a;
+    }
 
     .toggle input[type="checkbox"],
     .calendar-row input[type="checkbox"],
@@ -984,7 +1105,9 @@
       user-select: none;
     }
 
-    .calendar-group h3:hover { color: #9deaff; }
+    .calendar-group h3:hover {
+      color: #9deaff;
+    }
 
     .calendar-group h3::after {
       content: attr(data-toggle-hint);
@@ -1012,10 +1135,23 @@
       border-radius: 8px;
     }
 
-    .calendar-row:nth-child(odd) { background: #ffffff04; }
-    .calendar-row.is-selected { background: #5bdcff12; }
-    .calendar-row > span { min-width: 0; overflow-wrap: anywhere; }
-    .calendar-row .ics-btn { min-height: 29px; padding: 5px 8px; }
+    .calendar-row:nth-child(odd) {
+      background: #ffffff04;
+    }
+
+    .calendar-row.is-selected {
+      background: #5bdcff12;
+    }
+
+    .calendar-row>span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .calendar-row .ics-btn {
+      min-height: 29px;
+      padding: 5px 8px;
+    }
 
     .btn:disabled {
       cursor: not-allowed;
@@ -1045,8 +1181,8 @@
       align-items: start;
     }
 
-    .stack > .label,
-    .controls > .row > .label {
+    .stack>.label,
+    .controls>.row>.label {
       color: #bfeeff;
     }
 
@@ -1073,10 +1209,23 @@
       min-width: 0;
     }
 
-    .notification-copy strong { font-size: 12px; color: #edf8ff; }
-    .notification-copy small { color: #9facbf; line-height: 1.4; }
-    .notification-copy small.is-ready { color: #86e9ac; }
-    .notification-copy small.is-blocked { color: #ffb074; }
+    .notification-copy strong {
+      font-size: 12px;
+      color: #edf8ff;
+    }
+
+    .notification-copy small {
+      color: #9facbf;
+      line-height: 1.4;
+    }
+
+    .notification-copy small.is-ready {
+      color: #86e9ac;
+    }
+
+    .notification-copy small.is-blocked {
+      color: #ffb074;
+    }
 
     .event-dialog {
       width: min(420px, calc(100vw - 28px));
@@ -1101,9 +1250,20 @@
       background: radial-gradient(480px 180px at 100% 0%, #6adeff26, transparent 64%);
     }
 
-    .event-dialog h2 { margin: 0; font-size: 24px; }
-    .event-dialog p { margin: 0; color: #c7d5e8; line-height: 1.55; }
-    .event-dialog .btn { justify-self: start; }
+    .event-dialog h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .event-dialog p {
+      margin: 0;
+      color: #c7d5e8;
+      line-height: 1.55;
+    }
+
+    .event-dialog .btn {
+      justify-self: start;
+    }
 
     /* Wide dashboard: controls in the center, live timers on the right. */
     body {
@@ -1128,7 +1288,10 @@
       min-width: 0;
     }
 
-    .dashboard-main > .hero { grid-column: 1; grid-row: 1; }
+    .dashboard-main>.hero {
+      grid-column: 1;
+      grid-row: 1;
+    }
 
     .controls {
       grid-column: 1;
@@ -1151,8 +1314,13 @@
       gap: 9px;
     }
 
-    .control-settings .meta-grid { grid-template-columns: 1fr; }
-    .control-visibility { align-content: start; }
+    .control-settings .meta-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .control-visibility {
+      align-content: start;
+    }
 
     .controls .notification-setup {
       grid-template-columns: 1fr;
@@ -1160,7 +1328,9 @@
       align-self: start;
     }
 
-    .controls .notification-setup .btn { justify-self: start; }
+    .controls .notification-setup .btn {
+      justify-self: start;
+    }
 
     .notification-actions {
       display: grid;
@@ -1198,9 +1368,13 @@
     }
 
     .calendar,
-    .footer { grid-column: 1 / -1; }
+    .footer {
+      grid-column: 1 / -1;
+    }
 
-    .calendar { padding: 15px; }
+    .calendar {
+      padding: 15px;
+    }
 
     .topbar-tools {
       display: flex;
@@ -1326,7 +1500,10 @@
       font-size: 10px;
     }
 
-    .current-events[hidden] { display: none; }
+    .current-events[hidden] {
+      display: none;
+    }
+
     #currentEventsList {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr));
@@ -1361,10 +1538,25 @@
       gap: 10px;
     }
 
-    .current-event-head > div { display: grid; gap: 2px; min-width: 0; }
-    .current-event-head b { overflow-wrap: anywhere; }
-    .current-event-head small { color: #8ee7bd; }
-    .current-event-head strong { color: #dffdf0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .current-event-head>div {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .current-event-head b {
+      overflow-wrap: anywhere;
+    }
+
+    .current-event-head small {
+      color: #8ee7bd;
+    }
+
+    .current-event-head strong {
+      color: #dffdf0;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
 
     .current-event-meta {
       color: #9eb0c4;
@@ -1388,7 +1580,7 @@
       transition: width 900ms linear;
     }
 
-    .dashboard-main > .hero {
+    .dashboard-main>.hero {
       min-height: 370px;
       background-position: center 18%;
     }
@@ -1422,7 +1614,9 @@
     }
 
     /* Compact timer cards: details live in the title tooltip. */
-    .stack { padding: 8px; }
+    .stack {
+      padding: 8px;
+    }
 
     .card {
       gap: 5px;
@@ -1432,7 +1626,9 @@
     }
 
     .card:hover,
-    .card:focus-within { z-index: 6; }
+    .card:focus-within {
+      z-index: 6;
+    }
 
     .card-head {
       justify-content: flex-start;
@@ -1494,8 +1690,15 @@
       transform: translateY(0);
     }
 
-    .card-tooltip p { margin: 0; }
-    .card-tooltip-row { display: grid; gap: 2px; }
+    .card-tooltip p {
+      margin: 0;
+    }
+
+    .card-tooltip-row {
+      display: grid;
+      gap: 2px;
+    }
+
     .card-tooltip-label {
       color: #86e8ff;
       font-size: 9px;
@@ -1535,7 +1738,10 @@
       outline: none;
     }
 
-    .icon-btn svg { width: 15px; height: 15px; }
+    .icon-btn svg {
+      width: 15px;
+      height: 15px;
+    }
 
     .count {
       font-size: clamp(28px, 4vw, 34px);
@@ -1550,7 +1756,9 @@
       font-size: 11px;
     }
 
-    .card-when { color: #d4deef; }
+    .card-when {
+      color: #d4deef;
+    }
 
     .card-status {
       display: inline-flex;
@@ -1614,7 +1822,9 @@
       border-radius: 13px;
     }
 
-    html.dock-mode .card { padding: 9px 10px; }
+    html.dock-mode .card {
+      padding: 9px 10px;
+    }
 
     @media (min-width: 1360px) {
       body.editor-open .layout {
@@ -1625,32 +1835,58 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       body::before,
-      body::after { animation: none; }
+      body::after {
+        animation: none;
+      }
+
       .btn,
-      .card { transition: none; }
+      .card {
+        transition: none;
+      }
+
       .card.is-critical,
-      .card.is-critical .count { animation: none; }
+      .card.is-critical .count {
+        animation: none;
+      }
     }
 
     @media (max-width: 1100px) {
-      body { padding-top: 92px; }
+      body {
+        padding-top: 92px;
+      }
+
       .layout {
         max-width: 760px;
         grid-template-columns: minmax(0, 1fr);
       }
-      .live-column { grid-column: 1; grid-row: 1; }
+
+      .live-column {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
       .live-column {
         position: static;
         max-height: none;
         overflow: visible;
       }
+
       .live-column #cardStack {
         grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
       }
-      .dashboard-main { grid-column: 1; grid-row: 2; }
+
+      .dashboard-main {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
       .calendar,
-      .footer { grid-column: 1; }
+      .footer {
+        grid-column: 1;
+      }
+
       .editor {
         position: static;
         width: auto;
@@ -1660,28 +1896,82 @@
     }
 
     @media (max-width: 640px) {
-      .topbar { flex-wrap: wrap; }
-      .clocks { width: 100%; text-align: left; }
-      body { padding-top: 124px; }
-      .dashboard-main > .hero { display: none; }
-      .topbar-tools { width: 100%; justify-content: space-between; }
-      .meta-grid { grid-template-columns: 1fr; }
-      .controls { grid-template-columns: 1fr; }
-      .toggle { grid-template-columns: 1fr; }
-      .toggle label:nth-child(n) { border-right: 0; border-top: 1px solid #ffffff10; }
-      .toggle label:first-child { border-top: 0; }
+      .topbar {
+        flex-wrap: wrap;
+      }
+
+      .clocks {
+        width: 100%;
+        text-align: left;
+      }
+
+      body {
+        padding-top: 124px;
+      }
+
+      .dashboard-main>.hero {
+        display: none;
+      }
+
+      .topbar-tools {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .toggle {
+        grid-template-columns: 1fr;
+      }
+
+      .toggle label:nth-child(n) {
+        border-right: 0;
+        border-top: 1px solid #ffffff10;
+      }
+
+      .toggle label:first-child {
+        border-top: 0;
+      }
+
       .toggle label:nth-child(odd),
-      .toggle label:nth-child(even) { background: #0b1523; }
-      .toggle label:nth-child(even) { background: #101c2c; }
-      .calendar-row { grid-template-columns: 18px 48px 52px minmax(0, 1fr) auto; }
-      .notification-setup { grid-template-columns: 1fr; }
+      .toggle label:nth-child(even) {
+        background: #0b1523;
+      }
+
+      .toggle label:nth-child(even) {
+        background: #101c2c;
+      }
+
+      .calendar-row {
+        grid-template-columns: 18px 48px 52px minmax(0, 1fr) auto;
+      }
+
+      .notification-setup {
+        grid-template-columns: 1fr;
+      }
+
       .calendar-toolbar,
-      .inline-field-action { grid-template-columns: 1fr; }
-      .builder-time-list { grid-template-columns: 1fr; }
-      .count { font-size: 26px; }
+      .inline-field-action {
+        grid-template-columns: 1fr;
+      }
+
+      .builder-time-list {
+        grid-template-columns: 1fr;
+      }
+
+      .count {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
+
 <body>
   <header class="topbar">
     <div class="brand">
@@ -1698,15 +1988,35 @@
       </div>
       <div class="language-switch" role="group" aria-label="Language">
         <button id="langDeBtn" type="button" title="Deutsch" aria-label="Deutsch">
-          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><path fill="#171717" d="M0 0h18v4H0z"/><path fill="#d5232f" d="M0 4h18v4H0z"/><path fill="#f2c500" d="M0 8h18v4H0z"/></svg><span>DE</span>
+          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true">
+            <path fill="#171717" d="M0 0h18v4H0z" />
+            <path fill="#d5232f" d="M0 4h18v4H0z" />
+            <path fill="#f2c500" d="M0 8h18v4H0z" />
+          </svg><span>DE</span>
         </button>
         <button id="langEnBtn" type="button" title="English" aria-label="English">
-          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><path fill="#183c78" d="M0 0h18v12H0z"/><path stroke="#fff" stroke-width="3" d="M0 0l18 12M18 0L0 12"/><path stroke="#c9233c" stroke-width="1.5" d="M0 0l18 12M18 0L0 12"/><path fill="#fff" d="M7 0h4v12H7zM0 4h18v4H0z"/><path fill="#c9233c" d="M8 0h2v12H8zM0 5h18v2H0z"/></svg><span>EN</span>
+          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true">
+            <path fill="#183c78" d="M0 0h18v12H0z" />
+            <path stroke="#fff" stroke-width="3" d="M0 0l18 12M18 0L0 12" />
+            <path stroke="#c9233c" stroke-width="1.5" d="M0 0l18 12M18 0L0 12" />
+            <path fill="#fff" d="M7 0h4v12H7zM0 4h18v4H0z" />
+            <path fill="#c9233c" d="M8 0h2v12H8zM0 5h18v2H0z" />
+          </svg><span>EN</span>
         </button>
         <button id="langBarBtn" type="button" title="Boarisch" aria-label="Boarisch">
-          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><defs><pattern id="bavariaPattern" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="6" fill="#1685c8"/><rect x="3" width="3" height="6" fill="#fff"/></pattern></defs><rect width="18" height="12" fill="url(#bavariaPattern)"/></svg><span>BY</span>
+          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true">
+            <defs>
+              <pattern id="bavariaPattern" width="6" height="6" patternUnits="userSpaceOnUse"
+                patternTransform="rotate(45)">
+                <rect width="3" height="6" fill="#1685c8" />
+                <rect x="3" width="3" height="6" fill="#fff" />
+              </pattern>
+            </defs>
+            <rect width="18" height="12" fill="url(#bavariaPattern)" />
+          </svg><span>BY</span>
         </button>
       </div>
+      <a class="btn alt topbar-help-link" id="helpDocsLink" href="help/" target="_blank" rel="noopener">Hilfe / Help</a>
     </div>
   </header>
 
@@ -1781,7 +2091,8 @@
       <div class="notification-level-grid">
         <div class="notification-level-card" id="warningNotificationCard">
           <div class="notification-level-head">
-            <label class="pill"><input id="editNotifyWarningEnabled" type="checkbox"> <span id="editNotifyWarningEnabledLabel">Warning enabled</span></label>
+            <label class="pill"><input id="editNotifyWarningEnabled" type="checkbox"> <span
+                id="editNotifyWarningEnabledLabel">Warning enabled</span></label>
           </div>
           <div class="row">
             <label class="field-caption" id="editNotifyWarningLabel" for="editNotifyWarningSeconds">Warning</label>
@@ -1789,17 +2100,20 @@
             <div class="editor-help" id="editNotifyWarningHelp"></div>
           </div>
           <div class="row">
-            <label class="field-caption" id="editNotifyWarningSoundLabel" for="editNotifyWarningSound">Warning sound</label>
+            <label class="field-caption" id="editNotifyWarningSoundLabel" for="editNotifyWarningSound">Warning
+              sound</label>
             <div class="sound-control">
               <select id="editNotifyWarningSound"></select>
-              <button class="btn alt sound-test-btn" id="testWarningSoundBtn" type="button" aria-label="Test warning sound">▶</button>
+              <button class="btn alt sound-test-btn" id="testWarningSoundBtn" type="button"
+                aria-label="Test warning sound">▶</button>
               <button class="btn alt alarm-test-btn" id="testWarningAlarmBtn" type="button">+10s</button>
             </div>
           </div>
         </div>
         <div class="notification-level-card" id="criticalNotificationCard">
           <div class="notification-level-head">
-            <label class="pill"><input id="editNotifyCriticalEnabled" type="checkbox"> <span id="editNotifyCriticalEnabledLabel">Critical enabled</span></label>
+            <label class="pill"><input id="editNotifyCriticalEnabled" type="checkbox"> <span
+                id="editNotifyCriticalEnabledLabel">Critical enabled</span></label>
           </div>
           <div class="row">
             <label class="field-caption" id="editNotifyCriticalLabel" for="editNotifyCriticalSeconds">Critical</label>
@@ -1807,17 +2121,20 @@
             <div class="editor-help" id="editNotifyCriticalHelp"></div>
           </div>
           <div class="row">
-            <label class="field-caption" id="editNotifyCriticalSoundLabel" for="editNotifyCriticalSound">Critical sound</label>
+            <label class="field-caption" id="editNotifyCriticalSoundLabel" for="editNotifyCriticalSound">Critical
+              sound</label>
             <div class="sound-control">
               <select id="editNotifyCriticalSound"></select>
-              <button class="btn alt sound-test-btn" id="testCriticalSoundBtn" type="button" aria-label="Test critical sound">▶</button>
+              <button class="btn alt sound-test-btn" id="testCriticalSoundBtn" type="button"
+                aria-label="Test critical sound">▶</button>
               <button class="btn alt alarm-test-btn" id="testCriticalAlarmBtn" type="button">+10s</button>
             </div>
           </div>
         </div>
       </div>
       <div class="channel-row">
-        <label class="pill"><input id="channelBrowser" type="checkbox"> <span id="channelBrowserLabel">Browser</span></label>
+        <label class="pill"><input id="channelBrowser" type="checkbox"> <span
+            id="channelBrowserLabel">Browser</span></label>
         <label class="pill"><input id="channelPopup" type="checkbox"> <span id="channelPopupLabel">Popup</span></label>
       </div>
     </div>
@@ -1840,79 +2157,81 @@
       </section>
 
       <section class="controls">
-      <div class="control-cluster control-settings">
-        <div class="meta-grid">
-          <div class="row">
-            <div class="label" id="categoryLabel">Category</div>
-            <select id="categorySelect"></select>
-            <div class="category-row">
-              <button class="btn alt" id="newCategoryBtn" type="button">New category</button>
-              <button class="btn danger" id="deleteCategoryBtn" type="button">Delete category</button>
+        <div class="control-cluster control-settings">
+          <div class="meta-grid">
+            <div class="row">
+              <div class="label" id="categoryLabel">Category</div>
+              <select id="categorySelect"></select>
+              <div class="category-row">
+                <button class="btn alt" id="newCategoryBtn" type="button">New category</button>
+                <button class="btn danger" id="deleteCategoryBtn" type="button">Delete category</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="label" id="displayZoneLabel">Display Timezone</div>
+              <select id="displayTimezone"></select>
             </div>
           </div>
-          <div class="row">
-            <div class="label" id="displayZoneLabel">Display Timezone</div>
-            <select id="displayTimezone"></select>
+          <div class="meta-grid compact-settings">
+            <div class="row">
+              <label class="label" id="historyMinutesLabel" for="historyMinutesInput">History after event</label>
+              <input id="historyMinutesInput" type="number" min="0" max="1440" step="1" value="30">
+              <div class="editor-help" id="historyMinutesHelp"></div>
+            </div>
+            <div class="row">
+              <div class="label" id="quickActionsLabel">Config</div>
+              <div class="actions">
+                <button class="btn" id="newTimerBtn" type="button">New timer</button>
+                <button class="btn alt" id="exportBtn" type="button">Export INI</button>
+                <button class="btn alt" id="importBtn" type="button">Import INI</button>
+                <input id="importInput" type="file" accept=".ini,text/plain" hidden>
+              </div>
+            </div>
+          </div>
+          <div class="meta-grid compact-settings">
+            <div class="row">
+              <label class="label" id="cardDensityLabel" for="cardDensitySelect">Card density</label>
+              <select id="cardDensitySelect">
+                <option value="comfortable">Comfortable</option>
+                <option value="compact" selected>Compact</option>
+                <option value="ultra">Ultra compact</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="label" id="accessibilityLabel">Accessibility</div>
+              <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span
+                  id="colorblindModeLabel">Colorblind symbols</span></label>
+            </div>
+          </div>
+          <div class="config-health" id="configHealth">
+            <span id="configUpdatedStatus"></span>
+            <span id="configExpiryStatus"></span>
           </div>
         </div>
-        <div class="meta-grid compact-settings">
-          <div class="row">
-            <label class="label" id="historyMinutesLabel" for="historyMinutesInput">History after event</label>
-            <input id="historyMinutesInput" type="number" min="0" max="1440" step="1" value="30">
-            <div class="editor-help" id="historyMinutesHelp"></div>
+
+        <div class="control-cluster control-visibility row">
+          <div class="label" id="visibilityLabel">Visible Timers</div>
+          <div class="toggle" id="timerToggle"></div>
+        </div>
+
+        <div class="control-cluster notification-setup">
+          <div class="notification-copy">
+            <strong id="notificationSetupTitle">Benachrichtigungen</strong>
+            <small id="notificationPermissionStatus">Noch nicht für Windows freigegeben. Die Seite muss geöffnet
+              bleiben.</small>
+            <small class="activity-status" id="pageActivityStatus"></small>
           </div>
-          <div class="row">
-            <div class="label" id="quickActionsLabel">Config</div>
-            <div class="actions">
-              <button class="btn" id="newTimerBtn" type="button">New timer</button>
-              <button class="btn alt" id="exportBtn" type="button">Export INI</button>
-              <button class="btn alt" id="importBtn" type="button">Import INI</button>
-              <input id="importInput" type="file" accept=".ini,text/plain" hidden>
+          <div class="notification-actions">
+            <button class="btn" id="enableNotificationsBtn" type="button">Aktivieren &amp; Ton testen</button>
+            <div class="dock-launch">
+              <select id="dockSideSelect" aria-label="Andockseite">
+                <option value="right" selected>Rechts</option>
+                <option value="left">Links</option>
+              </select>
+              <button class="btn alt" id="dockModeBtn" type="button">Statusleiste öffnen</button>
             </div>
           </div>
         </div>
-        <div class="meta-grid compact-settings">
-          <div class="row">
-            <label class="label" id="cardDensityLabel" for="cardDensitySelect">Card density</label>
-            <select id="cardDensitySelect">
-              <option value="comfortable">Comfortable</option>
-              <option value="compact" selected>Compact</option>
-              <option value="ultra">Ultra compact</option>
-            </select>
-          </div>
-          <div class="row">
-            <div class="label" id="accessibilityLabel">Accessibility</div>
-            <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span id="colorblindModeLabel">Colorblind symbols</span></label>
-          </div>
-        </div>
-        <div class="config-health" id="configHealth">
-          <span id="configUpdatedStatus"></span>
-          <span id="configExpiryStatus"></span>
-        </div>
-      </div>
-
-      <div class="control-cluster control-visibility row">
-        <div class="label" id="visibilityLabel">Visible Timers</div>
-        <div class="toggle" id="timerToggle"></div>
-      </div>
-
-      <div class="control-cluster notification-setup">
-        <div class="notification-copy">
-          <strong id="notificationSetupTitle">Benachrichtigungen</strong>
-          <small id="notificationPermissionStatus">Noch nicht für Windows freigegeben. Die Seite muss geöffnet bleiben.</small>
-          <small class="activity-status" id="pageActivityStatus"></small>
-        </div>
-        <div class="notification-actions">
-          <button class="btn" id="enableNotificationsBtn" type="button">Aktivieren &amp; Ton testen</button>
-          <div class="dock-launch">
-            <select id="dockSideSelect" aria-label="Andockseite">
-              <option value="right" selected>Rechts</option>
-              <option value="left">Links</option>
-            </select>
-            <button class="btn alt" id="dockModeBtn" type="button">Statusleiste öffnen</button>
-          </div>
-        </div>
-      </div>
       </section>
     </div>
 
@@ -1953,7 +2272,8 @@
       <div id="footerSummary">Standarddaten: config.ini · Persönliche Anpassungen lassen sich als INI exportieren.</div>
       <div>thomas.denk79@gmail.com</div>
       <a href="https://questlog.gg/throne-and-liberty/en/event-calendar" target="_blank" rel="noreferrer">Questlog</a>
-      <a href="https://throneandliberty.gameslantern.com/event-calendar" target="_blank" rel="noreferrer">GamesLantern</a>
+      <a href="https://throneandliberty.gameslantern.com/event-calendar" target="_blank"
+        rel="noreferrer">GamesLantern</a>
       <a href="https://metaforge.app/throne-and-liberty/timer" target="_blank" rel="noreferrer">MetaForge</a>
     </section>
   </main>
@@ -4400,8 +4720,8 @@
         warningValue.textContent = !notifications.warning.enabled
           ? text("tooltipNotificationDisabled")
           : text("tooltipWarningActive")
-              .replace("{lead}", formatLeadTime(notifications.warning.seconds))
-              .replace("{sound}", notificationSoundName(notifications.warning.sound));
+            .replace("{lead}", formatLeadTime(notifications.warning.seconds))
+            .replace("{sound}", notificationSoundName(notifications.warning.sound));
         warningRow.append(warningLabel, warningValue);
         tooltip.appendChild(warningRow);
 
@@ -4414,8 +4734,8 @@
         criticalValue.textContent = !notifications.critical.enabled
           ? text("tooltipNotificationDisabled")
           : text("tooltipCriticalActive")
-              .replace("{lead}", formatLeadTime(notifications.critical.seconds))
-              .replace("{sound}", notificationSoundName(notifications.critical.sound));
+            .replace("{lead}", formatLeadTime(notifications.critical.seconds))
+            .replace("{sound}", notificationSoundName(notifications.critical.sound));
         criticalRow.append(criticalLabel, criticalValue);
         tooltip.appendChild(criticalRow);
         title.appendChild(tooltip);
@@ -4889,4 +5209,5 @@
     start();
   </script>
 </body>
+
 </html>

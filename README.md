@@ -101,7 +101,10 @@ Sprache, Anzeigezeitzone, sichtbare Timer, Andockseite, Historienlaenge und eing
 
 ## Deployment
 
-Ein Push auf `main` startet den vorhandenen GitHub-Pages-Workflow.
+Ein Push auf `main` startet den GitHub-Pages-Workflow. Dabei werden zwei Webziele veroeffentlicht:
+
+- Anwendung: `/` (Hauptseite mit Timer)
+- Dokumentation: `/help/` (MkDocs mit Anwenderhilfe + Entwicklerdoku)
 
 ```powershell
 git add index.html config.ini README.md
@@ -109,4 +112,15 @@ git commit -m "Update Linny's Astral Solisium Pulse"
 git push origin main
 ```
 
-Die MkDocs-Dokumentation wird derzeit bewusst nur lokal gebaut. Dadurch bleibt die bestehende GitHub-Pages-Anwendung unveraendert. Eine spaetere separate Veroeffentlichung der Dokumentation benoetigt eine eigene, dokumentierte Deployment-Entscheidung.
+Die Anwendung und die Doku werden im Workflow gemeinsam als Pages-Artefakt gebaut und bereitgestellt.
+
+Lokal testen:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements-docs.txt
+mkdocs serve
+```
+
+Im lokalen Server ist die Dokumentation unter `http://127.0.0.1:8000/` erreichbar.

@@ -30,10 +30,16 @@ Diese Dokumentation ist das gemeinsame, versionierte **Projektgedächtnis für M
 
 | Bereich | Zweck |
 |---|---|
+| `docs/user/` | Anwenderhilfe fuer Nutzung, Konfiguration und FAQ |
 | `docs/project/` | Was ist das Projekt, warum gibt es das und wie ist es aufgebaut? |
 | `docs/engineering/` | Wie wird entwickelt, getestet, dokumentiert und mit KI gearbeitet? |
 | `docs/reference/` | kompakte Nachschlagewerke und Syntaxreferenzen |
 | `docs/demo/` | Vorführung, Lernmaterial und wiederverwendbare Prompt-Beispiele |
+
+## Oeffentliche Ziele auf GitHub Pages
+
+- Hauptanwendung: `/`
+- Hilfe und Doku: `/help/`
 
 ## Schnellstart für Agenten
 
