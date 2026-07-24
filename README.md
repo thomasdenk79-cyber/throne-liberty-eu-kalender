@@ -2,6 +2,30 @@
 
 Kompakter, konfigurationsbasierter Event-Timer fuer Throne and Liberty EU. Die Seite laeuft statisch auf GitHub Pages und liest ihre Standard-Timer ausschliesslich aus `config.ini`.
 
+Das Repository dient zugleich als kleines Demo-Projekt fuer **KI-gestuetzte Softwareentwicklung**: Menschen, ChatGPT und Coding-Agenten arbeiten ueber eine gemeinsame, versionierte Markdown-Wissensbasis zusammen.
+
+## Dokumentation und Projektgedaechtnis
+
+- [Dokumentationsstart](docs/README.md)
+- [Projektueberblick](docs/project/project-brief.md)
+- [Architektur](docs/project/architecture.md)
+- [Entwicklungsrichtlinien](docs/engineering/development-guidelines.md)
+- [KI-gestuetzte Entwicklung](docs/engineering/ai-assisted-development.md)
+- [Markdown-Kurzreferenz](docs/reference/markdown-cheatsheet.md)
+- [Demo fuer Kollegen](docs/demo/colleague-demo.md)
+- [Prompt-Beispiele](docs/demo/prompt-examples.md)
+
+Agenten beginnen mit [`AGENTS.md`](AGENTS.md). GitHub Copilot verwendet zusaetzlich [`.github/copilot-instructions.md`](.github/copilot-instructions.md).
+
+Die Markdown-Dateien sind die gepflegte Quelle. Mit MkDocs kann daraus lokal eine navigierbare HTML-Dokumentation mit Suche und Inhaltsverzeichnissen erzeugt werden:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements-docs.txt
+mkdocs serve
+```
+
 ## Features
 
 - Boarisch, Deutsch und Englisch; deutsche Clients starten boarisch, alle anderen englisch
@@ -29,6 +53,10 @@ Kompakter, konfigurationsbasierter Event-Timer fuer Throne and Liberty EU. Die S
 
 - `index.html`: Oberflaeche, Timer-Engine und Benachrichtigungen
 - `config.ini`: einzige Standard-Konfiguration fuer Kategorien und Timer
+- `AGENTS.md`: herstellerneutraler Einstieg fuer Coding-Agenten
+- `.github/copilot-instructions.md`: Repository-Regeln fuer GitHub Copilot
+- `docs/`: Projektwissen, Architektur, Entwicklungsregeln und Demo-Material
+- `mkdocs.yml`: Navigation und Build-Konfiguration der HTML-Dokumentation
 
 ## Timer in `config.ini`
 
@@ -80,3 +108,5 @@ git add index.html config.ini README.md
 git commit -m "Update Linny's Astral Solisium Pulse"
 git push origin main
 ```
+
+Die MkDocs-Dokumentation wird derzeit bewusst nur lokal gebaut. Dadurch bleibt die bestehende GitHub-Pages-Anwendung unveraendert. Eine spaetere separate Veroeffentlichung der Dokumentation benoetigt eine eigene, dokumentierte Deployment-Entscheidung.
