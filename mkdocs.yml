@@ -1,0 +1,41 @@
+site_name: Linny's Astral Solisium Pulse – Entwicklungsdokumentation
+site_description: Projektgedächtnis und Demo für KI-gestützte Softwareentwicklung
+site_author: Thomas Denk
+
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+
+repo_name: thomasdenk79-cyber/throne-liberty-eu-kalender
+repo_url: https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender
+edit_uri: edit/main/docs/
+
+theme:
+  name: mkdocs
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - fenced_code
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Start: README.md
+  - Projekt:
+      - Projektüberblick: project/project-brief.md
+      - Architektur: project/architecture.md
+  - Entwicklung:
+      - Entwicklungsrichtlinien: engineering/development-guidelines.md
+      - KI-gestützte Entwicklung: engineering/ai-assisted-development.md
+      - Dokumentationsrichtlinien: engineering/documentation-guidelines.md
+      - Entscheidungsprotokoll: engineering/decision-log.md
+  - Referenz:
+      - Markdown-Kurzreferenz: reference/markdown-cheatsheet.md
+  - Demo:
+      - Vorstellung für Kollegen: demo/colleague-demo.md
+      - Prompt-Beispiele: demo/prompt-examples.md
