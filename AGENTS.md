@@ -22,7 +22,7 @@ Vor jeder größeren Änderung zuerst lesen:
 - Erst verstehen, dann ändern.
 - Kleine nachvollziehbare Änderungen bevorzugen.
 - Bestehendes Verhalten erhalten, außer die Aufgabe verlangt explizit etwas anderes.
-- Keine geheimen Zugangsdaten, Tokens oder personenbezogenen Daten ins Repository schreiben.
+- Keine geheimen Zugangsdaten oder Tokens ins Repository schreiben. Personenbezogene Daten sind nur in der ausdrücklich freigegebenen gesetzlichen Anbieterangabe zulässig; niemals in Beispielen, Logs oder Testdaten.
 - Keine Siemens-internen Inhalte in dieses öffentliche Privat-Repository aufnehmen.
 - Dokumentation auf Deutsch schreiben; technische Bezeichner bleiben Englisch.
 - Bei Unsicherheit Annahmen sichtbar dokumentieren.
@@ -37,6 +37,8 @@ Vor jeder größeren Änderung zuerst lesen:
 - `docs/project/architecture.md`: Architektur und Datenfluss
 - `docs/engineering/development-guidelines.md`: Entwicklungsqualität
 - `docs/engineering/decision-log.md`: dauerhafte Grundsatzentscheidungen
+- `docs/project/changelog.md`: menschenlesbare Release-Historie
+- `docs/project/taskboard.md`: versionierter Arbeitsstatus und Demo-Backlog
 
 Bei Widersprüchen nicht still eine neue Variante ergänzen. Die kanonische Quelle prüfen und den Widerspruch sichtbar korrigieren.
 
@@ -50,6 +52,7 @@ Eine Änderung ist erst fertig, wenn:
 - die Bedienung für Nicht-Programmierer verständlich bleibt,
 - relevante Ansichten und Randfälle geprüft wurden,
 - und ein kurzer Testnachweis oder eine ehrliche Liste nicht geprüfter Punkte vorliegt.
+- sichtbare Änderungen im Changelog und betroffene Aufgaben im Taskboard gepflegt sind.
 
 ## Umgang mit Kontext
 

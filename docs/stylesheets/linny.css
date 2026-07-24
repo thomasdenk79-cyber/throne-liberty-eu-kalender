@@ -1,0 +1,151 @@
+:root {
+  --linny-cyan: #82e8ff;
+  --linny-violet: #ae79ff;
+  --linny-night: #07101d;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #07101d;
+  --md-default-fg-color: #e9f3ff;
+  --md-primary-fg-color: #372966;
+  --md-accent-fg-color: var(--linny-cyan);
+}
+
+.md-header {
+  background: linear-gradient(100deg, #101c35, #422d73 55%, #14667b);
+  box-shadow: 0 8px 32px #0008;
+}
+
+.md-tabs {
+  background: linear-gradient(90deg, #111d35, #272044);
+}
+
+.md-main {
+  background:
+    radial-gradient(60rem 26rem at 14% 0%, #1c75a828, transparent 65%),
+    radial-gradient(54rem 28rem at 95% 4%, #7a39c826, transparent 64%);
+}
+
+.md-content img {
+  border: 1px solid #9beaff35;
+  border-radius: 16px;
+  box-shadow: 0 18px 55px #0008;
+}
+
+.linny-hero {
+  position: relative;
+  min-height: 25rem;
+  margin: 0 0 2rem;
+  overflow: hidden;
+  border: 1px solid #9beaff3d;
+  border-radius: 24px;
+  background:
+    linear-gradient(90deg, #07101df2 0%, #07101dcc 43%, #07101d18 78%),
+    url("../assets/linny/linny-goddess-of-armies-v1.webp") center / cover;
+  box-shadow: 0 26px 90px #0009;
+}
+
+.linny-hero__copy {
+  width: min(34rem, 88%);
+  padding: clamp(2rem, 7vw, 4.5rem);
+}
+
+.linny-hero-title {
+  margin: 0 0 .8rem;
+  color: #fff;
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  font-weight: 800;
+  line-height: .98;
+}
+
+.linny-hero p {
+  color: #dcecff;
+  font-size: 1.05rem;
+}
+
+.linny-kicker {
+  display: inline-block;
+  margin-bottom: .7rem;
+  color: var(--linny-cyan);
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.linny-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.linny-card {
+  padding: 1.1rem;
+  border: 1px solid #a8e9ff2d;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #14213ae8, #201a38e8);
+  box-shadow: 0 12px 38px #0006;
+}
+
+.linny-card h3 {
+  margin-top: 0;
+  color: var(--linny-cyan);
+}
+
+.linny-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1.1rem;
+}
+
+.linny-gallery figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #9beaff35;
+  border-radius: 16px;
+  background: #0a1424;
+  box-shadow: 0 18px 50px #0007;
+}
+
+.linny-gallery img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 0;
+  object-fit: cover;
+  box-shadow: none;
+}
+
+.linny-gallery figcaption {
+  padding: .85rem 1rem 1rem;
+  color: #dcecff;
+  font-weight: 700;
+}
+
+.status-chip {
+  display: inline-flex;
+  padding: .2rem .55rem;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.status-done { color: #b8ffd1; background: #1b744255; }
+.status-active { color: #ffdf91; background: #aa6c2255; }
+.status-next { color: #bdeeff; background: #246a8b55; }
+
+@media (max-width: 640px) {
+  .linny-hero {
+    min-height: 31rem;
+    background:
+      linear-gradient(0deg, #07101df5 0%, #07101d92 62%, transparent 90%),
+      url("../assets/linny/linny-goddess-of-armies-v1.webp") 62% center / cover;
+  }
+
+  .linny-hero__copy {
+    position: absolute;
+    inset: auto 0 0;
+    width: auto;
+    padding: 1.4rem;
+  }
+}

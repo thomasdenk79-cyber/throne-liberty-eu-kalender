@@ -11,7 +11,50 @@ canonical: true
 
 # Dokumentations- und Wissensstruktur
 
-Diese Dokumentation ist das gemeinsame, versionierte **Projektgedächtnis für Menschen, ChatGPT und Coding-Agenten**. Die Markdown-Dateien sind die gepflegte Quelle; aus ihnen kann mit MkDocs eine klickbare HTML-Dokumentation erzeugt werden.
+<section class="linny-hero">
+  <div class="linny-hero__copy">
+    <span class="linny-kicker">Solisium Engineering Excellence</span>
+    <div class="linny-hero-title">Linny führt. Menschen und KI liefern.</div>
+    <p>Das gemeinsame, versionierte Projektgedächtnis für eine Event-App – und eine bewusst übertriebene Demo dafür, wie moderne Softwareentwicklung mit Menschen, Agenten und einer sehr epischen Zauberin aussehen kann.</p>
+  </div>
+</section>
+
+<div class="linny-grid">
+  <article class="linny-card">
+    <h3>Für Nutzer</h3>
+    <p>Timer starten, Warnungen einstellen, Termine exportieren und die App auf Handy oder Desktop installieren.</p>
+    <p><a href="user/quickstart/">Zum Schnellstart →</a></p>
+  </article>
+  <article class="linny-card">
+    <h3>Für Entwickler</h3>
+    <p>Architektur, INI-Vertrag, Sicherheitsregeln, Tests und nachvollziehbare Entscheidungen.</p>
+    <p><a href="project/architecture/">Architektur öffnen →</a></p>
+  </article>
+  <article class="linny-card">
+    <h3>Für KI-Agenten</h3>
+    <p>Rollen, Review-Gates, Kontextladeverfahren und ein Repository als belastbares Langzeitgedächtnis.</p>
+    <p><a href="engineering/ai-assisted-development/">KI-Workflow ansehen →</a></p>
+  </article>
+</div>
+
+Die Markdown-Dateien sind die gepflegte Quelle; MkDocs erzeugt daraus diese klickbare und durchsuchbare Website.
+
+## Linny in völlig angemessenem Maßstab
+
+<div class="linny-gallery">
+  <figure>
+    <img src="assets/linny/linny-felswacht-conqueror-v1.webp" alt="Linny vor Burg Felswacht, während sich eine große Armee verbeugt">
+    <figcaption>Linny erobert Burg Felswacht mit dem kleinen Finger. Das Review dauerte länger.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/linny/linny-kart-race-v1.webp" alt="Linny in einem magischen Kart auf einer bunten Rennstrecke">
+    <figcaption>Continuous Delivery, jetzt mit Sternenantrieb und ohne Tempolimit.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/linny/linny-baggersee-v1.webp" alt="Linny und Amitoi beim Baden an einem Bergsee">
+    <figcaption>Nach dem Release: Baggersee. Der Drache hat selbstverständlich Schwimmflügel.</figcaption>
+  </figure>
+</div>
 
 ## Einstieg nach Rolle
 

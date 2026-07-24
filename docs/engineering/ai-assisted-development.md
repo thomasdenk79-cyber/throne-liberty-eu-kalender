@@ -18,8 +18,9 @@ Menschen und KI-Systeme übernehmen unterschiedliche Rollen. Die KI ersetzt wede
 | Rolle | Hauptverantwortung |
 |---|---|
 | Projektinhaber | Ziele, Prioritäten, fachliche Abnahme und Freigabe |
-| ChatGPT im Web | Recherche, Konzepte, Architektur, Dokumentation und Review aus Gesamtsicht |
-| Coding-Agent | Repository verstehen, Dateien ändern, Tests ausführen und technische Ergebnisse liefern |
+| Chief AI Architect & Developer | Architekturvorgaben, Sicherheitsreview, Koordination und Endreview |
+| Junior Coding-Agent | klar begrenzte Implementierung, Tests und Dokumentation nach Vorgabe |
+| Junior Admin Runner | reproduzierbare Builds und einfache, risikoarme Wartungsaufgaben |
 | Repository-Wissensbasis | dauerhafte, versionierte Übergabeschnittstelle zwischen allen Beteiligten |
 
 ## Warum das Repository als Gedächtnis dient
@@ -122,6 +123,8 @@ Review auf Funktion, Architektur und Verständlichkeit
         ↓
 Dokumentation und Entscheidungen aktualisieren
 ```
+
+Details zu Zuständigkeiten, Ablehnungsgründen und Freigabe-Gates stehen unter [Rollen und Governance](../project/team-governance.md). Der aktuelle Arbeitsstand steht im [Taskboard](../project/taskboard.md).
 
 ## Regeln gegen typische KI-Fehler
 

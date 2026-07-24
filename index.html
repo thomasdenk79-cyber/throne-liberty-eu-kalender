@@ -1,12 +1,16 @@
 <!doctype html>
 <html lang="de">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="Linny's installierbarer Throne and Liberty EU Event-Timer mit Offline-Modus.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Linny's Astral Solisium Pulse · TL EU Event Timer</title>
-  <link rel="icon" href="data:,">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/linny-192.png">
+  <link rel="apple-touch-icon" href="assets/icons/linny-192.png">
   <style>
     :root {
       --bg: #09101b;
@@ -23,12 +27,9 @@
       --shadow: #00000042;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       min-height: 100%;
       color: var(--text);
@@ -80,10 +81,7 @@
       flex: 0 0 auto;
     }
 
-    .mark b {
-      transform: rotate(-45deg);
-      font-size: 10px;
-    }
+    .mark b { transform: rotate(-45deg); font-size: 10px; }
 
     .brand strong {
       display: block;
@@ -107,9 +105,7 @@
       color: #d8e4f8;
     }
 
-    .clocks b {
-      color: #ffffff;
-    }
+    .clocks b { color: #ffffff; }
 
     .layout {
       width: 100%;
@@ -194,10 +190,7 @@
       gap: 10px;
     }
 
-    .row {
-      display: grid;
-      gap: 6px;
-    }
+    .row { display: grid; gap: 6px; }
 
     .label {
       font-size: 10px;
@@ -310,11 +303,14 @@
       box-shadow: inset 0 1px 0 #ffffff16, 0 8px 18px #00000024;
     }
 
-    .topbar-help-link {
-      text-decoration: none;
+    .topbar-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      min-height: 30px;
+      padding: 5px 8px;
+      color: #cdefff;
+      text-decoration: none;
       white-space: nowrap;
     }
 
@@ -333,7 +329,7 @@
       display: none;
     }
 
-    .editor>*,
+    .editor > *,
     .editor .row,
     .editor .meta-grid,
     .editor .calendar-group {
@@ -341,9 +337,7 @@
       max-width: 100%;
     }
 
-    .editor .meta-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    .editor .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
     .editor input,
     .editor select,
@@ -387,9 +381,7 @@
       background: linear-gradient(145deg, #0d1929, #08111e);
     }
 
-    .notification-level-card.is-disabled {
-      opacity: 0.62;
-    }
+    .notification-level-card.is-disabled { opacity: 0.62; }
 
     .notification-level-head,
     .sound-control {
@@ -398,25 +390,11 @@
       align-items: center;
     }
 
-    .notification-level-head .pill {
-      width: auto;
-    }
+    .notification-level-head .pill { width: auto; }
+    .sound-control select { flex: 1 1 auto; }
+    .sound-test-btn { flex: 0 0 auto; min-width: 42px; padding-inline: 9px; }
 
-    .sound-control select {
-      flex: 1 1 auto;
-    }
-
-    .sound-test-btn {
-      flex: 0 0 auto;
-      min-width: 42px;
-      padding-inline: 9px;
-    }
-
-    .alarm-test-btn {
-      flex: 0 0 auto;
-      padding-inline: 8px;
-      white-space: nowrap;
-    }
+    .alarm-test-btn { flex: 0 0 auto; padding-inline: 8px; white-space: nowrap; }
 
     .config-health {
       display: flex;
@@ -431,13 +409,8 @@
       font-size: 10px;
     }
 
-    .config-health .is-warning {
-      color: #ffc06b;
-    }
-
-    .config-health .is-ok {
-      color: #79dda1;
-    }
+    .config-health .is-warning { color: #ffc06b; }
+    .config-health .is-ok { color: #79dda1; }
 
     .activity-status::before {
       content: "";
@@ -450,59 +423,90 @@
       box-shadow: 0 0 9px currentColor;
     }
 
+    html.colorblind-mode .card {
+      border-width: 2px;
+      border-color: #f8fbffb8;
+      background-image:
+        repeating-linear-gradient(var(--cb-angle, 135deg), #ffffff14 0 3px, transparent 3px 11px),
+        var(--card-overlay),
+        var(--motif);
+    }
+
+    html.colorblind-mode .card::before {
+      width: 9px;
+      background: var(--urgency-color);
+      opacity: 1;
+    }
+
+    html.colorblind-mode .card-status {
+      min-width: 76px;
+      justify-content: center;
+      padding: 3px 8px;
+      border: 2px solid currentColor;
+      border-radius: 999px;
+      background: #050a12e8;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
     html.colorblind-mode .card-status::before {
-      content: "◈";
-      margin-right: 4px;
+      content: "◆";
+      margin-right: 6px;
+      font-size: 1.15em;
       font-weight: 900;
     }
 
-    html.colorblind-mode .card.is-soon .card-status::before,
-    html.colorblind-mode .card.is-verysoon .card-status::before {
-      content: "▲";
+    html.colorblind-mode .card.is-day { --cb-angle: 0deg; }
+    html.colorblind-mode .card.is-day .card-status::before { content: "●"; }
+    html.colorblind-mode .card.is-soon { --cb-angle: 45deg; }
+    html.colorblind-mode .card.is-soon .card-status::before { content: "▲"; }
+    html.colorblind-mode .card.is-verysoon { --cb-angle: 90deg; }
+    html.colorblind-mode .card.is-verysoon .card-status::before { content: "■"; }
+    html.colorblind-mode .card.is-danger { --cb-angle: 135deg; }
+    html.colorblind-mode .card.is-danger .card-status::before { content: "!"; font-size: 1.3em; }
+    html.colorblind-mode .card.is-critical { --cb-angle: -45deg; }
+    html.colorblind-mode .card.is-critical .card-status::before { content: "!!"; }
+
+    html.colorblind-mode .card-phase-progress {
+      height: 9px;
+      border: 1px solid #fff;
+      border-radius: 2px;
     }
 
-    html.colorblind-mode .card.is-danger .card-status::before {
-      content: "!";
+    html.colorblind-mode .card-phase-progress span {
+      background: repeating-linear-gradient(90deg, var(--urgency-color) 0 8px, #fff 8px 11px);
     }
 
-    html.colorblind-mode .card.is-critical .card-status::before {
-      content: "!!";
-    }
-
-    html[data-density="comfortable"] #cardStack {
-      grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr));
-    }
-
-    html[data-density="comfortable"] .card {
-      padding: 13px;
-      gap: 11px;
-    }
-
-    html[data-density="compact"] #cardStack {
-      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
-    }
-
-    html[data-density="ultra"] #cardStack {
-      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
-      gap: 6px;
-    }
-
+    html[data-density="comfortable"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr)); }
+    html[data-density="comfortable"] .card { padding: 13px; gap: 11px; }
+    html[data-density="compact"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+    html[data-density="ultra"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(185px, 100%), 1fr)); gap: 4px; }
     html[data-density="ultra"] .card {
-      padding: 7px 8px;
-      gap: 5px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "head count" "phase phase";
+      align-items: center;
+      padding: 5px 7px 5px 10px;
+      gap: 3px 7px;
+      min-height: 47px;
+      border-radius: 8px;
+      transform: none;
     }
-
+    html[data-density="ultra"] .card-head { grid-area: head; min-width: 0; }
+    html[data-density="ultra"] .card-title { min-width: 0; }
     html[data-density="ultra"] .card-title b {
-      font-size: 14px;
+      overflow: hidden;
+      font-size: 12px;
+      line-height: 1.15;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
-
-    html[data-density="ultra"] .count {
-      font-size: clamp(25px, 4vw, 30px);
-    }
-
-    html[data-density="ultra"] .meta {
-      font-size: 10px;
-    }
+    html[data-density="ultra"] .count { grid-area: count; font-size: clamp(18px, 3vw, 23px); white-space: nowrap; }
+    html[data-density="ultra"] .card-phase-progress { grid-area: phase; height: 4px; margin: 0; }
+    html[data-density="ultra"] .meta,
+    html[data-density="ultra"] .edit-btn,
+    html[data-density="ultra"] .card-tooltip,
+    html[data-density="ultra"] .card-thumbnail { display: none !important; }
 
     .stack {
       padding: 10px;
@@ -550,13 +554,10 @@
     }
 
     @keyframes critical-card-pulse {
-
-      0%,
-      100% {
+      0%, 100% {
         border-color: #b892ff80;
         box-shadow: inset 0 1px 0 #ffffff1a, 0 0 12px #b892ff35;
       }
-
       50% {
         border-color: #eadfff;
         box-shadow: inset 0 1px 0 #ffffff38, 0 0 0 2px #b892ff52, 0 0 34px #b892ff9c;
@@ -564,19 +565,8 @@
     }
 
     @keyframes critical-count-blink {
-
-      0%,
-      44%,
-      100% {
-        opacity: 1;
-        filter: brightness(1.25);
-      }
-
-      45%,
-      78% {
-        opacity: 0.3;
-        filter: brightness(0.75);
-      }
+      0%, 44%, 100% { opacity: 1; filter: brightness(1.25); }
+      45%, 78% { opacity: 0.3; filter: brightness(0.75); }
     }
 
     .card.is-critical {
@@ -678,6 +668,162 @@
       transition: width 300ms linear, background 300ms linear;
     }
 
+    .card.has-thumbnail {
+      grid-template-columns: 88px minmax(0, 1fr);
+      grid-template-areas:
+        "thumb head"
+        "thumb count"
+        "thumb meta"
+        "phase phase";
+      align-items: center;
+    }
+
+    .card.has-thumbnail .card-head { grid-area: head; min-width: 0; }
+    .card.has-thumbnail .count { grid-area: count; }
+    .card.has-thumbnail .meta { grid-area: meta; }
+    .card.has-thumbnail .card-phase-progress { grid-area: phase; }
+
+    .card-thumbnail {
+      position: relative;
+      grid-area: thumb;
+      align-self: stretch;
+      min-height: 92px;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid #bdeaff42;
+      border-radius: 9px;
+      background: #050a12;
+      cursor: zoom-in;
+      box-shadow: inset 0 0 0 1px #0008, 0 7px 18px #0006;
+    }
+
+    .card-thumbnail img {
+      width: 100%;
+      height: 100%;
+      min-height: 92px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 220ms ease, filter 220ms ease;
+    }
+
+    .card-thumbnail:hover img,
+    .card-thumbnail:focus-visible img { transform: scale(1.07); filter: brightness(1.12); }
+
+    .card-art-caption {
+      position: absolute;
+      inset: auto 5px 5px;
+      z-index: 1;
+      overflow: hidden;
+      padding: 3px 5px;
+      border: 1px solid #ffffff2c;
+      border-radius: 6px;
+      color: #f7fbff;
+      background: #030713d4;
+      font-size: 8px;
+      font-weight: 800;
+      line-height: 1.15;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      box-shadow: 0 2px 10px #000a;
+    }
+
+    .image-lightbox {
+      width: min(94vw, 1500px);
+      max-width: none;
+      padding: 8px;
+      border: 1px solid #8ce9ff73;
+      border-radius: 18px;
+      color: var(--text);
+      background: linear-gradient(145deg, #07101df4, #11152af4);
+      box-shadow: 0 0 0 1px #b88cff2b, 0 0 70px #64dfff42, 0 30px 100px #000e;
+    }
+
+    .image-lightbox::backdrop { background: #02050bea; backdrop-filter: blur(10px); }
+
+    .image-lightbox-frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #02050b;
+    }
+
+    .image-lightbox-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid #ffffff1f;
+      box-shadow: inset 0 0 70px #6edfff1d;
+      pointer-events: none;
+    }
+
+    .image-lightbox img { width: 100%; max-height: 84vh; display: block; object-fit: contain; }
+    .image-lightbox-caption { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 9px 8px 3px; }
+    .image-lightbox-caption b { color: #b9efff; }
+
+    .legal-dialog {
+      width: min(680px, calc(100vw - 24px));
+      max-height: min(82vh, 760px);
+      overflow: auto;
+      padding: 20px;
+      border: 1px solid #83dcff52;
+      border-radius: 16px;
+      color: var(--text);
+      background: #0b1422f7;
+      box-shadow: 0 30px 90px #000d;
+    }
+
+    .legal-dialog::backdrop { background: #02050bc7; backdrop-filter: blur(7px); }
+    .legal-dialog h2 { margin: 0 0 12px; }
+    .legal-dialog h3 { margin: 18px 0 7px; color: #9be8ff; }
+    .legal-dialog p, .legal-dialog li { color: #cad5e5; line-height: 1.55; }
+    .legal-dialog .legal-warning { color: #ffd07c; }
+
+    .imprint-dialog {
+      min-height: min(72vh, 650px);
+      background:
+        linear-gradient(90deg, #06101df7 0%, #06101de8 48%, #06101d42 76%, #06101d12 100%),
+        url('assets/legal/linny-imprint-v1.webp') 72% center / cover;
+    }
+
+    .imprint-dialog #imprintContent {
+      width: min(390px, 100%);
+      padding: 16px;
+      border: 1px solid #91e5ff38;
+      border-radius: 14px;
+      background: #07111edb;
+      box-shadow: 0 18px 50px #0009;
+      backdrop-filter: blur(9px);
+    }
+
+    .consent-dialog {
+      width: min(760px, calc(100vw - 24px));
+      padding: 14px;
+      border: 1px solid #86e5ff65;
+      border-radius: 18px;
+      color: var(--text);
+      background:
+        radial-gradient(520px 220px at 100% 0%, #7a65ff2b, transparent 68%),
+        #081220f8;
+      box-shadow: 0 20px 65px #000d, inset 0 1px 0 #fff1;
+      backdrop-filter: blur(15px);
+    }
+
+    .consent-dialog::backdrop {
+      background: #02050bd9;
+      backdrop-filter: blur(9px);
+    }
+
+    .consent-dialog[hidden] { display: none; }
+    .consent-copy { display: grid; gap: 4px; }
+    .consent-copy small { color: #bfcbdc; line-height: 1.4; }
+    .consent-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; justify-content: flex-start; }
+
+    .footer-links { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+    .footer-link-btn { padding: 0; border: 0; color: #9ce9ff; background: transparent; font: inherit; cursor: pointer; }
+    .footer-link-btn:hover { text-decoration: underline; }
+
     .meta {
       display: flex;
       justify-content: space-between;
@@ -757,9 +903,7 @@
       border-bottom: 1px dashed #ffffff18;
     }
 
-    .calendar-row:last-child {
-      border-bottom: 0;
-    }
+    .calendar-row:last-child { border-bottom: 0; }
 
     .toast-wrap {
       position: fixed;
@@ -774,9 +918,7 @@
       backdrop-filter: blur(14px);
     }
 
-    .toast-wrap:empty {
-      display: none;
-    }
+    .toast-wrap:empty { display: none; }
 
     .toast {
       padding: 10px;
@@ -795,14 +937,8 @@
       color: #c1cde0;
     }
 
-    .footer a {
-      color: #9ce9ff;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
+    .footer a { color: #9ce9ff; text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
 
     /* 2026 visual refresh: cinematic glass UI without changing timer behavior. */
     body::before,
@@ -833,9 +969,7 @@
     }
 
     @keyframes ambient-drift {
-      to {
-        transform: translate3d(7vw, 5vh, 0) scale(1.12);
-      }
+      to { transform: translate3d(7vw, 5vh, 0) scale(1.12); }
     }
 
     .topbar {
@@ -912,22 +1046,15 @@
       color: transparent;
     }
 
-    .hero p {
-      font-size: 14px;
-      line-height: 1.55;
-    }
+    .hero p { font-size: 14px; line-height: 1.55; }
 
     .controls,
     .calendar,
     .footer,
     .editor,
-    .stack {
-      border-radius: 17px;
-    }
+    .stack { border-radius: 17px; }
 
-    .controls {
-      padding: 14px;
-    }
+    .controls { padding: 14px; }
 
     select,
     input,
@@ -954,9 +1081,7 @@
       box-shadow: inset 0 1px 0 #ffffff20, 0 8px 22px #0003;
     }
 
-    .btn.alt {
-      background: linear-gradient(180deg, #111e30, #0a1422);
-    }
+    .btn.alt { background: linear-gradient(180deg, #111e30, #0a1422); }
 
     .card {
       border-radius: 15px;
@@ -1011,26 +1136,17 @@
     }
 
     .toggle label:nth-child(4n + 3),
-    .toggle label:nth-child(4n + 4) {
-      background: #101c2c;
-    }
+    .toggle label:nth-child(4n + 4) { background: #101c2c; }
 
-    .toggle label:nth-child(odd) {
-      border-right: 1px solid #ffffff12;
-    }
-
-    .toggle label:nth-child(n + 3) {
-      border-top: 1px solid #ffffff10;
-    }
+    .toggle label:nth-child(odd) { border-right: 1px solid #ffffff12; }
+    .toggle label:nth-child(n + 3) { border-top: 1px solid #ffffff10; }
 
     .toggle label.is-active {
       color: #effbff;
       box-shadow: inset 3px 0 0 #72dcff, inset 0 0 24px #5bdcff0c;
     }
 
-    .toggle label:hover {
-      background: #17263a;
-    }
+    .toggle label:hover { background: #17263a; }
 
     .toggle input[type="checkbox"],
     .calendar-row input[type="checkbox"],
@@ -1105,9 +1221,7 @@
       user-select: none;
     }
 
-    .calendar-group h3:hover {
-      color: #9deaff;
-    }
+    .calendar-group h3:hover { color: #9deaff; }
 
     .calendar-group h3::after {
       content: attr(data-toggle-hint);
@@ -1135,23 +1249,10 @@
       border-radius: 8px;
     }
 
-    .calendar-row:nth-child(odd) {
-      background: #ffffff04;
-    }
-
-    .calendar-row.is-selected {
-      background: #5bdcff12;
-    }
-
-    .calendar-row>span {
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-
-    .calendar-row .ics-btn {
-      min-height: 29px;
-      padding: 5px 8px;
-    }
+    .calendar-row:nth-child(odd) { background: #ffffff04; }
+    .calendar-row.is-selected { background: #5bdcff12; }
+    .calendar-row > span { min-width: 0; overflow-wrap: anywhere; }
+    .calendar-row .ics-btn { min-height: 29px; padding: 5px 8px; }
 
     .btn:disabled {
       cursor: not-allowed;
@@ -1181,8 +1282,8 @@
       align-items: start;
     }
 
-    .stack>.label,
-    .controls>.row>.label {
+    .stack > .label,
+    .controls > .row > .label {
       color: #bfeeff;
     }
 
@@ -1209,23 +1310,10 @@
       min-width: 0;
     }
 
-    .notification-copy strong {
-      font-size: 12px;
-      color: #edf8ff;
-    }
-
-    .notification-copy small {
-      color: #9facbf;
-      line-height: 1.4;
-    }
-
-    .notification-copy small.is-ready {
-      color: #86e9ac;
-    }
-
-    .notification-copy small.is-blocked {
-      color: #ffb074;
-    }
+    .notification-copy strong { font-size: 12px; color: #edf8ff; }
+    .notification-copy small { color: #9facbf; line-height: 1.4; }
+    .notification-copy small.is-ready { color: #86e9ac; }
+    .notification-copy small.is-blocked { color: #ffb074; }
 
     .event-dialog {
       width: min(420px, calc(100vw - 28px));
@@ -1250,20 +1338,9 @@
       background: radial-gradient(480px 180px at 100% 0%, #6adeff26, transparent 64%);
     }
 
-    .event-dialog h2 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    .event-dialog p {
-      margin: 0;
-      color: #c7d5e8;
-      line-height: 1.55;
-    }
-
-    .event-dialog .btn {
-      justify-self: start;
-    }
+    .event-dialog h2 { margin: 0; font-size: 24px; }
+    .event-dialog p { margin: 0; color: #c7d5e8; line-height: 1.55; }
+    .event-dialog .btn { justify-self: start; }
 
     /* Wide dashboard: controls in the center, live timers on the right. */
     body {
@@ -1288,10 +1365,7 @@
       min-width: 0;
     }
 
-    .dashboard-main>.hero {
-      grid-column: 1;
-      grid-row: 1;
-    }
+    .dashboard-main > .hero { grid-column: 1; grid-row: 1; }
 
     .controls {
       grid-column: 1;
@@ -1314,13 +1388,8 @@
       gap: 9px;
     }
 
-    .control-settings .meta-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .control-visibility {
-      align-content: start;
-    }
+    .control-settings .meta-grid { grid-template-columns: 1fr; }
+    .control-visibility { align-content: start; }
 
     .controls .notification-setup {
       grid-template-columns: 1fr;
@@ -1328,9 +1397,7 @@
       align-self: start;
     }
 
-    .controls .notification-setup .btn {
-      justify-self: start;
-    }
+    .controls .notification-setup .btn { justify-self: start; }
 
     .notification-actions {
       display: grid;
@@ -1368,13 +1435,9 @@
     }
 
     .calendar,
-    .footer {
-      grid-column: 1 / -1;
-    }
+    .footer { grid-column: 1 / -1; }
 
-    .calendar {
-      padding: 15px;
-    }
+    .calendar { padding: 15px; }
 
     .topbar-tools {
       display: flex;
@@ -1500,10 +1563,7 @@
       font-size: 10px;
     }
 
-    .current-events[hidden] {
-      display: none;
-    }
-
+    .current-events[hidden] { display: none; }
     #currentEventsList {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr));
@@ -1538,25 +1598,10 @@
       gap: 10px;
     }
 
-    .current-event-head>div {
-      display: grid;
-      gap: 2px;
-      min-width: 0;
-    }
-
-    .current-event-head b {
-      overflow-wrap: anywhere;
-    }
-
-    .current-event-head small {
-      color: #8ee7bd;
-    }
-
-    .current-event-head strong {
-      color: #dffdf0;
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-    }
+    .current-event-head > div { display: grid; gap: 2px; min-width: 0; }
+    .current-event-head b { overflow-wrap: anywhere; }
+    .current-event-head small { color: #8ee7bd; }
+    .current-event-head strong { color: #dffdf0; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
     .current-event-meta {
       color: #9eb0c4;
@@ -1580,7 +1625,7 @@
       transition: width 900ms linear;
     }
 
-    .dashboard-main>.hero {
+    .dashboard-main > .hero {
       min-height: 370px;
       background-position: center 18%;
     }
@@ -1614,9 +1659,7 @@
     }
 
     /* Compact timer cards: details live in the title tooltip. */
-    .stack {
-      padding: 8px;
-    }
+    .stack { padding: 8px; }
 
     .card {
       gap: 5px;
@@ -1626,9 +1669,7 @@
     }
 
     .card:hover,
-    .card:focus-within {
-      z-index: 6;
-    }
+    .card:focus-within { z-index: 6; }
 
     .card-head {
       justify-content: flex-start;
@@ -1690,15 +1731,8 @@
       transform: translateY(0);
     }
 
-    .card-tooltip p {
-      margin: 0;
-    }
-
-    .card-tooltip-row {
-      display: grid;
-      gap: 2px;
-    }
-
+    .card-tooltip p { margin: 0; }
+    .card-tooltip-row { display: grid; gap: 2px; }
     .card-tooltip-label {
       color: #86e8ff;
       font-size: 9px;
@@ -1738,10 +1772,7 @@
       outline: none;
     }
 
-    .icon-btn svg {
-      width: 15px;
-      height: 15px;
-    }
+    .icon-btn svg { width: 15px; height: 15px; }
 
     .count {
       font-size: clamp(28px, 4vw, 34px);
@@ -1756,9 +1787,7 @@
       font-size: 11px;
     }
 
-    .card-when {
-      color: #d4deef;
-    }
+    .card-when { color: #d4deef; }
 
     .card-status {
       display: inline-flex;
@@ -1822,9 +1851,18 @@
       border-radius: 13px;
     }
 
-    html.dock-mode .card {
-      padding: 9px 10px;
+    html.dock-mode .card { padding: 9px 10px; }
+
+    html.dock-mode[data-density="ultra"] #cardStack {
+      grid-template-columns: repeat(auto-fit, minmax(min(185px, 100%), 1fr));
+      gap: 4px;
     }
+
+    html.dock-mode[data-density="ultra"] .card { padding: 5px 7px 5px 10px; }
+
+    html.colorblind-mode .card { border-width: 2px !important; }
+    html.colorblind-mode .card-phase-progress { height: 9px !important; }
+    html.colorblind-mode[data-density="ultra"] .card-phase-progress { height: 7px !important; }
 
     @media (min-width: 1360px) {
       body.editor-open .layout {
@@ -1835,58 +1873,32 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-
       body::before,
-      body::after {
-        animation: none;
-      }
-
+      body::after { animation: none; }
       .btn,
-      .card {
-        transition: none;
-      }
-
+      .card { transition: none; }
       .card.is-critical,
-      .card.is-critical .count {
-        animation: none;
-      }
+      .card.is-critical .count { animation: none; }
     }
 
     @media (max-width: 1100px) {
-      body {
-        padding-top: 92px;
-      }
-
+      body { padding-top: 92px; }
       .layout {
         max-width: 760px;
         grid-template-columns: minmax(0, 1fr);
       }
-
-      .live-column {
-        grid-column: 1;
-        grid-row: 1;
-      }
-
+      .live-column { grid-column: 1; grid-row: 1; }
       .live-column {
         position: static;
         max-height: none;
         overflow: visible;
       }
-
       .live-column #cardStack {
         grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
       }
-
-      .dashboard-main {
-        grid-column: 1;
-        grid-row: 2;
-      }
-
+      .dashboard-main { grid-column: 1; grid-row: 2; }
       .calendar,
-      .footer {
-        grid-column: 1;
-      }
-
+      .footer { grid-column: 1; }
       .editor {
         position: static;
         width: auto;
@@ -1896,82 +1908,33 @@
     }
 
     @media (max-width: 640px) {
-      .topbar {
-        flex-wrap: wrap;
-      }
-
-      .clocks {
-        width: 100%;
-        text-align: left;
-      }
-
-      body {
-        padding-top: 124px;
-      }
-
-      .dashboard-main>.hero {
-        display: none;
-      }
-
-      .topbar-tools {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .meta-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .controls {
-        grid-template-columns: 1fr;
-      }
-
-      .toggle {
-        grid-template-columns: 1fr;
-      }
-
-      .toggle label:nth-child(n) {
-        border-right: 0;
-        border-top: 1px solid #ffffff10;
-      }
-
-      .toggle label:first-child {
-        border-top: 0;
-      }
-
+      .topbar { flex-wrap: wrap; }
+      .clocks { width: 100%; text-align: left; }
+      body { padding-top: 124px; }
+      .dashboard-main > .hero { display: none; }
+      .topbar-tools { width: 100%; justify-content: space-between; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: 1fr; }
+      .toggle { grid-template-columns: 1fr; }
+      .toggle label:nth-child(n) { border-right: 0; border-top: 1px solid #ffffff10; }
+      .toggle label:first-child { border-top: 0; }
       .toggle label:nth-child(odd),
-      .toggle label:nth-child(even) {
-        background: #0b1523;
-      }
-
-      .toggle label:nth-child(even) {
-        background: #101c2c;
-      }
-
-      .calendar-row {
-        grid-template-columns: 18px 48px 52px minmax(0, 1fr) auto;
-      }
-
-      .notification-setup {
-        grid-template-columns: 1fr;
-      }
-
+      .toggle label:nth-child(even) { background: #0b1523; }
+      .toggle label:nth-child(even) { background: #101c2c; }
+      .calendar-row { grid-template-columns: 18px 48px 52px minmax(0, 1fr) auto; }
+      .notification-setup { grid-template-columns: 1fr; }
       .calendar-toolbar,
-      .inline-field-action {
-        grid-template-columns: 1fr;
-      }
-
-      .builder-time-list {
-        grid-template-columns: 1fr;
-      }
-
-      .count {
-        font-size: 26px;
-      }
+      .inline-field-action { grid-template-columns: 1fr; }
+      .builder-time-list { grid-template-columns: 1fr; }
+      .count { font-size: 26px; }
+      .consent-dialog { width: min(94vw, 760px); }
+      .consent-actions { justify-content: flex-start; }
+      .card.has-thumbnail { grid-template-columns: 74px minmax(0, 1fr); }
+      .card-thumbnail,
+      .card-thumbnail img { min-height: 82px; }
     }
   </style>
 </head>
-
 <body>
   <header class="topbar">
     <div class="brand">
@@ -1988,35 +1951,17 @@
       </div>
       <div class="language-switch" role="group" aria-label="Language">
         <button id="langDeBtn" type="button" title="Deutsch" aria-label="Deutsch">
-          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true">
-            <path fill="#171717" d="M0 0h18v4H0z" />
-            <path fill="#d5232f" d="M0 4h18v4H0z" />
-            <path fill="#f2c500" d="M0 8h18v4H0z" />
-          </svg><span>DE</span>
+          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><path fill="#171717" d="M0 0h18v4H0z"/><path fill="#d5232f" d="M0 4h18v4H0z"/><path fill="#f2c500" d="M0 8h18v4H0z"/></svg><span>DE</span>
         </button>
         <button id="langEnBtn" type="button" title="English" aria-label="English">
-          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true">
-            <path fill="#183c78" d="M0 0h18v12H0z" />
-            <path stroke="#fff" stroke-width="3" d="M0 0l18 12M18 0L0 12" />
-            <path stroke="#c9233c" stroke-width="1.5" d="M0 0l18 12M18 0L0 12" />
-            <path fill="#fff" d="M7 0h4v12H7zM0 4h18v4H0z" />
-            <path fill="#c9233c" d="M8 0h2v12H8zM0 5h18v2H0z" />
-          </svg><span>EN</span>
+          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><path fill="#183c78" d="M0 0h18v12H0z"/><path stroke="#fff" stroke-width="3" d="M0 0l18 12M18 0L0 12"/><path stroke="#c9233c" stroke-width="1.5" d="M0 0l18 12M18 0L0 12"/><path fill="#fff" d="M7 0h4v12H7zM0 4h18v4H0z"/><path fill="#c9233c" d="M8 0h2v12H8zM0 5h18v2H0z"/></svg><span>EN</span>
         </button>
         <button id="langBarBtn" type="button" title="Boarisch" aria-label="Boarisch">
-          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true">
-            <defs>
-              <pattern id="bavariaPattern" width="6" height="6" patternUnits="userSpaceOnUse"
-                patternTransform="rotate(45)">
-                <rect width="3" height="6" fill="#1685c8" />
-                <rect x="3" width="3" height="6" fill="#fff" />
-              </pattern>
-            </defs>
-            <rect width="18" height="12" fill="url(#bavariaPattern)" />
-          </svg><span>BY</span>
+          <svg class="language-flag" viewBox="0 0 18 12" aria-hidden="true"><defs><pattern id="bavariaPattern" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="6" fill="#1685c8"/><rect x="3" width="3" height="6" fill="#fff"/></pattern></defs><rect width="18" height="12" fill="url(#bavariaPattern)"/></svg><span>BY</span>
         </button>
       </div>
-      <a class="btn alt topbar-help-link" id="helpDocsLink" href="help/" target="_blank" rel="noopener">Hilfe / Help</a>
+      <button class="btn alt topbar-link" id="installAppBtn" type="button" hidden>App installieren</button>
+      <a class="btn alt topbar-link" id="helpDocsLink" href="help/" target="_blank" rel="noopener">Hilfe</a>
     </div>
   </header>
 
@@ -2062,14 +2007,14 @@
     <div class="row interval-editor">
       <div class="label" id="editIntervalLabel">Interval Seconds</div>
       <div class="inline-field-action">
-        <input id="editIntervalSeconds" type="number" min="1" step="1" placeholder="11808">
+        <input id="editIntervalSeconds" type="number" min="1" step="1" placeholder="11806">
         <button class="btn alt" id="applyIntervalBtn" type="button">Apply interval</button>
       </div>
       <div class="editor-help" id="editIntervalHelp"></div>
     </div>
     <div class="row">
       <div class="label" id="editRulesLabel">Rules</div>
-      <textarea id="editRules" placeholder="30 3,14,19 * * 1-5&#10;30 3,14,19,23 * * 0,6&#10;@every 11808s"></textarea>
+      <textarea id="editRules" placeholder="30 3,14,19 * * 1-5&#10;30 3,14,19,23 * * 0,6&#10;@every 11806s"></textarea>
       <div class="editor-help" id="editRulesHelp"></div>
       <div class="calendar-group">
         <h3 id="builderTitle">Schedule builder</h3>
@@ -2091,8 +2036,7 @@
       <div class="notification-level-grid">
         <div class="notification-level-card" id="warningNotificationCard">
           <div class="notification-level-head">
-            <label class="pill"><input id="editNotifyWarningEnabled" type="checkbox"> <span
-                id="editNotifyWarningEnabledLabel">Warning enabled</span></label>
+            <label class="pill"><input id="editNotifyWarningEnabled" type="checkbox"> <span id="editNotifyWarningEnabledLabel">Warning enabled</span></label>
           </div>
           <div class="row">
             <label class="field-caption" id="editNotifyWarningLabel" for="editNotifyWarningSeconds">Warning</label>
@@ -2100,20 +2044,17 @@
             <div class="editor-help" id="editNotifyWarningHelp"></div>
           </div>
           <div class="row">
-            <label class="field-caption" id="editNotifyWarningSoundLabel" for="editNotifyWarningSound">Warning
-              sound</label>
+            <label class="field-caption" id="editNotifyWarningSoundLabel" for="editNotifyWarningSound">Warning sound</label>
             <div class="sound-control">
               <select id="editNotifyWarningSound"></select>
-              <button class="btn alt sound-test-btn" id="testWarningSoundBtn" type="button"
-                aria-label="Test warning sound">▶</button>
+              <button class="btn alt sound-test-btn" id="testWarningSoundBtn" type="button" aria-label="Test warning sound">▶</button>
               <button class="btn alt alarm-test-btn" id="testWarningAlarmBtn" type="button">+10s</button>
             </div>
           </div>
         </div>
         <div class="notification-level-card" id="criticalNotificationCard">
           <div class="notification-level-head">
-            <label class="pill"><input id="editNotifyCriticalEnabled" type="checkbox"> <span
-                id="editNotifyCriticalEnabledLabel">Critical enabled</span></label>
+            <label class="pill"><input id="editNotifyCriticalEnabled" type="checkbox"> <span id="editNotifyCriticalEnabledLabel">Critical enabled</span></label>
           </div>
           <div class="row">
             <label class="field-caption" id="editNotifyCriticalLabel" for="editNotifyCriticalSeconds">Critical</label>
@@ -2121,20 +2062,17 @@
             <div class="editor-help" id="editNotifyCriticalHelp"></div>
           </div>
           <div class="row">
-            <label class="field-caption" id="editNotifyCriticalSoundLabel" for="editNotifyCriticalSound">Critical
-              sound</label>
+            <label class="field-caption" id="editNotifyCriticalSoundLabel" for="editNotifyCriticalSound">Critical sound</label>
             <div class="sound-control">
               <select id="editNotifyCriticalSound"></select>
-              <button class="btn alt sound-test-btn" id="testCriticalSoundBtn" type="button"
-                aria-label="Test critical sound">▶</button>
+              <button class="btn alt sound-test-btn" id="testCriticalSoundBtn" type="button" aria-label="Test critical sound">▶</button>
               <button class="btn alt alarm-test-btn" id="testCriticalAlarmBtn" type="button">+10s</button>
             </div>
           </div>
         </div>
       </div>
       <div class="channel-row">
-        <label class="pill"><input id="channelBrowser" type="checkbox"> <span
-            id="channelBrowserLabel">Browser</span></label>
+        <label class="pill"><input id="channelBrowser" type="checkbox"> <span id="channelBrowserLabel">Browser</span></label>
         <label class="pill"><input id="channelPopup" type="checkbox"> <span id="channelPopupLabel">Popup</span></label>
       </div>
     </div>
@@ -2157,81 +2095,81 @@
       </section>
 
       <section class="controls">
-        <div class="control-cluster control-settings">
-          <div class="meta-grid">
-            <div class="row">
-              <div class="label" id="categoryLabel">Category</div>
-              <select id="categorySelect"></select>
-              <div class="category-row">
-                <button class="btn alt" id="newCategoryBtn" type="button">New category</button>
-                <button class="btn danger" id="deleteCategoryBtn" type="button">Delete category</button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="label" id="displayZoneLabel">Display Timezone</div>
-              <select id="displayTimezone"></select>
+      <div class="control-cluster control-settings">
+        <div class="meta-grid">
+          <div class="row">
+            <div class="label" id="categoryLabel">Category</div>
+            <select id="categorySelect"></select>
+            <div class="category-row">
+              <button class="btn alt" id="newCategoryBtn" type="button">New category</button>
+              <button class="btn danger" id="deleteCategoryBtn" type="button">Delete category</button>
             </div>
           </div>
-          <div class="meta-grid compact-settings">
-            <div class="row">
-              <label class="label" id="historyMinutesLabel" for="historyMinutesInput">History after event</label>
-              <input id="historyMinutesInput" type="number" min="0" max="1440" step="1" value="30">
-              <div class="editor-help" id="historyMinutesHelp"></div>
-            </div>
-            <div class="row">
-              <div class="label" id="quickActionsLabel">Config</div>
-              <div class="actions">
-                <button class="btn" id="newTimerBtn" type="button">New timer</button>
-                <button class="btn alt" id="exportBtn" type="button">Export INI</button>
-                <button class="btn alt" id="importBtn" type="button">Import INI</button>
-                <input id="importInput" type="file" accept=".ini,text/plain" hidden>
-              </div>
-            </div>
-          </div>
-          <div class="meta-grid compact-settings">
-            <div class="row">
-              <label class="label" id="cardDensityLabel" for="cardDensitySelect">Card density</label>
-              <select id="cardDensitySelect">
-                <option value="comfortable">Comfortable</option>
-                <option value="compact" selected>Compact</option>
-                <option value="ultra">Ultra compact</option>
-              </select>
-            </div>
-            <div class="row">
-              <div class="label" id="accessibilityLabel">Accessibility</div>
-              <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span
-                  id="colorblindModeLabel">Colorblind symbols</span></label>
-            </div>
-          </div>
-          <div class="config-health" id="configHealth">
-            <span id="configUpdatedStatus"></span>
-            <span id="configExpiryStatus"></span>
+          <div class="row">
+            <div class="label" id="displayZoneLabel">Display Timezone</div>
+            <select id="displayTimezone"></select>
           </div>
         </div>
+        <div class="meta-grid compact-settings">
+          <div class="row">
+            <label class="label" id="historyMinutesLabel" for="historyMinutesInput">History after event</label>
+            <input id="historyMinutesInput" type="number" min="0" max="1440" step="1" value="30">
+            <div class="editor-help" id="historyMinutesHelp"></div>
+          </div>
+          <div class="row">
+            <div class="label" id="quickActionsLabel">Config</div>
+            <div class="actions">
+              <button class="btn" id="newTimerBtn" type="button">New timer</button>
+              <button class="btn alt" id="exportBtn" type="button">Export INI</button>
+              <button class="btn alt" id="importBtn" type="button">Import INI</button>
+              <input id="importInput" type="file" accept=".ini,text/plain" hidden>
+            </div>
+          </div>
+        </div>
+        <div class="meta-grid compact-settings">
+          <div class="row">
+            <label class="label" id="cardDensityLabel" for="cardDensitySelect">Card density</label>
+            <select id="cardDensitySelect">
+              <option value="comfortable">Comfortable</option>
+              <option value="compact" selected>Compact</option>
+              <option value="ultra">Ultra compact</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="label" id="accessibilityLabel">Accessibility</div>
+            <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span id="colorblindModeLabel">Colorblind symbols</span></label>
+            <label class="pill"><input id="showThumbnailsInput" type="checkbox" checked> <span id="showThumbnailsLabel">Show event art</span></label>
+          </div>
+        </div>
+        <div class="config-health" id="configHealth">
+          <span id="configUpdatedStatus"></span>
+          <span id="configLiveStatus"></span>
+          <span id="configExpiryStatus"></span>
+        </div>
+      </div>
 
-        <div class="control-cluster control-visibility row">
-          <div class="label" id="visibilityLabel">Visible Timers</div>
-          <div class="toggle" id="timerToggle"></div>
-        </div>
+      <div class="control-cluster control-visibility row">
+        <div class="label" id="visibilityLabel">Visible Timers</div>
+        <div class="toggle" id="timerToggle"></div>
+      </div>
 
-        <div class="control-cluster notification-setup">
-          <div class="notification-copy">
-            <strong id="notificationSetupTitle">Benachrichtigungen</strong>
-            <small id="notificationPermissionStatus">Noch nicht für Windows freigegeben. Die Seite muss geöffnet
-              bleiben.</small>
-            <small class="activity-status" id="pageActivityStatus"></small>
-          </div>
-          <div class="notification-actions">
-            <button class="btn" id="enableNotificationsBtn" type="button">Aktivieren &amp; Ton testen</button>
-            <div class="dock-launch">
-              <select id="dockSideSelect" aria-label="Andockseite">
-                <option value="right" selected>Rechts</option>
-                <option value="left">Links</option>
-              </select>
-              <button class="btn alt" id="dockModeBtn" type="button">Statusleiste öffnen</button>
-            </div>
+      <div class="control-cluster notification-setup">
+        <div class="notification-copy">
+          <strong id="notificationSetupTitle">Benachrichtigungen</strong>
+          <small id="notificationPermissionStatus">Noch nicht für Windows freigegeben. Die Seite muss geöffnet bleiben.</small>
+          <small class="activity-status" id="pageActivityStatus"></small>
+        </div>
+        <div class="notification-actions">
+          <button class="btn" id="enableNotificationsBtn" type="button">Aktivieren &amp; Ton testen</button>
+          <div class="dock-launch">
+            <select id="dockSideSelect" aria-label="Andockseite">
+              <option value="right" selected>Rechts</option>
+              <option value="left">Links</option>
+            </select>
+            <button class="btn alt" id="dockModeBtn" type="button">Statusleiste öffnen</button>
           </div>
         </div>
+      </div>
       </section>
     </div>
 
@@ -2270,11 +2208,14 @@
 
     <section class="footer">
       <div id="footerSummary">Standarddaten: config.ini · Persönliche Anpassungen lassen sich als INI exportieren.</div>
-      <div>thomas.denk79@gmail.com</div>
-      <a href="https://questlog.gg/throne-and-liberty/en/event-calendar" target="_blank" rel="noreferrer">Questlog</a>
-      <a href="https://throneandliberty.gameslantern.com/event-calendar" target="_blank"
-        rel="noreferrer">GamesLantern</a>
-      <a href="https://metaforge.app/throne-and-liberty/timer" target="_blank" rel="noreferrer">MetaForge</a>
+      <div class="footer-links">
+        <button class="footer-link-btn" id="imprintBtn" type="button">Impressum</button>
+        <button class="footer-link-btn" id="privacyBtn" type="button">Datenschutz &amp; Speicher</button>
+        <a href="https://questlog.gg/throne-and-liberty/en/event-calendar" target="_blank" rel="noreferrer">Questlog</a>
+        <a href="https://throneandliberty.gameslantern.com/event-calendar" target="_blank" rel="noreferrer">GamesLantern</a>
+        <a href="https://metaforge.app/throne-and-liberty/timer" target="_blank" rel="noreferrer">MetaForge</a>
+      </div>
+      <small id="fanDisclaimer"></small>
     </section>
   </main>
 
@@ -2287,6 +2228,39 @@
     </div>
   </dialog>
 
+  <dialog class="image-lightbox" id="imageLightbox">
+    <div class="image-lightbox-frame"><img id="imageLightboxImage" alt=""></div>
+    <div class="image-lightbox-caption">
+      <b id="imageLightboxTitle"></b>
+      <button class="btn alt" id="imageLightboxCloseBtn" type="button">Close</button>
+    </div>
+  </dialog>
+
+  <dialog class="legal-dialog imprint-dialog" id="imprintDialog">
+    <h2 id="imprintTitle">Impressum</h2>
+    <div id="imprintContent"></div>
+    <button class="btn alt" id="imprintCloseBtn" type="button">Close</button>
+  </dialog>
+
+  <dialog class="legal-dialog" id="privacyDialog">
+    <h2 id="privacyTitle">Datenschutz &amp; lokaler Speicher</h2>
+    <div id="privacyContent"></div>
+    <button class="btn danger" id="storageResetBtn" type="button">Lokale Daten löschen</button>
+    <button class="btn alt" id="privacyCloseBtn" type="button">Close</button>
+  </dialog>
+
+  <dialog class="consent-dialog" id="storageConsent">
+    <div class="consent-copy">
+      <strong id="storageConsentTitle">Lokale Einstellungen speichern?</strong>
+      <small id="storageConsentText"></small>
+    </div>
+    <div class="consent-actions">
+      <button class="btn" id="storageAcceptBtn" type="button">Akzeptieren</button>
+      <button class="btn alt" id="storageDeclineBtn" type="button">Ohne Speichern</button>
+      <button class="footer-link-btn" id="storagePrivacyBtn" type="button">Details</button>
+    </div>
+  </dialog>
+
   <section class="toast-wrap" id="toastWrap"></section>
 
   <script>
@@ -2294,7 +2268,9 @@
       de: {
         editorTitle: "Timer bearbeiten",
         editorNote: "Die Standardkonfiguration kommt aus Git. Änderungen werden in diesem Browser gespeichert und lassen sich als INI exportieren.",
-        brandSub: "EU-Event-Timer · v2.5",
+        brandSub: "EU-Event-Timer · v3.0",
+        installApp: "Als App installieren",
+        helpDocs: "Hilfe",
         heroTitle: "Linny's Astral Solisium Pulse",
         heroCharacter: "Linny · Server Sophia",
         heroText: "Wichtige Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.",
@@ -2308,10 +2284,13 @@
         densityCompact: "Kompakt",
         densityUltra: "Ultrakompakt",
         accessibility: "Barrierefreiheit",
-        colorblindMode: "Farbenblind-Symbole",
+        colorblindMode: "Kontrastreicher Farbenblind-Modus",
+        showThumbnails: "Linny-Eventbilder anzeigen",
+        thumbnailHint: "Doppelklick öffnet das Eventbild in Großansicht.",
         activityActive: "Seite aktiv · Alarme laufen sekundengenau.",
         activityHidden: "Seite im Hintergrund · Energiesparen kann Alarme verzögern.",
         configUpdated: "Konfiguration aktualisiert: {date}",
+        configLive: "Gate of Memory geprüft: {date} · MetaForge",
         configExpired: "{count} Event-Zeitraum/-räume abgelaufen",
         configExpiresSoon: "Nächster Zeitraum endet am {date}",
         configRangesValid: "Keine abgelaufenen Event-Zeiträume",
@@ -2341,7 +2320,7 @@
         intervalHelp: "Nur für regelmäßige Abstände. Erzeugt eine @every-Regel und benötigt einen Intervall-Anker.",
         applyInterval: "Intervall übernehmen",
         rules: "Zeitplan – Crontab",
-        rulesHelp: "Cron: Minute Stunde Tag Monat Wochentag. Eine Regel pro Zeile. Exakte Intervalle stehen als @every 11808s im Zeitplan.",
+        rulesHelp: "Cron: Minute Stunde Tag Monat Wochentag. Eine Regel pro Zeile. Exakte Intervalle stehen als @every 11806s im Zeitplan.",
         notifications: "Benachrichtigungen",
         warningEnabled: "Warning aktiv",
         warningReminder: "Vorlauf (Sekunden)",
@@ -2358,8 +2337,22 @@
         soundGentle: "Sanftes Glockenspiel",
         soundCrystal: "Kristall-Ping",
         soundBell: "Doppelglocke",
+        soundHarp: "Sanfte Sternenharfe",
+        soundCelestial: "Himmlischer Akkord",
+        soundDroplet: "Magischer Tropfen",
+        soundWindchime: "Windspiel",
+        soundSoftpulse: "Sanfter Puls",
+        soundAmitoi: "Amitoi-Klingeln",
         soundUrgent: "Dringender Alarm",
         soundSiren: "Solisium-Sirene",
+        soundWarhorn: "Kriegshorn",
+        soundDrums: "Schlachttrommeln",
+        soundAlarm: "Dreifach-Alarm",
+        soundDoublepulse: "Doppelter Warnpuls",
+        soundThunder: "Donnerschlag",
+        soundArcane: "Arkaner Aufstieg",
+        soundDragon: "Drachenruf",
+        soundFinale: "Astrales Finale",
         notificationSetupTitle: "Benachrichtigungen",
         notificationEnable: "Aktivieren & Ton testen",
         notificationTestSound: "Ton testen",
@@ -2445,12 +2438,38 @@
         builderPickDay: "Bitte mindestens einen Tag wählen.",
         builderBadTime: "Bitte mindestens eine gültige Uhrzeit auswählen.",
         builderAdded: "Zeitplan hinzugefügt",
-        anchorNowSaved: "Intervall-Anker auf die aktuelle UTC-Zeit gesetzt"
+        anchorNowSaved: "Intervall-Anker auf die aktuelle UTC-Zeit gesetzt",
+        imprint: "Impressum",
+        privacy: "Datenschutz & lokaler Speicher",
+        fanDisclaimer: "Inoffizielles, nichtkommerzielles Fanprojekt. Keine Verbindung zu NCSOFT oder Amazon Games; Marken und Spielinhalte gehören ihren jeweiligen Rechteinhabern.",
+        storageConsentTitle: "Lokale Einstellungen speichern?",
+        storageConsentText: "Keine Werbe- oder Analyse-Cookies: Mit deiner Zustimmung speichert die Seite Sprache, Timer, Darstellung und lokale Änderungen sowie die Offline-App im Browser. Ohne Zustimmung funktioniert sie für diese Sitzung mit Standardwerten und ohne dauerhafte App-Speicherung.",
+        storageAccept: "Speichern erlauben",
+        storageDecline: "Ohne Speichern",
+        storageDetails: "Details",
+        storageReset: "Zustimmung widerrufen & lokale Daten löschen",
+        storageResetConfirm: "Alle lokal gespeicherten Timer und Einstellungen dieser Seite wirklich löschen?",
+        imprintTitle: "Impressum",
+        imprintPending: "Die veröffentlichbare Anbieteranschrift fehlt noch. Diese Fassung ist rechtlich noch nicht zur Veröffentlichung freigegeben.",
+        imprintContact: "Kontakt",
+        privacyTitle: "Datenschutz & lokaler Speicher",
+        privacyIntro: "Diese statische Fan-Seite verwendet keine eigene Analyse, Werbung oder Tracking-Pixel.",
+        privacyStorageHeading: "Lokale Speicherung",
+        privacyStorageText: "Nur nach deiner Zustimmung werden Einstellungen und lokale Timer im localStorage sowie technische App-Dateien für den Offline-Modus im Cache Storage dieses Browsers gespeichert. Die Daten verlassen den Browser nicht. Du kannst beides über diese Seite oder die Browser-Einstellungen löschen.",
+        privacyHostingHeading: "Hosting durch GitHub Pages",
+        privacyHostingText: "Beim Aufruf verarbeitet GitHub als Hosting-Anbieter technisch notwendige Verbindungsdaten, insbesondere die IP-Adresse, zu Sicherheitszwecken.",
+        privacyNotificationsHeading: "Benachrichtigungen & Töne",
+        privacyNotificationsText: "Browser-Benachrichtigungen werden nur nach deiner Browserfreigabe erzeugt. Töne und In-App-Hinweise werden ausschließlich lokal abgespielt.",
+        privacyRightsHeading: "Kontakt & Betroffenenrechte",
+        privacyRightsText: "Für Fragen zur Seite oder zu deinen Datenschutzrechten wende dich an die im Impressum genannte verantwortliche Person.",
+        legalClose: "Schließen"
       },
       en: {
         editorTitle: "Edit timer",
         editorNote: "The default configuration comes from Git. Changes stay in this browser and can be exported as INI.",
-        brandSub: "EU event timer · v2.5",
+        brandSub: "EU event timer · v3.0",
+        installApp: "Install app",
+        helpDocs: "Help",
         heroTitle: "Linny's Astral Solisium Pulse",
         heroCharacter: "Linny · Sophia server",
         heroText: "Important event windows, precise countdowns and reminders at a glance.",
@@ -2464,10 +2483,13 @@
         densityCompact: "Compact",
         densityUltra: "Ultra compact",
         accessibility: "Accessibility",
-        colorblindMode: "Colour-blind symbols",
+        colorblindMode: "High-contrast colour-blind mode",
+        showThumbnails: "Show Linny event art",
+        thumbnailHint: "Double-click to open the event art full-size.",
         activityActive: "Page active · alarms are running with second-level precision.",
         activityHidden: "Page in background · power saving may delay alarms.",
         configUpdated: "Configuration updated: {date}",
+        configLive: "Gate of Memory verified: {date} · MetaForge",
         configExpired: "{count} event validity range(s) expired",
         configExpiresSoon: "Next validity range ends on {date}",
         configRangesValid: "No expired event validity ranges",
@@ -2497,7 +2519,7 @@
         intervalHelp: "Only for regular intervals. Creates an @every rule and requires an interval anchor.",
         applyInterval: "Apply interval",
         rules: "Schedule – crontab",
-        rulesHelp: "Cron: minute hour day month weekday. Use one rule per line. Exact intervals appear as @every 11808s in the schedule.",
+        rulesHelp: "Cron: minute hour day month weekday. Use one rule per line. Exact intervals appear as @every 11806s in the schedule.",
         notifications: "Notifications",
         warningEnabled: "Warning enabled",
         warningReminder: "Lead time (seconds)",
@@ -2514,8 +2536,22 @@
         soundGentle: "Gentle chime",
         soundCrystal: "Crystal ping",
         soundBell: "Double bell",
+        soundHarp: "Gentle star harp",
+        soundCelestial: "Celestial chord",
+        soundDroplet: "Magic droplet",
+        soundWindchime: "Wind chime",
+        soundSoftpulse: "Soft pulse",
+        soundAmitoi: "Amitoi jingle",
         soundUrgent: "Urgent alarm",
         soundSiren: "Solisium siren",
+        soundWarhorn: "War horn",
+        soundDrums: "Battle drums",
+        soundAlarm: "Triple alarm",
+        soundDoublepulse: "Double warning pulse",
+        soundThunder: "Thunder strike",
+        soundArcane: "Arcane ascent",
+        soundDragon: "Dragon call",
+        soundFinale: "Astral finale",
         notificationSetupTitle: "Notifications",
         notificationEnable: "Enable & test sound",
         notificationTestSound: "Test sound",
@@ -2601,7 +2637,31 @@
         builderPickDay: "Please select at least one day.",
         builderBadTime: "Please select at least one valid time.",
         builderAdded: "Schedule added",
-        anchorNowSaved: "Interval anchor set to the current UTC time"
+        anchorNowSaved: "Interval anchor set to the current UTC time",
+        imprint: "Legal notice",
+        privacy: "Privacy & local storage",
+        fanDisclaimer: "Unofficial, non-commercial fan project. Not affiliated with NCSOFT or Amazon Games; trademarks and game content belong to their respective owners.",
+        storageConsentTitle: "Save local settings?",
+        storageConsentText: "No advertising or analytics cookies: with your consent, the page stores language, timers, appearance, local changes and the offline app in this browser. Without consent it uses defaults for this session and creates no persistent app storage.",
+        storageAccept: "Allow storage",
+        storageDecline: "Continue without saving",
+        storageDetails: "Details",
+        storageReset: "Withdraw consent & delete local data",
+        storageResetConfirm: "Delete all locally stored timers and settings for this page?",
+        imprintTitle: "Legal notice",
+        imprintPending: "The publishable provider address is still missing. This version is not yet legally cleared for publication.",
+        imprintContact: "Contact",
+        privacyTitle: "Privacy & local storage",
+        privacyIntro: "This static fan page does not run its own analytics, advertising or tracking pixels.",
+        privacyStorageHeading: "Local storage",
+        privacyStorageText: "After consent, settings and local timers are stored in localStorage and technical offline-app files in Cache Storage. The data never leaves the browser and can be removed here or in browser settings.",
+        privacyHostingHeading: "Hosting by GitHub Pages",
+        privacyHostingText: "When you open the page, GitHub as the hosting provider processes technically necessary connection data, including the IP address, for security purposes.",
+        privacyNotificationsHeading: "Notifications & sounds",
+        privacyNotificationsText: "Browser notifications are created only after browser permission. Sounds and in-app notices are generated locally.",
+        privacyRightsHeading: "Contact & data-subject rights",
+        privacyRightsText: "For questions about this page or your privacy rights, contact the responsible person named in the legal notice.",
+        legalClose: "Close"
       }
     };
 
@@ -2609,7 +2669,9 @@
       ...UI.de,
       editorTitle: "Timer herrichtn",
       editorNote: "D'Grundkonfiguration kimmt aus Git. Dei Änderungen bleim in dem Browser und lossn se als INI exportiern.",
-      brandSub: "Boarischer EU-Event-Timer · v2.5",
+      brandSub: "Boarischer EU-Event-Timer · v3.0",
+      installApp: "Ois App installiern",
+      helpDocs: "Hüf",
       heroText: "De wichtigsten Eventfenster, Countdowns und Erinnerungen auf oan Blick.",
       category: "Kategorie",
       displayZone: "Zeiten zoagn in",
@@ -2621,10 +2683,13 @@
       densityCompact: "Kompakt",
       densityUltra: "Sakrisch kompakt",
       accessibility: "Barrierefreiheit",
-      colorblindMode: "Farbnblind-Symbole",
+      colorblindMode: "Deitlicher Farbnblind-Modus",
+      showThumbnails: "Linnys Event-Buidln zoagn",
+      thumbnailHint: "Doppelklick macht des Buidl sakrisch groß.",
       activityActive: "D'Seitn is aktiv · d'Alarme laffa sekundngenau.",
       activityHidden: "D'Seitn is im Hintergrund · Energiesparn ko Alarme verzögern.",
       configUpdated: "Konfiguration aktualisiert: {date}",
+      configLive: "Gate of Memory gprüft: {date} · MetaForge",
       configExpired: "{count} Event-Zeitraum/-räum san abglaffa",
       configExpiresSoon: "Da nächste Zeitraum endet am {date}",
       configRangesValid: "Koa Event-Zeitraum is abglaffa",
@@ -2671,8 +2736,22 @@
       soundGentle: "A sanfts Glocknspui",
       soundCrystal: "Kristall-Ping",
       soundBell: "Doppelte Glockn",
+      soundHarp: "Sanfte Sternenharfn",
+      soundCelestial: "Himmlischer Akkord",
+      soundDroplet: "Magischer Tropfn",
+      soundWindchime: "Windspui",
+      soundSoftpulse: "Sanfter Puls",
+      soundAmitoi: "Amitoi-Glingeln",
       soundUrgent: "Dringender Alarm",
       soundSiren: "Solisium-Sirenn",
+      soundWarhorn: "Kriegshorn",
+      soundDrums: "Schlachttrommeln",
+      soundAlarm: "Dreifach-Alarm",
+      soundDoublepulse: "Doppelter Warnpuls",
+      soundThunder: "Donnerschlag",
+      soundArcane: "Arkaner Aufstieg",
+      soundDragon: "Drachnruf",
+      soundFinale: "Astrals Finale",
       notificationSetupTitle: "Benachrichtigungen",
       notificationEnable: "Eischaltn & Klang testn",
       notificationTestSound: "Klang testn",
@@ -2758,25 +2837,70 @@
       builderPickDay: "Bittschee mindestens an Tag aussuacha.",
       builderBadTime: "Bittschee mindestens a gscheide Uhrzeit aussuacha.",
       builderAdded: "Zeitplan is drin",
-      anchorNowSaved: "Intervall-Anker is auf de jetzige UTC-Zeit gsetzt"
+      anchorNowSaved: "Intervall-Anker is auf de jetzige UTC-Zeit gsetzt",
+      imprint: "Impressum",
+      privacy: "Datnschutz & lokaler Speicher",
+      fanDisclaimer: "A inoffiziells, ned-kommerziells Fanprojekt. Nix mit NCSOFT oder Amazon Games verbandlt; Marken und Spuiinhalte ghern de jeweiligen Rechteinhaber.",
+      storageConsentTitle: "Dei Einstellungen lokal speichan?",
+      storageConsentText: "Koane Werbe- oder Analyse-Cookies: Wennst zustimmst, speichert d'Seitn Sprach, Timer, Optik, lokale Änderungen und d'Offline-App im Browser. Ohne Zustimmung lafft's mit de Standardwert und ohne dauerhafte App-Speicherung.",
+      storageAccept: "Speichan erlaubn",
+      storageDecline: "Ohne Speichan weida",
+      storageDetails: "Genauer",
+      storageReset: "Zustimmung zrucknehma & lokale Daten löschn",
+      storageResetConfirm: "Wirklich olle lokal gspeicherten Timer und Einstellungen von der Seitn löschn?",
+      imprintTitle: "Impressum",
+      imprintPending: "D'veröffentlichbare Anbieteranschrift fehlt no. So is de Fassung rechtlich no ned zum Veröffentlichen fertig.",
+      imprintContact: "Kontakt",
+      privacyTitle: "Datnschutz & lokaler Speicher",
+      privacyIntro: "De statische Fan-Seitn hot koa eigene Analyse, Werbung oder Tracking-Pixel.",
+      privacyStorageHeading: "Lokaler Speicher",
+      privacyStorageText: "Erst nach deiner Zustimmung speichert d'Seitn Einstellungen und lokale Timer im localStorage und technische Offline-App-Dateien im Cache Storage. De Daten bleim im Browser und san do oder über d'Browser-Einstellungen löschbar.",
+      privacyHostingHeading: "Hosting über GitHub Pages",
+      privacyHostingText: "Beim Aufruaf verarbeitet GitHub als Hoster technisch nötige Verbindungsdaten, aa d'IP-Adresse, für d'Sicherheit.",
+      privacyNotificationsHeading: "Benachrichtigungen & Kläng",
+      privacyNotificationsText: "Browser-Benachrichtigungen gibt's bloß nach deiner Freigab. Kläng und Popups machat d'Seitn lokal.",
+      privacyRightsHeading: "Kontakt & deine Recht",
+      privacyRightsText: "Bei Fragen zur Seitn oder zum Datnschutz meld di bei da verantwortlichen Person ausm Impressum.",
+      legalClose: "Zumacha"
     };
 
     const BAVARIA_TIMEZONE = "Bayern/Munich";
-    const CONFIG_UPDATED_AT = "2026-07-20T00:00:00Z";
+    const CONFIG_UPDATED_AT = "2026-07-24T00:00:00Z";
     const germanClient = (navigator.language || "").toLowerCase().startsWith("de");
     const clientDefaultLanguage = germanClient ? "bar" : "en";
     const clientDefaultTimezone = germanClient ? BAVARIA_TIMEZONE : "Europe/Berlin";
-    const localeDefaultsKey = "timer_locale_defaults_v24";
+    const localeDefaultsKey = "timer_locale_defaults_v26";
+    const STORAGE_CONSENT_KEY = "timer_storage_consent_v1";
+    const LEGAL_PROFILE = {
+      name: "Thomas Denk",
+      address: ["Stubaierstr. 17", "81739 München", "Deutschland"],
+      email: "thomas.denk79@gmail.com"
+    };
+    let storageDecision = "";
+    let storageConsent = false;
+    let deferredInstallPrompt = null;
+    try {
+      storageDecision = localStorage.getItem(STORAGE_CONSENT_KEY) || "";
+      storageConsent = storageDecision === "accepted";
+    } catch {
+      storageDecision = "";
+      storageConsent = false;
+    }
 
-    if (!localStorage.getItem(localeDefaultsKey)) {
-      localStorage.setItem("timer_language", clientDefaultLanguage);
-      localStorage.setItem("timer_display_timezone", clientDefaultTimezone);
-      localStorage.setItem(localeDefaultsKey, "1");
+    function storageGet(key) {
+      if (!storageConsent) return null;
+      try { return localStorage.getItem(key); } catch { return null; }
+    }
+
+    function storageSet(key, value) {
+      if (!storageConsent) return;
+      try { localStorage.setItem(key, value); } catch { /* Browser storage may be unavailable. */ }
     }
 
     const state = {
-      lang: localStorage.getItem("timer_language") || clientDefaultLanguage,
+      lang: storageGet("timer_language") || clientDefaultLanguage,
       baseConfig: null,
+      liveOverlayText: "",
       localConfig: null,
       mergedConfig: null,
       categoryId: "",
@@ -2788,13 +2912,14 @@
       historyCollapsed: false,
       cardDensity: "compact",
       colorblindMode: false,
+      showThumbnails: true,
       editingTimerId: "",
       notified: new Set(),
       audioContext: null,
       popupTimer: null,
       lastNotificationCheck: Date.now() - 1500,
       dockMode: new URLSearchParams(window.location.search).get("mode") === "dock",
-      dockSide: localStorage.getItem("timer_dock_side") || "right"
+      dockSide: storageGet("timer_dock_side") || "right"
     };
 
     if (state.dockMode) document.documentElement.classList.add("dock-mode");
@@ -2845,7 +2970,10 @@
       accessibilityLabel: document.getElementById("accessibilityLabel"),
       colorblindModeInput: document.getElementById("colorblindModeInput"),
       colorblindModeLabel: document.getElementById("colorblindModeLabel"),
+      showThumbnailsInput: document.getElementById("showThumbnailsInput"),
+      showThumbnailsLabel: document.getElementById("showThumbnailsLabel"),
       configUpdatedStatus: document.getElementById("configUpdatedStatus"),
+      configLiveStatus: document.getElementById("configLiveStatus"),
       configExpiryStatus: document.getElementById("configExpiryStatus"),
       quickActionsLabel: document.getElementById("quickActionsLabel"),
       visibilityLabel: document.getElementById("visibilityLabel"),
@@ -2922,7 +3050,31 @@
       eventPopupLabel: document.getElementById("eventPopupLabel"),
       eventPopupTitle: document.getElementById("eventPopupTitle"),
       eventPopupText: document.getElementById("eventPopupText"),
-      eventPopupCloseBtn: document.getElementById("eventPopupCloseBtn")
+      eventPopupCloseBtn: document.getElementById("eventPopupCloseBtn"),
+      imageLightbox: document.getElementById("imageLightbox"),
+      imageLightboxImage: document.getElementById("imageLightboxImage"),
+      imageLightboxTitle: document.getElementById("imageLightboxTitle"),
+      imageLightboxCloseBtn: document.getElementById("imageLightboxCloseBtn"),
+      installAppBtn: document.getElementById("installAppBtn"),
+      helpDocsLink: document.getElementById("helpDocsLink"),
+      imprintBtn: document.getElementById("imprintBtn"),
+      privacyBtn: document.getElementById("privacyBtn"),
+      fanDisclaimer: document.getElementById("fanDisclaimer"),
+      imprintDialog: document.getElementById("imprintDialog"),
+      imprintTitle: document.getElementById("imprintTitle"),
+      imprintContent: document.getElementById("imprintContent"),
+      imprintCloseBtn: document.getElementById("imprintCloseBtn"),
+      privacyDialog: document.getElementById("privacyDialog"),
+      privacyTitle: document.getElementById("privacyTitle"),
+      privacyContent: document.getElementById("privacyContent"),
+      privacyCloseBtn: document.getElementById("privacyCloseBtn"),
+      storageResetBtn: document.getElementById("storageResetBtn"),
+      storageConsent: document.getElementById("storageConsent"),
+      storageConsentTitle: document.getElementById("storageConsentTitle"),
+      storageConsentText: document.getElementById("storageConsentText"),
+      storageAcceptBtn: document.getElementById("storageAcceptBtn"),
+      storageDeclineBtn: document.getElementById("storageDeclineBtn"),
+      storagePrivacyBtn: document.getElementById("storagePrivacyBtn")
     };
 
     function text(key) {
@@ -2940,7 +3092,97 @@
       return "Bavaria/Munich 🥨";
     }
 
-    const NOTIFICATION_SOUNDS = ["none", "gentle", "crystal", "bell", "urgent", "siren"];
+    const NOTIFICATION_SOUNDS = [
+      "none", "gentle", "crystal", "bell", "harp", "celestial", "droplet", "windchime", "softpulse", "amitoi",
+      "urgent", "siren", "warhorn", "drums", "alarm", "doublepulse", "thunder", "arcane", "dragon", "finale"
+    ];
+
+    const SOUND_LABEL_KEYS = {
+      none: "soundNone",
+      gentle: "soundGentle",
+      crystal: "soundCrystal",
+      bell: "soundBell",
+      harp: "soundHarp",
+      celestial: "soundCelestial",
+      droplet: "soundDroplet",
+      windchime: "soundWindchime",
+      softpulse: "soundSoftpulse",
+      amitoi: "soundAmitoi",
+      urgent: "soundUrgent",
+      siren: "soundSiren",
+      warhorn: "soundWarhorn",
+      drums: "soundDrums",
+      alarm: "soundAlarm",
+      doublepulse: "soundDoublepulse",
+      thunder: "soundThunder",
+      arcane: "soundArcane",
+      dragon: "soundDragon",
+      finale: "soundFinale"
+    };
+
+    const art = (src, de, en, bar = de) => ({ src, title: { de, en, bar } });
+    const EPIC_EVENT_ART = [
+      art("assets/events/linny-arkeum-invasion-v1.webp", "Linny erklärt dem Arkeum-Boss sehr höflich den Ruhestand", "Linny politely retires the Arkeum boss"),
+      art("assets/events/linny-gate-memory-v1.webp", "Linny schwebt durchs Erinnerungsquiz – Wissen braucht keinen Boden", "Linny floats through the Memory Quiz – knowledge needs no floor"),
+      art("assets/events/linny-summer-festival-v1.webp", "Linny reitet ins Sommerfest – Wasserbomben verneigen sich bereits", "Linny rides into Summer Festival – even water balloons bow"),
+      art("assets/events/linny-archboss-v1.webp", "Archboss gesichtet. Linny übernimmt ab hier.", "Archboss spotted. Linny takes it from here."),
+      art("assets/events/linny-castle-pvp-v1.webp", "Felswacht kapituliert vorsorglich vor Linny", "Stoneguard surrenders to Linny as a precaution"),
+      art("assets/events/linny-guild-raid-v1.webp", "Gildenraid: Linny tankt, heilt und sieht dabei königlich aus", "Guild Raid: Linny tanks, heals and still looks royal"),
+      art("assets/events/linny-amitoi-home-v1.webp", "Linnys Amitoi-Haus – fünf Sterne, null Staub", "Linny's Amitoi house – five stars, zero dust"),
+      art("assets/events/gallery/linny-astral-oracle-v1.webp", "Das Orakel fragt Linny nach der Zukunft", "The oracle asks Linny about the future"),
+      art("assets/events/gallery/linny-celestial-observatory-v1.webp", "Linny sortiert kurz die Sterne neu", "Linny briefly rearranges the stars"),
+      art("assets/events/gallery/linny-griffin-moonflight-v1.webp", "Mondflug mit Linny – Gravitation heute geschlossen", "Moonflight with Linny – gravity is closed today"),
+      art("assets/events/gallery/linny-leviathan-coast-v1.webp", "Der Leviathan wollte Linny nur um ein Autogramm bitten", "The leviathan only wanted Linny's autograph"),
+      art("assets/events/gallery/linny-frozen-owl-v1.webp", "Linny und die Eule, die sogar Nix den Winter erklärt", "Linny and the owl that explains winter to Nix"),
+      art("assets/events/gallery/linny-sand-titan-v1.webp", "Ein Sandtitan macht Platz für Linnys Auftritt", "A sand titan makes room for Linny's entrance"),
+      art("assets/events/gallery/linny-spring-amitoi-v1.webp", "Frühlingshofstaat: Amitoi werfen Blüten für Linny", "Spring court: Amitoi scatter blossoms for Linny"),
+      art("assets/events/gallery/linny-volcanic-forge-v1.webp", "Linny schmiedet Legenden vor dem Frühstück", "Linny forges legends before breakfast"),
+      art("assets/events/gallery/linny-sapphire-dragon-v1.webp", "Saphirdrache? Linnys besonders großes Reittier.", "Sapphire dragon? Linny's extra-large mount."),
+      art("assets/events/gallery/linny-white-stag-v1.webp", "Der weiße Hirsch führt – aber nur, weil Linny es erlaubt", "The white stag leads – because Linny allows it"),
+      art("assets/events/gallery/linny-goddess-of-armies-v1.webp", "10.000 Soldaten, Götter und Könige erkennen Linnys Rang", "10,000 soldiers, gods and kings acknowledge Linny's rank"),
+      art("assets/events/gallery/linny-felswacht-conqueror-v1.webp", "Linny erobert Burg Felswacht mit dem kleinen Finger", "Linny conquers Stoneguard Castle with her little finger"),
+      art("assets/events/gallery/linny-golden-arena-v1.webp", "Die Arena jubelt – Linny war schon vor dem Start Siegerin", "The arena cheers – Linny won before it even started"),
+      art("assets/events/gallery/linny-infinite-library-v1.webp", "Unendliche Bibliothek, ein ausgeliehenes Zauberbuch", "Infinite library, one borrowed spellbook"),
+      art("assets/events/gallery/linny-kraken-storm-v1.webp", "Krakenwarnung? Der Kraken wurde vor Linny gewarnt.", "Kraken warning? The kraken was warned about Linny."),
+      art("assets/events/gallery/linny-crystal-serpent-v1.webp", "Die Kristallschlange bewacht jetzt Linnys Schmuck", "The crystal serpent now guards Linny's jewellery"),
+      art("assets/events/gallery/linny-autumn-amitoi-v1.webp", "Herbstpicknick mit Linnys königlicher Amitoi-Garde", "Autumn picnic with Linny's royal Amitoi guard"),
+      art("assets/events/gallery/linny-shadow-portal-v1.webp", "Linny betritt das Schattenportal – die Schatten gehen", "Linny enters the shadow portal – the shadows leave"),
+      art("assets/events/gallery/linny-waterfall-sanctuary-v1.webp", "Linnys Wasserfall-Heiligtum akzeptiert nur epische Gäste", "Linny's waterfall sanctuary admits epic guests only"),
+      art("assets/events/gallery/linny-gigantrite-airship-v1.webp", "Linny überholt den Gigantriten im Luftverkehr", "Linny overtakes the Gigantrite in mid-air"),
+      art("assets/events/gallery/linny-aurora-ice-dragon-v1.webp", "Nordlicht, Eisdrache, Linny – in dieser Reihenfolge der Wichtigkeit", "Aurora, ice dragon, Linny – in ascending order of importance"),
+      art("assets/events/gallery/linny-royal-victory-v1.webp", "Solisium feiert Linnys vollkommen überraschenden nächsten Sieg", "Solisium celebrates Linny's completely unexpected next victory")
+    ];
+    const FUN_EVENT_ART = [
+      art("assets/events/fun/linny-baggersee-v1.webp", "Baden mit Linny am Baggersee – der Drache hat Schwimmflügel", "Swimming with Linny at the lake – the dragon brought floaties", "Bodn mit da Linny am Baggersee – da Drach hod Schwimmflügl"),
+      art("assets/events/fun/linny-alone-at-home-v1.webp", "Linny allein zu Haus – die Goblins bereuen bereits alles", "Linny alone at home – the goblins already regret everything", "Linny alloa dahoam – de Goblins berein scho ois"),
+      art("assets/events/fun/linny-grand-mmo-city-v1.webp", "Linny besucht die große MMO-Stadt – die Wachen wechseln die Seiten", "Linny visits the grand MMO city – the guards switch sides", "Linny kimmt in d'große MMO-Stodt – de Wacha wechsln d'Seitn"),
+      art("assets/events/fun/linny-cel-kingdom-v1.webp", "Linny im Himmels-Königreich – der Held darf kurz mitlaufen", "Linny in the sky kingdom – the hero may tag along", "Linny im Himmels-Kinireich – da Held derf a weng mitlaffa"),
+      art("assets/events/fun/linny-kart-race-v1.webp", "Linny Kart: Blaue Schale? Wird einfach weggeblitzt.", "Linny Kart: blue shell? Simply zapped away.", "Linny-Kart: Blaue Schoin? Wird hoid weggeblitzt.")
+    ];
+    const FIXED_EVENT_ART_IDS = new Set(["arkeum_eu", "gate_memory_eu", "summer_festival_eu"]);
+
+    function stableHash(value) {
+      let hash = 2166136261;
+      for (const char of String(value)) {
+        hash ^= char.charCodeAt(0);
+        hash = Math.imul(hash, 16777619);
+      }
+      return hash >>> 0;
+    }
+
+    function timerArt(timer) {
+      const configured = EPIC_EVENT_ART.find((item) => item.src === timer?.image);
+      if (FIXED_EVENT_ART_IDS.has(timer?.id) && configured) return configured;
+      const pool = timer?.categoryId === "personal" && FUN_EVENT_ART.length ? FUN_EVENT_ART : EPIC_EVENT_ART;
+      const day = new Intl.DateTimeFormat("en-CA", {
+        year: "numeric", month: "2-digit", day: "2-digit", timeZone: "Europe/Berlin"
+      }).format(new Date());
+      return pool[stableHash((timer?.id || "linny") + "|" + day) % pool.length] || configured || { src: timer?.image || "", title: {} };
+    }
+
+    function artTitle(item, timer) {
+      return item?.title?.[state.lang] || item?.title?.de || timerName(timer);
+    }
 
     function positiveSeconds(value, fallback) {
       const seconds = Math.round(Number(value));
@@ -3005,15 +3247,7 @@
     }
 
     function notificationSoundName(soundId) {
-      const keys = {
-        none: "soundNone",
-        gentle: "soundGentle",
-        crystal: "soundCrystal",
-        bell: "soundBell",
-        urgent: "soundUrgent",
-        siren: "soundSiren"
-      };
-      return text(keys[soundId] || "soundNone");
+      return text(SOUND_LABEL_KEYS[soundId] || "soundNone");
     }
 
     function clone(value) {
@@ -3060,19 +3294,19 @@
 
     function loadLocalConfig() {
       try {
-        return JSON.parse(localStorage.getItem("timer_local_config") || "null");
+        return JSON.parse(storageGet("timer_local_config") || "null");
       } catch {
         return null;
       }
     }
 
     function saveLocalConfig() {
-      localStorage.setItem("timer_local_config", JSON.stringify(state.localConfig || { categories: [], timers: [] }));
+      storageSet("timer_local_config", JSON.stringify(state.localConfig || { categories: [], timers: [] }));
     }
 
     function loadVisibleIds() {
       try {
-        const stored = localStorage.getItem("timer_visible_ids");
+        const stored = storageGet("timer_visible_ids");
         if (stored === null) return null;
         return new Set(JSON.parse(stored));
       } catch {
@@ -3081,7 +3315,7 @@
     }
 
     function saveVisibleIds() {
-      localStorage.setItem("timer_visible_ids", JSON.stringify(Array.from(state.visibleIds)));
+      storageSet("timer_visible_ids", JSON.stringify(Array.from(state.visibleIds)));
     }
 
     function mergeConfig(baseConfig, localConfig) {
@@ -3095,7 +3329,15 @@
       }
       for (const timer of localConfig.timers || []) {
         if (timer.deleted) timerMap.delete(timer.id);
-        else timerMap.set(timer.id, clone(timer));
+        else {
+          const baseTimer = timerMap.get(timer.id);
+          const localTimer = clone(timer);
+          timerMap.set(timer.id, {
+            ...(baseTimer || {}),
+            ...localTimer,
+            image: localTimer.image || baseTimer?.image || ""
+          });
+        }
       }
 
       const validCategoryIds = new Set(Array.from(categoryMap.keys()));
@@ -3167,7 +3409,8 @@
         historyMinutes: Number(settingsData.historyMinutes),
         historyCollapsed: parseIniBoolean(settingsData.historyCollapsed, false),
         cardDensity: settingsData.cardDensity || "",
-        colorblindMode: parseIniBoolean(settingsData.colorblindMode, false)
+        colorblindMode: parseIniBoolean(settingsData.colorblindMode, false),
+        showThumbnails: parseIniBoolean(settingsData.showThumbnails, true)
       } : null;
       const categories = [];
       const timers = [];
@@ -3179,7 +3422,8 @@
             id,
             label: {
               de: data["label.de"] || id,
-              en: data["label.en"] || data["label.de"] || id
+              en: data["label.en"] || data["label.de"] || id,
+              bar: data["label.bar"] || data["label.de"] || id
             },
             region: data.region || "custom",
             timezone: data.timezone || "Europe/Berlin"
@@ -3210,13 +3454,16 @@
             categoryId: data.categoryId || "personal",
             name: {
               de: data["name.de"] || id,
-              en: data["name.en"] || data["name.de"] || id
+              en: data["name.en"] || data["name.de"] || id,
+              bar: data["name.bar"] || data["name.de"] || id
             },
             description: {
               de: data["description.de"] || "",
-              en: data["description.en"] || data["description.de"] || ""
+              en: data["description.en"] || data["description.de"] || "",
+              bar: data["description.bar"] || data["description.de"] || ""
             },
             motif: data.motif || "",
+            image: data.image || "",
             timezone: data.timezone || "",
             durationMinutes: Number(data.durationMinutes || "10") || 10,
             activeFrom: data.activeFrom || "",
@@ -3230,6 +3477,25 @@
       return { schemaVersion, categories, timers, settings };
     }
 
+    function applyLiveTimerOverrides(config, iniText) {
+      const sections = parseIni(iniText);
+      for (const timer of config.timers) {
+        const data = sections.get("timer:" + timer.id);
+        if (!data) continue;
+        const rules = parseIniList(data.rules, "||");
+        const anchor = Date.parse(data.anchorUtc || "");
+        const duration = Number(data.durationMinutes);
+        if (rules.length && rules.every((rule) => /^@every\s+\d+(?:s|m|h|d)$/i.test(rule))) {
+          timer.rules = rules;
+        }
+        if (Number.isFinite(anchor)) timer.anchorUtc = new Date(anchor).toISOString();
+        if (Number.isFinite(duration) && duration > 0 && duration <= 1440) timer.durationMinutes = duration;
+        timer.liveVerifiedAt = data.verifiedAt || "";
+        timer.liveSourceUrl = data.sourceUrl || "";
+      }
+      return config;
+    }
+
     function iniValue(value) {
       return String(value ?? "").replace(/\r?\n/g, " ").trim();
     }
@@ -3241,7 +3507,7 @@
         "; Import this file directly in the timer UI.",
         "",
         "[meta]",
-        "schemaVersion=" + Math.max(3, Number(config.schemaVersion) || 3)
+        "schemaVersion=" + Math.max(5, Number(config.schemaVersion) || 5)
       ];
 
       if (config.settings) {
@@ -3256,7 +3522,8 @@
           "historyMinutes=" + Math.max(0, Number(config.settings.historyMinutes) || 0),
           "historyCollapsed=" + (config.settings.historyCollapsed ? "true" : "false"),
           "cardDensity=" + iniValue(config.settings.cardDensity || "compact"),
-          "colorblindMode=" + (config.settings.colorblindMode ? "true" : "false")
+          "colorblindMode=" + (config.settings.colorblindMode ? "true" : "false"),
+          "showThumbnails=" + (config.settings.showThumbnails !== false ? "true" : "false")
         );
       }
 
@@ -3266,6 +3533,7 @@
           "[category:" + iniValue(category.id) + "]",
           "label.de=" + iniValue(category.label?.de || category.id),
           "label.en=" + iniValue(category.label?.en || category.label?.de || category.id),
+          "label.bar=" + iniValue(category.label?.bar || category.label?.de || category.id),
           "region=" + iniValue(category.region || "custom"),
           "timezone=" + iniValue(category.timezone || "Europe/Berlin")
         );
@@ -3279,10 +3547,13 @@
           "categoryId=" + iniValue(timer.categoryId || "personal"),
           "name.de=" + iniValue(timer.name?.de || timer.id),
           "name.en=" + iniValue(timer.name?.en || timer.name?.de || timer.id),
+          "name.bar=" + iniValue(timer.name?.bar || timer.name?.de || timer.id),
           "description.de=" + iniValue(timer.description?.de || ""),
-          "description.en=" + iniValue(timer.description?.en || timer.description?.de || "")
+          "description.en=" + iniValue(timer.description?.en || timer.description?.de || ""),
+          "description.bar=" + iniValue(timer.description?.bar || timer.description?.de || "")
         );
         if (timer.motif) lines.push("motif=" + iniValue(timer.motif));
+        if (timer.image) lines.push("image=" + iniValue(timer.image));
         if (timer.timezone) lines.push("timezone=" + iniValue(timer.timezone));
         lines.push("durationMinutes=" + (Number(timer.durationMinutes) || 10));
         if (timer.activeFrom) lines.push("activeFrom=" + iniValue(timer.activeFrom));
@@ -3333,16 +3604,16 @@
     function migrateLegacyMemoryInterval(localConfig) {
       let changed = false;
       const fixedRules = ["0 1,5,9,13,17,21 * * *"];
-      const intervalRules = ["@every 11808s"];
-      const intervalAnchor = "2026-07-19T00:03:00Z";
+      const intervalRules = ["@every 11806s"];
+      const intervalAnchor = "2026-07-24T14:56:16Z";
       for (const timer of localConfig.timers || []) {
         if (timer.id !== "gate_memory_eu" || timer.deleted) continue;
         const rules = (timer.rules || []).map((rule) => String(rule).trim());
         const hasFixed = rules.some((rule) => fixedRules.includes(rule));
         const hasLegacyEvery = rules.some((rule) => /^@every\s+197m$/i.test(rule));
-        const hasEvery11808 = rules.some((rule) => /^@every\s+11808s$/i.test(rule));
-        if (hasFixed || hasLegacyEvery || hasEvery11808) {
-          const needsRuleUpdate = !(rules.length === 1 && /^@every\s+11808s$/i.test(rules[0] || ""));
+        const hasOldInterval = rules.some((rule) => /^@every\s+1180[68]s$/i.test(rule));
+        if (hasFixed || hasLegacyEvery || hasOldInterval) {
+          const needsRuleUpdate = !(rules.length === 1 && /^@every\s+11806s$/i.test(rules[0] || ""));
           const needsAnchorUpdate = timer.anchorUtc !== intervalAnchor;
           if (needsRuleUpdate) timer.rules = intervalRules.slice();
           if (needsAnchorUpdate) timer.anchorUtc = intervalAnchor;
@@ -3352,7 +3623,7 @@
       if (!changed) {
         for (const timer of localConfig.timers || []) {
           if (timer.id !== "gate_memory_eu" || timer.deleted) continue;
-          if ((timer.rules || []).some((rule) => /^@every\s+11808s$/i.test(String(rule).trim())) && !timer.anchorUtc) {
+          if ((timer.rules || []).some((rule) => /^@every\s+11806s$/i.test(String(rule).trim())) && !timer.anchorUtc) {
             timer.anchorUtc = intervalAnchor;
             changed = true;
           }
@@ -3362,7 +3633,7 @@
     }
 
     function restoreCoreDefaultTimers(localConfig) {
-      const required = new Set(["arkeum_eu", "gate_memory_eu", "summer_festival_eu", "archboss_eu", "archboss_guild_eu", "innerspace_guild_boss"]);
+      const required = new Set(["arkeum_eu", "gate_memory_eu", "summer_festival_eu", "archboss_eu", "innerspace_guild_boss", "boonstones_eu", "riftstones_eu", "tax_delivery_eu", "castle_event_eu", "interserver_eu"]);
       const before = (localConfig.timers || []).length;
       localConfig.timers = (localConfig.timers || []).filter((timer) => !(timer.deleted && required.has(timer.id)));
       return localConfig.timers.length !== before;
@@ -3371,12 +3642,11 @@
     function migrateUpdatedDefaultDurations(localConfig) {
       const durationUpdates = new Map([
         ["arkeum_eu", [30, 25]],
-        ["gate_memory_eu", [4, 5]],
+        ["gate_memory_eu", [5, 4]],
         ["summer_festival_eu", [25, 5]],
         ["archboss_eu", [35, 5]],
-        ["archboss_guild_eu", [35, 5]],
         ["boonstones_eu", [40, 30]],
-        ["castle_event_eu", [60, 45]],
+        ["castle_event_eu", [45, 30]],
         ["innerspace_guild_boss", [45, 20]]
       ]);
       let changed = false;
@@ -3404,7 +3674,6 @@
         ["gate_memory_eu", [300, 90]],
         ["summer_festival_eu", [600, 30]],
         ["archboss_eu", [600, 120]],
-        ["archboss_guild_eu", [600, 120]],
         ["innerspace_guild_boss", [600, 120]]
       ]);
       let changed = false;
@@ -3419,6 +3688,46 @@
           migrated.critical = { enabled: true, seconds: configured[1], sound: "urgent" };
         }
         timer.notifications = migrated;
+        changed = true;
+      }
+      return changed;
+    }
+
+    function migrateJulyGuildSchedule(localConfig) {
+      const oldRules = new Map([
+        ["archboss_eu", ["0 19,22 * * 3,6"]],
+        ["boonstones_eu", ["0 20 * * 2,4", "0 18 * * 0"]],
+        ["tax_delivery_eu", ["0 19 * * 0"]],
+        ["castle_event_eu", ["0 20 * * 6"]],
+        ["innerspace_guild_boss", ["15 20 * * 4"]]
+      ]);
+      const replacements = new Map([
+        ["archboss_eu", ["0 22 * * 2", "0 19,22 * * 3,6"]],
+        ["boonstones_eu", ["0 21 * * 1,5"]],
+        ["tax_delivery_eu", ["@every 14d"]],
+        ["castle_event_eu", ["@every 14d"]],
+        ["innerspace_guild_boss", ["10 20 * * 4"]]
+      ]);
+      let changed = false;
+      localConfig.timers = (localConfig.timers || []).filter((timer) => {
+        if (timer.id !== "archboss_guild_eu") return true;
+        changed = true;
+        return false;
+      });
+      for (const timer of localConfig.timers || []) {
+        const expected = oldRules.get(timer.id);
+        if (!expected) continue;
+        const current = (timer.rules || []).map(String);
+        if (current.length !== expected.length || current.some((rule, index) => rule !== expected[index])) continue;
+        timer.rules = replacements.get(timer.id).slice();
+        if (timer.id === "tax_delivery_eu") {
+          timer.anchorUtc = "2026-07-19T17:30:00Z";
+          timer.durationMinutes = 30;
+        }
+        if (timer.id === "castle_event_eu") {
+          timer.anchorUtc = "2026-07-26T17:30:00Z";
+          timer.durationMinutes = 30;
+        }
         changed = true;
       }
       return changed;
@@ -3718,11 +4027,12 @@
 
     function intervalSecondsFromRules(rules) {
       const rule = (rules || []).find((value) => /^@every\s+/i.test(value));
-      const match = rule?.match(/^@every\s+(\d+)(s|m|h)$/i);
+      const match = rule?.match(/^@every\s+(\d+)(s|m|h|d)$/i);
       if (!match) return 0;
       const amount = Number(match[1]);
       const unit = match[2].toLowerCase();
-      return unit === "h" ? amount * 3600 : (unit === "m" ? amount * 60 : amount);
+      return unit === "d" ? amount * 86400
+        : (unit === "h" ? amount * 3600 : (unit === "m" ? amount * 60 : amount));
     }
 
     function intervalSchedule(timer) {
@@ -3840,6 +4150,67 @@
       document.documentElement.classList.toggle("colorblind-mode", state.colorblindMode);
       dom.cardDensitySelect.value = density;
       dom.colorblindModeInput.checked = state.colorblindMode;
+      dom.showThumbnailsInput.checked = state.showThumbnails;
+    }
+
+    function renderLegalContent() {
+      dom.imprintBtn.textContent = text("imprint");
+      dom.privacyBtn.textContent = text("privacy");
+      dom.fanDisclaimer.textContent = text("fanDisclaimer");
+      dom.imprintTitle.textContent = text("imprintTitle");
+      dom.privacyTitle.textContent = text("privacyTitle");
+      dom.imprintCloseBtn.textContent = text("legalClose");
+      dom.privacyCloseBtn.textContent = text("legalClose");
+      dom.imageLightboxCloseBtn.textContent = text("legalClose");
+      dom.storageConsentTitle.textContent = text("storageConsentTitle");
+      dom.storageConsentText.textContent = text("storageConsentText");
+      dom.storageAcceptBtn.textContent = text("storageAccept");
+      dom.storageDeclineBtn.textContent = text("storageDecline");
+      dom.storagePrivacyBtn.textContent = text("storageDetails");
+      dom.storageResetBtn.textContent = text("storageReset");
+      dom.storageResetBtn.hidden = !storageConsent;
+
+      const provider = document.createElement("p");
+      const providerName = document.createElement("strong");
+      providerName.textContent = LEGAL_PROFILE.name;
+      provider.appendChild(providerName);
+      for (const line of LEGAL_PROFILE.address) {
+        provider.append(document.createElement("br"), document.createTextNode(line));
+      }
+      const contactHeading = document.createElement("h3");
+      contactHeading.textContent = text("imprintContact");
+      const contact = document.createElement("p");
+      const mail = document.createElement("a");
+      mail.href = "mailto:" + LEGAL_PROFILE.email;
+      mail.textContent = LEGAL_PROFILE.email;
+      contact.appendChild(mail);
+      const disclaimer = document.createElement("p");
+      disclaimer.textContent = text("fanDisclaimer");
+      dom.imprintContent.replaceChildren(provider, contactHeading, contact, disclaimer);
+
+      const privacyFragment = document.createDocumentFragment();
+      const appendPrivacySection = (headingKey, bodyKey) => {
+        if (headingKey) {
+          const heading = document.createElement("h3");
+          heading.textContent = text(headingKey);
+          privacyFragment.appendChild(heading);
+        }
+        const body = document.createElement("p");
+        body.textContent = text(bodyKey);
+        privacyFragment.appendChild(body);
+      };
+      appendPrivacySection("", "privacyIntro");
+      appendPrivacySection("privacyStorageHeading", "privacyStorageText");
+      appendPrivacySection("privacyHostingHeading", "privacyHostingText");
+      const hostingLink = document.createElement("a");
+      hostingLink.href = "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement";
+      hostingLink.target = "_blank";
+      hostingLink.rel = "noreferrer";
+      hostingLink.textContent = " GitHub Privacy Statement";
+      privacyFragment.lastElementChild.append(hostingLink, ".");
+      appendPrivacySection("privacyNotificationsHeading", "privacyNotificationsText");
+      appendPrivacySection("privacyRightsHeading", "privacyRightsText");
+      dom.privacyContent.replaceChildren(privacyFragment);
     }
 
     function renderPageActivityStatus() {
@@ -3856,6 +4227,12 @@
 
     function renderConfigHealth() {
       dom.configUpdatedStatus.textContent = text("configUpdated").replace("{date}", configDate(new Date(CONFIG_UPDATED_AT)));
+      const gate = state.mergedConfig?.timers?.find((timer) => timer.id === "gate_memory_eu");
+      const liveVerified = Date.parse(gate?.liveVerifiedAt || "");
+      dom.configLiveStatus.hidden = !Number.isFinite(liveVerified);
+      dom.configLiveStatus.textContent = Number.isFinite(liveVerified)
+        ? text("configLive").replace("{date}", configDate(new Date(liveVerified)))
+        : "";
       const now = Date.now();
       const ranges = (state.mergedConfig?.timers || [])
         .map((timer) => timer.activeUntil ? Date.parse(timer.activeUntil) : NaN)
@@ -3876,6 +4253,8 @@
       document.documentElement.lang = state.lang;
       dom.brandTitle.textContent = text("heroTitle");
       dom.brandSub.textContent = text("brandSub");
+      dom.installAppBtn.textContent = text("installApp");
+      dom.helpDocsLink.textContent = text("helpDocs");
       dom.heroTitle.textContent = text("heroTitle");
       dom.heroCharacter.textContent = text("heroCharacter");
       dom.heroText.textContent = text("heroText");
@@ -3933,6 +4312,7 @@
       dom.cardDensitySelect.options[2].textContent = text("densityUltra");
       dom.accessibilityLabel.textContent = text("accessibility");
       dom.colorblindModeLabel.textContent = text("colorblindMode");
+      dom.showThumbnailsLabel.textContent = text("showThumbnails");
       dom.quickActionsLabel.textContent = text("config");
       dom.visibilityLabel.textContent = text("visibleTimers");
       dom.stackLabel.textContent = text("upcomingTimers");
@@ -3950,27 +4330,20 @@
       dom.eventPopupLabel.textContent = text("eventAlert");
       dom.eventPopupCloseBtn.textContent = text("acknowledge");
       dom.footerSummary.textContent = text("footerSummary");
+      renderLegalContent();
       dom.saveTimerBtn.textContent = text("saveLocal");
       dom.duplicateTimerBtn.textContent = text("duplicate");
       dom.deleteTimerBtn.textContent = text("deleteLocal");
       dom.resetTimerBtn.textContent = text("resetDefault");
       dom.closeEditorBtn.textContent = text("close");
 
-      const soundLabels = {
-        none: text("soundNone"),
-        gentle: text("soundGentle"),
-        crystal: text("soundCrystal"),
-        bell: text("soundBell"),
-        urgent: text("soundUrgent"),
-        siren: text("soundSiren")
-      };
       for (const select of [dom.editNotifyWarningSound, dom.editNotifyCriticalSound]) {
         const selected = select.value;
         select.innerHTML = "";
         for (const sound of NOTIFICATION_SOUNDS) {
           const option = document.createElement("option");
           option.value = sound;
-          option.textContent = soundLabels[sound];
+          option.textContent = notificationSoundName(sound);
           select.appendChild(option);
         }
         if (NOTIFICATION_SOUNDS.includes(selected)) select.value = selected;
@@ -4229,7 +4602,7 @@
       saveLocalConfig();
       state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
       state.categoryId = id;
-      localStorage.setItem("timer_category_id", state.categoryId);
+      storageSet("timer_category_id", state.categoryId);
       toast(text("categoryCreated"));
       renderAll();
     }
@@ -4254,7 +4627,7 @@
       saveLocalConfig();
       state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
       state.categoryId = state.mergedConfig.categories[0]?.id || "";
-      localStorage.setItem("timer_category_id", state.categoryId);
+      storageSet("timer_category_id", state.categoryId);
       toast(text("categoryDeleted"));
       renderAll();
     }
@@ -4353,13 +4726,20 @@
       lines.forEach((line, index) => {
         const row = document.createElement("div");
         row.className = "builder-line";
-        row.innerHTML = "<span>" + line + "</span><button class='btn alt' type='button' data-index='" + index + "'>X</button>";
-        row.querySelector("button").addEventListener("click", () => {
+        const value = document.createElement("span");
+        value.textContent = line;
+        const remove = document.createElement("button");
+        remove.className = "btn alt";
+        remove.type = "button";
+        remove.dataset.index = String(index);
+        remove.textContent = "×";
+        remove.addEventListener("click", () => {
           const nextLines = dom.editRules.value.split(/\r?\n/).map((x) => x.trim()).filter(Boolean);
           nextLines.splice(index, 1);
           dom.editRules.value = nextLines.join("\n");
           renderBuilderLines();
         });
+        row.append(value, remove);
         dom.builderLines.appendChild(row);
       });
     }
@@ -4374,7 +4754,8 @@
         historyMinutes: state.historyMinutes,
         historyCollapsed: state.historyCollapsed,
         cardDensity: state.cardDensity,
-        colorblindMode: state.colorblindMode
+        colorblindMode: state.colorblindMode,
+        showThumbnails: state.showThumbnails
       };
     }
 
@@ -4389,16 +4770,18 @@
       state.historyCollapsed = Boolean(settings.historyCollapsed);
       if (["comfortable", "compact", "ultra"].includes(settings.cardDensity)) state.cardDensity = settings.cardDensity;
       state.colorblindMode = Boolean(settings.colorblindMode);
-      localStorage.setItem("timer_language", state.lang);
-      localStorage.setItem("timer_display_timezone", state.displayTimezone);
-      localStorage.setItem("timer_category_id", state.categoryId);
-      localStorage.setItem("timer_visible_ids", JSON.stringify(Array.from(state.visibleIds)));
-      localStorage.setItem("timer_dock_side", state.dockSide);
-      localStorage.setItem("timer_history_minutes", String(state.historyMinutes));
-      localStorage.setItem("timer_history_collapsed", String(state.historyCollapsed));
-      localStorage.setItem("timer_card_density", state.cardDensity);
-      localStorage.setItem("timer_colorblind_mode", String(state.colorblindMode));
-      localStorage.setItem(localeDefaultsKey, "1");
+      state.showThumbnails = settings.showThumbnails !== false;
+      storageSet("timer_language", state.lang);
+      storageSet("timer_display_timezone", state.displayTimezone);
+      storageSet("timer_category_id", state.categoryId);
+      storageSet("timer_visible_ids", JSON.stringify(Array.from(state.visibleIds)));
+      storageSet("timer_dock_side", state.dockSide);
+      storageSet("timer_history_minutes", String(state.historyMinutes));
+      storageSet("timer_history_collapsed", String(state.historyCollapsed));
+      storageSet("timer_card_density", state.cardDensity);
+      storageSet("timer_colorblind_mode", String(state.colorblindMode));
+      storageSet("timer_show_thumbnails", String(state.showThumbnails));
+      storageSet(localeDefaultsKey, "1");
     }
 
     function exportConfig() {
@@ -4426,7 +4809,7 @@
       applyImportedSettings(parsed.settings);
       if (!state.mergedConfig.categories.find((x) => x.id === state.categoryId)) {
         state.categoryId = state.mergedConfig.categories[0]?.id || "";
-        localStorage.setItem("timer_category_id", state.categoryId);
+        storageSet("timer_category_id", state.categoryId);
       }
       ensureVisibleIds();
       toast(text("imported"));
@@ -4441,11 +4824,25 @@
         if (ctx.state === "suspended") void ctx.resume();
         const startAt = ctx.currentTime + 0.03;
         const patterns = {
-          gentle: { type: "sine", gain: 0.038, notes: [[0, 659.25, 0.32], [0.38, 880, 0.46]] },
-          crystal: { type: "triangle", gain: 0.042, notes: [[0, 1046.5, 0.22], [0.24, 1318.5, 0.3], [0.58, 1568, 0.42]] },
-          bell: { type: "sine", gain: 0.055, notes: [[0, 783.99, 0.38], [0.48, 783.99, 0.5]] },
-          urgent: { type: "square", gain: 0.052, notes: [[0, 740, 0.18], [0.23, 988, 0.18], [0.46, 740, 0.18], [0.69, 988, 0.34]] },
-          siren: { type: "sawtooth", gain: 0.045, notes: [[0, 520, 0.42, 940], [0.46, 940, 0.42, 520], [0.92, 520, 0.55, 1040]] }
+          gentle: { type: "sine", gain: 0.038, notes: [[0, 659.25, 0.34], [0.42, 880, 0.5], [0.98, 1046.5, 0.6]] },
+          crystal: { type: "triangle", gain: 0.042, notes: [[0, 1046.5, 0.22], [0.24, 1318.5, 0.3], [0.58, 1568, 0.48]] },
+          bell: { type: "sine", gain: 0.055, notes: [[0, 783.99, 0.42], [0.5, 783.99, 0.55], [1.08, 987.77, 0.62]] },
+          harp: { type: "triangle", gain: 0.035, notes: [[0, 523.25, 0.4], [0.18, 659.25, 0.44], [0.36, 783.99, 0.5], [0.58, 1046.5, 0.7]] },
+          celestial: { type: "sine", gain: 0.035, notes: [[0, 440, 0.85], [0.05, 554.37, 0.85], [0.1, 659.25, 0.85], [0.72, 880, 0.65]] },
+          droplet: { type: "sine", gain: 0.044, notes: [[0, 1300, 0.18, 720], [0.34, 1500, 0.2, 820], [0.76, 1760, 0.38, 990]] },
+          windchime: { type: "triangle", gain: 0.032, notes: [[0, 880, 0.5], [0.16, 1174.66, 0.62], [0.39, 1396.91, 0.7], [0.7, 1760, 0.72]] },
+          softpulse: { type: "sine", gain: 0.046, notes: [[0, 392, 0.32, 523.25], [0.52, 392, 0.32, 523.25], [1.04, 523.25, 0.46, 659.25]] },
+          amitoi: { type: "triangle", gain: 0.04, notes: [[0, 987.77, 0.18], [0.2, 1318.5, 0.18], [0.4, 1174.66, 0.18], [0.6, 1568, 0.45]] },
+          urgent: { type: "square", gain: 0.052, notes: [[0, 740, 0.2], [0.25, 988, 0.2], [0.5, 740, 0.2], [0.75, 988, 0.36], [1.2, 1174, 0.45]] },
+          siren: { type: "sawtooth", gain: 0.045, notes: [[0, 520, 0.42, 940], [0.46, 940, 0.42, 520], [0.92, 520, 0.55, 1040]] },
+          warhorn: { type: "sawtooth", gain: 0.045, notes: [[0, 196, 0.65, 293.66], [0.7, 220, 0.72, 329.63], [1.48, 246.94, 0.9, 392]] },
+          drums: { type: "square", gain: 0.05, notes: [[0, 110, 0.16, 70], [0.31, 110, 0.16, 70], [0.62, 92, 0.22, 55], [1.02, 110, 0.3, 60]] },
+          alarm: { type: "square", gain: 0.05, notes: [[0, 880, 0.16], [0.22, 880, 0.16], [0.44, 880, 0.16], [0.84, 1174.66, 0.38], [1.3, 880, 0.52]] },
+          doublepulse: { type: "sine", gain: 0.058, notes: [[0, 587.33, 0.24], [0.29, 587.33, 0.24], [0.78, 783.99, 0.28], [1.11, 783.99, 0.5]] },
+          thunder: { type: "sawtooth", gain: 0.038, notes: [[0, 180, 0.7, 48], [0.18, 120, 0.8, 42], [1.0, 220, 0.65, 55]] },
+          arcane: { type: "triangle", gain: 0.045, notes: [[0, 329.63, 0.3], [0.2, 440, 0.32], [0.4, 587.33, 0.36], [0.62, 783.99, 0.42], [0.88, 1046.5, 0.62]] },
+          dragon: { type: "sawtooth", gain: 0.04, notes: [[0, 146.83, 0.7, 110], [0.48, 220, 0.62, 130], [1.05, 293.66, 0.75, 146.83]] },
+          finale: { type: "triangle", gain: 0.047, notes: [[0, 392, 0.28], [0.18, 523.25, 0.3], [0.36, 659.25, 0.32], [0.56, 783.99, 0.36], [0.78, 1046.5, 0.44], [1.12, 1318.5, 0.7]] }
         };
         const pattern = patterns[soundId] || patterns.gentle;
         for (const [offset, frequency, duration, endFrequency] of pattern.notes) {
@@ -4630,8 +5027,24 @@
     function updateClocks() {
       const now = new Date();
       const category = selectedCategory();
-      dom.localClock.innerHTML = text("localClock") + ": <b>" + formatTime(now, Intl.DateTimeFormat().resolvedOptions().timeZone) + "</b> · " + Intl.DateTimeFormat().resolvedOptions().timeZone;
-      dom.serverClock.innerHTML = text("serverClock") + ": <b>" + formatTime(now, state.displayTimezone) + "</b> · " + (categoryLabel(category) || state.displayTimezone);
+      const localZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const renderClock = (target, label, time, suffix) => {
+        const value = document.createElement("b");
+        value.textContent = time;
+        target.replaceChildren(document.createTextNode(label + ": "), value, document.createTextNode(" · " + suffix));
+      };
+      renderClock(dom.localClock, text("localClock"), formatTime(now, localZone), localZone);
+      renderClock(dom.serverClock, text("serverClock"), formatTime(now, state.displayTimezone), categoryLabel(category) || state.displayTimezone);
+    }
+
+    function openEventImage(timer, selectedArt = timerArt(timer)) {
+      if (!selectedArt?.src) return;
+      dom.imageLightboxImage.src = selectedArt.src;
+      dom.imageLightboxImage.alt = artTitle(selectedArt, timer);
+      dom.imageLightboxTitle.textContent = artTitle(selectedArt, timer);
+      if (!dom.imageLightbox.open && typeof dom.imageLightbox.showModal === "function") {
+        dom.imageLightbox.showModal();
+      }
     }
 
     function renderCards() {
@@ -4653,6 +5066,7 @@
 
       cards.forEach((item, index) => {
         const timer = item.timer;
+        const selectedArt = timerArt(timer);
         const next = item.next;
         const categoryRef = state.mergedConfig.categories.find((x) => x.id === timer.categoryId);
         const accent = dynamicAccent(timer, categoryRef);
@@ -4663,6 +5077,7 @@
         const phaseProgress = urgencyPhaseProgress(delta);
         const el = document.createElement("article");
         el.className = "card " + urgencyClass(delta) + (index === 0 ? " is-primary" : "");
+        if (state.showThumbnails && selectedArt.src) el.classList.add("has-thumbnail");
         el.style.setProperty("--motif", motif);
         el.style.setProperty("--accent-bar", accent.bar);
         el.style.setProperty("--card-overlay", accent.overlay);
@@ -4720,8 +5135,8 @@
         warningValue.textContent = !notifications.warning.enabled
           ? text("tooltipNotificationDisabled")
           : text("tooltipWarningActive")
-            .replace("{lead}", formatLeadTime(notifications.warning.seconds))
-            .replace("{sound}", notificationSoundName(notifications.warning.sound));
+              .replace("{lead}", formatLeadTime(notifications.warning.seconds))
+              .replace("{sound}", notificationSoundName(notifications.warning.sound));
         warningRow.append(warningLabel, warningValue);
         tooltip.appendChild(warningRow);
 
@@ -4734,8 +5149,8 @@
         criticalValue.textContent = !notifications.critical.enabled
           ? text("tooltipNotificationDisabled")
           : text("tooltipCriticalActive")
-            .replace("{lead}", formatLeadTime(notifications.critical.seconds))
-            .replace("{sound}", notificationSoundName(notifications.critical.sound));
+              .replace("{lead}", formatLeadTime(notifications.critical.seconds))
+              .replace("{sound}", notificationSoundName(notifications.critical.sound));
         criticalRow.append(criticalLabel, criticalValue);
         tooltip.appendChild(criticalRow);
         title.appendChild(tooltip);
@@ -4779,6 +5194,30 @@
         phaseFill.style.width = phasePercent + "%";
         phaseBar.appendChild(phaseFill);
 
+        if (state.showThumbnails && selectedArt.src) {
+          const thumbnail = document.createElement("button");
+          thumbnail.className = "card-thumbnail";
+          thumbnail.type = "button";
+          thumbnail.title = text("thumbnailHint");
+          thumbnail.setAttribute("aria-label", text("thumbnailHint") + " " + timerName(timer));
+          const image = document.createElement("img");
+          image.src = selectedArt.src;
+          image.alt = "";
+          image.loading = index < 2 ? "eager" : "lazy";
+          image.decoding = "async";
+          const caption = document.createElement("span");
+          caption.className = "card-art-caption";
+          caption.textContent = artTitle(selectedArt, timer);
+          thumbnail.append(image, caption);
+          thumbnail.addEventListener("dblclick", () => openEventImage(timer, selectedArt));
+          thumbnail.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              openEventImage(timer, selectedArt);
+            }
+          });
+          el.appendChild(thumbnail);
+        }
         el.append(head, count, meta, phaseBar);
         dom.cardStack.appendChild(el);
       });
@@ -4811,10 +5250,30 @@
           : text("eventEndedAgo").replace("{time}", compactDuration(now - timing.endMs));
         const row = document.createElement("article");
         row.className = "current-event " + (isRunning ? "is-running" : "is-ended");
-        row.innerHTML = ""
-          + "<div class=\"current-event-head\"><div><b>" + timerName(timer) + "</b><small>" + (isRunning ? text("currentRunning") : text("recentlyEnded")) + "</small></div><strong>" + remainingText + "</strong></div>"
-          + "<div class=\"event-progress\"><span style=\"width:" + Math.min(100, Math.max(0, timing.progress * 100)).toFixed(2) + "%\"></span></div>"
-          + "<div class=\"current-event-meta\"><span>" + formatTime(new Date(timing.startMs), state.displayTimezone, false) + "</span><span>" + (timer.durationMinutes || 10) + " min</span></div>";
+        const head = document.createElement("div");
+        head.className = "current-event-head";
+        const titleWrap = document.createElement("div");
+        const title = document.createElement("b");
+        title.textContent = timerName(timer);
+        const stateLabel = document.createElement("small");
+        stateLabel.textContent = isRunning ? text("currentRunning") : text("recentlyEnded");
+        titleWrap.append(title, stateLabel);
+        const remaining = document.createElement("strong");
+        remaining.textContent = remainingText;
+        head.append(titleWrap, remaining);
+        const progress = document.createElement("div");
+        progress.className = "event-progress";
+        const progressFill = document.createElement("span");
+        progressFill.style.width = Math.min(100, Math.max(0, timing.progress * 100)).toFixed(2) + "%";
+        progress.appendChild(progressFill);
+        const meta = document.createElement("div");
+        meta.className = "current-event-meta";
+        const start = document.createElement("span");
+        start.textContent = formatTime(new Date(timing.startMs), state.displayTimezone, false);
+        const duration = document.createElement("span");
+        duration.textContent = (timer.durationMinutes || 10) + " min";
+        meta.append(start, duration);
+        row.append(head, progress, meta);
         dom.currentEventsList.appendChild(row);
       }
     }
@@ -4902,23 +5361,37 @@
         if (!occurrences.length) continue;
         const wrap = document.createElement("div");
         wrap.className = "calendar-group";
-        const rows = occurrences.map((date) => {
-          const key = calendarEntryKey(timer.id, date.getTime());
-          state.calendarEntries.set(key, { timer, start: date.getTime() });
-          const checked = state.calendarSelection.has(key) ? " checked" : "";
-          return "<div class=\"calendar-row" + (checked ? " is-selected" : "") + "\">"
-            + "<input class=\"calendar-select\" type=\"checkbox\" data-key=\"" + key + "\"" + checked + ">"
-            + "<b>" + formatDate(date, state.displayTimezone) + "</b>"
-            + "<strong>" + formatTime(date, state.displayTimezone, false) + "</strong>"
-            + "<span>" + timerName(timer) + "</span>"
-            + "<button class=\"btn alt ics-btn\" type=\"button\" data-key=\"" + key + "\">ICS</button>"
-            + "</div>";
-        }).join("");
-        wrap.innerHTML = "<h3>" + timerName(timer) + "</h3>" + rows;
-        const heading = wrap.querySelector("h3");
+        const heading = document.createElement("h3");
+        heading.textContent = timerName(timer);
         heading.dataset.timerId = timer.id;
         heading.dataset.toggleHint = text("calendarToggleHint");
         heading.title = text("calendarToggleHint");
+        wrap.appendChild(heading);
+        for (const date of occurrences) {
+          const key = calendarEntryKey(timer.id, date.getTime());
+          state.calendarEntries.set(key, { timer, start: date.getTime() });
+          const checked = state.calendarSelection.has(key);
+          const row = document.createElement("div");
+          row.className = "calendar-row" + (checked ? " is-selected" : "");
+          const checkbox = document.createElement("input");
+          checkbox.className = "calendar-select";
+          checkbox.type = "checkbox";
+          checkbox.dataset.key = key;
+          checkbox.checked = checked;
+          const dateValue = document.createElement("b");
+          dateValue.textContent = formatDate(date, state.displayTimezone);
+          const timeValue = document.createElement("strong");
+          timeValue.textContent = formatTime(date, state.displayTimezone, false);
+          const name = document.createElement("span");
+          name.textContent = timerName(timer);
+          const ics = document.createElement("button");
+          ics.className = "btn alt ics-btn";
+          ics.type = "button";
+          ics.dataset.key = key;
+          ics.textContent = "ICS";
+          row.append(checkbox, dateValue, timeValue, name, ics);
+          wrap.appendChild(row);
+        }
         dom.calendarGroups.appendChild(wrap);
       }
 
@@ -4986,6 +5459,15 @@
       const iniResponse = await fetch("config.ini", { cache: "no-cache" });
       if (!iniResponse.ok) throw new Error("Failed to load config.ini");
       const loadedConfig = normalizeConfig(parseIniConfig(await iniResponse.text()));
+      try {
+        const liveResponse = await fetch("live-timers.ini", { cache: "no-store" });
+        if (liveResponse.ok) {
+          state.liveOverlayText = await liveResponse.text();
+          applyLiveTimerOverrides(loadedConfig, state.liveOverlayText);
+        }
+      } catch (error) {
+        console.warn("Using checked-in timer anchors because the live overlay is unavailable.", error);
+      }
       state.baseConfig = loadedConfig;
       state.localConfig = loadLocalConfig() || { categories: [], timers: [] };
       if (normalizeSummerFestivalRules(state.localConfig)) {
@@ -5003,17 +5485,27 @@
       if (migrateNotificationSettings(state.localConfig)) {
         saveLocalConfig();
       }
+      if (migrateJulyGuildSchedule(state.localConfig)) {
+        saveLocalConfig();
+      }
       state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
-      state.categoryId = localStorage.getItem("timer_category_id") || state.mergedConfig.categories[0]?.id || "";
-      state.displayTimezone = localStorage.getItem("timer_display_timezone") || clientDefaultTimezone;
-      state.historyMinutes = Math.max(0, Number(localStorage.getItem("timer_history_minutes") ?? "30") || 0);
-      state.historyCollapsed = localStorage.getItem("timer_history_collapsed") === "true";
-      state.cardDensity = ["comfortable", "compact", "ultra"].includes(localStorage.getItem("timer_card_density"))
-        ? localStorage.getItem("timer_card_density")
+      if (state.liveOverlayText) applyLiveTimerOverrides(state.mergedConfig, state.liveOverlayText);
+      state.categoryId = storageGet("timer_category_id") || state.mergedConfig.categories[0]?.id || "";
+      state.displayTimezone = storageGet("timer_display_timezone") || clientDefaultTimezone;
+      state.historyMinutes = Math.max(0, Number(storageGet("timer_history_minutes") ?? "30") || 0);
+      state.historyCollapsed = storageGet("timer_history_collapsed") === "true";
+      state.cardDensity = ["comfortable", "compact", "ultra"].includes(storageGet("timer_card_density"))
+        ? storageGet("timer_card_density")
         : "compact";
-      state.colorblindMode = localStorage.getItem("timer_colorblind_mode") === "true";
+      state.colorblindMode = storageGet("timer_colorblind_mode") === "true";
+      state.showThumbnails = storageGet("timer_show_thumbnails") !== "false";
       const storedVisibleIds = loadVisibleIds();
       state.visibleIds = storedVisibleIds || new Set(state.mergedConfig.timers.map((timer) => timer.id));
+      if (storedVisibleIds && storageGet("timer_visibility_schema") !== "2026-07-24") {
+        for (const timer of state.mergedConfig.timers) state.visibleIds.add(timer.id);
+        storageSet("timer_visibility_schema", "2026-07-24");
+        saveVisibleIds();
+      }
       if (!storedVisibleIds) saveVisibleIds();
       if (!state.mergedConfig.categories.find((x) => x.id === state.categoryId)) {
         state.categoryId = state.mergedConfig.categories[0]?.id || "";
@@ -5022,38 +5514,62 @@
 
     function setLanguage(language, persist = true) {
       state.lang = ["de", "en", "bar"].includes(language) ? language : clientDefaultLanguage;
-      if (persist) localStorage.setItem("timer_language", state.lang);
+      if (persist) storageSet("timer_language", state.lang);
       renderBuilderDays();
       renderAll();
+    }
+
+    function setupPwa() {
+      window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        dom.installAppBtn.hidden = false;
+      });
+      window.addEventListener("appinstalled", () => {
+        deferredInstallPrompt = null;
+        dom.installAppBtn.hidden = true;
+      });
+      if (storageConsent && "serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
+        navigator.serviceWorker.register("service-worker.js").catch((error) => {
+          console.warn("Service worker registration failed.", error);
+        });
+      }
     }
 
     function bind() {
       dom.langDeBtn.addEventListener("click", () => setLanguage("de"));
       dom.langEnBtn.addEventListener("click", () => setLanguage("en"));
       dom.langBarBtn.addEventListener("click", () => setLanguage("bar"));
+      dom.installAppBtn.addEventListener("click", async () => {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        dom.installAppBtn.hidden = true;
+      });
 
       dom.categorySelect.addEventListener("change", () => {
         state.categoryId = dom.categorySelect.value;
-        localStorage.setItem("timer_category_id", state.categoryId);
+        storageSet("timer_category_id", state.categoryId);
         renderAll();
       });
 
       dom.displayTimezone.addEventListener("change", () => {
         state.displayTimezone = dom.displayTimezone.value || clientDefaultTimezone;
-        localStorage.setItem("timer_display_timezone", state.displayTimezone);
+        storageSet("timer_display_timezone", state.displayTimezone);
         renderAll();
       });
 
       dom.historyMinutesInput.addEventListener("change", () => {
         state.historyMinutes = Math.max(0, Math.min(1440, Math.round(Number(dom.historyMinutesInput.value) || 0)));
         dom.historyMinutesInput.value = String(state.historyMinutes);
-        localStorage.setItem("timer_history_minutes", String(state.historyMinutes));
+        storageSet("timer_history_minutes", String(state.historyMinutes));
         renderCurrentEvents();
       });
 
       dom.historyToggleBtn.addEventListener("click", () => {
         state.historyCollapsed = !state.historyCollapsed;
-        localStorage.setItem("timer_history_collapsed", String(state.historyCollapsed));
+        storageSet("timer_history_collapsed", String(state.historyCollapsed));
         renderCurrentEvents();
       });
 
@@ -5061,14 +5577,20 @@
         state.cardDensity = ["comfortable", "compact", "ultra"].includes(dom.cardDensitySelect.value)
           ? dom.cardDensitySelect.value
           : "compact";
-        localStorage.setItem("timer_card_density", state.cardDensity);
+        storageSet("timer_card_density", state.cardDensity);
         applyAppearanceSettings();
       });
 
       dom.colorblindModeInput.addEventListener("change", () => {
         state.colorblindMode = dom.colorblindModeInput.checked;
-        localStorage.setItem("timer_colorblind_mode", String(state.colorblindMode));
+        storageSet("timer_colorblind_mode", String(state.colorblindMode));
         applyAppearanceSettings();
+      });
+
+      dom.showThumbnailsInput.addEventListener("change", () => {
+        state.showThumbnails = dom.showThumbnailsInput.checked;
+        storageSet("timer_show_thumbnails", String(state.showThumbnails));
+        renderCards();
       });
 
       document.addEventListener("visibilitychange", renderPageActivityStatus);
@@ -5127,13 +5649,61 @@
 
       dom.dockSideSelect.addEventListener("change", () => {
         state.dockSide = dom.dockSideSelect.value === "left" ? "left" : "right";
-        localStorage.setItem("timer_dock_side", state.dockSide);
+        storageSet("timer_dock_side", state.dockSide);
       });
       dom.dockModeBtn.addEventListener("click", openDockWindow);
 
       dom.eventPopupCloseBtn.addEventListener("click", () => {
         if (state.popupTimer) clearTimeout(state.popupTimer);
         if (dom.eventPopup.open) dom.eventPopup.close();
+      });
+
+      dom.imageLightboxCloseBtn.addEventListener("click", () => dom.imageLightbox.close());
+      dom.imprintBtn.addEventListener("click", () => dom.imprintDialog.showModal());
+      dom.privacyBtn.addEventListener("click", () => dom.privacyDialog.showModal());
+      dom.storagePrivacyBtn.addEventListener("click", () => dom.privacyDialog.showModal());
+      dom.imprintCloseBtn.addEventListener("click", () => dom.imprintDialog.close());
+      dom.privacyCloseBtn.addEventListener("click", () => dom.privacyDialog.close());
+      dom.storageAcceptBtn.addEventListener("click", () => {
+        try {
+          localStorage.setItem(STORAGE_CONSENT_KEY, "accepted");
+          storageDecision = "accepted";
+          storageConsent = true;
+          window.location.reload();
+        } catch {
+          storageDecision = "";
+          storageConsent = false;
+        }
+      });
+      dom.storageDeclineBtn.addEventListener("click", () => {
+        try {
+          localStorage.setItem(STORAGE_CONSENT_KEY, "declined");
+          storageDecision = "declined";
+        } catch {
+          storageDecision = "declined";
+        }
+        storageConsent = false;
+        if (dom.storageConsent.open) dom.storageConsent.close();
+      });
+      dom.storageResetBtn.addEventListener("click", async () => {
+        if (!window.confirm(text("storageResetConfirm"))) return;
+        try {
+          for (const key of Object.keys(localStorage)) {
+            if (key.startsWith("timer_")) localStorage.removeItem(key);
+          }
+          if ("serviceWorker" in navigator) {
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(registrations.map((registration) => registration.unregister()));
+          }
+          if ("caches" in window) {
+            const keys = await caches.keys();
+            await Promise.all(keys.filter((key) => key.startsWith("linny-")).map((key) => caches.delete(key)));
+          }
+        } finally {
+          storageDecision = "";
+          storageConsent = false;
+          window.location.reload();
+        }
       });
 
       dom.saveTimerBtn.addEventListener("click", saveEditor);
@@ -5181,7 +5751,7 @@
       });
 
       window.addEventListener("languagechange", () => {
-        if (!localStorage.getItem("timer_language")) {
+        if (!storageGet("timer_language")) {
           setLanguage((navigator.language || "").toLowerCase().startsWith("de") ? "bar" : "en", false);
         }
       });
@@ -5194,9 +5764,13 @@
     async function start() {
       await loadConfig();
       bind();
+      setupPwa();
       renderBuilderDays();
       renderAll();
-      setInterval(() => {
+      if (!state.dockMode && !storageDecision && typeof dom.storageConsent.showModal === "function") {
+        dom.storageConsent.showModal();
+      }
+      window.setInterval(() => {
         renderCurrentEvents();
         renderCards();
         updateClocks();
@@ -5209,5 +5783,4 @@
     start();
   </script>
 </body>
-
 </html>
