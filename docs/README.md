@@ -17,10 +17,10 @@ Diese Dokumentation ist das gemeinsame, versionierte **Projektgedächtnis für M
 
 | Rolle oder Aufgabe | Empfohlener Einstieg |
 |---|---|
-| Nutzer der Timer-Seite | [`../README.md`](../README.md) |
+| Nutzer der Timer-Seite | [Projekt-README auf GitHub](https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender/blob/main/README.md) |
 | neuer Entwickler | [Projektüberblick](project/project-brief.md) und [Architektur](project/architecture.md) |
-| Coding-Agent | [`../AGENTS.md`](../AGENTS.md), danach die dort verlinkten Dateien |
-| GitHub Copilot | [Copilot-Instruktionen](../.github/copilot-instructions.md) |
+| Coding-Agent | [AGENTS.md auf GitHub](https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender/blob/main/AGENTS.md), danach die dort verlinkten Dateien |
+| GitHub Copilot | [Copilot-Instruktionen auf GitHub](https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender/blob/main/.github/copilot-instructions.md) |
 | konkrete Implementierung | [Entwicklungsrichtlinien](engineering/development-guidelines.md) |
 | KI-Workflow verstehen | [KI-gestützte Entwicklung](engineering/ai-assisted-development.md) |
 | Markdown lernen | [Markdown-Kurzreferenz](reference/markdown-cheatsheet.md) |
@@ -58,12 +58,12 @@ Nicht jede Datei darf dieselbe Information neu erzählen. Maßgeblich sind:
 | KI-Zusammenarbeit | `engineering/ai-assisted-development.md` |
 | Dokumentationsformat | `engineering/documentation-guidelines.md` |
 | wichtige Entscheidungen | `engineering/decision-log.md` |
-| Standardtimer | `../config.ini` |
-| tatsächlich implementiertes Verhalten | `../index.html` |
+| Standardtimer | `config.ini` im Repository-Stamm |
+| tatsächlich implementiertes Verhalten | `index.html` im Repository-Stamm |
 
 ## HTML-Dokumentation lokal starten
 
-Voraussetzung: Python ist installiert.
+Voraussetzung: Python ist installiert. Die Befehle werden im Repository-Stamm ausgeführt.
 
 ### Windows PowerShell
 
