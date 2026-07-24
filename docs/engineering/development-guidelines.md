@@ -99,6 +99,7 @@ Eine neue Bibliothek oder ein CDN ist nur sinnvoll, wenn:
 - Keine vertraulichen Unternehmensinformationen in dieses öffentliche Repository.
 - Importierte Dateien als nicht vertrauenswürdig behandeln.
 - Inhalte vor der Einfügung in HTML korrekt als Text behandeln; keine ungeprüfte HTML-Injektion.
+- Dynamische Inhalte mit `textContent`, DOM-Knoten oder gleichwertigem Escaping erzeugen; `innerHTML` nur für statische, vertrauenswürdige Templates verwenden.
 
 ## Testcheckliste
 
@@ -111,6 +112,8 @@ Eine neue Bibliothek oder ein CDN ist nur sinnvoll, wenn:
 - Import und Export funktionieren.
 - ICS-Export enthält plausible Zeitpunkte.
 - lokale Einstellungen bleiben nach Neuladen erhalten.
+- Gate-of-Memory-Live-Overlay wird geladen und fällt bei Netzproblemen sauber auf den geprüften INI-Anchor zurück.
+- Manifest und Service Worker sind syntaktisch gültig.
 
 ### Oberfläche
 

@@ -14,6 +14,9 @@ Das Repository dient zugleich als kleines Demo-Projekt fuer **KI-gestuetzte Soft
 - [Markdown-Kurzreferenz](docs/reference/markdown-cheatsheet.md)
 - [Demo fuer Kollegen](docs/demo/colleague-demo.md)
 - [Prompt-Beispiele](docs/demo/prompt-examples.md)
+- [Changelog](docs/project/changelog.md)
+- [Taskboard](docs/project/taskboard.md)
+- [Rollen und Governance](docs/project/team-governance.md)
 
 Agenten beginnen mit [`AGENTS.md`](AGENTS.md). GitHub Copilot verwendet zusaetzlich [`.github/copilot-instructions.md`](.github/copilot-instructions.md).
 
@@ -31,13 +34,15 @@ mkdocs serve
 - Boarisch, Deutsch und Englisch; deutsche Clients starten boarisch, alle anderen englisch
 - Eigene Anzeigezeitzone `Bayern/Munich`, intern DST-sicher auf `Europe/Berlin` abgebildet
 - Live-Countdowns fuer Cron-Zeitplaene und exakte Intervalle
+- Automatischer, validierter Gate-of-Memory-Abgleich mit MetaForge bei jedem stündlichen Pages-Build
+- Installierbare Progressive Web App mit Offline-App-Shell
 - Automatische Anzeige in der lokalen Zeitzone des Nutzers
 - Timer pro Kategorie ein- und ausblendbar
 - Saisonale Timer mit optionalem Gueltigkeitszeitraum
 - Laufende Events mit Fortschrittsbalken, einklappbarer Historie und lokal gespeichertem 30-Minuten-Rueckblick
 - Separates, editierfreies Statusfenster fuer die linke oder rechte Bildschirmseite
 - Unabhaengig aktivierbare Warning- und Critical-Erinnerungen mit sekundengenauem Vorlauf
-- Mehrere separat waehl- und testbare Sounds: sanftes Glockenspiel bis Solisium-Sirene
+- 20 separat waehl- und testbare Sounds: sanftes Glockenspiel bis astrales Finale
 - Vollstaendiger 10-Sekunden-Test fuer Warning und Critical inklusive Sound, Popup und Browsermeldung
 - ICS-Export einzelner oder beliebig vieler ausgewaehlter Termine; Doppelklick auf einen Eventnamen waehlt dessen Termine an oder ab
 - Kompakte zweispaltige Auswahl der sichtbaren Timer
@@ -67,11 +72,11 @@ Jeder Timer besitzt einen eigenen Abschnitt:
 categoryId=tl_eu
 name.de=Tor der Erinnerung
 name.en=Gate of Memory
-durationMinutes=5
+durationMinutes=4
 activeFrom=2026-01-01T00:00:00Z
 activeUntil=2026-12-31T23:59:59Z
-rules=@every 11808s
-anchorUtc=2026-07-19T00:03:00Z
+rules=@every 11806s
+anchorUtc=2026-07-24T14:56:16Z
 notifications.warning.enabled=true
 notifications.warning.seconds=300
 notifications.warning.sound=gentle
@@ -85,7 +90,7 @@ Zeitplanformate:
 
 - Cron: `Minute Stunde Tag Monat Wochentag`
 - Mehrere Regeln: mit `||` trennen
-- Intervall: `@every 11808s`, `@every 90m` oder `@every 2h`
+- Intervall: `@every 11806s`, `@every 90m`, `@every 2h` oder `@every 14d`
 - Bei Intervallen legt `anchorUtc` den exakten Startpunkt fest
 - `activeFrom` und `activeUntil` sind optionale ISO-UTC-Grenzen
 
@@ -93,7 +98,9 @@ Zeitplanformate:
 
 Der Export-Button erzeugt eine vollstaendige `timer-config.ini`. Dieselbe Datei kann ohne JSON-Zwischenschritt wieder importiert oder als neue `config.ini` ins Repository uebernommen werden.
 
-Warning und Critical besitzen jeweils einen eigenen Ein-/Ausschalter, sekundengenauen Vorlauf und Sound. Gueltige Sounds sind `none`, `gentle`, `crystal`, `bell`, `urgent` und `siren`. `notifications.channels` steuert unabhaengig davon Browser- und In-App-Popups. Alte `notifications.minutes`-Eintraege werden weiterhin gelesen und beim Export in das neue Format umgewandelt.
+Warning und Critical besitzen jeweils einen eigenen Ein-/Ausschalter, sekundengenauen Vorlauf und Sound. Die Oberfläche bietet 20 lokal synthetisierte Sounds von `none` und `gentle` bis `dragon` und `finale`. `notifications.channels` steuert unabhängig davon Browser- und In-App-Popups. Alte `notifications.minutes`-Einträge werden weiterhin gelesen und beim Export in das neue Format umgewandelt.
+
+`live-timers.ini` ist eine kleine, optionale INI-Überlagerung für restart-sensitive Timer. Der Pages-Workflow aktualisiert sie stündlich über `scripts/sync_gate_memory.py`. Bei Quell- oder Netzfehlern bleibt der eingecheckte letzte geprüfte Anchor aktiv; es gibt keinen JSON-Fallback.
 
 Windows-/Browserbenachrichtigungen werden ueber den Button in der Oberflaeche freigegeben. Die Seite muss fuer Timer, In-App-Popups und Audio-Erinnerungen geoeffnet bleiben. Hintergrund-Tabs koennen durch Browser-Energiesparen verzoegert werden; der Aktivitaetsstatus weist darauf hin.
 
@@ -101,7 +108,7 @@ Sprache, Anzeigezeitzone, sichtbare Timer, Andockseite, Historienlaenge und eing
 
 ## Deployment
 
-Ein Push auf `main` startet den GitHub-Pages-Workflow. Dabei werden zwei Webziele veroeffentlicht:
+Ein Push auf `main` oder der stündliche Live-Timer-Job startet den GitHub-Pages-Workflow. Dabei werden zwei Webziele veröffentlicht:
 
 - Anwendung: `/` (Hauptseite mit Timer)
 - Dokumentation: `/help/` (MkDocs mit Anwenderhilfe + Entwicklerdoku)

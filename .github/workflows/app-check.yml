@@ -1,0 +1,51 @@
+name: Application check
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - "config.ini"
+      - "live-timers.ini"
+      - "manifest.webmanifest"
+      - "service-worker.js"
+      - "scripts/**"
+      - "tests/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/app-check.yml"
+  pull_request:
+    paths:
+      - "index.html"
+      - "config.ini"
+      - "live-timers.ini"
+      - "manifest.webmanifest"
+      - "service-worker.js"
+      - "scripts/**"
+      - "tests/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/app-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci
+      - run: npm test
+      - run: npm run check:service-worker
+      - run: python -m py_compile scripts/sync_gate_memory.py
+      - run: python -m json.tool manifest.webmanifest > /dev/null

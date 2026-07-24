@@ -29,6 +29,9 @@ Dieses Protokoll verhindert, dass Menschen oder Agenten bereits geklärte Grunds
 | ADR-0003 | accepted | `config.ini` ist die einzige kanonische Quelle für Standardtimer. | Konfiguration bleibt lesbar, exportierbar und von Programmlogik getrennt |
 | ADR-0004 | accepted | Projektwissen wird verdichtet im Repository gespeichert, nicht als rohe Chatkopie. | weniger Rauschen, nachvollziehbare Quellen der Wahrheit, agententauglicher Kontext |
 | ADR-0005 | accepted | Dokumentation und Agentenanweisungen werden auf Deutsch geschrieben; technische Bezeichner bleiben Englisch. | verständlich für das Team, kompatibel mit Code und APIs |
+| ADR-0006 | accepted | Restart-sensitive Anchor werden als validierte INI-Überlagerung beim Pages-Build aktualisiert. | Serverneustarts dürfen den Countdown nicht dauerhaft verschieben; INI bleibt das einzige Konfigurationsformat |
+| ADR-0007 | accepted | Die Anwendung wird als PWA mit kleiner Offline-App-Shell ausgeliefert. | app-ähnliche Installation ohne APK oder Backend |
+| ADR-0008 | accepted | Ein Repository-Taskboard bleibt die portable Quelle; Teams darf nur spiegeln. | nachvollziehbar, versioniert und unabhängig von einem einzelnen Kollaborationstool |
 
 ## ADR-0001: Markdown als Quelle, HTML als Ausgabe
 

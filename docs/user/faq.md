@@ -23,7 +23,7 @@ canonical: true
 
 ## Was bedeutet `@every`?
 
-`@every` beschreibt exakte Intervalle, zum Beispiel `@every 11808s`.
+`@every` beschreibt exakte Intervalle, zum Beispiel `@every 11806s`.
 
 ## Was bedeutet `durationMinutes`?
 

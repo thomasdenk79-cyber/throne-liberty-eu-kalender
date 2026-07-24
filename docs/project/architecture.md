@@ -20,10 +20,12 @@ GitHub Pages
     +-- index.html  -------- Benutzeroberfläche und Anwendungslogik
     |
     +-- config.ini  -------- Standardkategorien und Standardtimer
+    +-- live-timers.ini  --- validierte, generierte Anchor-Überlagerung
+    +-- service-worker.js -- Offline-App-Shell
 
 Browser
     |
-    +-- lädt index.html und config.ini
+    +-- lädt index.html, config.ini und optional live-timers.ini
     +-- berechnet Zeitpunkte und Countdown-Zustände lokal
     +-- speichert persönliche Einstellungen lokal
     +-- erzeugt Benachrichtigungen, Sounds und ICS-Dateien lokal
@@ -64,9 +66,20 @@ Benutzereinstellungen und importierte Anpassungen werden im Browser gespeichert.
 
 1. Der Browser lädt `index.html`.
 2. Die Anwendung lädt `config.ini`.
-3. Kategorien, Timerregeln und Benachrichtigungseinstellungen werden geparst.
-4. Lokale Benutzereinstellungen werden ergänzt.
-5. Die sichtbaren Timerkarten und Countdown-Zustände werden erzeugt.
+3. Der Browser lädt `live-timers.ini` ohne Cache und übernimmt ausschließlich validierte Live-Felder.
+4. Kategorien, Timerregeln und Benachrichtigungseinstellungen werden geparst.
+5. Lokale Benutzereinstellungen werden nach erteilter Einwilligung ergänzt.
+6. Die sichtbaren Timerkarten und Countdown-Zustände werden erzeugt.
+
+### Restart-sensitive Timer
+
+`config.ini` bleibt die kanonische Standardquelle. Gate of Memory kann nach einem Serverneustart jedoch einen neuen Anchor erhalten. Deshalb extrahiert `scripts/sync_gate_memory.py` beim stündlichen Pages-Build das Event-JSON-LD von MetaForge, validiert Intervall, Dauer und UTC-Zeitpunkt und erzeugt `live-timers.ini`.
+
+Die Überlagerung darf nur vorhandene Timer und die Felder `rules`, `anchorUtc` und `durationMinutes` ändern. Bei Quell- oder Netzfehlern bleibt die eingecheckte letzte geprüfte INI-Datei unverändert. Es gibt keinen JSON-Konfigurationsfallback.
+
+### PWA und Offline-Modus
+
+`manifest.webmanifest` macht die Seite installierbar. Der Service Worker speichert die App-Shell und die wichtigsten Eventbilder. `live-timers.ini` wird network-first geladen, damit Online-Nutzer den neuesten Anchor erhalten und Offline-Nutzer auf den letzten Cachewert zurückfallen.
 
 <a name="arch-timer-cycle"></a>
 ### Timerzyklus
@@ -91,6 +104,9 @@ Benutzereinstellungen und importierte Anpassungen werden im Browser gespeichert.
 |---|---|
 | `index.html` | HTML-Struktur, CSS, JavaScript, Rendering und Browserfunktionen |
 | `config.ini` | Standarddaten und Standardbenachrichtigungen |
+| `live-timers.ini` | letzte validierte Live-Überlagerung für restart-sensitive Timer |
+| `scripts/sync_gate_memory.py` | validierter MetaForge-Abgleich im Pages-Build |
+| `manifest.webmanifest`, `service-worker.js` | Installation und Offline-App-Shell |
 | `README.md` | Bedienung und schneller Projekteinstieg |
 | `docs/project/` | Produkt- und Architekturwissen |
 | `docs/engineering/` | Vorgehen, Qualitätsregeln und Entscheidungen |
@@ -104,12 +120,13 @@ Benutzereinstellungen und importierte Anpassungen werden im Browser gespeichert.
 Agenten und Entwickler müssen folgende Invarianten erhalten, sofern eine Aufgabe nicht ausdrücklich eine Änderung verlangt:
 
 1. `config.ini` bleibt die einzige kanonische Standard-Timerquelle.
-2. Bestehende INI-Schlüssel bleiben rückwärtskompatibel oder erhalten eine Migration.
-3. UTC wird für kanonische Zeitpunkte verwendet; die Anzeige wird lokalisiert.
-4. Die Anwendung bleibt ohne Backend lauffähig.
-5. Persönliche Einstellungen verlassen den Browser nicht.
-6. Neue externe Abhängigkeiten benötigen eine dokumentierte Begründung.
-7. Barrierefreiheit und responsive Darstellung gehören zur Funktion, nicht zur optionalen Verschönerung.
+2. Live-Überlagerungen dürfen nur dokumentierte, validierte Felder vorhandener Timer ersetzen.
+3. Bestehende INI-Schlüssel bleiben rückwärtskompatibel oder erhalten eine Migration.
+4. UTC wird für kanonische Zeitpunkte verwendet; die Anzeige wird lokalisiert.
+5. Die Anwendung bleibt ohne Backend lauffähig.
+6. Persönliche Einstellungen verlassen den Browser nicht.
+7. Neue externe Abhängigkeiten benötigen eine dokumentierte Begründung.
+8. Barrierefreiheit und responsive Darstellung gehören zur Funktion, nicht zur optionalen Verschönerung.
 
 ## Bekannte technische Schuld
 

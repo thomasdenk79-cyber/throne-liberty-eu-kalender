@@ -11,7 +11,31 @@ repo_url: https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender
 edit_uri: edit/main/docs/
 
 theme:
-  name: mkdocs
+  name: material
+  language: de
+  logo: assets/linny/linny-icon.png
+  favicon: assets/linny/linny-icon.png
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - content.action.edit
+    - search.highlight
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Helles Design
+    - scheme: default
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Dunkles Design
 
 plugins:
   - search
@@ -23,9 +47,28 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra_css:
+  - stylesheets/linny.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender
+      name: Projekt auf GitHub
 
 nav:
   - Start: README.md
+  - Projektstatus:
+    - Changelog: project/changelog.md
+    - Taskboard: project/taskboard.md
+    - Rollen und Governance: project/team-governance.md
   - Anwenderhilfe:
     - Schnellstart: user/quickstart.md
     - Konfiguration und Import/Export: user/configuration.md

@@ -3,6 +3,8 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: ["main"]
+  schedule:
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -34,6 +36,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-docs.txt
 
+      - name: Refresh restart-sensitive live timers
+        run: python scripts/sync_gate_memory.py
+
       - name: Build MkDocs help site
         run: mkdocs build --clean --site-dir .pages/help
 
@@ -42,6 +47,9 @@ jobs:
           mkdir -p .pages
           cp index.html .pages/index.html
           cp config.ini .pages/config.ini
+          cp live-timers.ini .pages/live-timers.ini
+          cp manifest.webmanifest .pages/manifest.webmanifest
+          cp service-worker.js .pages/service-worker.js
           cp -R assets .pages/assets
           if [ -f 404.html ]; then cp 404.html .pages/404.html; fi
 
