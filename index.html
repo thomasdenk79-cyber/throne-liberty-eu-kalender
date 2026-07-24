@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" class="booting">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,6 +28,7 @@
     }
 
     * { box-sizing: border-box; }
+    html.booting body { visibility: hidden; }
 
     html, body {
       margin: 0;
@@ -529,10 +530,21 @@
     }
     html[data-density="cinematic"] .card-thumbnail,
     html[data-density="cinematic"] .card-thumbnail img { min-height: 170px; }
-    html[data-density="big-picture"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); }
-    html[data-density="big-picture"] .card {
+    html[data-density="cinematic"] .card.has-thumbnail {
       grid-template-columns: 1fr;
       grid-template-areas: "thumb" "head" "count" "meta" "phase";
+    }
+    html[data-density="cinematic"] .card-title b {
+      min-height: 0;
+      display: block;
+      overflow: visible;
+      white-space: normal;
+      -webkit-line-clamp: unset;
+    }
+    html[data-density="big-picture"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); }
+    html[data-density="big-picture"] .card {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "thumb thumb" "head count" "meta count" "phase phase";
       min-height: 360px;
       padding: 14px;
       gap: 10px;
@@ -544,6 +556,8 @@
     }
     html[data-density="big-picture"] .card-thumbnail img { min-height: 230px; }
     html[data-density="big-picture"] .count { font-size: clamp(38px, 7vw, 58px); }
+    html[data-density="big-picture"] .card-head { align-self: end; }
+    html[data-density="big-picture"] .count { align-self: center; justify-self: end; }
     html[data-density="ultra"] #cardStack { grid-template-columns: repeat(auto-fit, minmax(min(185px, 100%), 1fr)); gap: 4px; }
     html[data-density="ultra"] .card {
       grid-template-columns: minmax(0, 1fr) auto;
@@ -818,7 +832,7 @@
       z-index: 120;
       right: clamp(12px, 3vw, 44px);
       top: 50%;
-      width: min(58vw, 900px);
+      width: min(72vw, 1120px);
       max-height: 76vh;
       padding: 7px;
       border: 1px solid #a8efff70;
@@ -846,17 +860,39 @@
       border-radius: 12px;
     }
 
+    .section-heading-actions,
+    .stack-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .collapse-btn {
+      width: 34px;
+      min-width: 34px;
+      height: 30px;
+      min-height: 30px;
+      padding: 0;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .calendar.is-collapsed > :not(.section-heading),
+    .live-column.is-collapsed .current-events,
+    .live-column.is-collapsed #cardStack { display: none !important; }
+
     @media (max-width: 760px), (hover: none) {
       .image-hover-preview { display: none; }
     }
 
     /* Theme packs change the stage, not the timer semantics. */
-    html[data-theme="astral"] { --theme-a: #223762; --theme-b: #3c1f47; --theme-accent: #72dcff; }
-    html[data-theme="bavaria"] { --theme-a: #0d65a3; --theme-b: #e6f4ff; --theme-accent: #74c9ff; }
-    html[data-theme="time-vortex"] { --theme-a: #19356e; --theme-b: #6d208d; --theme-accent: #ff9df4; }
-    html[data-theme="arcade"] { --theme-a: #ff187a; --theme-b: #2149ff; --theme-accent: #67fff0; }
-    html[data-theme="solisium"] { --theme-a: #1b6055; --theme-b: #69451f; --theme-accent: #8fffd3; }
-    html[data-theme="executive"] { --theme-a: #1b2633; --theme-b: #202832; --theme-accent: #8eb3cf; }
+    html[data-theme="astral"] { --theme-a: #223762; --theme-b: #3c1f47; --theme-accent: #72dcff; --surface-a: #101d2e; --surface-b: #091421; }
+    html[data-theme="bavaria"] { --theme-a: #0d65a3; --theme-b: #e6f4ff; --theme-accent: #74c9ff; --surface-a: #113e63; --surface-b: #091c30; }
+    html[data-theme="time-vortex"] { --theme-a: #19356e; --theme-b: #6d208d; --theme-accent: #ff9df4; --surface-a: #29154b; --surface-b: #101b3d; }
+    html[data-theme="arcade"] { --theme-a: #ff187a; --theme-b: #2149ff; --theme-accent: #67fff0; --surface-a: #32134b; --surface-b: #081b3d; }
+    html[data-theme="solisium"] { --theme-a: #1b6055; --theme-b: #69451f; --theme-accent: #8fffd3; --surface-a: #143e35; --surface-b: #172416; }
+    html[data-theme="executive"] { --theme-a: #1b2633; --theme-b: #202832; --theme-accent: #8eb3cf; --surface-a: #202b36; --surface-b: #111820; }
 
     html[data-theme] body {
       background:
@@ -867,6 +903,19 @@
 
     html[data-theme] {
       --accent: var(--theme-accent);
+    }
+    html[data-theme] .topbar,
+    html[data-theme] .controls,
+    html[data-theme] .stack,
+    html[data-theme] .calendar,
+    html[data-theme] .footer,
+    html[data-theme] .control-cluster {
+      background: linear-gradient(145deg, color-mix(in srgb, var(--surface-a) 94%, transparent), color-mix(in srgb, var(--surface-b) 96%, transparent));
+      border-color: color-mix(in srgb, var(--theme-accent) 28%, transparent);
+    }
+    html[data-theme="arcade"] body::before {
+      background-image: linear-gradient(#67fff00c 1px, transparent 1px), linear-gradient(90deg, #ff41ba0c 1px, transparent 1px);
+      background-size: 28px 28px;
     }
 
     html[data-theme="bavaria"] .controls,
@@ -1499,6 +1548,8 @@
     .notification-copy small { color: #9facbf; line-height: 1.4; }
     .notification-copy small.is-ready { color: #86e9ac; }
     .notification-copy small.is-blocked { color: #ffb074; }
+    .notification-copy small { display: none; }
+    .notification-copy { cursor: help; }
 
     .event-dialog {
       width: min(420px, calc(100vw - 28px));
@@ -1577,7 +1628,7 @@
     .controls {
       grid-column: 1;
       grid-row: 2;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(280px, .9fr) minmax(360px, 1.25fr) minmax(220px, .65fr);
       align-items: stretch;
       align-content: start;
     }
@@ -1597,6 +1648,7 @@
 
     .control-settings .meta-grid { grid-template-columns: 1fr; }
     .control-visibility { align-content: start; }
+    .control-visibility .toggle { max-height: 560px; }
 
     .controls .notification-setup {
       grid-template-columns: 1fr;
@@ -1612,17 +1664,45 @@
       align-content: start;
     }
 
-    .dock-launch {
+    .dock-launch { display: grid; place-items: center; gap: 7px; }
+    .dock-pad {
       display: grid;
-      grid-template-columns: 92px minmax(0, 1fr);
-      gap: 7px;
+      grid-template-columns: repeat(3, 38px);
+      grid-template-rows: repeat(3, 38px);
+      gap: 4px;
+      padding: 7px;
+      border: 1px solid #8ee7ff36;
+      border-radius: 14px;
+      background: #07111dd9;
     }
-
-    .dock-launch select,
-    .dock-launch .btn {
-      min-height: 36px;
-      width: 100%;
+    .dock-direction {
+      width: 38px;
+      min-width: 38px;
+      height: 38px;
+      min-height: 38px;
+      padding: 0;
+      border: 1px solid #9cdbf52b;
+      border-radius: 9px;
+      background: #102034;
+      color: #bfeeff;
+      cursor: pointer;
+      font-size: 20px;
+      transition: transform 140ms ease, color 140ms ease, background 140ms ease, box-shadow 140ms ease;
     }
+    .dock-direction:hover,
+    .dock-direction:focus-visible {
+      color: #fff;
+      background: #1a4663;
+      box-shadow: 0 0 18px #72dcff55;
+      transform: scale(1.14);
+      outline: none;
+    }
+    .dock-direction.is-selected {
+      color: #fff;
+      background: linear-gradient(145deg, #2e76a0, #704c9d);
+      box-shadow: 0 0 0 2px #8ee7ff55;
+    }
+    .dock-center { display: grid; place-items: center; color: #7b91aa; font-size: 16px; }
 
     .live-column {
       grid-column: 2;
@@ -1934,9 +2014,9 @@
       pointer-events: none;
       transform: translateY(-3px);
       transition:
-        opacity 130ms ease 5s,
-        transform 130ms ease 5s,
-        visibility 0s linear 5s;
+        opacity 130ms ease 1s,
+        transform 130ms ease 1s,
+        visibility 0s linear 1s;
     }
 
     .card-title:hover .card-tooltip,
@@ -2056,10 +2136,22 @@
     }
 
     html.dock-mode #cardStack {
-      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      grid-template-columns: minmax(0, 1fr);
       max-height: none;
       overflow: visible;
     }
+
+    html.dock-mode[data-dock-side="top"] #cardStack,
+    html.dock-mode[data-dock-side="bottom"] #cardStack {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(240px, 1fr);
+      grid-template-columns: none;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    html.dock-mode .card-tooltip { display: none !important; }
+    html.dock-mode .card-title { cursor: default; }
 
     html.dock-mode #currentEventsList {
       grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
@@ -2180,6 +2272,7 @@
         </button>
       </div>
       <button class="btn alt topbar-link" id="installAppBtn" type="button" hidden>App installieren</button>
+      <button class="btn alt icon-action" id="settingsToggleBtn" type="button" title="Einstellungen ein-/ausblenden" aria-label="Einstellungen ein-/ausblenden">⚙</button>
       <a class="btn alt topbar-link" id="helpDocsLink" href="help/" target="_blank" rel="noopener">Hilfe</a>
     </div>
   </header>
@@ -2371,6 +2464,12 @@
             <div class="label" id="accessibilityLabel">Accessibility</div>
             <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span id="colorblindModeLabel">Colorblind symbols</span></label>
             <label class="pill"><input id="showThumbnailsInput" type="checkbox" checked> <span id="showThumbnailsLabel">Show event art</span></label>
+            <label class="label" id="imageZoomLabel" for="imageZoomSelect">Bildvorschau</label>
+            <select id="imageZoomSelect">
+              <option value="off">Aus</option>
+              <option value="large" selected>Groß</option>
+              <option value="huge">Sehr groß</option>
+            </select>
           </div>
         </div>
         <div class="config-health" id="configHealth">
@@ -2401,24 +2500,24 @@
           </select>
           <button class="btn icon-action" id="enableNotificationsBtn" type="button" title="Benachrichtigungen aktivieren und Ton testen" aria-label="Benachrichtigungen aktivieren und Ton testen">🔊</button>
           <div class="dock-launch">
-            <select id="dockSideSelect" aria-label="Andockseite">
-              <option value="right" selected>Rechts</option>
-              <option value="left">Links</option>
-              <option value="top">Oben</option>
-              <option value="bottom">Unten</option>
-              <option value="top-left">Oben links</option>
-              <option value="top-right">Oben rechts</option>
-              <option value="bottom-left">Unten links</option>
-              <option value="bottom-right">Unten rechts</option>
-            </select>
-            <button class="btn alt icon-action" id="dockModeBtn" type="button" title="Statusleiste positionieren" aria-label="Statusleiste positionieren">✥</button>
+            <div class="dock-pad" id="dockPad" aria-label="Statusleiste positionieren">
+              <button class="dock-direction" type="button" data-dock-side="top-left" title="Oben links">↖</button>
+              <button class="dock-direction" type="button" data-dock-side="top" title="Oben">↑</button>
+              <button class="dock-direction" type="button" data-dock-side="top-right" title="Oben rechts">↗</button>
+              <button class="dock-direction" type="button" data-dock-side="left" title="Links">←</button>
+              <span class="dock-center">✥</span>
+              <button class="dock-direction" type="button" data-dock-side="right" title="Rechts">→</button>
+              <button class="dock-direction" type="button" data-dock-side="bottom-left" title="Unten links">↙</button>
+              <button class="dock-direction" type="button" data-dock-side="bottom" title="Unten">↓</button>
+              <button class="dock-direction" type="button" data-dock-side="bottom-right" title="Unten rechts">↘</button>
+            </div>
           </div>
         </div>
       </div>
       </section>
     </div>
 
-    <div class="live-column">
+    <div class="live-column" id="liveColumn">
       <section class="current-events" id="currentEventsSection" hidden>
         <div class="current-events-heading">
           <div class="label" id="currentEventsLabel">Currently running</div>
@@ -2428,18 +2527,24 @@
       </section>
 
       <section class="stack">
-        <div class="label" id="stackLabel">Upcoming Timers</div>
+        <div class="stack-heading">
+          <div class="label" id="stackLabel">Upcoming Timers</div>
+          <button class="btn alt collapse-btn" id="liveCollapseBtn" type="button" title="Timer ein-/ausklappen" aria-label="Timer ein-/ausklappen">⌃</button>
+        </div>
         <div id="cardStack"></div>
       </section>
     </div>
 
-    <section class="calendar">
+    <section class="calendar" id="calendarSection">
       <div class="section-heading">
         <div>
           <div class="label" id="calendarLabel">Kalenderexport</div>
           <p class="section-copy" id="calendarHelp">Termine auswählen und gemeinsam als ICS-Datei herunterladen.</p>
         </div>
-        <span class="selection-count" id="calendarSelectionStatus">0 ausgewählt</span>
+        <div class="section-heading-actions">
+          <span class="selection-count" id="calendarSelectionStatus">0 ausgewählt</span>
+          <button class="btn alt collapse-btn" id="calendarCollapseBtn" type="button" title="Kalender ein-/ausklappen" aria-label="Kalender ein-/ausklappen">⌃</button>
+        </div>
       </div>
       <div class="calendar-toolbar">
         <label class="calendar-select-all">
@@ -2480,6 +2585,9 @@
       <button class="btn alt" id="imageLightboxCloseBtn" type="button">Close</button>
     </div>
   </dialog>
+  <div class="image-hover-preview" id="imageHoverPreview" aria-hidden="true">
+    <img id="imageHoverPreviewImage" alt="">
+  </div>
 
   <dialog class="legal-dialog imprint-dialog" id="imprintDialog">
     <h2 id="imprintTitle">Impressum</h2>
@@ -2513,7 +2621,7 @@
       de: {
         editorTitle: "Timer bearbeiten",
         editorNote: "Die Standardkonfiguration kommt aus Git. Änderungen werden in diesem Browser gespeichert und lassen sich als INI exportieren.",
-        brandSub: "EU-Event-Timer · v3.1",
+        brandSub: "EU-Event-Timer · v3.2",
         installApp: "Als App installieren",
         helpDocs: "Hilfe",
         heroTitle: "Linny's Epic Time Portal",
@@ -2545,7 +2653,14 @@
         accessibility: "Barrierefreiheit",
         colorblindMode: "Kontrastreicher Farbenblind-Modus",
         showThumbnails: "Linny-Eventbilder anzeigen",
-        thumbnailHint: "Doppelklick öffnet das Eventbild in Großansicht.",
+        imageZoom: "Bildvorschau beim Darüberfahren",
+        zoomOff: "Aus",
+        zoomLarge: "Groß",
+        zoomHuge: "Sehr groß",
+        thumbnailHint: "Ein Klick öffnet das Eventbild in Großansicht.",
+        collapseTimers: "Timer ein-/ausklappen",
+        collapseCalendar: "Kalender ein-/ausklappen",
+        toggleSettings: "Einstellungen ein-/ausblenden",
         activityActive: "Seite aktiv · Alarme laufen sekundengenau.",
         activityHidden: "Seite im Hintergrund · Energiesparen kann Alarme verzögern.",
         configUpdated: "Konfiguration aktualisiert: {date}",
@@ -2732,7 +2847,7 @@
       en: {
         editorTitle: "Edit timer",
         editorNote: "The default configuration comes from Git. Changes stay in this browser and can be exported as INI.",
-        brandSub: "EU event timer · v3.1",
+        brandSub: "EU event timer · v3.2",
         installApp: "Install app",
         helpDocs: "Help",
         heroTitle: "Linny's Epic Time Portal",
@@ -2764,7 +2879,14 @@
         accessibility: "Accessibility",
         colorblindMode: "High-contrast colour-blind mode",
         showThumbnails: "Show Linny event art",
-        thumbnailHint: "Double-click to open the event art full-size.",
+        imageZoom: "Image preview on hover",
+        zoomOff: "Off",
+        zoomLarge: "Large",
+        zoomHuge: "Very large",
+        thumbnailHint: "Click once to open the event art full-size.",
+        collapseTimers: "Collapse or expand timers",
+        collapseCalendar: "Collapse or expand calendar",
+        toggleSettings: "Show or hide settings",
         activityActive: "Page active · alarms are running with second-level precision.",
         activityHidden: "Page in background · power saving may delay alarms.",
         configUpdated: "Configuration updated: {date}",
@@ -2954,7 +3076,7 @@
       ...UI.de,
       editorTitle: "Timer herrichtn",
       editorNote: "D'Grundkonfiguration kimmt aus Git. Dei Änderungen bleim in dem Browser und lossn se als INI exportiern.",
-      brandSub: "Boarischer EU-Event-Timer · v3.1",
+      brandSub: "Boarischer EU-Event-Timer · v3.2",
       installApp: "Ois App installiern",
       helpDocs: "Hüf",
       heroText: "De wichtigsten Eventfenster, Countdowns und Erinnerungen auf oan Blick.",
@@ -2984,7 +3106,14 @@
       accessibility: "Barrierefreiheit",
       colorblindMode: "Deitlicher Farbnblind-Modus",
       showThumbnails: "Linnys Event-Buidln zoagn",
-      thumbnailHint: "Doppelklick macht des Buidl sakrisch groß.",
+      imageZoom: "Buidl-Vorschau beim Drüberfahrn",
+      zoomOff: "Aus",
+      zoomLarge: "Groß",
+      zoomHuge: "Sakrisch groß",
+      thumbnailHint: "Oa Klick macht des Buidl sakrisch groß.",
+      collapseTimers: "Timer ei- oder ausklappn",
+      collapseCalendar: "Kalender ei- oder ausklappn",
+      toggleSettings: "Einstellungen ei- oder ausblenden",
       activityActive: "D'Seitn is aktiv · d'Alarme laffa sekundngenau.",
       activityHidden: "D'Seitn is im Hintergrund · Energiesparn ko Alarme verzögern.",
       configUpdated: "Konfiguration aktualisiert: {date}",
@@ -3214,6 +3343,9 @@
       notificationOverride: "default",
       colorblindMode: false,
       showThumbnails: true,
+      imageZoom: "large",
+      liveCollapsed: false,
+      calendarCollapsed: false,
       cardRenderKey: "",
       artRotationBucket: Math.floor(Date.now() / 600000),
       editingTimerId: "",
@@ -3222,10 +3354,13 @@
       popupTimer: null,
       lastNotificationCheck: Date.now() - 1500,
       dockMode: new URLSearchParams(window.location.search).get("mode") === "dock",
-      dockSide: storageGet("timer_dock_side") || "right"
+      dockSide: new URLSearchParams(window.location.search).get("dockSide") || storageGet("timer_dock_side") || "right"
     };
 
-    if (state.dockMode) document.documentElement.classList.add("dock-mode");
+    if (state.dockMode) {
+      document.documentElement.classList.add("dock-mode");
+      document.documentElement.dataset.dockSide = state.dockSide;
+    }
 
     const dom = {
       brandTitle: document.getElementById("brandTitle"),
@@ -3278,6 +3413,8 @@
       colorblindModeLabel: document.getElementById("colorblindModeLabel"),
       showThumbnailsInput: document.getElementById("showThumbnailsInput"),
       showThumbnailsLabel: document.getElementById("showThumbnailsLabel"),
+      imageZoomLabel: document.getElementById("imageZoomLabel"),
+      imageZoomSelect: document.getElementById("imageZoomSelect"),
       configUpdatedStatus: document.getElementById("configUpdatedStatus"),
       configLiveStatus: document.getElementById("configLiveStatus"),
       configExpiryStatus: document.getElementById("configExpiryStatus"),
@@ -3297,11 +3434,15 @@
       newCategoryBtn: document.getElementById("newCategoryBtn"),
       deleteCategoryBtn: document.getElementById("deleteCategoryBtn"),
       cardStack: document.getElementById("cardStack"),
+      liveColumn: document.getElementById("liveColumn"),
+      liveCollapseBtn: document.getElementById("liveCollapseBtn"),
       currentEventsSection: document.getElementById("currentEventsSection"),
       currentEventsLabel: document.getElementById("currentEventsLabel"),
       historyToggleBtn: document.getElementById("historyToggleBtn"),
       currentEventsList: document.getElementById("currentEventsList"),
       calendarGroups: document.getElementById("calendarGroups"),
+      calendarSection: document.getElementById("calendarSection"),
+      calendarCollapseBtn: document.getElementById("calendarCollapseBtn"),
       toastWrap: document.getElementById("toastWrap"),
       editName: document.getElementById("editName"),
       editCategory: document.getElementById("editCategory"),
@@ -3352,8 +3493,7 @@
       notificationPermissionStatus: document.getElementById("notificationPermissionStatus"),
       pageActivityStatus: document.getElementById("pageActivityStatus"),
       enableNotificationsBtn: document.getElementById("enableNotificationsBtn"),
-      dockSideSelect: document.getElementById("dockSideSelect"),
-      dockModeBtn: document.getElementById("dockModeBtn"),
+      dockPad: document.getElementById("dockPad"),
       eventPopup: document.getElementById("eventPopup"),
       eventPopupLabel: document.getElementById("eventPopupLabel"),
       eventPopupTitle: document.getElementById("eventPopupTitle"),
@@ -3363,7 +3503,10 @@
       imageLightboxImage: document.getElementById("imageLightboxImage"),
       imageLightboxTitle: document.getElementById("imageLightboxTitle"),
       imageLightboxCloseBtn: document.getElementById("imageLightboxCloseBtn"),
+      imageHoverPreview: document.getElementById("imageHoverPreview"),
+      imageHoverPreviewImage: document.getElementById("imageHoverPreviewImage"),
       installAppBtn: document.getElementById("installAppBtn"),
+      settingsToggleBtn: document.getElementById("settingsToggleBtn"),
       helpDocsLink: document.getElementById("helpDocsLink"),
       imprintBtn: document.getElementById("imprintBtn"),
       privacyBtn: document.getElementById("privacyBtn"),
@@ -3726,7 +3869,10 @@
         theme: settingsData.theme || "",
         notificationOverride: settingsData.notificationOverride || "",
         colorblindMode: parseIniBoolean(settingsData.colorblindMode, false),
-        showThumbnails: parseIniBoolean(settingsData.showThumbnails, true)
+        showThumbnails: parseIniBoolean(settingsData.showThumbnails, true),
+        imageZoom: settingsData.imageZoom || "",
+        liveCollapsed: parseIniBoolean(settingsData.liveCollapsed, false),
+        calendarCollapsed: parseIniBoolean(settingsData.calendarCollapsed, false)
       } : null;
       const categories = [];
       const timers = [];
@@ -3841,7 +3987,10 @@
           "theme=" + iniValue(config.settings.theme || "astral"),
           "notificationOverride=" + iniValue(config.settings.notificationOverride || "default"),
           "colorblindMode=" + (config.settings.colorblindMode ? "true" : "false"),
-          "showThumbnails=" + (config.settings.showThumbnails !== false ? "true" : "false")
+          "showThumbnails=" + (config.settings.showThumbnails !== false ? "true" : "false"),
+          "imageZoom=" + iniValue(config.settings.imageZoom || "large"),
+          "liveCollapsed=" + (config.settings.liveCollapsed ? "true" : "false"),
+          "calendarCollapsed=" + (config.settings.calendarCollapsed ? "true" : "false")
         );
       }
 
@@ -4475,6 +4624,10 @@
       dom.notificationOverrideSelect.value = state.notificationOverride;
       dom.colorblindModeInput.checked = state.colorblindMode;
       dom.showThumbnailsInput.checked = state.showThumbnails;
+      dom.liveColumn.classList.toggle("is-collapsed", state.liveCollapsed && !state.dockMode);
+      dom.calendarSection.classList.toggle("is-collapsed", state.calendarCollapsed);
+      dom.liveCollapseBtn.textContent = state.liveCollapsed ? "⌄" : "⌃";
+      dom.calendarCollapseBtn.textContent = state.calendarCollapsed ? "⌄" : "⌃";
       const heroByTheme = {
         astral: "assets/events/gallery/linny-celestial-observatory-v1.webp",
         bavaria: "assets/events/gallery/linny-white-stag-v1.webp",
@@ -4657,6 +4810,11 @@
       dom.accessibilityLabel.textContent = text("accessibility");
       dom.colorblindModeLabel.textContent = text("colorblindMode");
       dom.showThumbnailsLabel.textContent = text("showThumbnails");
+      dom.imageZoomLabel.textContent = text("imageZoom");
+      ["zoomOff", "zoomLarge", "zoomHuge"].forEach((key, index) => {
+        dom.imageZoomSelect.options[index].textContent = text(key);
+      });
+      dom.imageZoomSelect.value = state.imageZoom;
       dom.quickActionsLabel.textContent = text("config");
       dom.visibilityLabel.textContent = text("visibleTimers");
       dom.stackLabel.textContent = text("upcomingTimers");
@@ -4666,13 +4824,16 @@
       dom.calendarSelectAllLabel.textContent = text("selectAllDates");
       dom.downloadSelectedIcsBtn.textContent = text("exportSelectedIcs");
       dom.notificationSetupTitle.textContent = text("notificationSetupTitle");
-      dom.dockModeBtn.textContent = "✥";
-      dom.dockModeBtn.title = text("dockMode");
-      dom.dockModeBtn.setAttribute("aria-label", text("dockMode"));
-      dom.dockSideSelect.setAttribute("aria-label", text("dockSide"));
-      ["dockRight", "dockLeft", "dockTop", "dockBottom", "dockTopLeft", "dockTopRight", "dockBottomLeft", "dockBottomRight"]
-        .forEach((key, index) => { dom.dockSideSelect.options[index].textContent = text(key); });
-      dom.dockSideSelect.value = state.dockSide;
+      dom.dockPad.setAttribute("aria-label", text("dockMode"));
+      dom.dockPad.querySelectorAll("[data-dock-side]").forEach((button) => {
+        button.classList.toggle("is-selected", button.dataset.dockSide === state.dockSide);
+      });
+      dom.liveCollapseBtn.title = text("collapseTimers");
+      dom.liveCollapseBtn.setAttribute("aria-label", text("collapseTimers"));
+      dom.calendarCollapseBtn.title = text("collapseCalendar");
+      dom.calendarCollapseBtn.setAttribute("aria-label", text("collapseCalendar"));
+      dom.settingsToggleBtn.title = text("toggleSettings");
+      dom.settingsToggleBtn.setAttribute("aria-label", text("toggleSettings"));
       dom.eventPopupLabel.textContent = text("eventAlert");
       dom.eventPopupCloseBtn.textContent = text("acknowledge");
       dom.footerSummary.textContent = text("footerSummary");
@@ -5139,7 +5300,10 @@
         theme: state.theme,
         notificationOverride: state.notificationOverride,
         colorblindMode: state.colorblindMode,
-        showThumbnails: state.showThumbnails
+        showThumbnails: state.showThumbnails,
+        imageZoom: state.imageZoom,
+        liveCollapsed: state.liveCollapsed,
+        calendarCollapsed: state.calendarCollapsed
       };
     }
 
@@ -5159,6 +5323,9 @@
       if (["default", "all", "silent", "off"].includes(settings.notificationOverride)) state.notificationOverride = settings.notificationOverride;
       state.colorblindMode = Boolean(settings.colorblindMode);
       state.showThumbnails = settings.showThumbnails !== false;
+      if (["off", "large", "huge"].includes(settings.imageZoom)) state.imageZoom = settings.imageZoom;
+      state.liveCollapsed = Boolean(settings.liveCollapsed);
+      state.calendarCollapsed = Boolean(settings.calendarCollapsed);
       storageSet("timer_language", state.lang);
       storageSet("timer_display_timezone", state.displayTimezone);
       storageSet("timer_category_id", state.categoryId);
@@ -5171,6 +5338,9 @@
       storageSet("timer_notification_override", state.notificationOverride);
       storageSet("timer_colorblind_mode", String(state.colorblindMode));
       storageSet("timer_show_thumbnails", String(state.showThumbnails));
+      storageSet("timer_image_zoom", state.imageZoom);
+      storageSet("timer_live_collapsed", String(state.liveCollapsed));
+      storageSet("timer_calendar_collapsed", String(state.calendarCollapsed));
       storageSet(localeDefaultsKey, "1");
     }
 
@@ -5289,11 +5459,16 @@
         dom.enableNotificationsBtn.title = text(labelKey);
         dom.enableNotificationsBtn.setAttribute("aria-label", text(labelKey));
       };
+      const updateNotificationTooltip = () => {
+        const copy = dom.notificationPermissionStatus.parentElement;
+        if (copy) copy.title = [dom.notificationPermissionStatus.textContent, dom.pageActivityStatus.textContent].filter(Boolean).join(" ");
+      };
       if (!("Notification" in window)) {
         dom.notificationPermissionStatus.textContent = text("notificationStatusUnsupported");
         dom.notificationPermissionStatus.className = "is-blocked";
         setNotificationButton("notificationTestSound");
         dom.channelBrowser.disabled = true;
+        updateNotificationTooltip();
         return;
       }
       dom.channelBrowser.disabled = false;
@@ -5310,6 +5485,7 @@
         dom.notificationPermissionStatus.className = "";
         setNotificationButton("notificationEnable");
       }
+      updateNotificationTooltip();
     }
 
     async function activateNotifications() {
@@ -5383,16 +5559,17 @@
       const screenHeight = window.screen.availHeight || 900;
       const horizontal = state.dockSide === "top" || state.dockSide === "bottom";
       const corner = state.dockSide.includes("-");
-      const width = horizontal ? Math.min(1100, screenWidth) : (corner ? Math.min(520, screenWidth) : 340);
-      const height = horizontal ? Math.min(380, screenHeight) : (corner ? Math.min(680, screenHeight) : Math.max(640, screenHeight));
+      const width = horizontal ? screenWidth : (corner ? Math.min(520, screenWidth) : 360);
+      const height = horizontal ? Math.min(330, screenHeight) : (corner ? Math.min(680, screenHeight) : screenHeight);
       const atLeft = state.dockSide.includes("left") || state.dockSide === "left";
       const atTop = state.dockSide.includes("top") || state.dockSide === "top";
       const atBottom = state.dockSide.includes("bottom") || state.dockSide === "bottom";
-      const left = horizontal ? screenLeft + Math.max(0, (screenWidth - width) / 2)
+      const left = horizontal ? screenLeft
         : (atLeft ? screenLeft : screenLeft + screenWidth - width);
       const top = atBottom ? screenTop + screenHeight - height : screenTop;
       const url = new URL(window.location.href);
       url.searchParams.set("mode", "dock");
+      url.searchParams.set("dockSide", state.dockSide);
       const dockWindow = window.open(
         url.toString(),
         "solisiumPulseStatus",
@@ -5455,6 +5632,19 @@
       if (!dom.imageLightbox.open && typeof dom.imageLightbox.showModal === "function") {
         dom.imageLightbox.showModal();
       }
+    }
+
+    function showImageHoverPreview(selectedArt) {
+      if (state.dockMode || state.imageZoom === "off" || !selectedArt?.src || matchMedia("(hover: none)").matches) return;
+      dom.imageHoverPreview.style.width = state.imageZoom === "huge" ? "min(84vw, 1400px)" : "min(72vw, 1120px)";
+      dom.imageHoverPreviewImage.src = selectedArt.src;
+      dom.imageHoverPreview.classList.add("is-visible");
+      dom.imageHoverPreview.setAttribute("aria-hidden", "false");
+    }
+
+    function hideImageHoverPreview() {
+      dom.imageHoverPreview.classList.remove("is-visible");
+      dom.imageHoverPreview.setAttribute("aria-hidden", "true");
     }
 
     function renderCards() {
@@ -5667,6 +5857,9 @@
           thumbnail.append(image, caption);
           thumbnail.title = artTitle(selectedArt, timer);
           thumbnail.setAttribute("aria-label", artTitle(selectedArt, timer));
+          thumbnail.addEventListener("mouseenter", () => showImageHoverPreview(selectedArt));
+          thumbnail.addEventListener("mouseleave", hideImageHoverPreview);
+          thumbnail.addEventListener("blur", hideImageHoverPreview);
           thumbnail.addEventListener("click", () => openEventImage(timer, selectedArt));
           thumbnail.addEventListener("keydown", (event) => {
             if (event.key === "Enter" || event.key === " ") {
@@ -5966,6 +6159,12 @@
         : "default";
       state.colorblindMode = storageGet("timer_colorblind_mode") === "true";
       state.showThumbnails = storageGet("timer_show_thumbnails") !== "false";
+      state.imageZoom = ["off", "large", "huge"].includes(storageGet("timer_image_zoom"))
+        ? storageGet("timer_image_zoom")
+        : "large";
+      state.liveCollapsed = storageGet("timer_live_collapsed") === "true";
+      state.calendarCollapsed = storageGet("timer_calendar_collapsed") === "true";
+      document.querySelector(".controls").hidden = storageGet("timer_settings_collapsed") === "true";
       const storedVisibleIds = loadVisibleIds();
       state.visibleIds = storedVisibleIds || new Set(state.mergedConfig.timers.map((timer) => timer.id));
       if (storedVisibleIds && storageGet("timer_visibility_schema") !== "2026-07-24") {
@@ -6076,6 +6275,33 @@
         renderCards();
       });
 
+      dom.imageZoomSelect.addEventListener("change", () => {
+        state.imageZoom = ["off", "large", "huge"].includes(dom.imageZoomSelect.value)
+          ? dom.imageZoomSelect.value
+          : "large";
+        storageSet("timer_image_zoom", state.imageZoom);
+        hideImageHoverPreview();
+      });
+
+      dom.liveCollapseBtn.addEventListener("click", () => {
+        state.liveCollapsed = !state.liveCollapsed;
+        storageSet("timer_live_collapsed", String(state.liveCollapsed));
+        applyAppearanceSettings();
+      });
+
+      dom.calendarCollapseBtn.addEventListener("click", () => {
+        state.calendarCollapsed = !state.calendarCollapsed;
+        storageSet("timer_calendar_collapsed", String(state.calendarCollapsed));
+        applyAppearanceSettings();
+      });
+
+      dom.settingsToggleBtn.addEventListener("click", () => {
+        const controls = document.querySelector(".controls");
+        controls.hidden = !controls.hidden;
+        storageSet("timer_settings_collapsed", String(controls.hidden));
+        if (!controls.hidden) controls.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
       document.addEventListener("visibilitychange", renderPageActivityStatus);
 
       dom.newTimerBtn.addEventListener("click", createNewTimer);
@@ -6130,12 +6356,14 @@
       dom.testWarningAlarmBtn.addEventListener("click", () => void scheduleAlarmTest("warning"));
       dom.testCriticalAlarmBtn.addEventListener("click", () => void scheduleAlarmTest("critical"));
 
-      dom.dockSideSelect.addEventListener("change", () => {
-        const values = ["left", "right", "top", "bottom", "top-left", "top-right", "bottom-left", "bottom-right"];
-        state.dockSide = values.includes(dom.dockSideSelect.value) ? dom.dockSideSelect.value : "right";
-        storageSet("timer_dock_side", state.dockSide);
+      dom.dockPad.querySelectorAll("[data-dock-side]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.dockSide = button.dataset.dockSide || "right";
+          storageSet("timer_dock_side", state.dockSide);
+          applyAppearanceSettings();
+          openDockWindow();
+        });
       });
-      dom.dockModeBtn.addEventListener("click", openDockWindow);
 
       dom.eventPopupCloseBtn.addEventListener("click", () => {
         if (state.popupTimer) clearTimeout(state.popupTimer);
@@ -6246,13 +6474,17 @@
     }
 
     async function start() {
-      await loadConfig();
-      bind();
-      setupPwa();
-      renderBuilderDays();
-      renderAll();
-      if (!state.dockMode && !storageDecision && typeof dom.storageConsent.showModal === "function") {
-        dom.storageConsent.showModal();
+      try {
+        await loadConfig();
+        bind();
+        setupPwa();
+        renderBuilderDays();
+        renderAll();
+        if (!state.dockMode && !storageDecision && typeof dom.storageConsent.showModal === "function") {
+          dom.storageConsent.showModal();
+        }
+      } finally {
+        document.documentElement.classList.remove("booting");
       }
       window.setInterval(() => {
         const artRotationBucket = Math.floor(Date.now() / 600000);

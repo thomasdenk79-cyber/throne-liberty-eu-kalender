@@ -1,4 +1,4 @@
-const CACHE_NAME = "linny-solisium-pulse-v3-1";
+const CACHE_NAME = "linny-epic-time-portal-v3-2";
 const APP_SHELL = [
   "./",
   "./index.html",

@@ -22,6 +22,7 @@ Dieses Repository-Board ist die portable Demo-Quelle. Es funktioniert ohne exter
 | <span class="status-chip status-done">Done</span> | Gate-of-Memory-Live-Synchronisation | Chief AI Developer | automatisierte Tests |
 | <span class="status-chip status-done">Done</span> | PWA, Offline-App-Shell und Installationsbutton | Chief AI Developer | Browser-Smoke-Test |
 | <span class="status-chip status-done">Done</span> | Sicherheitsreview für importierte INI-Inhalte | Chief AI Architect | DOM-XSS-Test |
+| <span class="status-chip status-done">Done</span> | Modulares Dashboard, Hover-Vorschau und achtteiliges Dock | Chief AI Developer | Runtime- und Dokumentationstest |
 
 ## In Arbeit
 
@@ -29,7 +30,7 @@ Dieses Repository-Board ist die portable Demo-Quelle. Es funktioniert ohne exter
 |---|---|---|---|
 | <span class="status-chip status-active">Review</span> | Juli-Eventdaten im Spiel gegenprüfen | Thomas · Product Owner | nächste Spielsession |
 | <span class="status-chip status-active">Review</span> | PWA-Installation auf Android, iOS und Windows prüfen | Human QA | nächster Release |
-| <span class="status-chip status-active">Review</span> | Linny Portal 3.1: Themes, stabile Karten und Symbol-UI | Chief AI Developer | automatisierte und visuelle Abnahme |
+| <span class="status-chip status-active">Review</span> | Linny Portal 3.2: modulare Oberfläche und Dock-Layout | Chief AI Developer | automatisierte und visuelle Abnahme |
 | <span class="status-chip status-active">Review</span> | Discord-Webhook mit Gildenadmin einrichten | Thomas / Discord Admin | Secret außerhalb des Repositories hinterlegt |
 
 ## Als Nächstes

@@ -33,6 +33,24 @@ erste Aufgabe.
    Einstellungsbereich; das Dashboard zeigt den Status.
 6. **Barrierefreiheit:** Kontrastmodus bleibt optional. Farbe ist nie das einzige
    Signal. `prefers-reduced-motion`, Fokuszustände und Touchbedienung beachten.
+
+## Modulare Arbeitsfläche
+
+- Timerübersicht, Kalender und Einstellungen sind eigenständige, einklappbare
+  Module.
+- Ein eingeklappter Zustand ist eine Benutzereinstellung und wird nur nach
+  Einwilligung lokal gespeichert.
+- Die Hauptseite dient Konfiguration und Kontrolle; das Dock-Fenster dient der
+  reinen Statusanzeige. Bearbeitung und Detail-Tooltips gehören deshalb nicht in
+  den Dock-Modus.
+- Große Bildschirmmodi dürfen Informationen anders anordnen, Eventnamen aber
+  nicht kommentarlos durch Ellipsen unlesbar machen.
+
+## Browsergrenzen
+
+Fensterposition und -größe sind nur Anfragen an den Browser. URL- und Titelleisten
+von Popups sind sicherheitsrelevante Browseroberflächen und werden nicht durch
+CSS oder JavaScript entfernt.
 7. **Goldener Schnitt als Orientierung, nicht Dogma:** große Bildbühne und
    Informationsflächen sollen ungefähr in einer 60/40-Beziehung funktionieren,
    dürfen auf schmalen Ansichten aber vollständig stapeln.

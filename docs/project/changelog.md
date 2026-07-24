@@ -13,9 +13,25 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
-## 3.1.0 – in Vorbereitung
+## 3.2.0 – 24. Juli 2026
 
 <span class="status-chip status-active">Chief Review</span>
+
+- Haupt-Timerliste und Kalenderexport als dauerhaft speicherbare, einklappbare Module umgesetzt.
+- Direkte achtteilige Dock-Steuerung ersetzt das Positions-Dropdown; horizontale Statusleisten laufen einreihig.
+- Kino- und Großbildkarten neu angeordnet: vollständige Namen, größere Motive und kompakter platzierte Countdowns.
+- Konfigurierbare Hover-Großvorschau für Eventbilder ergänzt; einfacher Klick öffnet weiterhin die Vollansicht.
+- Detail-Tooltips erscheinen auf der Hauptseite nach einer Sekunde und bleiben im reinen Statusfenster verborgen.
+- Einstellungsbereich über ein Zahnrad ein-/ausblendbar; Benachrichtigungsstatus in kompakte Tooltips verschoben.
+- Themenwelten prägen nun auch Flächen, Rahmen und Hintergrund der vollständigen Oberfläche deutlicher.
+- Sichtbares Sprach- und Motivflackern beim initialen Laden durch atomaren Startzustand beseitigt.
+- Pages-Workflow bleibt die einzige Veröffentlichungsquelle für Anwendung und MkDocs-Hilfe.
+
+Bekannte Browsergrenze: Die URL-/Titelleiste eines Popupfensters wird aus Sicherheitsgründen vom Browser gesteuert und kann von einer Webseite nicht zuverlässig entfernt werden.
+
+## 3.1.0 – 24. Juli 2026
+
+<span class="status-chip status-done">Done</span>
 
 - Kartenrendering entkoppelt: Countdowns aktualisieren sich weiterhin sekündlich, ohne Bilder und komplette Karten neu aufzubauen.
 - Neue Themenwelten, Kino- und Großbildmodus sowie rotierender Hero-Bereich ergänzt.
