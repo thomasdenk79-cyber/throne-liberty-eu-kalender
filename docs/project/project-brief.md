@@ -64,13 +64,13 @@ Informationen sollen nicht unnötig doppelt gepflegt werden.
 
 | Information | Kanonische Quelle |
 |---|---|
-| Standard-Timer und Kategorien | `config.ini` |
-| tatsächlich implementiertes Verhalten | `index.html` |
+| Standard-Timer und Kategorien | `config.ini` im Repository-Stamm |
+| tatsächlich implementiertes Verhalten | `index.html` im Repository-Stamm |
 | Produktziel und Nicht-Ziele | diese Datei |
-| technische Struktur und Datenfluss | `architecture.md` |
-| Entwicklungsregeln | `../engineering/development-guidelines.md` |
-| Agentenarbeitsweise | `../../AGENTS.md` und `../engineering/ai-assisted-development.md` |
-| Begründung wichtiger Entscheidungen | `../engineering/decision-log.md` |
+| technische Struktur und Datenfluss | [Architektur](architecture.md) |
+| Entwicklungsregeln | [Entwicklungsrichtlinien](../engineering/development-guidelines.md) |
+| Agentenarbeitsweise | `AGENTS.md` im Repository-Stamm und [KI-gestützte Entwicklung](../engineering/ai-assisted-development.md) |
+| Begründung wichtiger Entscheidungen | [Entscheidungsprotokoll](../engineering/decision-log.md) |
 
 ## Erfolgskriterien
 
