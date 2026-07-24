@@ -64,4 +64,5 @@ assert.match(config, /\[timer:interserver_eu\][\s\S]*?rules=30 21 \* \* 5,6/, "c
 assert.match(liveTimers, /rules=@every 11806s[\s\S]*?anchorUtc=2026-07-24T14:56:16Z[\s\S]*?durationMinutes=4/, "Gate live values");
 
 console.log("runtime smoke: cards, schedules, calendar, consent, localization and XSS guard OK");
+await window.happyDOM.cancelAsync();
 window.close();

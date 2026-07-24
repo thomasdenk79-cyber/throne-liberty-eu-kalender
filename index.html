@@ -5770,7 +5770,7 @@
       if (!state.dockMode && !storageDecision && typeof dom.storageConsent.showModal === "function") {
         dom.storageConsent.showModal();
       }
-      setInterval(() => {
+      window.setInterval(() => {
         renderCurrentEvents();
         renderCards();
         updateClocks();
