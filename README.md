@@ -1,4 +1,4 @@
-# Linny's Astral Solisium Pulse
+# Linny's Epic Time Portal
 
 Kompakter, konfigurationsbasierter Event-Timer fuer Throne and Liberty EU. Die Seite laeuft statisch auf GitHub Pages und liest ihre Standard-Timer ausschliesslich aus `config.ini`.
 
@@ -52,6 +52,9 @@ mkdocs serve
 - Kontinuierlicher Farbübergang samt neu startendem Fortschrittsbalken je Alarmphase
 - Violetter Puls- und Blinkalarm in der letzten Minute
 - Komfortable, kompakte und ultrakompakte Kartendichte plus Farbenblind-Symbole
+- Kino- und Großbildmodus sowie vollständige Themenwelten mit rotierendem Hero
+- stabile Zehn-Minuten-Bildrotation ohne Flackern im Sekundentakt
+- zentrale Alarmsteuerung: Timer-Standard, alle, nur visuell oder aus
 - Aktivitaetswarnung fuer Hintergrund-Tabs sowie Konfigurations- und Ablaufstatus
 
 ## Dateien
@@ -115,7 +118,7 @@ Ein Push auf `main` oder der stündliche Live-Timer-Job startet den GitHub-Pages
 
 ```powershell
 git add index.html config.ini README.md
-git commit -m "Update Linny's Astral Solisium Pulse"
+git commit -m "Update Linny's Epic Time Portal"
 git push origin main
 ```
 

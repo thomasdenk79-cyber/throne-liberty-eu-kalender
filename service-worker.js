@@ -1,4 +1,4 @@
-const CACHE_NAME = "linny-solisium-pulse-v3";
+const CACHE_NAME = "linny-solisium-pulse-v3-1";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,7 +7,8 @@ const APP_SHELL = [
   "./manifest.webmanifest",
   "./assets/icons/linny-192.png",
   "./assets/icons/linny-512.png",
-  "./assets/images/linny/linny-hero-v1.png",
+  "./assets/images/linny/linny-hero-v2.webp",
+  "./assets/events/themes/time-vortex/linny-time-lady-gallifrey-v1.webp",
   "./assets/events/linny-arkeum-invasion-v1.webp",
   "./assets/events/linny-gate-memory-v1.webp",
   "./assets/events/linny-summer-festival-v1.webp",

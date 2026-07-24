@@ -13,6 +13,21 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
+## 3.1.0 – in Vorbereitung
+
+<span class="status-chip status-active">Chief Review</span>
+
+- Kartenrendering entkoppelt: Countdowns aktualisieren sich weiterhin sekündlich, ohne Bilder und komplette Karten neu aufzubauen.
+- Neue Themenwelten, Kino- und Großbildmodus sowie rotierender Hero-Bereich ergänzt.
+- Timerbearbeitung aus den Statuskarten in die kompakte Timerauswahl verschoben.
+- Verspätete Browseralarme zeigen nun die tatsächlich verbleibende Zeit statt des konfigurierten Soll-Vorlaufs.
+- Gate-of-Memory-Standard auf sechs Minuten Warning und zwei Minuten Critical angepasst.
+- Entwurfs-Timer werden erst beim Speichern dauerhaft; alte leere „Neuer Timer“-Entwürfe werden migriert.
+- Tooltip-Positionierung, lange Namen, Timerlisten-Scrolling und das überlagerte Seitenende korrigiert.
+- Zentrale Alarmsteuerung und Theme-Einstellungen in INI-Import/-Export und lokalen Einstellungen ergänzt.
+- Neues Hauptmotiv, Time-Lady-, Anime- und Arcade-Motive in die erweiterbare Theme-Struktur aufgenommen.
+- Dokumentationsvertrag, Designsystem, Anwender-Neuigkeiten und sichere Discord-Webhook-Planung ergänzt.
+
 ## 3.0.0 – 24. Juli 2026
 
 <span class="status-chip status-done">Chief Review</span>

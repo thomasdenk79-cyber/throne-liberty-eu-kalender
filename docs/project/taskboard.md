@@ -29,6 +29,8 @@ Dieses Repository-Board ist die portable Demo-Quelle. Es funktioniert ohne exter
 |---|---|---|---|
 | <span class="status-chip status-active">Review</span> | Juli-Eventdaten im Spiel gegenprüfen | Thomas · Product Owner | nächste Spielsession |
 | <span class="status-chip status-active">Review</span> | PWA-Installation auf Android, iOS und Windows prüfen | Human QA | nächster Release |
+| <span class="status-chip status-active">Review</span> | Linny Portal 3.1: Themes, stabile Karten und Symbol-UI | Chief AI Developer | automatisierte und visuelle Abnahme |
+| <span class="status-chip status-active">Review</span> | Discord-Webhook mit Gildenadmin einrichten | Thomas / Discord Admin | Secret außerhalb des Repositories hinterlegt |
 
 ## Als Nächstes
 
@@ -37,6 +39,7 @@ Dieses Repository-Board ist die portable Demo-Quelle. Es funktioniert ohne exter
 | <span class="status-chip status-next">Next</span> | GitHub-Issues als echtes Teamboard aktivieren | Thomas / Project Lead | Labels und Templates vorhanden |
 | <span class="status-chip status-next">Next</span> | Teams-Demo anbinden | Admin Runner | Teams-Plugin verbunden; keine Geheimnisse im Repo |
 | <span class="status-chip status-next">Next</span> | Browser-End-to-End-Tests erweitern | Junior Developer | mobile, wide und PWA im CI |
+| <span class="status-chip status-next">Next</span> | Theme-Galerien schrittweise mit zusätzlichen Linny-Motiven füllen | Creative AI / Human Review | je Themenwelt ausreichende Bildauswahl |
 
 ## Workflow
 

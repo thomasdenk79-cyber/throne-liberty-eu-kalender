@@ -199,6 +199,50 @@ Bei jeder Codeänderung prüfen:
 5. Wurde eine frühere Entscheidung ersetzt?
 6. Gibt es nun doppelte oder widersprüchliche Aussagen?
 
+## Dokumentationsvertrag für Agenten
+
+Jeder Agent bewertet vor dem Abschluss einer Änderung deren Wirkung. Nicht jede Datei
+wird pauschal angefasst; die betroffene kanonische Sicht wird jedoch im selben
+Änderungssatz aktualisiert.
+
+| Änderung | Pflichtziel |
+|---|---|
+| sichtbare Funktion oder wichtiger Bugfix | `docs/user/whats-new.md` und Release-Eintrag im Changelog |
+| neue oder geänderte Bedienung | passende Seite unter `docs/user/` |
+| Datenfluss, Komponente oder Sicherheitsgrenze | `docs/project/architecture.md` |
+| dauerhafte Grundsatzentscheidung | `docs/engineering/decision-log.md` |
+| neue Entwicklungs- oder Reviewregel | passende Datei unter `docs/engineering/` und bei Bedarf `AGENTS.md` |
+| Arbeitsstatus oder offene Abnahme | `docs/project/taskboard.md` |
+| reine interne Umstrukturierung ohne Nutzerwirkung | technisches Changelog nur, wenn release- oder migrationsrelevant |
+
+### Zwei Changelog-Sichten
+
+- `docs/project/changelog.md` ist die technische, menschenlesbare Release-Historie.
+- `docs/user/whats-new.md` erklärt Nutzerwirkung und Highlights ohne Code- oder
+  Zeilennummern.
+- Git-Commits bleiben kurz und technisch. Sie ersetzen kein Release-Changelog.
+
+### Repository als lebendes Gedächtnis
+
+Ein Agent übernimmt keine dauerhafte Erkenntnis blind aus einem Chat. Er:
+
+1. prüft die vorhandene kanonische Quelle,
+2. verdichtet die bestätigte Erkenntnis,
+3. nennt Widerspruch oder ersetzte Annahme,
+4. schlägt eine Grundsatzänderung als reviewbare Entscheidung vor,
+5. überschreibt akzeptierte Architekturentscheidungen nicht still,
+6. fragt bei einer erheblichen Abweichung nach fachlicher Bestätigung.
+
+Rohe Chatprotokolle, vollständige Toolausgaben und Gedankengänge gehören nicht in
+das Projektgedächtnis. Ziel ist genügend Kontext für einen neuen Menschen oder
+Agenten bei möglichst wenig Rauschen.
+
+### Links und Build
+
+Neue sichtbare Seiten werden in `mkdocs.yml` einsortiert. Vor dem Merge werden
+relative Links sowie `mkdocs build --strict` geprüft. Generierte Dateien unter
+`site/` bleiben unverändert.
+
 ## Qualitätscheck
 
 Ein Dokument ist gut, wenn ein neuer Mensch oder Agent nach dem Lesen:

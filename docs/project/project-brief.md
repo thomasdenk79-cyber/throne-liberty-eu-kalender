@@ -13,7 +13,7 @@ canonical: true
 
 ## Zweck
 
-**Linny's Astral Solisium Pulse** ist eine statische, browserbasierte Event-Timer-Seite für *Throne and Liberty EU*. Sie zeigt wiederkehrende und saisonale Ereignisse, Countdown-Zeiten, laufende Ereignisse sowie konfigurierbare Warnungen an.
+**Linny's Epic Time Portal** ist eine statische, browserbasierte Event-Timer-Seite für *Throne and Liberty EU*. Sie zeigt wiederkehrende und saisonale Ereignisse, Countdown-Zeiten, laufende Ereignisse sowie konfigurierbare Warnungen an.
 
 Das Repository erfüllt gleichzeitig einen zweiten Zweck: Es ist ein bewusst überschaubares Demo-Projekt für **KI-gestützte Softwareentwicklung mit gemeinsamem Projektgedächtnis**.
 
