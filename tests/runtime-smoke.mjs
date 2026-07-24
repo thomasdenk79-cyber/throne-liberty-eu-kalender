@@ -56,6 +56,11 @@ assert.equal(window.document.querySelectorAll("#cardStack .edit-btn").length, 0,
 assert(window.document.querySelectorAll("#timerToggle .toggle-edit").length >= 4, "timer selection exposes compact edit actions");
 assert.equal(window.document.querySelectorAll("#themeSelect option").length, 6, "theme worlds are selectable");
 assert.equal(window.document.querySelectorAll("#cardDensitySelect option").length, 5, "all density modes are selectable");
+assert.equal(window.document.querySelectorAll("#dockPad [data-dock-side]").length, 8, "dock pad exposes all eight positions");
+assert.equal(window.document.querySelectorAll("#imageZoomSelect option").length, 3, "hover preview can be configured");
+assert(window.document.querySelector("#liveCollapseBtn"), "main timer module is collapsible");
+assert(window.document.querySelector("#calendarCollapseBtn"), "calendar module is collapsible");
+assert.equal(window.document.querySelector("#dockSideSelect"), null, "dock dropdown is replaced by direct controls");
 assert(window.document.querySelectorAll("#calendarGroups .calendar-group").length >= 4, "calendar groups render");
 assert.equal(window.document.documentElement.lang, "en", "stored language is applied");
 assert.equal(window.document.querySelector("#storageConsent").open, false, "accepted consent is not shown again");

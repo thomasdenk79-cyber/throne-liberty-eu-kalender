@@ -9,6 +9,26 @@ canonical: true
 
 # Was ist neu?
 
+## Das Portal räumt die Kommandozentrale auf
+
+Version 3.2 macht die Oberfläche modular: Wer das separate Statusfenster verwendet,
+kann die doppelte Timerliste auf der Hauptseite einklappen. Auch der Kalender lässt
+sich platzsparend schließen; beide Entscheidungen merkt sich der Browser.
+
+### Neu in 3.2
+
+- großes Steuerkreuz zum direkten Andocken an acht Bildschirmpositionen
+- einreihige Statusleisten am oberen und unteren Bildschirmrand
+- vollständig lesbare Namen im Kino-Modus
+- kompaktere Großbildkarten mit Countdown rechts neben dem Eventnamen
+- konfigurierbare große oder sehr große Bildvorschau beim Darüberfahren
+- einfacher Klick für die Vollbildansicht
+- einklappbare Timer-, Kalender- und Einstellungsbereiche
+- deutlich unterscheidbarere Themenwelten
+
+Die sichtbare Browserleiste eines Popupfensters gehört zu Edge, Chrome oder Firefox.
+Eine Webseite darf sie aus Sicherheitsgründen nicht vollständig ausblenden.
+
 ## Linny öffnet das Epic Time Portal
 
 Version 3.1 macht aus dem Timer stärker eine kleine Themenwelt: Der große Einstieg
