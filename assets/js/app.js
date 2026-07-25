@@ -13,7 +13,7 @@ import { calendarEntryKey, downloadIcs as downloadCalendarIcs } from "./ics.js";
 const CARD_DENSITY_VALUES = ["ultra", "compact", "comfortable", "cinematic", "big-picture", "mega"];
 const BAVARIA_TIMEZONE = "Bayern/Munich";
 const CONFIG_UPDATED_AT = "2026-07-24T00:00:00Z";
-const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.4";
+const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.5";
 const GA4_MEASUREMENT_ID = (document.querySelector('meta[name="ga4-measurement-id"]')?.getAttribute("content") || "").trim();
 const PLAUSIBLE_DOMAIN = (document.querySelector('meta[name="plausible-domain"]')?.getAttribute("content") || "").trim();
 const germanClient = (navigator.language || "").toLowerCase().startsWith("de");
@@ -98,6 +98,9 @@ const dom = {
   heroSection: document.getElementById("heroSection"),
   heroCharacter: document.getElementById("heroCharacter"),
   heroText: document.getElementById("heroText"),
+  heroChipAi: document.getElementById("heroChipAi"),
+  heroChipLive: document.getElementById("heroChipLive"),
+  heroChipPwa: document.getElementById("heroChipPwa"),
   langDeBtn: document.getElementById("langDeBtn"),
   langEnBtn: document.getElementById("langEnBtn"),
   langBarBtn: document.getElementById("langBarBtn"),
@@ -336,6 +339,24 @@ function setCollapseDirection(button, direction) {
 function updateCollapseButtons() {
   setCollapseDirection(dom.liveCollapseBtn, state.liveCollapsed ? "right" : "left");
   setCollapseDirection(dom.calendarCollapseBtn, state.calendarCollapsed ? "down" : "up");
+}
+
+function setupHeroEffects() {
+  if (!dom.heroSection) return;
+  const setNeutral = () => {
+    dom.heroSection.style.setProperty("--hero-spot-x", "76%");
+    dom.heroSection.style.setProperty("--hero-spot-y", "18%");
+  };
+  setNeutral();
+  dom.heroSection.addEventListener("pointermove", (event) => {
+    const rect = dom.heroSection.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    dom.heroSection.style.setProperty("--hero-spot-x", `${Math.max(0, Math.min(100, x)).toFixed(1)}%`);
+    dom.heroSection.style.setProperty("--hero-spot-y", `${Math.max(0, Math.min(100, y)).toFixed(1)}%`);
+  });
+  dom.heroSection.addEventListener("pointerleave", setNeutral);
 }
 
 function analyticsMode() {
@@ -1115,6 +1136,9 @@ function renderLabels() {
   dom.heroTitle.textContent = text("heroTitle");
   dom.heroCharacter.textContent = text("heroCharacter");
   dom.heroText.textContent = text("heroText");
+  dom.heroChipAi.textContent = text("heroChipAi");
+  dom.heroChipLive.textContent = text("heroChipLive");
+  dom.heroChipPwa.textContent = text("heroChipPwa");
   dom.langDeBtn.classList.toggle("is-active", state.lang === "de");
   dom.langEnBtn.classList.toggle("is-active", state.lang === "en");
   dom.langBarBtn.classList.toggle("is-active", state.lang === "bar");
@@ -2921,6 +2945,7 @@ async function start() {
     await loadConfig();
     bind();
     setupPwa();
+    setupHeroEffects();
     setupAnalytics();
     renderBuilderDays();
     renderAll();

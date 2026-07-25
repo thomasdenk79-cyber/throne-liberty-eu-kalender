@@ -1,9 +1,9 @@
-const CACHE_NAME = "linny-epic-time-portal-v3-3-5";
+const CACHE_NAME = "linny-epic-time-portal-v3-3-6";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./assets/styles/app.css?v=3.3.4",
-  "./assets/js/app.js?v=3.3.4",
+  "./assets/styles/app.css?v=3.3.5",
+  "./assets/js/app.js?v=3.3.5",
   "./assets/js/config.js",
   "./assets/js/i18n.js",
   "./assets/js/ics.js",
@@ -11,7 +11,7 @@ const APP_SHELL = [
   "./assets/js/sounds.js",
   "./config.ini",
   "./live-timers.ini",
-  "./manifest.webmanifest?v=3.3.4",
+  "./manifest.webmanifest?v=3.3.5",
   "./assets/icons/linny-192.png",
   "./assets/icons/linny-512.png",
   "./assets/images/linny/linny-hero-v2.webp",
