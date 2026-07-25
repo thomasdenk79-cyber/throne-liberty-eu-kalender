@@ -253,6 +253,14 @@ const dom = {
   settingsPopoverCloseBtn: document.getElementById("settingsPopoverCloseBtn"),
   storageSettingsBtn: document.getElementById("storageSettingsBtn"),
   helpDocsLink: document.getElementById("helpDocsLink"),
+  shareLabel: document.getElementById("shareLabel"),
+  shareNativeBtn: document.getElementById("shareNativeBtn"),
+  shareXBtn: document.getElementById("shareXBtn"),
+  shareFacebookBtn: document.getElementById("shareFacebookBtn"),
+  shareRedditBtn: document.getElementById("shareRedditBtn"),
+  shareTelegramBtn: document.getElementById("shareTelegramBtn"),
+  shareWhatsappBtn: document.getElementById("shareWhatsappBtn"),
+  shareCopyBtn: document.getElementById("shareCopyBtn"),
   imprintBtn: document.getElementById("imprintBtn"),
   privacyBtn: document.getElementById("privacyBtn"),
   fanDisclaimer: document.getElementById("fanDisclaimer"),
@@ -307,6 +315,17 @@ function installFallbackHint() {
   const isSafari = /Safari/.test(ua) && !/Chrome|Chromium|Edg/.test(ua);
   if (isIos || (isMac && isSafari)) return text("installManualHintIos");
   return text("installManualHintDesktop");
+}
+
+function buildShareData() {
+  const url = new URL("./", window.location.href).href;
+  const title = text("heroTitle");
+  const summary = text("heroText");
+  return { url, title, summary };
+}
+
+function openShareWindow(url) {
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
 function analyticsMode() {
@@ -1185,6 +1204,9 @@ function renderLabels() {
   dom.eventPopupLabel.textContent = text("eventAlert");
   dom.eventPopupCloseBtn.textContent = text("acknowledge");
   dom.footerSummary.textContent = text("footerSummary");
+  dom.shareLabel.textContent = text("shareLabel");
+  dom.shareNativeBtn.textContent = text("shareNative");
+  dom.shareCopyBtn.textContent = text("shareCopy");
   renderLegalContent();
   updateEditorPanelState();
 
@@ -2551,6 +2573,49 @@ function bind() {
     await deferredInstallPrompt.userChoice;
     deferredInstallPrompt = null;
     updateInstallButton();
+  });
+  dom.shareNativeBtn.addEventListener("click", async () => {
+    const shareData = buildShareData();
+    if (!navigator.share) {
+      toast(text("shareNotSupported"));
+      return;
+    }
+    try {
+      await navigator.share({ title: shareData.title, text: shareData.summary, url: shareData.url });
+    } catch (error) {
+      if (error?.name !== "AbortError") {
+        toast(text("shareFailed"));
+      }
+    }
+  });
+  dom.shareXBtn.addEventListener("click", () => {
+    const shareData = buildShareData();
+    openShareWindow(`https://x.com/intent/tweet?text=${encodeURIComponent(shareData.summary)}&url=${encodeURIComponent(shareData.url)}`);
+  });
+  dom.shareFacebookBtn.addEventListener("click", () => {
+    const shareData = buildShareData();
+    openShareWindow(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}`);
+  });
+  dom.shareRedditBtn.addEventListener("click", () => {
+    const shareData = buildShareData();
+    openShareWindow(`https://www.reddit.com/submit?title=${encodeURIComponent(shareData.title)}&url=${encodeURIComponent(shareData.url)}`);
+  });
+  dom.shareTelegramBtn.addEventListener("click", () => {
+    const shareData = buildShareData();
+    openShareWindow(`https://t.me/share/url?url=${encodeURIComponent(shareData.url)}&text=${encodeURIComponent(shareData.summary)}`);
+  });
+  dom.shareWhatsappBtn.addEventListener("click", () => {
+    const shareData = buildShareData();
+    openShareWindow(`https://wa.me/?text=${encodeURIComponent(`${shareData.summary} ${shareData.url}`)}`);
+  });
+  dom.shareCopyBtn.addEventListener("click", async () => {
+    const shareData = buildShareData();
+    if (!navigator.clipboard?.writeText) {
+      toast(text("shareCopyManual"));
+      return;
+    }
+    await navigator.clipboard.writeText(shareData.url);
+    toast(text("shareCopied"));
   });
 
   dom.categorySelect.addEventListener("change", () => {

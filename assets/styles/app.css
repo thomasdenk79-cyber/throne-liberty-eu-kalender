@@ -1140,6 +1140,20 @@ html[data-theme="executive"] .calendar {
 .footer-links { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
 .footer-link-btn { padding: 0; border: 0; color: #9ce9ff; background: transparent; font: inherit; cursor: pointer; }
 .footer-link-btn:hover { text-decoration: underline; }
+.social-share { display: grid; gap: 7px; }
+.social-share-buttons { display: flex; flex-wrap: wrap; gap: 7px; }
+.social-btn {
+  width: auto;
+  min-width: 0;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid #86dfff66;
+  background: linear-gradient(160deg, #0d1829, #101d31);
+  color: #dff7ff;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.social-btn:hover { border-color: #8ff3ff; box-shadow: 0 0 0 1px #90f5ff3b inset; }
 
 .meta {
   display: flex;
