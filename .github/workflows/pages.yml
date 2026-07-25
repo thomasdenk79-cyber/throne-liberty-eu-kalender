@@ -82,6 +82,9 @@ jobs:
           cp live-timers.ini .pages/live-timers.ini
           cp manifest.webmanifest .pages/manifest.webmanifest
           cp service-worker.js .pages/service-worker.js
+          cp robots.txt .pages/robots.txt
+          cp sitemap.xml .pages/sitemap.xml
+          if [ -f googlebe057d3a9364d58b.html ]; then cp googlebe057d3a9364d58b.html .pages/googlebe057d3a9364d58b.html; fi
           cp -R assets .pages/assets
           if [ -f 404.html ]; then cp 404.html .pages/404.html; fi
 

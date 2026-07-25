@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thomasdenk79-cyber.github.io/throne-liberty-eu-kalender/sitemap.xml
