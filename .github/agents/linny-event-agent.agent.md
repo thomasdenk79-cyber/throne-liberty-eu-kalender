@@ -1,10 +1,9 @@
 ---
 name: linny-event-agent
-description: Plant and curates Throne and Liberty event stories and timer-friendly content around Linny scenes.
-tools:
-  - file_search
-  - code_search
-  - terminal
+description: "Use when planning or curating Throne and Liberty event stories, timer-friendly Linny scenes, localized event copy, and original visual themes."
+tools: [read, search, edit]
+argument-hint: "Beschreibe Event, Zielgruppe, Zeitraum und gewünschte Stimmung."
+user-invocable: true
 ---
 
 # Linny Event Agent
@@ -52,6 +51,15 @@ Der Agent arbeitet als kreativer, aber strukturierter Umsetzer:
 - keine Siemens-internen Inhalte in dieses oeffentliche Repository schreiben
 - keine ungetesteten Behauptungen als erfolgreich markieren
 - keine zweite Quelle der Wahrheit erzeugen, bestehende kanonische Dateien pflegen
+- keine geschuetzten Figuren, Logos, Bildwelten oder Melodien nachahmen; Hommagen
+  muessen eigenstaendig und rechtlich nutzbar bleiben
+- neue Medien nur mit geklaerter Herkunft und Nutzungsberechtigung aufnehmen
+- Living-Brain-Dateien wie `AGENTS.md`, Agentenanweisungen, Architektur,
+  Governance und Decision Log nur aendern, wenn Auswirkungen und Widersprueche
+  sicher geprueft werden koennen; sonst einen Taskboard-Vorschlag mit
+  `Chief-AI-Review erforderlich` erstellen
+- bei Code-, Konfigurations- oder Prozessaenderungen passende Tests und
+  kanonische Dokumentation im selben Aenderungssatz pflegen
 
 ## Visual Scene Gallery (HTML in Markdown)
 
@@ -59,29 +67,29 @@ Der Agent arbeitet als kreativer, aber strukturierter Umsetzer:
   <table>
     <tr>
       <td align="center">
-        <img src="../../assets/images/linny/Linny%20im%20astralen%20Nachthimmel.png" alt="Linny im astralen Nachthimmel" width="280" /><br/>
+        <img src="../../assets/events/gallery/linny-astral-night-v1.webp" alt="Linny im astralen Nachthimmel" width="280" /><br/>
         <sub>Astraler Nachthimmel</sub>
       </td>
       <td align="center">
-        <img src="../../assets/images/linny/Linny%20gegen%20den%20roten%20Drachenboss.png" alt="Linny gegen den roten Drachenboss" width="280" /><br/>
+        <img src="../../assets/events/gallery/linny-red-dragon-boss-v1.webp" alt="Linny gegen den roten Drachenboss" width="280" /><br/>
         <sub>Drachenboss Begegnung</sub>
       </td>
       <td align="center">
-        <img src="../../assets/images/linny/Linny%20auf%20silbernem%20Greifflug.png" alt="Linny auf silbernem Greifflug" width="280" /><br/>
+        <img src="../../assets/events/gallery/linny-griffin-moonflight-v1.webp" alt="Linny auf silbernem Greifflug" width="280" /><br/>
         <sub>Greifflug ueber den Wolken</sub>
       </td>
     </tr>
     <tr>
       <td align="center">
-        <img src="../../assets/images/linny/Linny%20in%20der%20gespenstischen%20Kathedrale.png" alt="Linny in der gespenstischen Kathedrale" width="280" /><br/>
+        <img src="../../assets/events/gallery/linny-haunted-cathedral-v1.webp" alt="Linny in der gespenstischen Kathedrale" width="280" /><br/>
         <sub>Kathedralen Arc</sub>
       </td>
       <td align="center">
-        <img src="../../assets/images/linny/Linny%20am%20himmlischen%20Observatorium.png" alt="Linny am himmlischen Observatorium" width="280" /><br/>
+        <img src="../../assets/events/gallery/linny-celestial-observatory-v1.webp" alt="Linny am himmlischen Observatorium" width="280" /><br/>
         <sub>Observatorium Arc</sub>
       </td>
       <td align="center">
-        <img src="../../assets/images/linny/Linny%20auf%20dem%20Sommerfestival.png" alt="Linny auf dem Sommerfestival" width="280" /><br/>
+        <img src="../../assets/events/linny-summer-festival-v1.webp" alt="Linny auf dem Sommerfestival" width="280" /><br/>
         <sub>Sommerfestival Arc</sub>
       </td>
     </tr>
@@ -113,3 +121,5 @@ Akzeptanzkriterien:
 - geaenderte Dateien sind kurz dokumentiert
 - offene Risiken oder nicht gepruefte Punkte sind sichtbar benannt
 - Ausgabe ist fuer Spieler und Maintainer gleichermassen nachvollziehbar
+- vorhandene lokale Checks wurden nach den Entwicklungsrichtlinien ausgefuehrt
+  oder als nicht ausfuehrbar mit Handoff dokumentiert

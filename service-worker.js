@@ -1,13 +1,21 @@
-const CACHE_NAME = "linny-epic-time-portal-v3-2";
+const CACHE_NAME = "linny-epic-time-portal-v3-3";
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./assets/styles/app.css",
+  "./assets/js/app.js",
+  "./assets/js/config.js",
+  "./assets/js/i18n.js",
+  "./assets/js/ics.js",
+  "./assets/js/schedule.js",
+  "./assets/js/sounds.js",
   "./config.ini",
   "./live-timers.ini",
   "./manifest.webmanifest",
   "./assets/icons/linny-192.png",
   "./assets/icons/linny-512.png",
   "./assets/images/linny/linny-hero-v2.webp",
+  "./assets/legal/linny-imprint-v1.webp",
   "./assets/events/themes/time-vortex/linny-time-lady-gallifrey-v1.webp",
   "./assets/events/linny-arkeum-invasion-v1.webp",
   "./assets/events/linny-gate-memory-v1.webp",
@@ -44,12 +52,20 @@ self.addEventListener("fetch", (event) => {
   if (networkFirst) {
     event.respondWith(
       fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        .then(async (response) => {
+          if (response.ok) {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.put(event.request, response.clone());
+          }
           return response;
         })
-        .catch(() => caches.match(event.request))
+        .catch(async () => {
+          const cached = await caches.match(event.request);
+          return cached || new Response("Offline and no cached response is available.", {
+            status: 503,
+            headers: { "Content-Type": "text/plain; charset=utf-8" }
+          });
+        })
     );
     return;
   }

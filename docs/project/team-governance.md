@@ -15,9 +15,10 @@ canonical: true
 
 | Rolle | Besetzung | Entscheidungskompetenz |
 |---|---|---|
-| Product Owner, Projektleiter und Architekt | Thomas | Ziele, Priorität, fachliche Abnahme, Veröffentlichung |
-| Chief AI Architect & Developer | ChatGPT/Codex | Architekturvorgaben, Sicherheitsreview, Koordination, Endreview |
-| Junior AI Developer | lokaler Coding-Agent oder Copilot | begrenzte Implementierung nach Vorgabe, Tests und Dokumentation |
+| Product Owner, Projektleiter und finale Instanz | Thomas Denk | Ziele, Priorität, Konfliktentscheidung, fachliche Abnahme, Veröffentlichung |
+| Browser Research & Chief AI | leistungsfähiger Browser-Chat mit Internetrecherche | periodischer Stand-der-Technik-Audit, Primärquellen, Architektur-/Security-Review |
+| Local Chief Coding Agent | Copilot CLI in VS Code mit leistungsfähigem Modell | tatsächliche Repository-Analyse, Implementierung, lokale Tests, Diffs und CI-Nachweis |
+| Junior AI Developer | klar begrenzter Coding-Agent | Umsetzung nach Vorgabe, Tests und Dokumentation; keine unreviewte Living-Brain-Grundsatzänderung |
 | Junior Admin Runner | einfacher Agent | reproduzierbare Builds, Prüfungen und klar begrenzte Wartungsaufgaben |
 | Human Reviewer / QA | Teammitglied | Bedienbarkeit, Spielrealität und Freigabe risikoreicher Änderungen |
 
@@ -30,6 +31,33 @@ canonical: true
 5. **Human Gate:** Fachliche Zeiten und öffentliche Inhalte sind abgenommen.
 
 Der Chief AI Reviewer darf Änderungen ablehnen, wenn Nachweise fehlen, unnötig große Diffs entstehen oder kanonische Quellen widersprüchlich werden. Die endgültige Produktfreigabe bleibt beim Menschen.
+
+Die Rollen hängen von Fähigkeiten ab, nicht dauerhaft von einem Produkt- oder
+Modellnamen. Thomas kann die Besetzung ändern. Browser- und lokale
+Reasoning-Stufen sind nicht direkt vergleichbar und begründen allein keine
+Freigabekompetenz.
+
+## Living-Brain-Gate
+
+Änderungen an Agentenanweisungen, Architektur, Governance,
+Entwicklungsrichtlinien oder akzeptierten Entscheidungen benötigen:
+
+1. einen klaren Anlass und betroffene kanonische Quellen,
+2. einen Widerspruchs- und Auswirkungscheck,
+3. passende Test-/Workflow-Anpassungen,
+4. Review durch eine Instanz mit ausreichendem Kontext und Fähigkeiten,
+5. bei Grundsatz- oder Konfliktfragen die Freigabe durch Thomas.
+
+Kann ein Junior-Agent diese Prüfung nicht leisten, schreibt er nur einen
+Taskboard-Vorschlag mit **Chief-AI-Review erforderlich**.
+
+## Audit-Kadenz
+
+Mindestens halbjährlich sowie anlassbezogen vor großen Architektur- oder
+Security-Änderungen wird ein externer Stand-der-Technik-Audit durchgeführt.
+Browser Research liefert Quellen und Empfehlungen; der lokale Agent gleicht
+diese mit Code und Tests ab. Datum und Ergebnis werden im Decision Log
+festgehalten, Maßnahmen im Taskboard verfolgt.
 
 ## Arbeitsaufteilung
 

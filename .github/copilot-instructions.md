@@ -34,6 +34,24 @@ Lade anschließend nur die für die konkrete Aufgabe relevanten Implementierungs
 - Keine Siemens-internen Informationen in dieses öffentliche Repository schreiben.
 - Bei größeren Änderungen zuerst kurz Verständnis, Annahmen, betroffene Dateien, Plan und Testidee nennen.
 - Behaupte keine erfolgreiche Prüfung, die nicht tatsächlich ausgeführt wurde.
+- Richte fehlende Projektwerkzeuge reproduzierbar nach
+  `docs/engineering/development-guidelines.md` ein; verwende keine
+  undokumentierten globalen Testabhängigkeiten.
+- Pflege bei Verhaltens-, Architektur- oder Werkzeugänderungen die zugehörigen
+  Tests, Workflows und kanonischen Dokumente im selben Änderungssatz.
+
+## Living-Brain-Schutz
+
+`AGENTS.md`, diese Datei, `.github/agents/`, `.github/instructions/` sowie die
+kanonischen Architektur-, Governance-, Entwicklungs- und Entscheidungsdokumente
+bestimmen das Verhalten späterer Menschen und Agenten. Ändere sie nur nach
+Prüfung von Geltungsbereich, Widersprüchen und Folgewirkungen.
+
+Wenn deine Fähigkeiten, dein Kontext oder deine Prüfmöglichkeiten für eine
+Grundsatzänderung nicht ausreichen, ändere die Regel nicht. Ergänze stattdessen
+im Taskboard einen reviewbaren Vorschlag mit Risiko, Akzeptanzkriterien und
+`Chief-AI-Review erforderlich`. Modell- oder Anbietername allein ist kein
+Qualitätsnachweis. Die finale Entscheidung liegt bei Thomas.
 
 ## Quellen der Wahrheit
 

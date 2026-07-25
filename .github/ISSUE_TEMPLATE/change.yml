@@ -1,0 +1,31 @@
+name: Änderung vorschlagen
+description: Funktion, Prozess oder Living-Brain-Änderung reviewbar vorschlagen
+title: "[Vorschlag] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Ziel und Nutzen
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Umfang und Nicht-Ziele
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Akzeptanzkriterien und Tests
+    validations:
+      required: true
+  - type: checkboxes
+    id: governance
+    attributes:
+      label: Governance
+      options:
+        - label: Betrifft das Living Brain und benötigt Chief-AI-/Owner-Review
+        - label: Benötigt aktuelle externe Recherche

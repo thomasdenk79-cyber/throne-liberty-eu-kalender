@@ -1,5 +1,6 @@
 ---
-applyTo: "index.html,**/*.html,**/*.css,**/*.js"
+description: "Use when changing the static web application, HTML, CSS, JavaScript modules, PWA behavior, responsive layout, accessibility, or browser tests."
+applyTo: ["index.html", "assets/**/*.html", "assets/**/*.css", "assets/**/*.js", "tests/**/*.mjs"]
 ---
 
 # HTML/CSS/JavaScript Instructions

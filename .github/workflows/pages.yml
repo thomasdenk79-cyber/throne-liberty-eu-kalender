@@ -17,30 +17,62 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  application-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - run: python -m py_compile scripts/sync_gate_memory.py
+      - run: python -m json.tool manifest.webmanifest > /dev/null
+
+  documentation-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-docs.txt
+      - run: python -m pip install --requirement requirements-docs.txt
+      - run: mkdocs build --strict
+
   deploy:
+    needs:
+      - application-check
+      - documentation-check
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.12"
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-docs.txt
 
       - name: Install docs dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-docs.txt
+          python -m pip install --requirement requirements-docs.txt
 
       - name: Refresh restart-sensitive live timers
         run: python scripts/sync_gate_memory.py
 
       - name: Build MkDocs help site
-        run: mkdocs build --clean --site-dir .pages/help
+        run: mkdocs build --strict --clean --site-dir .pages/help
 
       - name: Assemble Pages artifact
         run: |

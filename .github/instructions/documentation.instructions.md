@@ -1,5 +1,6 @@
 ---
-applyTo: "README.md,AGENTS.md,docs/**/*.md,mkdocs.yml"
+description: "Use when writing or reviewing README, project memory, MkDocs pages, changelogs, taskboards, ADRs, or other repository documentation."
+applyTo: ["README.md", "AGENTS.md", "docs/**/*.md", "mkdocs.yml"]
 ---
 
 # Dokumentations-Instruktionen

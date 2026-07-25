@@ -35,6 +35,9 @@ Dieses Protokoll verhindert, dass Menschen oder Agenten bereits geklärte Grunds
 | ADR-0009 | accepted | Anwender-Neuigkeiten, technisches Changelog und Git-Commit erfüllen getrennte Zwecke. | verständliche Produktkommunikation ohne Verlust technischer Nachvollziehbarkeit |
 | ADR-0010 | accepted | Themes sind vollständige visuelle Themenwelten; Bilder bleiben austauschbare, kategorisierte Assets. | konsistentes Erlebnis ohne Abhängigkeit von einer sofort vollständigen Bildbibliothek |
 | ADR-0011 | accepted | Discord-Zugangsdaten werden niemals in Browsercode oder Repository gespeichert. | öffentliche GitHub-Pages-Dateien dürfen keine sendefähigen Secrets enthalten |
+| ADR-0012 | accepted | Living-Brain-Grundsatzänderungen benötigen fähigkeitsbasiertes Review und bei Unsicherheit einen Taskboard-Handoff. | verhindert zufällige Regel- und Architekturdrift durch unvollständigen Kontext |
+| ADR-0013 | accepted | Browser Research auditiert mindestens halbjährlich externe Standards; lokale Agenten validieren und implementieren reproduzierbar. | verbindet aktuelle Primärquellen mit tatsächlicher Code- und Testprüfung |
+| ADR-0014 | accepted | Die statische Anwendung verwendet native ES-Module und externes CSS ohne verpflichtenden Build. | klare Verantwortungen und direkte GitHub-Pages-Auslieferung bleiben vereinbar |
 
 ## ADR-0001: Markdown als Quelle, HTML als Ausgabe
 

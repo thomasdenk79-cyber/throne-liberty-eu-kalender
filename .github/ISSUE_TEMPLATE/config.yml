@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Sicherheitsproblem vertraulich melden
+    url: https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender/security/advisories/new
+    about: Keine Sicherheitsdetails in ein öffentliches Issue schreiben.

@@ -18,7 +18,8 @@ Menschen und KI-Systeme übernehmen unterschiedliche Rollen. Die KI ersetzt wede
 | Rolle | Hauptverantwortung |
 |---|---|
 | Projektinhaber | Ziele, Prioritäten, fachliche Abnahme und Freigabe |
-| Chief AI Architect & Developer | Architekturvorgaben, Sicherheitsreview, Koordination und Endreview |
+| Browser Research & Chief AI | externe Stand-der-Technik-Recherche, Architektur-/Security-Review und Freigabeempfehlung |
+| Local Chief Coding Agent | Repository-Analyse, Implementierung, lokale Tests, Diffs und CI-Nachweis |
 | Junior Coding-Agent | klar begrenzte Implementierung, Tests und Dokumentation nach Vorgabe |
 | Junior Admin Runner | reproduzierbare Builds und einfache, risikoarme Wartungsaufgaben |
 | Repository-Wissensbasis | dauerhafte, versionierte Übergabeschnittstelle zwischen allen Beteiligten |
@@ -125,6 +126,30 @@ Dokumentation und Entscheidungen aktualisieren
 ```
 
 Details zu Zuständigkeiten, Ablehnungsgründen und Freigabe-Gates stehen unter [Rollen und Governance](../project/team-governance.md). Der aktuelle Arbeitsstand steht im [Taskboard](../project/taskboard.md).
+
+## Periodischer Stand-der-Technik-Audit
+
+Wenn der letzte dokumentierte Audit älter als sechs Monate ist oder vor einer
+größeren Architektur-/Security-Änderung, beauftragt Thomas bevorzugt eine
+Browser-Research-Instanz mit guter Internetrecherche. Sie prüft mit
+Primärquellen:
+
+- Web-, PWA-, Accessibility- und Security-Standards,
+- unterstützte Laufzeiten, Actions und Abhängigkeiten,
+- Programmier-, Test- und Dokumentationsrichtlinien,
+- Architekturgrenzen und bekannte technische Schuld,
+- Qualität, Konsistenz und Kontextkosten des Living Brain.
+
+Das Ergebnis nennt Quellen und Abrufdatum, unterscheidet Muss/Soll/Kann und
+erzeugt reviewbare Vorschläge. Es ändert akzeptierte Grundsätze nicht allein.
+Der lokale Agent validiert die tatsächliche Codebasis, setzt freigegebene
+Änderungen um und führt reproduzierbare Tests aus. Der Audit wird im Decision
+Log vermerkt; offene Maßnahmen kommen ins Taskboard.
+
+Reasoning-Einstellungen wie `medium`, `high` oder `max` sind
+produktspezifische Laufzeitoptionen und nicht zwischen Browser und lokalem
+Agenten direkt vergleichbar. Für Zuständigkeit und Vertrauen zählen
+nachweisbare Recherche-, Kontext-, Werkzeug- und Testfähigkeiten.
 
 ## Regeln gegen typische KI-Fehler
 

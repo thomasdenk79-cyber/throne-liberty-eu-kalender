@@ -9,6 +9,22 @@ canonical: true
 
 # Was ist neu?
 
+## Version 3.3: mehr Platz und echte Einstellungen
+
+- Das Zahnrad öffnet jetzt ein eigenes Einstellungsfenster mit Sprache und
+  Speicherverwaltung.
+- Der Timereditor lässt sich links oder rechts anzeigen und platzsparend
+  einklappen.
+- Die Timerliste nutzt auf breiten Bildschirmen die Höhe bis zum Kalender.
+- Bildvorschauen gibt es in klein, mittel, groß und sehr groß.
+- Warning und Critical besitzen getrennte Sound-Dauern von 1 bis 60 Sekunden.
+- Fünf neue eigenständige Synth-Klangwelten ersetzen die unübersichtliche lange
+  Soundliste; alte Einstellungen funktionieren weiterhin.
+- Die installierte PWA zeigt eindeutig `App läuft`; im Browser erscheint der
+  Installationsknopf nur, wenn eine Installation möglich ist.
+- Fehlerhafte INI-Dateien zeigen konkrete Ursachen, statt unbemerkt falsche
+  Timer zu übernehmen.
+
 ## Das Portal räumt die Kommandozentrale auf
 
 Version 3.2 macht die Oberfläche modular: Wer das separate Statusfenster verwendet,

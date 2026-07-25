@@ -31,6 +31,50 @@ Vor jeder größeren Änderung zuerst lesen:
 - Jede relevante Änderung in der Dokumentation nachziehen.
 - Keine erfolgreiche Prüfung behaupten, die nicht tatsächlich durchgeführt wurde.
 
+## Geschütztes Projektgedächtnis
+
+Diese Dateien bilden das **Living Brain** des Projekts und steuern Ziele,
+Architektur, Agentenverhalten und Qualitätsregeln:
+
+- `AGENTS.md`
+- `.github/copilot-instructions.md`
+- `.github/agents/` und `.github/instructions/`
+- `docs/project/project-brief.md`
+- `docs/project/architecture.md`
+- `docs/project/team-governance.md`
+- `docs/engineering/development-guidelines.md`
+- `docs/engineering/ai-assisted-development.md`
+- `docs/engineering/documentation-guidelines.md`
+- `docs/engineering/decision-log.md`
+
+Änderungen daran benötigen besondere Sorgfalt. Ein Agent beurteilt nicht nach
+einem Modellnamen, sondern nach seinen nachweisbaren Fähigkeiten, seinem
+Kontext und seiner Sicherheit bei der konkreten Entscheidung. Kann er
+Auswirkungen oder Widersprüche nicht vollständig prüfen, darf er keine
+Grundsatzregel eigenmächtig ändern. Er erstellt stattdessen einen konkreten
+Vorschlag im `docs/project/taskboard.md` mit Kontext, betroffenen Quellen,
+Risiko, Akzeptanzkriterien und dem Vermerk **Chief-AI-Review erforderlich**.
+Thomas entscheidet bei Konflikten und Freigaben endgültig.
+
+## Testpflicht und Umgebungen
+
+Jede Umgebung prüft das, was sie nachweisbar ausführen kann:
+
+- Browser-Chat: Anforderungen, aktuelle externe Quellen, UX und sichtbares
+  Verhalten prüfen; nicht ausgeführte lokale Tests als offen kennzeichnen.
+- Lokaler Coding-Agent: Abhängigkeiten reproduzierbar installieren,
+  `npm run check`, Python-Syntax und `mkdocs build --strict` ausführen sowie
+  relevante manuelle Browserfälle dokumentieren.
+- CI: dieselben deterministischen Anwendungs- und Dokumentationsprüfungen auf
+  einem sauberen Checkout wiederholen und Deployment blockieren.
+
+Fehlen Werkzeuge, werden sie nach den versionierten Projektdateien eingerichtet:
+Node.js 24, `npm ci`, Python-Venv und
+`pip install -r requirements-docs.txt`. Keine globalen Ad-hoc-Werkzeuge zur
+Pflicht machen. Werden Verhalten, Module, Testwerkzeuge oder Prozesse geändert,
+müssen Tests, Workflows und betroffene Living-Brain-Dokumente im selben
+Änderungssatz nachgezogen werden.
+
 ## Quellen der Wahrheit
 
 - `config.ini`: Standardkategorien und Standardtimer

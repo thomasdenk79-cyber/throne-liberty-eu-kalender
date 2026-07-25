@@ -1,0 +1,10 @@
+# Final review responsibility remains with the repository owner.
+* @thomasdenk79-cyber
+
+# Living Brain and release gates require explicit owner review.
+/AGENTS.md @thomasdenk79-cyber
+/.github/ @thomasdenk79-cyber
+/docs/engineering/ @thomasdenk79-cyber
+/docs/project/architecture.md @thomasdenk79-cyber
+/docs/project/team-governance.md @thomasdenk79-cyber
+/service-worker.js @thomasdenk79-cyber

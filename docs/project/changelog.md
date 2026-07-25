@@ -13,6 +13,27 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
+## 3.3.0 – 25. Juli 2026
+
+<span class="status-chip status-active">In Review</span>
+
+- Monolithisches Inline-CSS/-JavaScript in direkt auslieferbare ES-Module und
+  eine Stylesheet-Datei getrennt.
+- Strikte, zeilengenaue INI-Validierung für IDs, Zeitpläne, Zeitzonen,
+  Datumsgrenzen, Bilder und Motive ergänzt.
+- Einstellungen als rechtes Overlay, Timereditor verschiebbar und einklappbar,
+  Timerbereich bis zur Kalenderhöhe sowie fünf Bildvorschaugrößen umgesetzt.
+- PWA-Button zeigt den laufenden Standalone-Modus und erscheint im Browser nur,
+  wenn eine Installation angeboten wird.
+- Fünf eigenständige Synth-Sounds mit getrennten Dauern für Warning und
+  Critical; alte Sound-IDs bleiben importierbar.
+- Service-Worker-Caching, sichtbare Start-/Importfehler und Live-Sync-Status
+  gehärtet.
+- App-, Modul-, Asset-, INI-, ICS- und Runtime-Tests erweitert; Pages deployt
+  erst nach erfolgreichen App- und Doku-Gates.
+- Living-Brain-Schutz, fähigkeitsbasierte Agentenreviews, periodische externe
+  Stand-der-Technik-Audits und Repository-Vorlagen ergänzt.
+
 ## 3.2.0 – 24. Juli 2026
 
 <span class="status-chip status-active">Chief Review</span>

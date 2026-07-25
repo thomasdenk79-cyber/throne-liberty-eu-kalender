@@ -6,12 +6,22 @@ on:
       - main
     paths:
       - "docs/**"
+      - "README.md"
+      - "AGENTS.md"
+      - ".github/agents/**"
+      - ".github/instructions/**"
+      - ".github/copilot-instructions.md"
       - "mkdocs.yml"
       - "requirements-docs.txt"
       - ".github/workflows/docs-check.yml"
   pull_request:
     paths:
       - "docs/**"
+      - "README.md"
+      - "AGENTS.md"
+      - ".github/agents/**"
+      - ".github/instructions/**"
+      - ".github/copilot-instructions.md"
       - "mkdocs.yml"
       - "requirements-docs.txt"
       - ".github/workflows/docs-check.yml"

@@ -103,6 +103,42 @@ Eine neue Bibliothek oder ein CDN ist nur sinnvoll, wenn:
 
 ## Testcheckliste
 
+### Reproduzierbare lokale Einrichtung
+
+Die Projektdateien definieren die Werkzeuge; ein Agent installiert keine
+beliebigen globalen Testprogramme als versteckte Voraussetzung.
+
+```powershell
+# Anwendung: Node.js 24
+npm ci
+npm run check
+
+# Python und Dokumentation
+py -3.13 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-docs.txt
+.\.venv\Scripts\python.exe -m py_compile scripts\sync_gate_memory.py
+.\.venv\Scripts\mkdocs.exe build --strict
+```
+
+Wenn die exakte Python-Minor-Version lokal nicht vorhanden ist, darf eine
+kompatible unterstützte Version verwendet werden. Die Abweichung wird im
+Testnachweis genannt. `npm ci` ist gegenüber `npm install` zu bevorzugen, weil
+es den Lockfile-Stand reproduziert.
+
+### Testmatrix nach Ausführungsumgebung
+
+| Umgebung | Pflicht, soweit verfügbar | Darf nicht behaupten |
+|---|---|---|
+| Browser-Chat | Anforderungen und Diffs prüfen, aktuelle externe Quellen recherchieren, sichtbare UX/PWA auf bereitgestellter Seite prüfen | lokale Befehle, Dateisystem- oder CI-Tests seien gelaufen |
+| lokaler Coding-Agent | `npm run check`, Python-Syntax, strikter Doku-Build, Asset-/Link-Prüfung und relevante Browser-Smokes | nicht ausgeführte Geräte-, Installations- oder Cloudtests seien bestanden |
+| CI | sauberer Checkout, deterministische App- und Doku-Checks, Deployment nur nach Erfolg | menschliche Bedien- oder Spielabnahme ersetzen |
+| Human QA | Windows-/Mobil-PWA, Benachrichtigungen, Audio, Layout und fachliche Eventzeiten | technische Regressionstests ersetzen |
+
+Nicht verfügbare Prüfungen werden mit Grund und zuständiger Folgeebene
+dokumentiert. Ein Browser-Chat kann beispielsweise externe Standards besser
+recherchieren; der lokale Agent kann dafür Builds, Tests und reale Diffs
+reproduzierbar ausführen.
+
 ### Funktion
 
 - Seite lädt ohne sichtbaren Fehler.
@@ -138,6 +174,9 @@ Eine Aufgabe ist fertig, wenn:
 - die Anforderung umgesetzt ist,
 - Nicht-Ziele nicht versehentlich mit umgesetzt wurden,
 - relevante Tests durchgeführt und kurz dokumentiert sind,
+- neue oder geänderte Fachlogik passende automatisierte Tests besitzt,
+- Änderungen an Testwerkzeugen in `package.json`, Workflows und dieser
+  Richtlinie konsistent dokumentiert sind,
 - keine bekannten schwerwiegenden Regressionen offen sind,
 - README und Wissensbasis zum neuen Stand passen,
 - wichtige neue Entscheidungen protokolliert sind.

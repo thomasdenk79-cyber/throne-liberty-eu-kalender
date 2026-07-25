@@ -1,0 +1,21 @@
+# Beitragen
+
+Vor einer Änderung sind [`AGENTS.md`](AGENTS.md) und die dort verlinkten
+kanonischen Dokumente zu lesen.
+
+## Lokaler Qualitätscheck
+
+```powershell
+npm ci
+npm run check
+py -3.13 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-docs.txt
+.\.venv\Scripts\python.exe -m py_compile scripts\sync_gate_memory.py
+.\.venv\Scripts\mkdocs.exe build --strict
+```
+
+Änderungen erfolgen auf einem Feature-Branch und werden per Pull Request
+eingereicht. Sichtbares Verhalten benötigt passende Tests, Changelog und
+Anwenderhinweis. Änderungen am Living Brain benötigen Owner-Review; bei
+Unsicherheit ist nur ein Vorschlag mit `Chief-AI-Review erforderlich`
+einzureichen.

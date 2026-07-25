@@ -117,5 +117,6 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except Exception as error:  # keep the checked-in fallback intact
-        print(f"Gate of Memory sync skipped: {error}", file=sys.stderr)
+        prefix = "::warning title=Gate of Memory sync fallback::" if "GITHUB_ACTIONS" in __import__("os").environ else ""
+        print(f"{prefix}Gate of Memory sync skipped: {error}", file=sys.stderr)
         raise SystemExit(0)

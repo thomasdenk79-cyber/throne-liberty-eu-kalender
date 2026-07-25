@@ -237,6 +237,24 @@ Rohe Chatprotokolle, vollständige Toolausgaben und Gedankengänge gehören nich
 das Projektgedächtnis. Ziel ist genügend Kontext für einen neuen Menschen oder
 Agenten bei möglichst wenig Rauschen.
 
+### Schutzstufe für das Living Brain
+
+Kanonische Agenten-, Architektur-, Governance-, Qualitäts- und
+Entscheidungsdateien beeinflussen alle späteren Änderungen. Sie sind deshalb
+keine gewöhnlichen Begleittexte. Vor einer Änderung sind mindestens zu prüfen:
+
+1. welche Agenten und Arbeitsabläufe die Regel künftig steuert,
+2. ob eine akzeptierte Entscheidung widersprochen oder ersetzt wird,
+3. ob Code, Tests, Workflows oder andere kanonische Quellen angepasst werden,
+4. wie die Änderung durch Diff, Test und Review zurückgenommen werden könnte.
+
+Ein Agent mit unzureichendem Kontext oder unzureichenden Prüfmöglichkeiten
+ändert diese Dateien nicht spekulativ. Er legt im Taskboard einen Vorschlag mit
+Ausgangslage, Ziel, betroffenen Dateien, Risiko und Akzeptanzkriterien an und
+markiert ihn mit **Chief-AI-Review erforderlich**. Modellnamen und
+Reasoning-Stufen sind veränderliche Laufzeitangaben und ersetzen diese
+Fähigkeitsprüfung nicht.
+
 ### Links und Build
 
 Neue sichtbare Seiten werden in `mkdocs.yml` einsortiert. Vor dem Merge werden

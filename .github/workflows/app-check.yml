@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - "index.html"
+      - "assets/js/**"
+      - "assets/styles/**"
+      - "assets/events/**"
       - "config.ini"
       - "live-timers.ini"
       - "manifest.webmanifest"
@@ -14,10 +17,13 @@ on:
       - "tests/**"
       - "package.json"
       - "package-lock.json"
-      - ".github/workflows/app-check.yml"
+      - ".github/workflows/**"
   pull_request:
     paths:
       - "index.html"
+      - "assets/js/**"
+      - "assets/styles/**"
+      - "assets/events/**"
       - "config.ini"
       - "live-timers.ini"
       - "manifest.webmanifest"
@@ -26,7 +32,7 @@ on:
       - "tests/**"
       - "package.json"
       - "package-lock.json"
-      - ".github/workflows/app-check.yml"
+      - ".github/workflows/**"
   workflow_dispatch:
 
 permissions:
@@ -36,16 +42,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: "24"
           cache: npm
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: npm ci
-      - run: npm test
-      - run: npm run check:service-worker
+      - run: npm run check
       - run: python -m py_compile scripts/sync_gate_memory.py
       - run: python -m json.tool manifest.webmanifest > /dev/null

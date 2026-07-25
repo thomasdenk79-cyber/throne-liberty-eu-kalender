@@ -41,6 +41,7 @@ Dieses Repository-Board ist die portable Demo-Quelle. Es funktioniert ohne exter
 | <span class="status-chip status-next">Next</span> | Teams-Demo anbinden | Admin Runner | Teams-Plugin verbunden; keine Geheimnisse im Repo |
 | <span class="status-chip status-next">Next</span> | Browser-End-to-End-Tests erweitern | Junior Developer | mobile, wide und PWA im CI |
 | <span class="status-chip status-next">Next</span> | Theme-Galerien schrittweise mit zusätzlichen Linny-Motiven füllen | Creative AI / Human Review | je Themenwelt ausreichende Bildauswahl |
+| <span class="status-chip status-next">Next</span> | Halbjährlichen Stand-der-Technik-Audit durchführen | Browser Research & Chief AI / Thomas | Primärquellen und Datum im Decision Log; Maßnahmen als reviewbare Tasks |
 
 ## Workflow
 

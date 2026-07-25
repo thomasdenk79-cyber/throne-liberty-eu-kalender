@@ -17,8 +17,9 @@ Die Anwendung ist bewusst als **statische Single-Page-Webanwendung ohne Backend*
 ```text
 GitHub Pages
     |
-    +-- index.html  -------- Benutzeroberfläche und Anwendungslogik
-    |
+    +-- index.html  -------- semantische Benutzeroberfläche
+    +-- assets/styles/ ---- Darstellung und responsive Layouts
+    +-- assets/js/ -------- native ES-Module ohne Laufzeit-Build
     +-- config.ini  -------- Standardkategorien und Standardtimer
     +-- live-timers.ini  --- validierte, generierte Anchor-Überlagerung
     +-- service-worker.js -- Offline-App-Shell
@@ -86,7 +87,8 @@ Benutzereinstellungen und importierte Anpassungen werden im Browser gespeichert.
 1. Der Browser lädt `index.html`.
 2. Die Anwendung lädt `config.ini`.
 3. Der Browser lädt `live-timers.ini` ohne Cache und übernimmt ausschließlich validierte Live-Felder.
-4. Kategorien, Timerregeln und Benachrichtigungseinstellungen werden geparst.
+4. Kategorien, Timerregeln, Pfade, Zeitzonen und
+   Benachrichtigungseinstellungen werden strikt validiert.
 5. Lokale Benutzereinstellungen werden nach erteilter Einwilligung ergänzt.
 6. Die sichtbaren Timerkarten und Countdown-Zustände werden erzeugt.
 
@@ -98,7 +100,11 @@ Die Überlagerung darf nur vorhandene Timer und die Felder `rules`, `anchorUtc` 
 
 ### PWA und Offline-Modus
 
-`manifest.webmanifest` macht die Seite installierbar. Der Service Worker speichert die App-Shell und die wichtigsten Eventbilder. `live-timers.ini` wird network-first geladen, damit Online-Nutzer den neuesten Anchor erhalten und Offline-Nutzer auf den letzten Cachewert zurückfallen.
+`manifest.webmanifest` macht die Seite installierbar. Der Service Worker speichert
+HTML, CSS, ES-Module und die wichtigsten Eventbilder. Nur erfolgreiche
+Netzantworten werden gecacht. `live-timers.ini` wird network-first geladen,
+damit Online-Nutzer den neuesten Anchor erhalten und Offline-Nutzer auf den
+letzten Cachewert zurückfallen.
 
 <a name="arch-timer-cycle"></a>
 ### Timerzyklus
@@ -121,7 +127,14 @@ Die Überlagerung darf nur vorhandene Timer und die Felder `rules`, `anchorUtc` 
 
 | Datei oder Bereich | Verantwortung |
 |---|---|
-| `index.html` | HTML-Struktur, CSS, JavaScript, Rendering und Browserfunktionen |
+| `index.html` | semantische HTML-Struktur und statische Einstiegspunkte |
+| `assets/styles/app.css` | Themes, Komponenten, Panels und responsive Darstellung |
+| `assets/js/app.js` | DOM-Orchestrierung, Zustand und Browserfunktionen |
+| `assets/js/config.js` | strikter INI-Import/-Export, Migration und Validierung |
+| `assets/js/schedule.js` | Cron-/Intervallberechnung und Zeitlogik |
+| `assets/js/sounds.js` | kuratierte Web-Audio-Synthese und Dauern |
+| `assets/js/ics.js` | sicherer ICS-Aufbau und Download |
+| `assets/js/i18n.js` | lokalisierte UI-Texte |
 | `config.ini` | Standarddaten und Standardbenachrichtigungen |
 | `live-timers.ini` | letzte validierte Live-Überlagerung für restart-sensitive Timer |
 | `scripts/sync_gate_memory.py` | validierter MetaForge-Abgleich im Pages-Build |
@@ -147,15 +160,9 @@ Agenten und Entwickler müssen folgende Invarianten erhalten, sofern eine Aufgab
 7. Neue externe Abhängigkeiten benötigen eine dokumentierte Begründung.
 8. Barrierefreiheit und responsive Darstellung gehören zur Funktion, nicht zur optionalen Verschönerung.
 
-## Bekannte technische Schuld
+## Modulgrenzen
 
-Die Anwendung ist für ein kleines Demo-Projekt bewusst kompakt. Wenn `index.html` durch weitere Funktionen deutlich wächst, soll vor einem Umbau geprüft werden, ob CSS und JavaScript in getrennte Dateien ausgelagert werden sollten.
-
-Eine Modularisierung ist kein Selbstzweck. Sie ist sinnvoll, wenn mindestens eines dieser Probleme eintritt:
-
-- Änderungen verursachen regelmäßig unbeabsichtigte Seiteneffekte.
-- Tests oder Fehlersuche werden unverhältnismäßig schwierig.
-- mehrere Entwickler oder Agenten bearbeiten häufig dieselbe Datei.
-- einzelne Module können nicht mehr klar beschrieben werden.
-
-Die Entscheidung muss dann im [Entscheidungsprotokoll](../engineering/decision-log.md) festgehalten werden.
+Die Anwendung bleibt ohne Bundler direkt auslieferbar. Neue Fachlogik gehört in
+ein verantwortliches ES-Modul und erhält einen Modul- oder Runtime-Test.
+`app.js` verbindet diese Module mit dem DOM; es soll keine zweite
+Konfigurations-, Zeitplan-, Audio- oder ICS-Implementierung enthalten.

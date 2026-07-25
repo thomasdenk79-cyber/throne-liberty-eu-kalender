@@ -42,7 +42,8 @@ mkdocs serve
 - Laufende Events mit Fortschrittsbalken, einklappbarer Historie und lokal gespeichertem 30-Minuten-Rueckblick
 - Separates, editierfreies Statusfenster fuer die linke oder rechte Bildschirmseite
 - Unabhaengig aktivierbare Warning- und Critical-Erinnerungen mit sekundengenauem Vorlauf
-- 20 separat waehl- und testbare Sounds: sanftes Glockenspiel bis astrales Finale
+- fünf eigenständige, kuratierte Synth-Sounds plus lautloser Modus
+- getrennte Sound-Dauer für Warning und Critical von 1 bis 60 Sekunden
 - Vollstaendiger 10-Sekunden-Test fuer Warning und Critical inklusive Sound, Popup und Browsermeldung
 - ICS-Export einzelner oder beliebig vieler ausgewaehlter Termine; Doppelklick auf einen Eventnamen waehlt dessen Termine an oder ab
 - Kompakte zweispaltige Auswahl der sichtbaren Timer
@@ -59,7 +60,9 @@ mkdocs serve
 
 ## Dateien
 
-- `index.html`: Oberflaeche, Timer-Engine und Benachrichtigungen
+- `index.html`: semantische Oberflaeche
+- `assets/styles/app.css`: Darstellung, Themes und responsive Panels
+- `assets/js/`: native ES-Module für Konfiguration, Zeitplan, Sounds, ICS und UI
 - `config.ini`: einzige Standard-Konfiguration fuer Kategorien und Timer
 - `AGENTS.md`: herstellerneutraler Einstieg fuer Coding-Agenten
 - `.github/copilot-instructions.md`: Repository-Regeln fuer GitHub Copilot
@@ -83,9 +86,11 @@ anchorUtc=2026-07-24T14:56:16Z
 notifications.warning.enabled=true
 notifications.warning.seconds=300
 notifications.warning.sound=gentle
+notifications.warning.durationSeconds=10
 notifications.critical.enabled=true
 notifications.critical.seconds=90
-notifications.critical.sound=urgent
+notifications.critical.sound=neon
+notifications.critical.durationSeconds=10
 notifications.channels=browser,popup
 ```
 
@@ -101,7 +106,11 @@ Zeitplanformate:
 
 Der Export-Button erzeugt eine vollstaendige `timer-config.ini`. Dieselbe Datei kann ohne JSON-Zwischenschritt wieder importiert oder als neue `config.ini` ins Repository uebernommen werden.
 
-Warning und Critical besitzen jeweils einen eigenen Ein-/Ausschalter, sekundengenauen Vorlauf und Sound. Die Oberfläche bietet 20 lokal synthetisierte Sounds von `none` und `gentle` bis `dragon` und `finale`. `notifications.channels` steuert unabhängig davon Browser- und In-App-Popups. Alte `notifications.minutes`-Einträge werden weiterhin gelesen und beim Export in das neue Format umgewandelt.
+Warning und Critical besitzen jeweils einen eigenen Ein-/Ausschalter,
+sekundengenauen Vorlauf, Sound und eine Dauer von 1 bis 60 Sekunden. Die
+Oberfläche bietet fünf eigenständige lokal synthetisierte Sounds plus `none`.
+Alte Sound-IDs und `notifications.minutes` werden weiterhin gelesen und beim
+Export auf das neue Format abgebildet.
 
 `live-timers.ini` ist eine kleine, optionale INI-Überlagerung für restart-sensitive Timer. Der Pages-Workflow aktualisiert sie stündlich über `scripts/sync_gate_memory.py`. Bei Quell- oder Netzfehlern bleibt der eingecheckte letzte geprüfte Anchor aktiv; es gibt keinen JSON-Fallback.
 
@@ -124,13 +133,15 @@ git push origin main
 
 Die Anwendung und die Doku werden im Workflow gemeinsam als Pages-Artefakt gebaut und bereitgestellt.
 
-Lokal testen:
+Lokal vollständig prüfen:
 
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements-docs.txt
-mkdocs serve
+npm ci
+npm run check
+py -3.13 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-docs.txt
+.\.venv\Scripts\python.exe -m py_compile scripts\sync_gate_memory.py
+.\.venv\Scripts\mkdocs.exe build --strict
 ```
 
 Im lokalen Server ist die Dokumentation unter `http://127.0.0.1:8000/` erreichbar.
