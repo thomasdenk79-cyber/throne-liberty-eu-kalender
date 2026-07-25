@@ -166,3 +166,14 @@ Die Anwendung bleibt ohne Bundler direkt auslieferbar. Neue Fachlogik gehört in
 ein verantwortliches ES-Modul und erhält einen Modul- oder Runtime-Test.
 `app.js` verbindet diese Module mit dem DOM; es soll keine zweite
 Konfigurations-, Zeitplan-, Audio- oder ICS-Implementierung enthalten.
+
+### Bekannte Browsergrenze: `file://`
+
+Browser blockieren aus Sicherheitsgründen den Fetch von ES-Modulen über das
+`file://`-Protokoll (CORS). Wird `index.html` lokal per Doppelklick statt über
+einen Webserver oder GitHub Pages geöffnet, kann `assets/js/app.js` dadurch
+nicht laden. Ein klassisches, nicht modulares Inline-Script in `index.html`
+fängt diesen Ladefehler über das `error`-Ereignis des Modul-Scripts ab, blendet
+`html.booting` (siehe PWA-Abschnitt) wieder ein und zeigt eine verständliche
+Fehlermeldung statt einer leeren Seite. Lokal testen daher über einen
+einfachen Webserver, z. B. `npx http-server` oder `python -m http.server`.

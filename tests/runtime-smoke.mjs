@@ -5,8 +5,13 @@ import { Window } from "happy-dom";
 const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
 const config = fs.readFileSync(new URL("../config.ini", import.meta.url), "utf8");
 const liveTimers = fs.readFileSync(new URL("../live-timers.ini", import.meta.url), "utf8");
-const moduleScript = /<script\s+type="module"\s+src="assets\/js\/app\.js"><\/script>/;
+const moduleScript = /<script\s+type="module"\s+src="assets\/js\/app\.js"\s+id="appModuleScript"><\/script>/;
 assert.match(html, moduleScript, "external application module exists");
+assert.match(
+  html,
+  /appModuleScript"\)[\s\S]*addEventListener\("error"/,
+  "classic fallback script reacts if the module fails to load (e.g. file:// CORS block)"
+);
 
 const window = new Window({
   url: "https://example.test/",

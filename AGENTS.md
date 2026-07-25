@@ -126,6 +126,30 @@ Markdown unter `docs/` ist die gepflegte Quelle. `mkdocs.yml` erzeugt daraus bei
 - Neue sichtbare Dokumentationsseiten werden in `mkdocs.yml` einsortiert.
 - Interne Links innerhalb von `docs/` bleiben relativ.
 
+## Commit-Identitaet
+
+Dieses Repository ist oeffentlich und gehoert dem privaten Account
+`thomasdenk79-cyber` (Push-Zugriff ueber dessen lokal hinterlegtes
+Credential). Der Siemens-Account (`thomas-denk_SAGCP`) ist ein GitHub
+Enterprise Managed User und kann laut GitHub-Richtlinie nicht als
+Collaborator auf oeffentlichen Repos ausserhalb der Siemens-Enterprise
+hinzugefuegt werden ("Managed user accounts cannot create public content
+or collaborate outside your enterprise"). Push-Rechte haengen daher nicht
+von der Commit-Autoren-Identitaet ab.
+
+Damit dennoch nachvollziehbar bleibt, welches Werkzeug einen Commit erzeugt
+hat, gilt folgende Autoren-Konvention (rein informativ, nicht
+sicherheitsrelevant):
+
+- **GitHub Copilot CLI in VS Code (Siemens-SSO-Login):** Commit-Autor
+  `Thomas <Thomas.denk@siemens.com>` (lokaler globaler Git-Default).
+- **Andere/lokale Agenten mit eigenem Git-Login:** Commit-Autor
+  `thomasdenk79-cyber <thomas.denk79@gmail.com>`.
+
+Ein Agent aendert die lokale Git-Identitaet nicht eigenmaechtig auf ein
+drittes Konto und schreibt niemals Zugangsdaten oder Tokens in Repository-
+Dateien.
+
 ## Commit-Vorgaben fuer Agenten
 
 Wenn ein Agent Commits erstellt, muss die Commit Message immer enthalten:

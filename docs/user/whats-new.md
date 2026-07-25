@@ -24,6 +24,11 @@ canonical: true
   Installationsknopf nur, wenn eine Installation möglich ist.
 - Fehlerhafte INI-Dateien zeigen konkrete Ursachen, statt unbemerkt falsche
   Timer zu übernehmen.
+- Fix: Beim direkten Öffnen von `index.html` per Doppelklick blieb die Seite
+  nach der Modul-Umstellung leer, weil Browser Modul-Skripte über `file://`
+  blockieren. Jetzt erscheint stattdessen eine verständliche Hinweismeldung;
+  über GitHub Pages oder einen lokalen Webserver funktioniert die Seite wie
+  gewohnt.
 
 ## Das Portal räumt die Kommandozentrale auf
 

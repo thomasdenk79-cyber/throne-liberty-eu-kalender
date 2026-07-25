@@ -144,4 +144,10 @@ py -3.13 -m venv .venv
 .\.venv\Scripts\mkdocs.exe build --strict
 ```
 
+`index.html` lädt native ES-Module und funktioniert deshalb nicht per
+Doppelklick (`file://`). Für einen visuellen Lokaltest im Browser einen
+einfachen Webserver im Repository-Wurzelverzeichnis starten, z. B.
+`npx http-server` oder `python -m http.server`, und die ausgegebene
+`http://localhost:...`-Adresse öffnen.
+
 Im lokalen Server ist die Dokumentation unter `http://127.0.0.1:8000/` erreichbar.

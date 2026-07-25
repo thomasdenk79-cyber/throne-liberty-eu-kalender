@@ -412,6 +412,28 @@
 
   <section class="toast-wrap" id="toastWrap"></section>
 
-  <script type="module" src="assets/js/app.js"></script>
+  <script>
+    // Classic (non-module) script: always runs, even when the browser blocks
+    // the ES module below (e.g. opened directly from disk via file://, where
+    // module fetches are refused by CORS). Without this, "booting" never
+    // gets removed and the page stays invisible with no explanation.
+    (function () {
+      var appModule = document.getElementById("appModuleScript");
+      var errorBox = document.getElementById("startupError");
+      function showModuleLoadFailure() {
+        document.documentElement.classList.remove("booting");
+        if (!errorBox) return;
+        errorBox.hidden = false;
+        errorBox.textContent =
+          "Diese Seite laedt JavaScript-Module und funktioniert deshalb nicht per Doppelklick (file://). " +
+          "Bitte ueber einen lokalen Webserver (z. B. \"npx http-server\") oder die veroeffentlichte " +
+          "GitHub-Pages-Adresse oeffnen. / This page loads JavaScript modules and therefore cannot run " +
+          "when opened directly from disk (file://). Please serve it via a local web server " +
+          "(e.g. \"npx http-server\") or open the published GitHub Pages URL instead.";
+      }
+      if (appModule) appModule.addEventListener("error", showModuleLoadFailure);
+    })();
+  </script>
+  <script type="module" src="assets/js/app.js" id="appModuleScript"></script>
 </body>
 </html>

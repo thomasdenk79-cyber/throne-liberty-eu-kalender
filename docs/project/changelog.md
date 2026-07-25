@@ -34,6 +34,18 @@ Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. D
 - Living-Brain-Schutz, fähigkeitsbasierte Agentenreviews, periodische externe
   Stand-der-Technik-Audits und Repository-Vorlagen ergänzt.
 
+### Fix nach der Modularisierung (25. Juli 2026)
+
+Die neue Modul-Aufteilung (`assets/js/app.js` u.a. via `<script type="module">`)
+lud beim direkten Öffnen von `index.html` per Doppelklick (`file://`) nicht
+mehr: Browser blockieren ES-Modul-Fetches über `file://` aus Sicherheitsgründen
+(CORS). Da zuvor kein Fehler sichtbar wurde, blieb die Seite dauerhaft leer
+(„booting"-Zustand). Ein kleines klassisches Inline-Script fängt das
+`error`-Ereignis des Modul-Scripts jetzt ab, blendet die Seite wieder ein und
+zeigt eine verständliche zweisprachige Hinweismeldung, statt stumm leer zu
+bleiben. Über GitHub Pages oder einen lokalen Webserver war und bleibt die
+Seite unverändert funktionsfähig. Siehe `docs/project/architecture.md#bekannte-browsergrenze-file`.
+
 ## 3.2.0 – 24. Juli 2026
 
 <span class="status-chip status-active">Chief Review</span>
