@@ -8,6 +8,8 @@
     "check:source": "node scripts/check_js.mjs",
     "check:service-worker": "node --check service-worker.js",
     "check": "npm run check:source && npm test",
+    "docs:build-local": "python scripts/build_help.py --site-dir help",
+    "docs:build-local:en": "python scripts/build_help.py --site-dir help --translate-en",
     "visual:local": "node scripts/visual_check.mjs --target=local --label=local",
     "visual:live": "node scripts/visual_check.mjs --target=live --label=live --url=https://thomasdenk79-cyber.github.io/throne-liberty-eu-kalender/"
   },

@@ -29,6 +29,45 @@ pip install -r requirements-docs.txt
 mkdocs serve
 ```
 
+## Initiales Setup fuer Menschen und Agenten
+
+Beim ersten Lauf alle benoetigten Werkzeuge und Abhaengigkeiten einmalig lokal einrichten:
+
+```powershell
+# Node.js 24 vorausgesetzt
+npm ci
+
+# Python 3.13 fuer Doku-Build
+py -3.13 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-docs.txt
+```
+
+Danach stehen alle Standardpruefungen und Build-Schritte zur Verfuegung:
+
+```powershell
+npm run check
+.\.venv\Scripts\python.exe -m mkdocs build --strict
+.\.venv\Scripts\python.exe scripts\build_help.py --site-dir help
+```
+
+Optionale EN-Uebersetzung fuer die Hilfe (default aus, um Tokens zu sparen):
+
+```powershell
+# lokal mit Ollama
+set DOCS_TRANSLATION_MODEL=qwen3:8b
+.\.venv\Scripts\python.exe scripts\build_help.py --site-dir help --translate-en --translator ollama
+
+# alternativ per API
+set OPENAI_API_KEY=...
+set DOCS_TRANSLATION_MODEL=gpt-4o-mini
+.\.venv\Scripts\python.exe scripts\build_help.py --site-dir help --translate-en --translator openai
+```
+
+`scripts/build_help.py` schreibt einen Fingerprint nach `help/.build-meta.json`.
+Der Pages-Workflow verwendet diese vorgebaute Hilfe nur dann direkt, wenn sie zum
+aktuellen Stand der Quellen passt; andernfalls baut der Server fallback-maessig
+ohne Uebersetzung neu.
+
 ## Features
 
 - Boarisch, Deutsch und Englisch; deutsche Clients starten boarisch, alle anderen englisch

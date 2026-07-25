@@ -63,8 +63,9 @@ Jede Umgebung prüft das, was sie nachweisbar ausführen kann:
 - Browser-Chat: Anforderungen, aktuelle externe Quellen, UX und sichtbares
   Verhalten prüfen; nicht ausgeführte lokale Tests als offen kennzeichnen.
 - Lokaler Coding-Agent: Abhängigkeiten reproduzierbar installieren,
-  `npm run check`, Python-Syntax und `mkdocs build --strict` ausführen sowie
-  relevante manuelle Browserfälle dokumentieren.
+  `npm run check`, Python-Syntax, `mkdocs build --strict` und
+  `python scripts/build_help.py --site-dir help` ausführen sowie relevante
+  manuelle Browserfälle dokumentieren.
 - CI: dieselben deterministischen Anwendungs- und Dokumentationsprüfungen auf
   einem sauberen Checkout wiederholen und Deployment blockieren.
 
@@ -74,6 +75,10 @@ Node.js 24, `npm ci`, Python-Venv und
 Pflicht machen. Werden Verhalten, Module, Testwerkzeuge oder Prozesse geändert,
 müssen Tests, Workflows und betroffene Living-Brain-Dokumente im selben
 Änderungssatz nachgezogen werden.
+
+Für optionale EN-Doku gilt: Übersetzung nur bei explizitem Auftrag
+(`python scripts/build_help.py --translate-en ...`), default ohne Übersetzung,
+um Tokens/Kosten zu sparen.
 
 ## Visuelle Prüfung bei UI-/Layout-Änderungen
 

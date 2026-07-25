@@ -53,4 +53,5 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: python -m py_compile scripts/sync_gate_memory.py
+      - run: python -m py_compile scripts/build_help.py
       - run: python -m json.tool manifest.webmanifest > /dev/null

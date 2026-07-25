@@ -261,6 +261,10 @@ Neue sichtbare Seiten werden in `mkdocs.yml` einsortiert. Vor dem Merge werden
 relative Links sowie `mkdocs build --strict` geprüft. Generierte Dateien unter
 `site/` bleiben unverändert.
 
+Für die veröffentlichte Hilfe unter `/help/` wird lokal zusätzlich
+`python scripts/build_help.py --site-dir help` verwendet. Optionale EN-
+Übersetzung ist möglich, aber standardmäßig aus, um Tokens/Kosten zu sparen.
+
 ## Qualitätscheck
 
 Ein Dokument ist gut, wenn ein neuer Mensch oder Agent nach dem Lesen:

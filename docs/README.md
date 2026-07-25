@@ -39,6 +39,37 @@ canonical: true
 
 Die Markdown-Dateien sind die gepflegte Quelle; MkDocs erzeugt daraus diese klickbare und durchsuchbare Website.
 
+## Build-Vertrag fuer lokale Agenten (verbindlich)
+
+Wenn ein Agent Markdown oder Doku-Struktur aendert, muss er lokal die Hilfe neu
+bauen und pruefen. Quelle bleibt `docs/` (Docs-as-Code), nicht generiertes HTML.
+
+```powershell
+npm ci
+py -3.13 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-docs.txt
+.\.venv\Scripts\python.exe scripts\build_help.py --site-dir help
+```
+
+Optionale EN-Uebersetzung (default aus, um Tokens/API-Kosten zu sparen):
+
+```powershell
+set DOCS_TRANSLATION_MODEL=qwen3:8b
+.\.venv\Scripts\python.exe scripts\build_help.py --site-dir help --translate-en --translator ollama
+```
+
+Alternativ (nur wenn bewusst konfiguriert):
+
+```powershell
+set OPENAI_API_KEY=...
+set DOCS_TRANSLATION_MODEL=gpt-4o-mini
+.\.venv\Scripts\python.exe scripts\build_help.py --site-dir help --translate-en --translator openai
+```
+
+Die erzeugte Hilfe enthaelt `help/.build-meta.json`. Der Pages-Workflow nutzt
+eine bereits lokal erzeugte Hilfe nur bei passendem Fingerprint, sonst baut er
+serverseitig ohne Uebersetzung neu (Fallback fuer Browser-Edits).
+
 ## Linny in völlig angemessenem Maßstab
 
 <div class="linny-gallery">

@@ -11,7 +11,9 @@ npm run check
 py -3.13 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-docs.txt
 .\.venv\Scripts\python.exe -m py_compile scripts\sync_gate_memory.py
+.\.venv\Scripts\python.exe -m py_compile scripts\build_help.py
 .\.venv\Scripts\mkdocs.exe build --strict
+.\.venv\Scripts\python.exe scripts\build_help.py --site-dir help
 ```
 
 Änderungen erfolgen auf einem Feature-Branch und werden per Pull Request

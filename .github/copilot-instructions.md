@@ -39,6 +39,9 @@ Lade anschließend nur die für die konkrete Aufgabe relevanten Implementierungs
   undokumentierten globalen Testabhängigkeiten.
 - Pflege bei Verhaltens-, Architektur- oder Werkzeugänderungen die zugehörigen
   Tests, Workflows und kanonischen Dokumente im selben Änderungssatz.
+- Für Doku-Builds nutze den Projektweg:
+  `python scripts/build_help.py --site-dir help` (optionale EN-Übersetzung nur
+  bei explizitem Auftrag, standardmäßig aus).
 
 ## Living-Brain-Schutz
 
