@@ -46,6 +46,17 @@ zeigt eine verständliche zweisprachige Hinweismeldung, statt stumm leer zu
 bleiben. Über GitHub Pages oder einen lokalen Webserver war und bleibt die
 Seite unverändert funktionsfähig. Siehe `docs/project/architecture.md#bekannte-browsergrenze-file`.
 
+Zusätzlich per echtem Headless-Browser-Test gegen die veröffentlichte Seite
+geprüft und einen zweiten, unabhängigen Fehler gefunden und behoben: Das
+rotierende Hero-Hintergrundbild (Themen Astral/Bavaria) 404ete, weil der per
+JavaScript gesetzte CSS-Custom-Property-Wert `--hero-image: url(...)` einen
+relativen Bildpfad enthielt. Chromium löst `url()`-Werte innerhalb einer per
+`var()` konsumierten Custom Property relativ zum Stylesheet auf, das sie
+konsumiert (`assets/styles/app.css`), nicht relativ zum Dokument – dadurch
+landete der Request unter `assets/styles/assets/events/...`. Der Pfad wird vor
+dem Setzen jetzt über `new URL(..., document.baseURI)` in eine absolute URL
+aufgelöst.
+
 ## 3.2.0 – 24. Juli 2026
 
 <span class="status-chip status-active">Chief Review</span>

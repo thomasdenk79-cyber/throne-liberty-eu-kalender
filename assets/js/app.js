@@ -901,7 +901,12 @@ function applyAppearanceSettings() {
   const themePool = state.categoryId === "personal" ? FUN_EVENT_ART : EPIC_EVENT_ART;
   const rotated = themePool[stableHash(theme + "|" + state.artRotationBucket) % themePool.length]?.src;
   const heroImage = state.artRotationBucket % 2 === 0 ? rotated : heroByTheme[theme];
-  dom.heroSection.style.setProperty("--hero-image", "url('" + (heroImage || heroByTheme.astral) + "')");
+  // Resolve to an absolute URL before writing the custom property: browsers
+  // resolve relative url() references inside a custom property's value
+  // against the stylesheet that consumes it via var() (assets/styles/app.css),
+  // not against the document, which otherwise 404s one directory too deep.
+  const resolvedHeroImage = new URL(heroImage || heroByTheme.astral, document.baseURI).href;
+  dom.heroSection.style.setProperty("--hero-image", "url('" + resolvedHeroImage + "')");
 }
 
 function renderLegalContent() {

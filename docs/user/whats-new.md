@@ -29,6 +29,9 @@ canonical: true
   blockieren. Jetzt erscheint stattdessen eine verständliche Hinweismeldung;
   über GitHub Pages oder einen lokalen Webserver funktioniert die Seite wie
   gewohnt.
+- Fix: Das rotierende Hero-Hintergrundbild im Astral- und Bayern-Motiv lud auf
+  der echten Seite gelegentlich nicht (404), weil der Bildpfad im Browser
+  falsch aufgelöst wurde. Das Hero-Bild lädt jetzt zuverlässig.
 
 ## Das Portal räumt die Kommandozentrale auf
 
