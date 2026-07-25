@@ -375,10 +375,17 @@
   </dialog>
 
   <dialog class="image-lightbox" id="imageLightbox">
-    <div class="image-lightbox-frame"><img id="imageLightboxImage" alt=""></div>
+    <div class="image-lightbox-frame" id="imageLightboxFrame">
+      <img id="imageLightboxImage" alt="">
+      <span class="image-lightbox-lens" id="imageLightboxLens" aria-hidden="true"></span>
+    </div>
     <div class="image-lightbox-caption">
       <b id="imageLightboxTitle"></b>
-      <button class="btn alt" id="imageLightboxCloseBtn" type="button">Close</button>
+      <div class="image-lightbox-actions">
+        <button class="btn alt" id="imageLightboxZoomBtn" type="button" aria-pressed="false">🔍 Lupe</button>
+        <button class="btn alt" id="imageLightboxWallpaperBtn" type="button">🖼 Als Hintergrund speichern</button>
+        <button class="btn alt" id="imageLightboxCloseBtn" type="button">Close</button>
+      </div>
     </div>
   </dialog>
   <div class="image-hover-preview" id="imageHoverPreview" aria-hidden="true">

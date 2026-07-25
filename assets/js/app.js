@@ -79,6 +79,7 @@ const state = {
   notified: new Set(),
   audioContext: null,
   popupTimer: null,
+  imageLightboxZoom: false,
   lastNotificationCheck: Date.now() - 1500,
   dockMode: new URLSearchParams(window.location.search).get("mode") === "dock",
   dockSide: new URLSearchParams(window.location.search).get("dockSide") || storageGet("timer_dock_side") || "right"
@@ -243,8 +244,12 @@ const dom = {
   eventPopupText: document.getElementById("eventPopupText"),
   eventPopupCloseBtn: document.getElementById("eventPopupCloseBtn"),
   imageLightbox: document.getElementById("imageLightbox"),
+  imageLightboxFrame: document.getElementById("imageLightboxFrame"),
   imageLightboxImage: document.getElementById("imageLightboxImage"),
+  imageLightboxLens: document.getElementById("imageLightboxLens"),
   imageLightboxTitle: document.getElementById("imageLightboxTitle"),
+  imageLightboxZoomBtn: document.getElementById("imageLightboxZoomBtn"),
+  imageLightboxWallpaperBtn: document.getElementById("imageLightboxWallpaperBtn"),
   imageLightboxCloseBtn: document.getElementById("imageLightboxCloseBtn"),
   imageHoverPreview: document.getElementById("imageHoverPreview"),
   imageHoverPreviewImage: document.getElementById("imageHoverPreviewImage"),
@@ -339,6 +344,16 @@ function setCollapseDirection(button, direction) {
 function updateCollapseButtons() {
   setCollapseDirection(dom.liveCollapseBtn, state.liveCollapsed ? "right" : "left");
   setCollapseDirection(dom.calendarCollapseBtn, state.calendarCollapsed ? "down" : "up");
+}
+
+function setLightboxZoom(enabled) {
+  state.imageLightboxZoom = Boolean(enabled);
+  dom.imageLightboxFrame.classList.toggle("is-zoom-enabled", state.imageLightboxZoom);
+  dom.imageLightboxZoomBtn.setAttribute("aria-pressed", String(state.imageLightboxZoom));
+  dom.imageLightboxZoomBtn.textContent = state.imageLightboxZoom ? text("lightboxZoomDisable") : text("lightboxZoomEnable");
+  if (!state.imageLightboxZoom) {
+    dom.imageLightboxImage.style.transformOrigin = "center center";
+  }
 }
 
 function setupHeroEffects() {
@@ -1033,6 +1048,12 @@ function renderLegalContent() {
   dom.imprintCloseBtn.textContent = text("legalClose");
   dom.privacyCloseBtn.textContent = text("legalClose");
   dom.imageLightboxCloseBtn.textContent = text("legalClose");
+  dom.imageLightboxWallpaperBtn.textContent = text("wallpaperSave");
+  dom.imageLightboxWallpaperBtn.title = text("wallpaperSave");
+  dom.imageLightboxWallpaperBtn.setAttribute("aria-label", text("wallpaperSave"));
+  setLightboxZoom(state.imageLightboxZoom);
+  dom.imageLightboxZoomBtn.title = state.imageLightboxZoom ? text("lightboxZoomDisable") : text("lightboxZoomEnable");
+  dom.imageLightboxZoomBtn.setAttribute("aria-label", dom.imageLightboxZoomBtn.title);
   dom.storageConsentTitle.textContent = text("storageConsentTitle");
   dom.storageConsentText.textContent = text("storageConsentText");
   dom.storageAcceptBtn.textContent = text("storageAccept");
@@ -2039,9 +2060,45 @@ function openEventImage(timer, selectedArt = timerArt(timer)) {
   if (!selectedArt?.src) return;
   dom.imageLightboxImage.src = selectedArt.src;
   dom.imageLightboxImage.alt = artTitle(selectedArt, timer);
+  dom.imageLightboxImage.dataset.wallpaperSrc = selectedArt.src;
   dom.imageLightboxTitle.textContent = artTitle(selectedArt, timer);
+  setLightboxZoom(false);
   if (!dom.imageLightbox.open && typeof dom.imageLightbox.showModal === "function") {
     dom.imageLightbox.showModal();
+  }
+}
+
+function updateLightboxZoomPosition(event) {
+  if (!state.imageLightboxZoom) return;
+  const rect = dom.imageLightboxFrame.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const x = Math.max(0, Math.min(rect.width, event.clientX - rect.left));
+  const y = Math.max(0, Math.min(rect.height, event.clientY - rect.top));
+  const xPct = (x / rect.width) * 100;
+  const yPct = (y / rect.height) * 100;
+  dom.imageLightboxImage.style.transformOrigin = `${xPct.toFixed(2)}% ${yPct.toFixed(2)}%`;
+  dom.imageLightboxLens.style.left = `${x.toFixed(2)}px`;
+  dom.imageLightboxLens.style.top = `${y.toFixed(2)}px`;
+}
+
+async function downloadCurrentLightboxImage() {
+  const sourceUrl = dom.imageLightboxImage.dataset.wallpaperSrc || dom.imageLightboxImage.currentSrc || dom.imageLightboxImage.src;
+  if (!sourceUrl) return;
+  try {
+    const response = await fetch(sourceUrl, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Image download failed (HTTP ${response.status})`);
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = objectUrl;
+    link.download = "linny-desktop-wallpaper.webp";
+    link.click();
+    URL.revokeObjectURL(objectUrl);
+    toast(text("wallpaperDownloaded"));
+  } catch (error) {
+    console.warn("Wallpaper download failed, opening image directly.", error);
+    openShareWindow(sourceUrl);
+    toast(text("wallpaperManualHint"));
   }
 }
 
@@ -2818,6 +2875,14 @@ function bind() {
   });
 
   dom.imageLightboxCloseBtn.addEventListener("click", () => dom.imageLightbox.close());
+  dom.imageLightboxZoomBtn.addEventListener("click", () => setLightboxZoom(!state.imageLightboxZoom));
+  dom.imageLightboxWallpaperBtn.addEventListener("click", () => void downloadCurrentLightboxImage());
+  dom.imageLightboxFrame.addEventListener("pointermove", updateLightboxZoomPosition);
+  dom.imageLightboxFrame.addEventListener("pointerleave", () => {
+    if (!state.imageLightboxZoom) return;
+    dom.imageLightboxImage.style.transformOrigin = "center center";
+  });
+  dom.imageLightbox.addEventListener("close", () => setLightboxZoom(false));
   dom.imprintBtn.addEventListener("click", () => dom.imprintDialog.showModal());
   dom.privacyBtn.addEventListener("click", () => dom.privacyDialog.showModal());
   dom.storagePrivacyBtn.addEventListener("click", () => dom.privacyDialog.showModal());
