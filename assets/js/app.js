@@ -16,6 +16,8 @@ const CONFIG_UPDATED_AT = "2026-07-24T00:00:00Z";
 const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.5";
 const GA4_MEASUREMENT_ID = (document.querySelector('meta[name="ga4-measurement-id"]')?.getAttribute("content") || "").trim();
 const PLAUSIBLE_DOMAIN = (document.querySelector('meta[name="plausible-domain"]')?.getAttribute("content") || "").trim();
+const COUNTAPI_NAMESPACE = (document.querySelector('meta[name="countapi-namespace"]')?.getAttribute("content") || "").trim();
+const COUNTAPI_KEY = (document.querySelector('meta[name="countapi-key"]')?.getAttribute("content") || "").trim();
 const germanClient = (navigator.language || "").toLowerCase().startsWith("de");
 const clientDefaultLanguage = germanClient ? "bar" : "en";
 const clientDefaultTimezone = germanClient ? BAVARIA_TIMEZONE : "Europe/Berlin";
@@ -80,6 +82,8 @@ const state = {
   audioContext: null,
   popupTimer: null,
   imageLightboxZoom: false,
+  visitorCount: null,
+  visitorCounterFailed: false,
   lastNotificationCheck: Date.now() - 1500,
   dockMode: new URLSearchParams(window.location.search).get("mode") === "dock",
   dockSide: new URLSearchParams(window.location.search).get("dockSide") || storageGet("timer_dock_side") || "right"
@@ -164,6 +168,7 @@ const dom = {
   stackLabel: document.getElementById("stackLabel"),
   calendarLabel: document.getElementById("calendarLabel"),
   footerSummary: document.getElementById("footerSummary"),
+  visitorCounter: document.getElementById("visitorCounter"),
   categorySelect: document.getElementById("categorySelect"),
   displayTimezone: document.getElementById("displayTimezone"),
   historyMinutesInput: document.getElementById("historyMinutesInput"),
@@ -420,6 +425,38 @@ function setupAnalytics() {
   }
   analyticsInitialized = (setupGa4() || analyticsInitialized);
   analyticsInitialized = (setupPlausible() || analyticsInitialized);
+}
+
+function renderVisitorCounter() {
+  if (!dom.visitorCounter) return;
+  if (Number.isFinite(state.visitorCount)) {
+    dom.visitorCounter.textContent = text("visitorCounterValue").replace("{count}", new Intl.NumberFormat(
+      state.lang === "en" ? "en-GB" : "de-DE"
+    ).format(state.visitorCount));
+    return;
+  }
+  dom.visitorCounter.textContent = state.visitorCounterFailed
+    ? text("visitorCounterError")
+    : text("visitorCounterLoading");
+}
+
+async function refreshVisitorCounter() {
+  if (!COUNTAPI_NAMESPACE || !COUNTAPI_KEY) return;
+  try {
+    const endpoint = `https://api.countapi.xyz/hit/${encodeURIComponent(COUNTAPI_NAMESPACE)}/${encodeURIComponent(COUNTAPI_KEY)}`;
+    const response = await fetch(endpoint, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Visitor counter failed (HTTP ${response.status})`);
+    if (typeof response.json !== "function") return;
+    const payload = await response.json();
+    if (!Number.isFinite(payload?.value)) throw new Error("Visitor counter payload missing numeric value.");
+    state.visitorCount = Number(payload.value);
+    state.visitorCounterFailed = false;
+  } catch (error) {
+    console.warn("Visitor counter unavailable.", error);
+    state.visitorCount = null;
+    state.visitorCounterFailed = true;
+  }
+  renderVisitorCounter();
 }
 
 function canRegisterServiceWorker() {
@@ -1100,6 +1137,7 @@ function renderLegalContent() {
   hostingLink.rel = "noreferrer";
   hostingLink.textContent = " GitHub Privacy Statement";
   privacyFragment.lastElementChild.append(hostingLink, ".");
+  appendPrivacySection("privacyCounterHeading", "privacyCounterText");
   appendPrivacySection("privacyNotificationsHeading", "privacyNotificationsText");
   appendPrivacySection("privacyRightsHeading", "privacyRightsText");
   dom.privacyContent.replaceChildren(privacyFragment);
@@ -1258,6 +1296,7 @@ function renderLabels() {
   dom.eventPopupLabel.textContent = text("eventAlert");
   dom.eventPopupCloseBtn.textContent = text("acknowledge");
   dom.footerSummary.textContent = text("footerSummary");
+  renderVisitorCounter();
   dom.shareLabel.textContent = text("shareLabel");
   dom.shareNativeBtn.textContent = text("shareNative");
   dom.shareCopyBtn.textContent = text("shareCopy");
@@ -3014,6 +3053,7 @@ async function start() {
     setupAnalytics();
     renderBuilderDays();
     renderAll();
+    void refreshVisitorCounter();
     if (state.localConfigError) {
       toast(state.localConfigError);
     }

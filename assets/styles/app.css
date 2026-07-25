@@ -1303,6 +1303,18 @@ html[data-theme="executive"] .calendar {
 .consent-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; justify-content: flex-start; }
 
 .footer-links { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.visitor-counter {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 10px;
+  border: 1px solid #91e6ff3f;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #091423d6, #122339b8);
+  color: #dff7ff;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
 .footer-link-btn {
   padding: 0;
   border: 0;
