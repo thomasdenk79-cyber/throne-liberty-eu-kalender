@@ -215,6 +215,24 @@ wird pauschal angefasst; die betroffene kanonische Sicht wird jedoch im selben
 | Arbeitsstatus oder offene Abnahme | `docs/project/taskboard.md` |
 | reine interne Umstrukturierung ohne Nutzerwirkung | technisches Changelog nur, wenn release- oder migrationsrelevant |
 
+### Release-Versionierung als dokumentierte Muss-Regel
+
+Fuer dieses Repository ist Versionierung eine verbindliche Agentenregel, nicht
+nur ein Hinweis. Bei release-relevanten Aenderungen muessen alle
+versionsgekoppelten Stellen mit identischem Wert aktualisiert werden
+(`package.json`, `package-lock.json`, `index.html`-Versionsmarker,
+`assets/js/app.js`, `assets/js/i18n.js`, `service-worker.js`).
+
+SSOT-Regel: Die operative Schrittfolge fuer Agenten steht zentral in
+`AGENTS.md`. Weitere Agenten-Instruktionsdateien verweisen darauf und pflegen
+keine abweichenden Duplikate derselben Regelliste.
+
+Die Regel gilt erst als erfuellt, wenn:
+
+1. alle Marker synchron sind,
+2. `npm run check` erfolgreich ist,
+3. keine veraltete Release-Zeichenkette mehr im Repository verbleibt.
+
 ### Zwei Changelog-Sichten
 
 - `docs/project/changelog.md` ist die technische, menschenlesbare Release-Historie.

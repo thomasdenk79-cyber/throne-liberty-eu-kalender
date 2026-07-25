@@ -9,6 +9,22 @@ canonical: true
 
 # Was ist neu?
 
+## Version 3.3.6: Mehr Platz, klarere Bedienung, sauberere Agentenregeln
+
+- Die Bereiche unter dem Titelbild sind neu sortiert:
+  **Timer anzeigen** hat jetzt links deutlich mehr Platz,
+  **Verwaltung** und **Benachrichtigungen** sind kompakter in der Mitte/rechts.
+- Die Pfeile zum Ein- und Ausklappen wurden optisch deutlich aufgewertet.
+- Das Zahnrad im Kategorie-Bereich tut jetzt wirklich etwas:
+  Es öffnet „Weitere Einstellungen“.
+- In der Bild-Vollansicht zoomst du jetzt intuitiv mit dem Mausrad direkt auf
+  die Stelle unter dem Mauszeiger.
+- „Als Hintergrund speichern“ wurde robuster gemacht.
+- Das Sommerfest ist standardmäßig deaktiviert (nicht mehr vorausgewählt).
+- Interne Qualitätsverbesserung für KI-Arbeit: Die Agentenregeln wurden als
+  klareres SSOT-Muster geschärft, damit weniger doppelte Vorgaben gepflegt
+  werden müssen.
+
 ## Version 3.3.3: Layout-Feinschliff nach eurem Feedback
 
 - Fix: Checkboxen (z. B. "Warning aktiv", Browser/Popup, Barrierefreiheit)

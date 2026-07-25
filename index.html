@@ -22,22 +22,19 @@
   <meta name="twitter:image" content="https://thomasdenk79-cyber.github.io/throne-liberty-eu-kalender/assets/icons/linny-512.png">
   <!--
     VERSIONING REQUIREMENT (do not skip):
-    On every release, bump the SAME version in all places below:
-    1) meta[name="app-version"]
-    2) manifest.webmanifest?v=...
-    3) assets/styles/app.css?v=...
-    4) assets/js/app.js?v=...
-    Keep these values identical to avoid stale-cache/PWA mismatch.
+    The canonical release version checklist for agents is maintained in
+    AGENTS.md ("Verbindliche Release-Versionierung (Pflicht)").
+    Keep this meta value and the cache-busting ?v=... values in sync.
   -->
-  <meta name="app-version" content="3.3.5">
-  <meta name="ga4-measurement-id" content="">
+  <meta name="app-version" content="3.3.6">
+  <meta name="ga4-measurement-id" content="G-SBCTZL1VGK">
   <meta name="plausible-domain" content="">
   <meta name="countapi-namespace" content="throne-liberty-eu-kalender">
   <meta name="countapi-key" content="home">
-  <link rel="manifest" href="manifest.webmanifest?v=3.3.5">
+  <link rel="manifest" href="manifest.webmanifest?v=3.3.6">
   <link rel="icon" href="assets/icons/linny-192.png">
   <link rel="apple-touch-icon" href="assets/icons/linny-192.png">
-  <link rel="stylesheet" href="assets/styles/app.css?v=3.3.5">
+  <link rel="stylesheet" href="assets/styles/app.css?v=3.3.6">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -233,7 +230,12 @@
       <section class="controls" id="settingsPanel">
 
       <details class="settings-group" id="settingsGroupCategory" open>
-        <summary class="settings-group-head"><span class="label" id="settingsGroupCategoryLabel">Verwaltung</span></summary>
+        <summary class="settings-group-head">
+          <span class="settings-group-head-main">
+            <span class="label" id="settingsGroupCategoryLabel">Verwaltung</span>
+            <button class="btn alt icon-action settings-group-action" id="categorySettingsBtn" type="button" title="Weitere Einstellungen" aria-label="Weitere Einstellungen">⚙</button>
+          </span>
+        </summary>
         <div class="settings-group-body control-cluster">
           <div class="row">
             <div class="label settings-heading" id="categoryLabel">Category</div>
@@ -380,7 +382,6 @@
   <dialog class="image-lightbox" id="imageLightbox">
     <div class="image-lightbox-frame" id="imageLightboxFrame">
       <img id="imageLightboxImage" alt="">
-      <span class="image-lightbox-lens" id="imageLightboxLens" aria-hidden="true"></span>
     </div>
     <div class="image-lightbox-caption">
       <b id="imageLightboxTitle"></b>
@@ -528,6 +529,6 @@
       if (appModule) appModule.addEventListener("error", showModuleLoadFailure);
     })();
   </script>
-  <script type="module" src="assets/js/app.js?v=3.3.5" id="appModuleScript"></script>
+  <script type="module" src="assets/js/app.js?v=3.3.6" id="appModuleScript"></script>
 </body>
 </html>

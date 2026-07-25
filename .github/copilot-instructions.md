@@ -43,6 +43,15 @@ Lade anschließend nur die für die konkrete Aufgabe relevanten Implementierungs
   `python scripts/build_help.py --site-dir help` (optionale EN-Übersetzung nur
   bei explizitem Auftrag, standardmäßig aus).
 
+## Verbindliche Versionsregel fuer Releases
+
+Die operative Release-Versionierungsregel wird zentral in `AGENTS.md` gepflegt
+(`## Verbindliche Release-Versionierung (Pflicht)`). Diese Datei dupliziert die
+Regelliste absichtlich nicht, um Widersprueche zu vermeiden.
+
+Fuer Copilot gilt: bei release-relevanten Aenderungen die AGENTS-Regel voll
+anwenden und vor Abschluss mindestens `npm run check` erfolgreich ausfuehren.
+
 ## Living-Brain-Schutz
 
 `AGENTS.md`, diese Datei, `.github/agents/`, `.github/instructions/` sowie die

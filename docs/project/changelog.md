@@ -13,6 +13,27 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
+## 3.3.6 – 25. Juli 2026
+
+<span class="status-chip status-active">Live</span>
+
+- UI-Layout nach Feedback neu angeordnet: Unter dem Hero-Bereich ist
+  **Timer anzeigen** jetzt links mit deutlich mehr Breite; **Verwaltung** und
+  **Benachrichtigungen** stehen schmaler in der Mitte/rechts.
+- Collapse-Steuerungen visuell aufgewertet (stärkerer Glow/3D-Wirkung) für
+  Timer-, Kalender- und Gruppen-Pfeile.
+- Kategorie-Bereich erweitert: Das Zahnrad ist nun eine echte Aktion und öffnet
+  „Weitere Einstellungen“.
+- Lightbox-Bedienung verbessert: Zoom per Mausrad am Cursorpunkt; Button
+  toggelt zwischen Zoom und Reset; „Als Hintergrund speichern“ robuster
+  ausgelöst.
+- Saisonanpassung: `summer_festival_eu` ist standardmäßig nicht mehr in den
+  sichtbaren Timern (`[settings].visibleTimerIds` in `config.ini`).
+- Release-Version auf **3.3.6** synchronisiert (UI, Assets, Service Worker,
+  Paketmetadaten).
+- Agenten-Dokumentation als SSOT geschärft: `AGENTS.md` als zentrale
+  Regelliste, Copilot-Datei mit Verweis statt doppelter Regelpflege.
+
 ## 3.3.3 – 26. Juli 2026
 
 <span class="status-chip status-active">Live</span>

@@ -13,7 +13,7 @@ import { calendarEntryKey, downloadIcs as downloadCalendarIcs } from "./ics.js";
 const CARD_DENSITY_VALUES = ["ultra", "compact", "comfortable", "cinematic", "big-picture", "mega"];
 const BAVARIA_TIMEZONE = "Bayern/Munich";
 const CONFIG_UPDATED_AT = "2026-07-24T00:00:00Z";
-const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.5";
+const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.6";
 const GA4_MEASUREMENT_ID = (document.querySelector('meta[name="ga4-measurement-id"]')?.getAttribute("content") || "").trim();
 const PLAUSIBLE_DOMAIN = (document.querySelector('meta[name="plausible-domain"]')?.getAttribute("content") || "").trim();
 const COUNTAPI_NAMESPACE = (document.querySelector('meta[name="countapi-namespace"]')?.getAttribute("content") || "").trim();
@@ -81,7 +81,9 @@ const state = {
   notified: new Set(),
   audioContext: null,
   popupTimer: null,
-  imageLightboxZoom: false,
+  imageLightboxZoomScale: 1,
+  imageLightboxOriginX: 50,
+  imageLightboxOriginY: 50,
   visitorCount: null,
   visitorCounterFailed: false,
   lastNotificationCheck: Date.now() - 1500,
@@ -180,6 +182,7 @@ const dom = {
   newCategoryBtn: document.getElementById("newCategoryBtn"),
   renameCategoryBtn: document.getElementById("renameCategoryBtn"),
   deleteCategoryBtn: document.getElementById("deleteCategoryBtn"),
+  categorySettingsBtn: document.getElementById("categorySettingsBtn"),
   cardStack: document.getElementById("cardStack"),
   liveColumn: document.getElementById("liveColumn"),
   liveCollapseBtn: document.getElementById("liveCollapseBtn"),
@@ -251,7 +254,6 @@ const dom = {
   imageLightbox: document.getElementById("imageLightbox"),
   imageLightboxFrame: document.getElementById("imageLightboxFrame"),
   imageLightboxImage: document.getElementById("imageLightboxImage"),
-  imageLightboxLens: document.getElementById("imageLightboxLens"),
   imageLightboxTitle: document.getElementById("imageLightboxTitle"),
   imageLightboxZoomBtn: document.getElementById("imageLightboxZoomBtn"),
   imageLightboxWallpaperBtn: document.getElementById("imageLightboxWallpaperBtn"),
@@ -351,14 +353,19 @@ function updateCollapseButtons() {
   setCollapseDirection(dom.calendarCollapseBtn, state.calendarCollapsed ? "down" : "up");
 }
 
-function setLightboxZoom(enabled) {
-  state.imageLightboxZoom = Boolean(enabled);
-  dom.imageLightboxFrame.classList.toggle("is-zoom-enabled", state.imageLightboxZoom);
-  dom.imageLightboxZoomBtn.setAttribute("aria-pressed", String(state.imageLightboxZoom));
-  dom.imageLightboxZoomBtn.textContent = state.imageLightboxZoom ? text("lightboxZoomDisable") : text("lightboxZoomEnable");
-  if (!state.imageLightboxZoom) {
-    dom.imageLightboxImage.style.transformOrigin = "center center";
-  }
+function setLightboxZoomScale(scale, originX = state.imageLightboxOriginX, originY = state.imageLightboxOriginY) {
+  const nextScale = Math.min(4, Math.max(1, Number(scale) || 1));
+  state.imageLightboxZoomScale = nextScale;
+  state.imageLightboxOriginX = Math.min(100, Math.max(0, Number(originX) || 50));
+  state.imageLightboxOriginY = Math.min(100, Math.max(0, Number(originY) || 50));
+  dom.imageLightboxFrame.classList.toggle("is-zoom-enabled", nextScale > 1.001);
+  dom.imageLightboxImage.style.transformOrigin = `${state.imageLightboxOriginX.toFixed(2)}% ${state.imageLightboxOriginY.toFixed(2)}%`;
+  dom.imageLightboxImage.style.transform = `scale(${nextScale.toFixed(3)})`;
+  const zoomActive = nextScale > 1.001;
+  dom.imageLightboxZoomBtn.setAttribute("aria-pressed", String(zoomActive));
+  dom.imageLightboxZoomBtn.textContent = zoomActive ? text("lightboxZoomDisable") : text("lightboxZoomEnable");
+  dom.imageLightboxZoomBtn.title = dom.imageLightboxZoomBtn.textContent;
+  dom.imageLightboxZoomBtn.setAttribute("aria-label", dom.imageLightboxZoomBtn.textContent);
 }
 
 function setupHeroEffects() {
@@ -1088,9 +1095,7 @@ function renderLegalContent() {
   dom.imageLightboxWallpaperBtn.textContent = text("wallpaperSave");
   dom.imageLightboxWallpaperBtn.title = text("wallpaperSave");
   dom.imageLightboxWallpaperBtn.setAttribute("aria-label", text("wallpaperSave"));
-  setLightboxZoom(state.imageLightboxZoom);
-  dom.imageLightboxZoomBtn.title = state.imageLightboxZoom ? text("lightboxZoomDisable") : text("lightboxZoomEnable");
-  dom.imageLightboxZoomBtn.setAttribute("aria-label", dom.imageLightboxZoomBtn.title);
+  setLightboxZoomScale(state.imageLightboxZoomScale, state.imageLightboxOriginX, state.imageLightboxOriginY);
   dom.storageConsentTitle.textContent = text("storageConsentTitle");
   dom.storageConsentText.textContent = text("storageConsentText");
   dom.storageAcceptBtn.textContent = text("storageAccept");
@@ -1325,6 +1330,7 @@ function renderLabels() {
     [dom.newCategoryBtn, "＋", "newCategory"],
     [dom.renameCategoryBtn, "✎", "renameCategory"],
     [dom.deleteCategoryBtn, "⌫", "deleteCategory"],
+    [dom.categorySettingsBtn, "⚙", "toggleSettings"],
     [dom.settingsPopoverCloseBtn, "×", "close"],
     [dom.saveTimerBtn, "💾", "saveLocal"],
     [dom.duplicateTimerBtn, "⧉", "duplicate"],
@@ -2101,23 +2107,34 @@ function openEventImage(timer, selectedArt = timerArt(timer)) {
   dom.imageLightboxImage.alt = artTitle(selectedArt, timer);
   dom.imageLightboxImage.dataset.wallpaperSrc = selectedArt.src;
   dom.imageLightboxTitle.textContent = artTitle(selectedArt, timer);
-  setLightboxZoom(false);
+  setLightboxZoomScale(1, 50, 50);
   if (!dom.imageLightbox.open && typeof dom.imageLightbox.showModal === "function") {
     dom.imageLightbox.showModal();
   }
 }
 
 function updateLightboxZoomPosition(event) {
-  if (!state.imageLightboxZoom) return;
+  if (state.imageLightboxZoomScale <= 1.001) return;
   const rect = dom.imageLightboxFrame.getBoundingClientRect();
   if (!rect.width || !rect.height) return;
   const x = Math.max(0, Math.min(rect.width, event.clientX - rect.left));
   const y = Math.max(0, Math.min(rect.height, event.clientY - rect.top));
   const xPct = (x / rect.width) * 100;
   const yPct = (y / rect.height) * 100;
-  dom.imageLightboxImage.style.transformOrigin = `${xPct.toFixed(2)}% ${yPct.toFixed(2)}%`;
-  dom.imageLightboxLens.style.left = `${x.toFixed(2)}px`;
-  dom.imageLightboxLens.style.top = `${y.toFixed(2)}px`;
+  setLightboxZoomScale(state.imageLightboxZoomScale, xPct, yPct);
+}
+
+function handleLightboxWheel(event) {
+  event.preventDefault();
+  const rect = dom.imageLightboxFrame.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const xPct = ((event.clientX - rect.left) / rect.width) * 100;
+  const yPct = ((event.clientY - rect.top) / rect.height) * 100;
+  const delta = event.deltaY < 0 ? 0.2 : -0.2;
+  const targetScale = Math.abs((state.imageLightboxZoomScale + delta) - 1) < 0.12
+    ? 1
+    : state.imageLightboxZoomScale + delta;
+  setLightboxZoomScale(targetScale, xPct, yPct);
 }
 
 async function downloadCurrentLightboxImage() {
@@ -2131,7 +2148,9 @@ async function downloadCurrentLightboxImage() {
     const link = document.createElement("a");
     link.href = objectUrl;
     link.download = "linny-desktop-wallpaper.webp";
+    document.body.appendChild(link);
     link.click();
+    link.remove();
     URL.revokeObjectURL(objectUrl);
     toast(text("wallpaperDownloaded"));
   } catch (error) {
@@ -2825,6 +2844,11 @@ function bind() {
   dom.settingsToggleBtn.addEventListener("click", () => {
     dom.settingsPopover.showModal();
   });
+  dom.categorySettingsBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    dom.settingsPopover.showModal();
+  });
   dom.settingsPopoverCloseBtn.addEventListener("click", () => dom.settingsPopover.close());
   dom.settingsPopover.addEventListener("click", (event) => {
     if (event.target === dom.settingsPopover) dom.settingsPopover.close();
@@ -2914,14 +2938,21 @@ function bind() {
   });
 
   dom.imageLightboxCloseBtn.addEventListener("click", () => dom.imageLightbox.close());
-  dom.imageLightboxZoomBtn.addEventListener("click", () => setLightboxZoom(!state.imageLightboxZoom));
+  dom.imageLightboxZoomBtn.addEventListener("click", () => {
+    if (state.imageLightboxZoomScale > 1.001) {
+      setLightboxZoomScale(1, 50, 50);
+      return;
+    }
+    setLightboxZoomScale(2, state.imageLightboxOriginX, state.imageLightboxOriginY);
+  });
   dom.imageLightboxWallpaperBtn.addEventListener("click", () => void downloadCurrentLightboxImage());
   dom.imageLightboxFrame.addEventListener("pointermove", updateLightboxZoomPosition);
+  dom.imageLightboxFrame.addEventListener("wheel", handleLightboxWheel, { passive: false });
   dom.imageLightboxFrame.addEventListener("pointerleave", () => {
-    if (!state.imageLightboxZoom) return;
-    dom.imageLightboxImage.style.transformOrigin = "center center";
+    if (state.imageLightboxZoomScale <= 1.001) return;
+    setLightboxZoomScale(state.imageLightboxZoomScale, 50, 50);
   });
-  dom.imageLightbox.addEventListener("close", () => setLightboxZoom(false));
+  dom.imageLightbox.addEventListener("close", () => setLightboxZoomScale(1, 50, 50));
   dom.imprintBtn.addEventListener("click", () => dom.imprintDialog.showModal());
   dom.privacyBtn.addEventListener("click", () => dom.privacyDialog.showModal());
   dom.storagePrivacyBtn.addEventListener("click", () => dom.privacyDialog.showModal());

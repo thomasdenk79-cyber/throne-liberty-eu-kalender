@@ -31,6 +31,30 @@ Vor jeder größeren Änderung zuerst lesen:
 - Jede relevante Änderung in der Dokumentation nachziehen.
 - Keine erfolgreiche Prüfung behaupten, die nicht tatsächlich durchgeführt wurde.
 
+## Verbindliche Release-Versionierung (Pflicht)
+
+Bei jeder nutzerrelevanten Änderung mit Release-Wirkung ist die Version **immer**
+konsistent hochzusetzen. Es gilt kein "optional" und kein stilles Auslassen.
+
+Pflichtstellen (identischer Wert, z. B. `3.3.6`):
+
+1. `package.json` → `version`
+2. `package-lock.json` → Root-`version` und `packages[""].version`
+3. `index.html` → `meta[name="app-version"]`
+4. `index.html` → `manifest.webmanifest?v=...`
+5. `index.html` → `assets/styles/app.css?v=...`
+6. `index.html` → `assets/js/app.js?v=...`
+7. `assets/js/app.js` → `APP_VERSION`-Fallback
+8. `assets/js/i18n.js` → sichtbare Versionsanzeige im Brand-Subtitle
+9. `service-worker.js` → Cache-Name `linny-epic-time-portal-vX-Y-Z`
+10. `service-worker.js` → App-Shell-URLs mit `?v=...`
+
+Definition of Done fuer Releases:
+
+- Version wurde an **allen** Pflichtstellen geaendert.
+- `npm run check` wurde erfolgreich ausgefuehrt.
+- Es gibt keine alte Versionszeichenkette mehr im Repo (`rg "3\\.3\\.x"`).
+
 ## Geschütztes Projektgedächtnis
 
 Diese Dateien bilden das **Living Brain** des Projekts und steuern Ziele,
