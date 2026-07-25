@@ -2,7 +2,7 @@ export const UI = {
   de: {
     editorTitle: "Timer bearbeiten",
     editorNote: "Die Standardkonfiguration kommt aus Git. Änderungen werden in diesem Browser gespeichert und lassen sich als INI exportieren.",
-    brandSub: "EU-Event-Timer · v3.3.3",
+    brandSub: "EU-Event-Timer · v3.3.4",
     installApp: "Als App installieren",
     appRunning: "App läuft",
     installManualHintDesktop: "Browser-Menü öffnen und „App installieren“ bzw. „Seite als App installieren“ wählen.",
@@ -256,7 +256,7 @@ export const UI = {
   en: {
     editorTitle: "Edit timer",
     editorNote: "The default configuration comes from Git. Changes stay in this browser and can be exported as INI.",
-    brandSub: "EU event timer · v3.3.3",
+    brandSub: "EU event timer · v3.3.4",
     installApp: "Install app",
     appRunning: "App running",
     installManualHintDesktop: "Open the browser menu and choose “Install app” (or “Install this site as an app”).",
@@ -513,7 +513,7 @@ UI.bar = {
   ...UI.de,
   editorTitle: "Timer herrichtn",
   editorNote: "D'Grundkonfiguration kimmt aus Git. Dei Änderungen bleim in dem Browser und lossn se als INI exportiern.",
-  brandSub: "Boarischer EU-Event-Timer · v3.3.3",
+  brandSub: "Boarischer EU-Event-Timer · v3.3.4",
   installApp: "Ois App installiern",
   appRunning: "App lafft",
   installManualHintDesktop: "Machs Browser-Menü auf und nimm „App installiern“ bzw. „Seitn ois App installiern“.",

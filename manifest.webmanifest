@@ -3,6 +3,7 @@
   "short_name": "Linny Portal",
   "description": "Installierbarer Throne and Liberty EU Event-Timer mit Offline-Modus.",
   "lang": "de",
+  "id": "/throne-liberty-eu-kalender/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

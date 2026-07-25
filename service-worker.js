@@ -1,9 +1,9 @@
-const CACHE_NAME = "linny-epic-time-portal-v3-3-4";
+const CACHE_NAME = "linny-epic-time-portal-v3-3-5";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./assets/styles/app.css",
-  "./assets/js/app.js",
+  "./assets/styles/app.css?v=3.3.4",
+  "./assets/js/app.js?v=3.3.4",
   "./assets/js/config.js",
   "./assets/js/i18n.js",
   "./assets/js/ics.js",
@@ -11,7 +11,7 @@ const APP_SHELL = [
   "./assets/js/sounds.js",
   "./config.ini",
   "./live-timers.ini",
-  "./manifest.webmanifest",
+  "./manifest.webmanifest?v=3.3.4",
   "./assets/icons/linny-192.png",
   "./assets/icons/linny-512.png",
   "./assets/images/linny/linny-hero-v2.webp",
@@ -46,6 +46,13 @@ self.addEventListener("fetch", (event) => {
 
   const networkFirst = url.pathname.endsWith("/")
     || url.pathname.endsWith("/index.html")
+    || url.pathname.endsWith("/assets/styles/app.css")
+    || url.pathname.endsWith("/assets/js/app.js")
+    || url.pathname.endsWith("/assets/js/config.js")
+    || url.pathname.endsWith("/assets/js/i18n.js")
+    || url.pathname.endsWith("/assets/js/ics.js")
+    || url.pathname.endsWith("/assets/js/schedule.js")
+    || url.pathname.endsWith("/assets/js/sounds.js")
     || url.pathname.endsWith("/config.ini")
     || url.pathname.endsWith("/live-timers.ini")
     || url.pathname.endsWith("/manifest.webmanifest");

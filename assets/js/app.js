@@ -13,6 +13,7 @@ import { calendarEntryKey, downloadIcs as downloadCalendarIcs } from "./ics.js";
 const CARD_DENSITY_VALUES = ["ultra", "compact", "comfortable", "cinematic", "big-picture", "mega"];
 const BAVARIA_TIMEZONE = "Bayern/Munich";
 const CONFIG_UPDATED_AT = "2026-07-24T00:00:00Z";
+const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.4";
 const germanClient = (navigator.language || "").toLowerCase().startsWith("de");
 const clientDefaultLanguage = germanClient ? "bar" : "en";
 const clientDefaultTimezone = germanClient ? BAVARIA_TIMEZONE : "Europe/Berlin";
@@ -1029,7 +1030,7 @@ function renderConfigHealth() {
 function renderLabels() {
   document.documentElement.lang = state.lang;
   dom.brandTitle.textContent = text("heroTitle");
-  dom.brandSub.textContent = text("brandSub");
+  dom.brandSub.textContent = text("brandSub").replace(/v\d+\.\d+\.\d+/i, "v" + APP_VERSION);
   updateInstallButton();
   dom.helpDocsLink.textContent = text("helpDocs");
   dom.heroTitle.textContent = text("heroTitle");
