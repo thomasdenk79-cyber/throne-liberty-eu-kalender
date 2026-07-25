@@ -200,8 +200,10 @@
           <button class="btn alt icon-action" id="settingsCloseBtn" type="button" aria-label="Einstellungen schließen">×</button>
         </div>
       </div>
-      <div class="control-cluster control-settings">
-        <div class="meta-grid">
+
+      <details class="settings-group" id="settingsGroupCategory" open>
+        <summary class="settings-group-head"><span class="label" id="settingsGroupCategoryLabel">Kategorie verwalten</span></summary>
+        <div class="settings-group-body control-cluster">
           <div class="row">
             <div class="label settings-heading" id="categoryLabel">Category</div>
             <select id="categorySelect"></select>
@@ -210,19 +212,75 @@
               <button class="btn danger icon-action" id="deleteCategoryBtn" type="button" title="Kategorie löschen" aria-label="Kategorie löschen">⌫</button>
             </div>
           </div>
-          <div class="row">
-            <div class="label" id="displayZoneLabel">Display Timezone</div>
-            <select id="displayTimezone"></select>
+        </div>
+      </details>
+
+      <details class="settings-group" id="settingsGroupDisplay" open>
+        <summary class="settings-group-head"><span class="label" id="settingsGroupDisplayLabel">Anzeige &amp; Darstellung</span></summary>
+        <div class="settings-group-body control-cluster">
+          <div class="meta-grid">
+            <div class="row">
+              <div class="label" id="displayZoneLabel">Display Timezone</div>
+              <select id="displayTimezone"></select>
+            </div>
+            <div class="row">
+              <label class="label" id="historyMinutesLabel" for="historyMinutesInput">History after event</label>
+              <input id="historyMinutesInput" type="number" min="0" max="1440" step="1" value="30">
+              <div class="editor-help" id="historyMinutesHelp"></div>
+            </div>
+          </div>
+          <div class="meta-grid compact-settings">
+            <div class="row">
+              <label class="label" id="cardDensityLabel" for="cardDensitySelect">Card density</label>
+              <select id="cardDensitySelect">
+                <option value="comfortable">Comfortable</option>
+                <option value="compact" selected>Compact</option>
+                <option value="ultra">Ultra compact</option>
+                <option value="cinematic">Cinematic</option>
+                <option value="big-picture">Big Picture</option>
+              </select>
+            </div>
+            <div class="row">
+              <label class="label" id="themeLabel" for="themeSelect">Theme</label>
+              <select id="themeSelect">
+                <option value="astral">Astral</option>
+                <option value="bavaria">Bayern</option>
+                <option value="time-vortex">Zeitwirbel</option>
+                <option value="arcade">Arcade</option>
+                <option value="solisium">Solisium</option>
+                <option value="executive">Executive</option>
+              </select>
+            </div>
+          </div>
+          <div class="meta-grid compact-settings">
+            <div class="row">
+              <div class="label" id="accessibilityLabel">Accessibility</div>
+              <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span id="colorblindModeLabel">Colorblind symbols</span></label>
+              <label class="pill"><input id="showThumbnailsInput" type="checkbox" checked> <span id="showThumbnailsLabel">Show event art</span></label>
+            </div>
+            <div class="row">
+              <label class="label" id="imageZoomLabel" for="imageZoomSelect">Bildvorschau</label>
+              <select id="imageZoomSelect">
+                <option value="off">Aus</option>
+                <option value="small">Klein</option>
+                <option value="medium">Mittel</option>
+                <option value="large" selected>Groß</option>
+                <option value="huge">Sehr groß</option>
+              </select>
+            </div>
+          </div>
+          <div class="config-health" id="configHealth">
+            <span id="configUpdatedStatus"></span>
+            <span id="configLiveStatus"></span>
+            <span id="configExpiryStatus"></span>
           </div>
         </div>
-        <div class="meta-grid compact-settings">
+      </details>
+
+      <details class="settings-group" id="settingsGroupTools" open>
+        <summary class="settings-group-head"><span class="label" id="quickActionsLabel">Config</span></summary>
+        <div class="settings-group-body control-cluster">
           <div class="row">
-            <label class="label" id="historyMinutesLabel" for="historyMinutesInput">History after event</label>
-            <input id="historyMinutesInput" type="number" min="0" max="1440" step="1" value="30">
-            <div class="editor-help" id="historyMinutesHelp"></div>
-          </div>
-          <div class="row">
-            <div class="label" id="quickActionsLabel">Config</div>
             <div class="actions">
               <button class="btn icon-action" id="newTimerBtn" type="button" title="Neuer Timer" aria-label="Neuer Timer">＋</button>
               <button class="btn alt icon-action" id="exportBtn" type="button" title="INI exportieren" aria-label="INI exportieren">⇩</button>
@@ -231,84 +289,52 @@
             </div>
           </div>
         </div>
-        <div class="meta-grid compact-settings">
-          <div class="row">
-            <label class="label" id="cardDensityLabel" for="cardDensitySelect">Card density</label>
-            <select id="cardDensitySelect">
-              <option value="comfortable">Comfortable</option>
-              <option value="compact" selected>Compact</option>
-              <option value="ultra">Ultra compact</option>
-              <option value="cinematic">Cinematic</option>
-              <option value="big-picture">Big Picture</option>
-            </select>
-          </div>
-          <div class="row">
-            <label class="label" id="themeLabel" for="themeSelect">Theme</label>
-            <select id="themeSelect">
-              <option value="astral">Astral</option>
-              <option value="bavaria">Bayern</option>
-              <option value="time-vortex">Zeitwirbel</option>
-              <option value="arcade">Arcade</option>
-              <option value="solisium">Solisium</option>
-              <option value="executive">Executive</option>
-            </select>
-          </div>
-          <div class="row">
-            <div class="label" id="accessibilityLabel">Accessibility</div>
-            <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span id="colorblindModeLabel">Colorblind symbols</span></label>
-            <label class="pill"><input id="showThumbnailsInput" type="checkbox" checked> <span id="showThumbnailsLabel">Show event art</span></label>
-            <label class="label" id="imageZoomLabel" for="imageZoomSelect">Bildvorschau</label>
-            <select id="imageZoomSelect">
-              <option value="off">Aus</option>
-              <option value="small">Klein</option>
-              <option value="medium">Mittel</option>
-              <option value="large" selected>Groß</option>
-              <option value="huge">Sehr groß</option>
-            </select>
-          </div>
-        </div>
-        <div class="config-health" id="configHealth">
-          <span id="configUpdatedStatus"></span>
-          <span id="configLiveStatus"></span>
-          <span id="configExpiryStatus"></span>
-        </div>
-      </div>
+      </details>
 
-      <div class="control-cluster control-visibility row">
-        <div class="label" id="visibilityLabel">Visible Timers</div>
-        <div class="toggle" id="timerToggle"></div>
-      </div>
-
-      <div class="control-cluster notification-setup">
-        <div class="notification-copy">
-          <strong id="notificationSetupTitle">Benachrichtigungen</strong>
-          <small id="notificationPermissionStatus">Noch nicht für Windows freigegeben. Die Seite muss geöffnet bleiben.</small>
-          <small class="activity-status" id="pageActivityStatus"></small>
+      <details class="settings-group" id="settingsGroupVisibility" open>
+        <summary class="settings-group-head"><span class="label" id="visibilityLabel">Visible Timers</span></summary>
+        <div class="settings-group-body control-cluster control-visibility">
+          <div class="toggle" id="timerToggle"></div>
         </div>
-        <div class="notification-actions">
-          <label class="label" id="notificationOverrideLabel" for="notificationOverrideSelect">Alarmsteuerung</label>
-          <select id="notificationOverrideSelect">
-            <option value="default">Timer-Standard</option>
-            <option value="all">Alle aktiv</option>
-            <option value="silent">Nur visuell</option>
-            <option value="off">Alle aus</option>
-          </select>
-          <button class="btn icon-action" id="enableNotificationsBtn" type="button" title="Benachrichtigungen aktivieren und Ton testen" aria-label="Benachrichtigungen aktivieren und Ton testen">🔊</button>
-          <div class="dock-launch">
-            <div class="dock-pad" id="dockPad" aria-label="Statusleiste positionieren">
-              <button class="dock-direction" type="button" data-dock-side="top-left" title="Oben links">↖</button>
-              <button class="dock-direction" type="button" data-dock-side="top" title="Oben">↑</button>
-              <button class="dock-direction" type="button" data-dock-side="top-right" title="Oben rechts">↗</button>
-              <button class="dock-direction" type="button" data-dock-side="left" title="Links">←</button>
-              <span class="dock-center">✥</span>
-              <button class="dock-direction" type="button" data-dock-side="right" title="Rechts">→</button>
-              <button class="dock-direction" type="button" data-dock-side="bottom-left" title="Unten links">↙</button>
-              <button class="dock-direction" type="button" data-dock-side="bottom" title="Unten">↓</button>
-              <button class="dock-direction" type="button" data-dock-side="bottom-right" title="Unten rechts">↘</button>
+      </details>
+
+      <details class="settings-group" id="settingsGroupNotifications" open>
+        <summary class="settings-group-head"><span class="label" id="notificationSetupTitle">Benachrichtigungen</span></summary>
+        <div class="settings-group-body control-cluster notification-setup">
+          <div class="notification-copy">
+            <small id="notificationPermissionStatus">Noch nicht für Windows freigegeben. Die Seite muss geöffnet bleiben.</small>
+            <small class="activity-status" id="pageActivityStatus"></small>
+          </div>
+          <div class="notification-actions">
+            <div class="row">
+              <label class="label" id="notificationOverrideLabel" for="notificationOverrideSelect">Alarmsteuerung</label>
+              <div class="inline-field-action">
+                <select id="notificationOverrideSelect">
+                  <option value="default">Timer-Standard</option>
+                  <option value="all">Alle aktiv</option>
+                  <option value="silent">Nur visuell</option>
+                  <option value="off">Alle aus</option>
+                </select>
+                <button class="btn alt notification-test-btn" id="enableNotificationsBtn" type="button" title="Benachrichtigungen aktivieren und Ton testen" aria-label="Benachrichtigungen aktivieren und Ton testen">🔊</button>
+              </div>
+            </div>
+            <div class="dock-launch">
+              <div class="label" id="dockLaunchLabel">Statusleiste positionieren</div>
+              <div class="dock-pad" id="dockPad" aria-label="Statusleiste positionieren">
+                <button class="dock-direction" type="button" data-dock-side="top-left" title="Oben links">↖</button>
+                <button class="dock-direction" type="button" data-dock-side="top" title="Oben">↑</button>
+                <button class="dock-direction" type="button" data-dock-side="top-right" title="Oben rechts">↗</button>
+                <button class="dock-direction" type="button" data-dock-side="left" title="Links">←</button>
+                <span class="dock-center">✥</span>
+                <button class="dock-direction" type="button" data-dock-side="right" title="Rechts">→</button>
+                <button class="dock-direction" type="button" data-dock-side="bottom-left" title="Unten links">↙</button>
+                <button class="dock-direction" type="button" data-dock-side="bottom" title="Unten">↓</button>
+                <button class="dock-direction" type="button" data-dock-side="bottom-right" title="Unten rechts">↘</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </details>
       </section>
     </div>
 
@@ -324,7 +350,7 @@
       <section class="stack">
         <div class="stack-heading">
           <div class="label" id="stackLabel">Upcoming Timers</div>
-          <button class="btn alt collapse-btn" id="liveCollapseBtn" type="button" title="Timer ein-/ausklappen" aria-label="Timer ein-/ausklappen">⌃</button>
+          <button class="btn alt collapse-btn" id="liveCollapseBtn" type="button" title="Timer ein-/ausklappen" aria-label="Timer ein-/ausklappen">›</button>
         </div>
         <div id="cardStack"></div>
       </section>

@@ -125,6 +125,25 @@ kompatible unterstützte Version verwendet werden. Die Abweichung wird im
 Testnachweis genannt. `npm ci` ist gegenüber `npm install` zu bevorzugen, weil
 es den Lockfile-Stand reproduziert.
 
+### Visuelle Regressionsprüfung
+
+Bei jeder Änderung an `index.html`, `assets/styles/app.css` oder
+layoutrelevantem JavaScript zusätzlich:
+
+```powershell
+npm run visual:local
+```
+
+Das Skript `scripts/visual_check.mjs` startet einen lokalen statischen
+Server, akzeptiert automatisch den Speicher-Consent-Dialog und schreibt
+Desktop- und Mobile-Screenshots nach `tests/visual-baselines/`. Diese
+Screenshots müssen mit dem Bildbetrachter tatsächlich angesehen werden — ein
+Agent darf visuelle Korrektheit nicht allein aus dem Nichtvorhandensein von
+Konsolenfehlern ableiten. Nach einem Deploy zusätzlich `npm run visual:live`
+gegen die echte GitHub-Pages-URL laufen lassen. `tests/visual-baselines/*.png`
+wird committet (aktueller Stand); `tests/visual-baselines/history/` ist
+lokal und per `.gitignore` ausgeschlossen.
+
 ### Testmatrix nach Ausführungsumgebung
 
 | Umgebung | Pflicht, soweit verfügbar | Darf nicht behaupten |

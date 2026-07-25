@@ -131,6 +131,9 @@ const dom = {
   editNotifyCriticalSoundLabel: document.getElementById("editNotifyCriticalSoundLabel"),
   editNotifyCriticalDurationLabel: document.getElementById("editNotifyCriticalDurationLabel"),
   categoryLabel: document.getElementById("categoryLabel"),
+  settingsGroupCategoryLabel: document.getElementById("settingsGroupCategoryLabel"),
+  settingsGroupDisplayLabel: document.getElementById("settingsGroupDisplayLabel"),
+  dockLaunchLabel: document.getElementById("dockLaunchLabel"),
   displayZoneLabel: document.getElementById("displayZoneLabel"),
   historyMinutesLabel: document.getElementById("historyMinutesLabel"),
   historyMinutesHelp: document.getElementById("historyMinutesHelp"),
@@ -888,7 +891,7 @@ function applyAppearanceSettings() {
   dom.showThumbnailsInput.checked = state.showThumbnails;
   dom.liveColumn.classList.toggle("is-collapsed", state.liveCollapsed && !state.dockMode);
   dom.calendarSection.classList.toggle("is-collapsed", state.calendarCollapsed);
-  dom.liveCollapseBtn.textContent = state.liveCollapsed ? "⌄" : "⌃";
+  dom.liveCollapseBtn.textContent = state.liveCollapsed ? "‹" : "›";
   dom.calendarCollapseBtn.textContent = state.calendarCollapsed ? "⌄" : "⌃";
   const heroByTheme = {
     astral: "assets/events/gallery/linny-celestial-observatory-v1.webp",
@@ -1065,6 +1068,9 @@ function renderLabels() {
   dom.channelBrowserLabel.textContent = text("browserChannel");
   dom.channelPopupLabel.textContent = text("popupChannel");
   dom.categoryLabel.textContent = text("category");
+  dom.settingsGroupCategoryLabel.textContent = text("settingsGroupCategory");
+  dom.settingsGroupDisplayLabel.textContent = text("settingsGroupDisplay");
+  dom.dockLaunchLabel.textContent = text("dockMode");
   dom.displayZoneLabel.textContent = text("displayZone");
   dom.historyMinutesLabel.textContent = text("historyMinutes");
   dom.historyMinutesHelp.textContent = text("historyMinutesHelp");
@@ -1728,7 +1734,7 @@ function showPopup(timer, next, level) {
 
 function renderNotificationPermissionStatus() {
   const setNotificationButton = (labelKey) => {
-    dom.enableNotificationsBtn.textContent = "🔊";
+    dom.enableNotificationsBtn.textContent = "🔊 " + text(labelKey);
     dom.enableNotificationsBtn.title = text(labelKey);
     dom.enableNotificationsBtn.setAttribute("aria-label", text(labelKey));
   };

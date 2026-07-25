@@ -75,6 +75,31 @@ Pflicht machen. Werden Verhalten, Module, Testwerkzeuge oder Prozesse geändert,
 müssen Tests, Workflows und betroffene Living-Brain-Dokumente im selben
 Änderungssatz nachgezogen werden.
 
+## Visuelle Prüfung bei UI-/Layout-Änderungen
+
+Da Thomas selbst keine Screenshots hochladen kann, muss ein Agent bei jeder
+Änderung an `index.html`, `assets/styles/app.css` oder layoutrelevantem
+`assets/js/app.js`-Code die Seite tatsächlich rendern und ansehen, bevor er
+"fertig" meldet:
+
+1. `npm run visual:local` ausführen (startet einen lokalen statischen Server,
+   akzeptiert automatisch den Speicher-Consent-Dialog und schreibt
+   Desktop-/Mobile-Screenshots nach `tests/visual-baselines/`).
+2. Die erzeugten PNGs mit dem Bild-/View-Werkzeug tatsächlich ansehen, nicht
+   nur "Datei existiert" prüfen.
+3. Nach einem Deploy zusätzlich `npm run visual:live` gegen die echte
+   GitHub-Pages-URL laufen lassen, um Cache-/Deploy-Probleme sichtbar zu
+   machen (Konsole-Fehler, fehlgeschlagene Requests ≥400).
+4. `tests/visual-baselines/*.png` (aktueller Stand, keine Historie) wird mit
+   committet, damit der jeweils letzte bekannte visuelle Zustand im Repo
+   nachvollziehbar bleibt. Der Ordner `tests/visual-baselines/history/`
+   sammelt Zeitstempel-Kopien nur lokal (per `.gitignore` ausgeschlossen), um
+   den Repo-Wachstum nicht unbegrenzt zu treiben.
+
+Das Werkzeug dafür ist `scripts/visual_check.mjs` (Playwright, permanente
+Dev-Dependency). Es ist kein Ersatz für `npm run check`, sondern eine
+zusätzliche, verpflichtende Sichtprüfung für sichtbare Änderungen.
+
 ## Quellen der Wahrheit
 
 - `config.ini`: Standardkategorien und Standardtimer
@@ -97,6 +122,10 @@ Eine Änderung ist erst fertig, wenn:
 - neue Konfigurationen importierbar/exportierbar bleiben,
 - die Bedienung für Nicht-Programmierer verständlich bleibt,
 - relevante Ansichten und Randfälle geprüft wurden,
+- bei sichtbaren UI-/Layout-Änderungen zusätzlich `npm run visual:local`
+  (und nach Deploy `npm run visual:live`) ausgeführt und die Screenshots
+  tatsächlich angesehen wurden (siehe „Visuelle Prüfung bei UI-/Layout-
+  Änderungen“),
 - und ein kurzer Testnachweis oder eine ehrliche Liste nicht geprüfter Punkte vorliegt.
 - sichtbare Änderungen im Changelog und betroffene Aufgaben im Taskboard gepflegt sind.
 - nutzerrelevante Änderungen zusätzlich unter `docs/user/whats-new.md` verständlich beschrieben sind.

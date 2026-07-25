@@ -12,3 +12,9 @@ site/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Visual regression tooling: keep the current baseline screenshots in git
+# (tests/visual-baselines/*.png) so future agents/humans can compare against
+# them, but don't commit the timestamped history/ trail to avoid unbounded
+# repo growth over time.
+tests/visual-baselines/history/

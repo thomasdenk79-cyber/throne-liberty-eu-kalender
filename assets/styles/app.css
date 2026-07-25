@@ -1537,6 +1537,12 @@ textarea:focus {
 .notification-copy small { display: none; }
 .notification-copy { cursor: help; }
 
+.notification-test-btn {
+  width: auto;
+  padding-inline: 12px;
+  white-space: nowrap;
+}
+
 .event-dialog {
   width: min(420px, calc(100vw - 28px));
   padding: 0;
@@ -1653,26 +1659,26 @@ body {
 .dock-launch { display: grid; place-items: center; gap: 7px; }
 .dock-pad {
   display: grid;
-  grid-template-columns: repeat(3, 38px);
-  grid-template-rows: repeat(3, 38px);
-  gap: 4px;
-  padding: 7px;
+  grid-template-columns: repeat(3, 48px);
+  grid-template-rows: repeat(3, 48px);
+  gap: 5px;
+  padding: 8px;
   border: 1px solid #8ee7ff36;
   border-radius: 14px;
   background: #07111dd9;
 }
 .dock-direction {
-  width: 38px;
-  min-width: 38px;
-  height: 38px;
-  min-height: 38px;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  min-height: 48px;
   padding: 0;
   border: 1px solid #9cdbf52b;
   border-radius: 9px;
   background: #102034;
   color: #bfeeff;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 26px;
   transition: transform 140ms ease, color 140ms ease, background 140ms ease, box-shadow 140ms ease;
 }
 .dock-direction:hover,
@@ -1688,7 +1694,7 @@ body {
   background: linear-gradient(145deg, #2e76a0, #704c9d);
   box-shadow: 0 0 0 2px #8ee7ff55;
 }
-.dock-center { display: grid; place-items: center; color: #7b91aa; font-size: 16px; }
+.dock-center { display: grid; place-items: center; color: #7b91aa; font-size: 20px; }
 
 .live-column {
   grid-column: 2;
@@ -2306,6 +2312,56 @@ html.colorblind-mode[data-density="ultra"] .card-phase-progress { height: 7px !i
 .settings-backdrop:not([hidden]) { display: block; }
 body.settings-open { overflow: hidden; }
 
+.settings-group {
+  border: 1px solid #9cdbf524;
+  border-radius: 14px;
+  background: linear-gradient(150deg, #101f32, #0a1420);
+  box-shadow: inset 0 1px 0 #ffffff0a;
+  overflow: hidden;
+}
+
+.settings-group + .settings-group { margin-top: 10px; }
+
+.settings-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 11px 14px;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  color: #d9f1ff;
+  user-select: none;
+}
+
+.settings-group-head::-webkit-details-marker { display: none; }
+
+.settings-group-head::after {
+  content: "›";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 17px;
+  color: #8ee7ff;
+  transform: rotate(90deg);
+  transition: transform 160ms ease;
+}
+
+.settings-group[open] > .settings-group-head::after { transform: rotate(-90deg); }
+
+.settings-group-head:hover { background: #ffffff08; }
+
+.settings-group-body {
+  padding: 4px 14px 14px;
+  border-top: 1px solid #9cdbf51c;
+}
+
+.settings-group-body.control-visibility { padding-top: 12px; }
+
+
 .editor {
   top: 78px;
   bottom: 12px;
@@ -2348,6 +2404,28 @@ body.settings-open { overflow: hidden; }
   min-height: 0;
   grid-template-rows: auto minmax(0, 1fr);
 }
+
+/* "Nächste Events" docks sideways into a slim rail instead of collapsing upward (wide layout only). */
+@media (min-width: 1101px) {
+  .layout:has(.live-column.is-collapsed) {
+    grid-template-columns: minmax(0, 1fr) 58px;
+  }
+}
+
+.live-column.is-collapsed {
+  min-width: 0;
+  padding-inline: 6px;
+}
+
+.live-column.is-collapsed .stack-heading {
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.live-column.is-collapsed .stack-heading .label { display: none; }
+
+.live-column.is-collapsed .collapse-btn { transform: none; }
 
 .live-column .stack {
   display: flex;

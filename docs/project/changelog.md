@@ -13,6 +13,57 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
+## 3.3.1 – 25. Juli 2026
+
+<span class="status-chip status-active">Live</span>
+
+Zwei Nachbesserungen an der 3.3.0-Modularisierung, gefunden per echtem
+Headless-Browser-Test (Chromium) sowohl gegen `file://` als auch gegen die
+veröffentlichte GitHub-Pages-Seite:
+
+- Fix: Die neue Modul-Aufteilung (`assets/js/app.js` u.a. via
+  `<script type="module">`) lud beim direkten Öffnen von `index.html` per
+  Doppelklick (`file://`) nicht mehr: Browser blockieren ES-Modul-Fetches über
+  `file://` aus Sicherheitsgründen (CORS). Da zuvor kein Fehler sichtbar
+  wurde, blieb die Seite dauerhaft leer („booting"-Zustand). Ein kleines
+  klassisches Inline-Script fängt das `error`-Ereignis des Modul-Scripts jetzt
+  ab, blendet die Seite wieder ein und zeigt eine verständliche
+  zweisprachige Hinweismeldung, statt stumm leer zu bleiben. Über GitHub
+  Pages oder einen lokalen Webserver war und bleibt die Seite unverändert
+  funktionsfähig. Siehe
+  `docs/project/architecture.md#bekannte-browsergrenze-file`.
+- Fix: Das rotierende Hero-Hintergrundbild (Themen Astral/Bavaria) 404ete auf
+  der echten Live-Seite, weil der per JavaScript gesetzte
+  CSS-Custom-Property-Wert `--hero-image: url(...)` einen relativen
+  Bildpfad enthielt. Chromium löst `url()`-Werte innerhalb einer per `var()`
+  konsumierten Custom Property relativ zum Stylesheet auf, das sie
+  konsumiert (`assets/styles/app.css`), nicht relativ zum Dokument – dadurch
+  landete der Request unter `assets/styles/assets/events/...`. Der Pfad wird
+  vor dem Setzen jetzt über `new URL(..., document.baseURI)` in eine
+  absolute URL aufgelöst.
+- Sichtbare Versionsnummer im Header von „v3.3" auf „v3.3.1" angehoben und
+  Service-Worker-Cachename entsprechend gebumpt (`linny-epic-time-portal-v3-3-1`),
+  damit auch wiederkehrende Besucher:innen die Fixes sofort erhalten und am
+  Header erkennbar ist, welcher Stand geladen wurde.
+- UX-Nachbesserung am 3.3.0-Einstellungs-Overlay: Kategorie, Anzeige &
+  Darstellung, Timer-Werkstatt (Neuer Timer/Export/Import), Timer anzeigen
+  und Benachrichtigungen sind jetzt fünf klar beschriftete, unabhängig
+  auf-/zuklappbare Bereiche (`<details>`) statt eines unübersichtlichen
+  Blocks – die Kategorie-Verwaltung war zuvor optisch nicht von den
+  Neuer-Timer/Export/Import-Knöpfen abgegrenzt.
+- Der Sound-Test-Knopf bei Benachrichtigungen stand zuvor isoliert neben dem
+  Alarmsteuerungs-Auswahlfeld; er zeigt jetzt Symbol **und** Beschriftung
+  und ist sichtbar der Alarmsteuerung zugeordnet.
+- Die Pfeile zum Positionieren der schwebenden Statusleiste (Dock-Pad) wurden
+  spürbar vergrößert (38px → 48px, Schriftgröße 20px → 26px).
+- „Nächste Events" klappt nicht mehr nach oben weg, sondern dockt seitlich
+  zu einer schmalen Leiste am rechten Rand (Pfeil zeigt zum Einklappen nach
+  rechts, Hero-/Kalenderbereich gewinnt dadurch Breite zurück).
+- Neues Werkzeug `scripts/visual_check.mjs` (Playwright) für echte
+  Screenshot-Prüfungen (`npm run visual:local` / `npm run visual:live`);
+  aktuelle Baseline-Screenshots liegen unter `tests/visual-baselines/*.png`
+  im Repository, siehe `AGENTS.md#visuelle-prüfung-bei-ui--layout-änderungen`.
+
 ## 3.3.0 – 25. Juli 2026
 
 <span class="status-chip status-active">In Review</span>
@@ -33,29 +84,6 @@ Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. D
   erst nach erfolgreichen App- und Doku-Gates.
 - Living-Brain-Schutz, fähigkeitsbasierte Agentenreviews, periodische externe
   Stand-der-Technik-Audits und Repository-Vorlagen ergänzt.
-
-### Fix nach der Modularisierung (25. Juli 2026)
-
-Die neue Modul-Aufteilung (`assets/js/app.js` u.a. via `<script type="module">`)
-lud beim direkten Öffnen von `index.html` per Doppelklick (`file://`) nicht
-mehr: Browser blockieren ES-Modul-Fetches über `file://` aus Sicherheitsgründen
-(CORS). Da zuvor kein Fehler sichtbar wurde, blieb die Seite dauerhaft leer
-(„booting"-Zustand). Ein kleines klassisches Inline-Script fängt das
-`error`-Ereignis des Modul-Scripts jetzt ab, blendet die Seite wieder ein und
-zeigt eine verständliche zweisprachige Hinweismeldung, statt stumm leer zu
-bleiben. Über GitHub Pages oder einen lokalen Webserver war und bleibt die
-Seite unverändert funktionsfähig. Siehe `docs/project/architecture.md#bekannte-browsergrenze-file`.
-
-Zusätzlich per echtem Headless-Browser-Test gegen die veröffentlichte Seite
-geprüft und einen zweiten, unabhängigen Fehler gefunden und behoben: Das
-rotierende Hero-Hintergrundbild (Themen Astral/Bavaria) 404ete, weil der per
-JavaScript gesetzte CSS-Custom-Property-Wert `--hero-image: url(...)` einen
-relativen Bildpfad enthielt. Chromium löst `url()`-Werte innerhalb einer per
-`var()` konsumierten Custom Property relativ zum Stylesheet auf, das sie
-konsumiert (`assets/styles/app.css`), nicht relativ zum Dokument – dadurch
-landete der Request unter `assets/styles/assets/events/...`. Der Pfad wird vor
-dem Setzen jetzt über `new URL(..., document.baseURI)` in eine absolute URL
-aufgelöst.
 
 ## 3.2.0 – 24. Juli 2026
 

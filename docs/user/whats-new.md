@@ -32,6 +32,17 @@ canonical: true
 - Fix: Das rotierende Hero-Hintergrundbild im Astral- und Bayern-Motiv lud auf
   der echten Seite gelegentlich nicht (404), weil der Bildpfad im Browser
   falsch aufgelöst wurde. Das Hero-Bild lädt jetzt zuverlässig.
+- Verbesserung: Das Einstellungsfenster war zu unübersichtlich – Kategorie,
+  Anzeige, Timer-Werkstatt (Neuer Timer/Export/Import), Timer anzeigen und
+  Benachrichtigungen sind jetzt fünf einzeln auf-/zuklappbare Bereiche mit
+  eigener Überschrift.
+- Verbesserung: Der Sound-Test-Knopf bei den Benachrichtigungen zeigt jetzt
+  eine Beschriftung statt nur ein einsames Lautsprecher-Symbol.
+- Verbesserung: Die Pfeile zum Positionieren der Statusleiste sind deutlich
+  größer und leichter zu treffen.
+- Verbesserung: „Nächste Events" klappt jetzt seitlich zu einer schmalen
+  Leiste am rechten Rand ein (Pfeil zeigt nach rechts), statt nach oben zu
+  verschwinden – dadurch bleibt mehr Platz für Hero-Bild und Kalender.
 
 ## Das Portal räumt die Kommandozentrale auf
 

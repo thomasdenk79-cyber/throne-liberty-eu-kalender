@@ -1,4 +1,4 @@
-const CACHE_NAME = "linny-epic-time-portal-v3-3";
+const CACHE_NAME = "linny-epic-time-portal-v3-3-1";
 const APP_SHELL = [
   "./",
   "./index.html",
