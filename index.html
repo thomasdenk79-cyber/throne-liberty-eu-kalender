@@ -287,7 +287,10 @@
       <section class="current-events" id="currentEventsSection" hidden>
         <div class="current-events-heading">
           <div class="label" id="currentEventsLabel">Currently running</div>
-          <button class="btn alt history-toggle" id="historyToggleBtn" type="button"></button>
+          <button class="btn alt history-toggle collapse-btn" id="historyToggleBtn" type="button">
+            <span class="collapse-icon" aria-hidden="true"></span>
+            <span class="history-count" aria-hidden="true">0</span>
+          </button>
         </div>
         <div id="currentEventsList"></div>
       </section>
@@ -295,7 +298,9 @@
       <section class="stack">
         <div class="stack-heading">
           <div class="label" id="stackLabel">Upcoming Timers</div>
-          <button class="btn alt collapse-btn" id="liveCollapseBtn" type="button" title="Timer ein-/ausklappen" aria-label="Timer ein-/ausklappen">›</button>
+          <button class="btn alt collapse-btn" id="liveCollapseBtn" type="button" title="Timer ein-/ausklappen" aria-label="Timer ein-/ausklappen">
+            <span class="collapse-icon" aria-hidden="true"></span>
+          </button>
         </div>
         <div id="cardStack"></div>
       </section>
@@ -309,7 +314,9 @@
         </div>
         <div class="section-heading-actions">
           <span class="selection-count" id="calendarSelectionStatus">0 ausgewählt</span>
-          <button class="btn alt collapse-btn" id="calendarCollapseBtn" type="button" title="Kalender ein-/ausklappen" aria-label="Kalender ein-/ausklappen">⌃</button>
+          <button class="btn alt collapse-btn" id="calendarCollapseBtn" type="button" title="Kalender ein-/ausklappen" aria-label="Kalender ein-/ausklappen">
+            <span class="collapse-icon" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
       <div class="calendar-toolbar">

@@ -329,6 +329,15 @@ function updateShareButtons() {
   dom.shareNativeBtn.hidden = !navigator.share;
 }
 
+function setCollapseDirection(button, direction) {
+  button.dataset.direction = direction;
+}
+
+function updateCollapseButtons() {
+  setCollapseDirection(dom.liveCollapseBtn, state.liveCollapsed ? "right" : "left");
+  setCollapseDirection(dom.calendarCollapseBtn, state.calendarCollapsed ? "down" : "up");
+}
+
 function analyticsMode() {
   const value = (new URLSearchParams(window.location.search).get("analytics") || "ga4").toLowerCase();
   if (value === "both" || value === "ga4" || value === "plausible") return value;
@@ -392,7 +401,7 @@ function registerPwaServiceWorker() {
 function updateEditorPanelState() {
   dom.editorPanel.dataset.side = state.editorSide;
   dom.editorPanel.dataset.collapsed = String(state.editorCollapsed);
-  dom.editorCollapseBtn.textContent = state.editorCollapsed ? "+" : "−";
+  dom.editorCollapseBtn.textContent = state.editorCollapsed ? "▾" : "▴";
   dom.editorCollapseBtn.title = text(state.editorCollapsed ? "editorExpand" : "editorCollapse");
   dom.editorCollapseBtn.setAttribute("aria-label", dom.editorCollapseBtn.title);
   dom.editorCollapseBtn.setAttribute("aria-expanded", String(!state.editorCollapsed));
@@ -974,8 +983,7 @@ function applyAppearanceSettings() {
   dom.showThumbnailsInput.checked = state.showThumbnails;
   dom.liveColumn.classList.toggle("is-collapsed", state.liveCollapsed && !state.dockMode);
   dom.calendarSection.classList.toggle("is-collapsed", state.calendarCollapsed);
-  dom.liveCollapseBtn.textContent = state.liveCollapsed ? "‹" : "›";
-  dom.calendarCollapseBtn.textContent = state.calendarCollapsed ? "⌄" : "⌃";
+  updateCollapseButtons();
   const heroByTheme = {
     astral: "assets/events/gallery/linny-celestial-observatory-v1.webp",
     bavaria: "assets/events/gallery/linny-white-stag-v1.webp",
@@ -2281,9 +2289,14 @@ function renderCurrentEvents() {
   dom.currentEventsList.innerHTML = "";
   const historyCount = items.filter((item) => item.timing.status === "ended").length;
   dom.historyToggleBtn.hidden = historyCount === 0;
-  dom.historyToggleBtn.textContent = text(state.historyCollapsed ? "showHistory" : "hideHistory")
+  const historyToggleText = text(state.historyCollapsed ? "showHistory" : "hideHistory")
     .replace("{count}", String(historyCount));
+  dom.historyToggleBtn.title = historyToggleText;
+  dom.historyToggleBtn.setAttribute("aria-label", historyToggleText);
   dom.historyToggleBtn.setAttribute("aria-expanded", String(!state.historyCollapsed));
+  setCollapseDirection(dom.historyToggleBtn, state.historyCollapsed ? "down" : "up");
+  const historyCountBadge = dom.historyToggleBtn.querySelector(".history-count");
+  if (historyCountBadge) historyCountBadge.textContent = String(historyCount);
   for (const { timer, timing } of items) {
     const isRunning = timing.status === "running";
     if (!isRunning && state.historyCollapsed) continue;
