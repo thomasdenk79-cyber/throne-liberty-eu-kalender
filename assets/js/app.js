@@ -291,9 +291,30 @@ function isStandaloneMode() {
 
 function updateInstallButton() {
   const standalone = isStandaloneMode();
-  dom.installAppBtn.hidden = !standalone && !deferredInstallPrompt;
+  dom.installAppBtn.hidden = false;
   dom.installAppBtn.disabled = standalone;
   dom.installAppBtn.textContent = text(standalone ? "appRunning" : "installApp");
+}
+
+function installFallbackHint() {
+  const ua = navigator.userAgent || "";
+  const isIos = /iPad|iPhone|iPod/.test(ua);
+  const isMac = /Macintosh/.test(ua);
+  const isSafari = /Safari/.test(ua) && !/Chrome|Chromium|Edg/.test(ua);
+  if (isIos || (isMac && isSafari)) return text("installManualHintIos");
+  return text("installManualHintDesktop");
+}
+
+function canRegisterServiceWorker() {
+  return "serviceWorker" in navigator && /^https?:$/.test(location.protocol);
+}
+
+function registerPwaServiceWorker() {
+  if (!canRegisterServiceWorker()) return;
+  navigator.serviceWorker.register("service-worker.js", { scope: "./" }).catch((error) => {
+    console.error("Service worker registration failed.", error);
+    toast(errorMessage(error));
+  });
 }
 
 function updateEditorPanelState() {
@@ -2461,12 +2482,7 @@ function setupPwa() {
   window.matchMedia?.("(display-mode: standalone)")
     .addEventListener?.("change", updateInstallButton);
   updateInstallButton();
-  if (storageConsent && "serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-    navigator.serviceWorker.register("service-worker.js").catch((error) => {
-      console.error("Service worker registration failed.", error);
-      toast(errorMessage(error));
-    });
-  }
+  registerPwaServiceWorker();
 }
 
 function bind() {
@@ -2475,6 +2491,7 @@ function bind() {
   dom.langBarBtn.addEventListener("click", () => setLanguage("bar"));
   dom.installAppBtn.addEventListener("click", async () => {
     if (isStandaloneMode() || !deferredInstallPrompt) {
+      if (!isStandaloneMode()) toast(installFallbackHint());
       updateInstallButton();
       return;
     }
