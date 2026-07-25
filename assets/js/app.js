@@ -10,6 +10,7 @@ import {
 } from "./schedule.js";
 import { calendarEntryKey, downloadIcs as downloadCalendarIcs } from "./ics.js";
 
+const CARD_DENSITY_VALUES = ["ultra", "compact", "comfortable", "cinematic", "big-picture", "mega"];
 const BAVARIA_TIMEZONE = "Bayern/Munich";
 const CONFIG_UPDATED_AT = "2026-07-24T00:00:00Z";
 const germanClient = (navigator.language || "").toLowerCase().startsWith("de");
@@ -66,7 +67,6 @@ const state = {
   imageZoom: "large",
   liveCollapsed: false,
   calendarCollapsed: false,
-  settingsOpen: true,
   editorSide: storageGet("timer_editor_side") === "right" ? "right" : "left",
   editorCollapsed: false,
   cardRenderKey: "",
@@ -165,6 +165,7 @@ const dom = {
   importBtn: document.getElementById("importBtn"),
   importInput: document.getElementById("importInput"),
   newCategoryBtn: document.getElementById("newCategoryBtn"),
+  renameCategoryBtn: document.getElementById("renameCategoryBtn"),
   deleteCategoryBtn: document.getElementById("deleteCategoryBtn"),
   cardStack: document.getElementById("cardStack"),
   liveColumn: document.getElementById("liveColumn"),
@@ -243,6 +244,9 @@ const dom = {
   installAppBtn: document.getElementById("installAppBtn"),
   settingsToggleBtn: document.getElementById("settingsToggleBtn"),
   settingsPanel: document.getElementById("settingsPanel"),
+  settingsPopover: document.getElementById("settingsPopover"),
+  settingsPopoverTitle: document.getElementById("settingsPopoverTitle"),
+  settingsPopoverCloseBtn: document.getElementById("settingsPopoverCloseBtn"),
   storageSettingsBtn: document.getElementById("storageSettingsBtn"),
   helpDocsLink: document.getElementById("helpDocsLink"),
   imprintBtn: document.getElementById("imprintBtn"),
@@ -290,13 +294,6 @@ function updateInstallButton() {
   dom.installAppBtn.hidden = !standalone && !deferredInstallPrompt;
   dom.installAppBtn.disabled = standalone;
   dom.installAppBtn.textContent = text(standalone ? "appRunning" : "installApp");
-}
-
-function setSettingsOpen(open) {
-  state.settingsOpen = Boolean(open);
-  dom.settingsPanel.hidden = !state.settingsOpen;
-  dom.settingsToggleBtn.setAttribute("aria-expanded", String(state.settingsOpen));
-  storageSet("timer_settings_collapsed", String(!state.settingsOpen));
 }
 
 function updateEditorPanelState() {
@@ -871,9 +868,8 @@ function filteredTimers() {
 }
 
 function applyAppearanceSettings() {
-  const densityValues = ["comfortable", "compact", "ultra", "cinematic", "big-picture"];
+  const density = CARD_DENSITY_VALUES.includes(state.cardDensity) ? state.cardDensity : "compact";
   const themeValues = ["astral", "bavaria", "time-vortex", "arcade", "solisium", "executive"];
-  const density = densityValues.includes(state.cardDensity) ? state.cardDensity : "compact";
   const theme = themeValues.includes(state.theme) ? state.theme : "astral";
   document.documentElement.dataset.density = density;
   document.documentElement.dataset.theme = theme;
@@ -1072,11 +1068,12 @@ function renderLabels() {
     dom.historyMinutesInput.value = String(state.historyMinutes);
   }
   dom.cardDensityLabel.textContent = text("cardDensity");
-  dom.cardDensitySelect.options[0].textContent = text("densityComfortable");
+  dom.cardDensitySelect.options[0].textContent = text("densityUltra");
   dom.cardDensitySelect.options[1].textContent = text("densityCompact");
-  dom.cardDensitySelect.options[2].textContent = text("densityUltra");
+  dom.cardDensitySelect.options[2].textContent = text("densityComfortable");
   dom.cardDensitySelect.options[3].textContent = text("densityCinematic");
   dom.cardDensitySelect.options[4].textContent = text("densityBigPicture");
+  dom.cardDensitySelect.options[5].textContent = text("densityMega");
   dom.themeLabel.textContent = text("theme");
   ["themeAstral", "themeBavaria", "themeTimeVortex", "themeArcade", "themeSolisium", "themeExecutive"]
     .forEach((key, index) => { dom.themeSelect.options[index].textContent = text(key); });
@@ -1110,16 +1107,12 @@ function renderLabels() {
   dom.calendarCollapseBtn.setAttribute("aria-label", text("collapseCalendar"));
   dom.settingsToggleBtn.title = text("toggleSettings");
   dom.settingsToggleBtn.setAttribute("aria-label", text("toggleSettings"));
+  dom.settingsPopoverTitle.textContent = text("settingsPopoverTitle");
   dom.storageSettingsBtn.textContent = text("storageSettings");
   dom.eventPopupLabel.textContent = text("eventAlert");
   dom.eventPopupCloseBtn.textContent = text("acknowledge");
   dom.footerSummary.textContent = text("footerSummary");
   renderLegalContent();
-  dom.saveTimerBtn.textContent = text("saveLocal");
-  dom.duplicateTimerBtn.textContent = text("duplicate");
-  dom.deleteTimerBtn.textContent = text("deleteLocal");
-  dom.resetTimerBtn.textContent = text("resetDefault");
-  dom.closeEditorBtn.textContent = text("close");
   updateEditorPanelState();
 
   for (const select of [dom.editNotifyWarningSound, dom.editNotifyCriticalSound]) {
@@ -1141,7 +1134,14 @@ function renderLabels() {
     [dom.exportBtn, "⇩", "exportConfig"],
     [dom.importBtn, "⇧", "importConfig"],
     [dom.newCategoryBtn, "＋", "newCategory"],
-    [dom.deleteCategoryBtn, "⌫", "deleteCategory"]
+    [dom.renameCategoryBtn, "✎", "renameCategory"],
+    [dom.deleteCategoryBtn, "⌫", "deleteCategory"],
+    [dom.settingsPopoverCloseBtn, "×", "close"],
+    [dom.saveTimerBtn, "💾", "saveLocal"],
+    [dom.duplicateTimerBtn, "⧉", "duplicate"],
+    [dom.deleteTimerBtn, "🗑", "deleteLocal"],
+    [dom.resetTimerBtn, "↺", "resetDefault"],
+    [dom.closeEditorBtn, "×", "close"]
   ];
   for (const [button, icon, labelKey] of iconActions) {
     button.textContent = icon;
@@ -1225,7 +1225,6 @@ function renderToggles() {
 function openEditor(timerId) {
   const timer = state.mergedConfig.timers.find((x) => x.id === timerId);
   if (!timer) return;
-  setSettingsOpen(false);
   state.editingTimerId = timerId;
   state.editorCollapsed = false;
   dom.editorPanel.dataset.open = "true";
@@ -1446,6 +1445,23 @@ function createCategory() {
   state.categoryId = id;
   storageSet("timer_category_id", state.categoryId);
   toast(text("categoryCreated"));
+  renderAll();
+}
+
+function renameCategory() {
+  const category = state.mergedConfig.categories.find((x) => x.id === state.categoryId);
+  if (!category) return;
+  const currentName = categoryLabel(category);
+  const name = prompt(state.lang === "de" ? "Neuer Name der Kategorie" : "New category name", currentName);
+  if (!name || !name.trim()) return;
+  const updated = clone(category);
+  updated.label = { ...(updated.label || {}), de: name.trim(), en: name.trim() };
+  const localIndex = state.localConfig.categories.findIndex((x) => x.id === category.id);
+  if (localIndex >= 0) state.localConfig.categories[localIndex] = updated;
+  else state.localConfig.categories.push(updated);
+  saveLocalConfig();
+  state.mergedConfig = mergeConfig(state.baseConfig, state.localConfig);
+  toast(text("categoryRenamed"));
   renderAll();
 }
 
@@ -1725,7 +1741,7 @@ function showPopup(timer, next, level) {
 
 function renderNotificationPermissionStatus() {
   const setNotificationButton = (labelKey) => {
-    dom.enableNotificationsBtn.textContent = "🔊 " + text(labelKey);
+    dom.enableNotificationsBtn.textContent = "🔊";
     dom.enableNotificationsBtn.title = text(labelKey);
     dom.enableNotificationsBtn.setAttribute("aria-label", text(labelKey));
   };
@@ -2395,7 +2411,7 @@ async function loadConfig() {
   state.displayTimezone = storageGet("timer_display_timezone") || clientDefaultTimezone;
   state.historyMinutes = Math.max(0, Number(storageGet("timer_history_minutes") ?? "30") || 0);
   state.historyCollapsed = storageGet("timer_history_collapsed") === "true";
-  state.cardDensity = ["comfortable", "compact", "ultra", "cinematic", "big-picture"].includes(storageGet("timer_card_density"))
+  state.cardDensity = CARD_DENSITY_VALUES.includes(storageGet("timer_card_density"))
     ? storageGet("timer_card_density")
     : "compact";
   state.theme = ["astral", "bavaria", "time-vortex", "arcade", "solisium", "executive"].includes(storageGet("timer_theme"))
@@ -2411,9 +2427,7 @@ async function loadConfig() {
     : "large";
   state.liveCollapsed = storageGet("timer_live_collapsed") === "true";
   state.calendarCollapsed = storageGet("timer_calendar_collapsed") === "true";
-  state.settingsOpen = storageGet("timer_settings_collapsed") !== "true";
   updateEditorPanelState();
-  setSettingsOpen(state.settingsOpen);
   const storedVisibleIds = loadVisibleIds();
   state.visibleIds = storedVisibleIds || new Set(state.mergedConfig.timers.map((timer) => timer.id));
   if (storedVisibleIds && storageGet("timer_visibility_schema") !== "2026-07-24") {
@@ -2496,7 +2510,7 @@ function bind() {
   });
 
   dom.cardDensitySelect.addEventListener("change", () => {
-    state.cardDensity = ["comfortable", "compact", "ultra", "cinematic", "big-picture"].includes(dom.cardDensitySelect.value)
+    state.cardDensity = CARD_DENSITY_VALUES.includes(dom.cardDensitySelect.value)
       ? dom.cardDensitySelect.value
       : "compact";
     storageSet("timer_card_density", state.cardDensity);
@@ -2552,8 +2566,11 @@ function bind() {
   });
 
   dom.settingsToggleBtn.addEventListener("click", () => {
-    setSettingsOpen(!state.settingsOpen);
-    if (state.settingsOpen) dom.settingsPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    dom.settingsPopover.showModal();
+  });
+  dom.settingsPopoverCloseBtn.addEventListener("click", () => dom.settingsPopover.close());
+  dom.settingsPopover.addEventListener("click", (event) => {
+    if (event.target === dom.settingsPopover) dom.settingsPopover.close();
   });
   dom.storageSettingsBtn.addEventListener("click", () => {
     dom.privacyDialog.showModal();
@@ -2561,8 +2578,12 @@ function bind() {
 
   document.addEventListener("visibilitychange", renderPageActivityStatus);
 
-  dom.newTimerBtn.addEventListener("click", createNewTimer);
+  dom.newTimerBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    createNewTimer();
+  });
   dom.newCategoryBtn.addEventListener("click", createCategory);
+  dom.renameCategoryBtn.addEventListener("click", renameCategory);
   dom.deleteCategoryBtn.addEventListener("click", deleteCategory);
   dom.exportBtn.addEventListener("click", exportConfig);
   dom.importBtn.addEventListener("click", () => dom.importInput.click());

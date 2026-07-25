@@ -9,6 +9,25 @@ canonical: true
 
 # Was ist neu?
 
+## Version 3.3.3: Layout-Feinschliff nach eurem Feedback
+
+- Fix: Checkboxen (z. B. "Warning aktiv", Browser/Popup, Barrierefreiheit)
+  erschienen über statt neben ihrem Text – jetzt überall korrekt nebeneinander.
+- "Kategorie verwalten" und "Timer-Werkstatt" sind zur Gruppe "Verwaltung"
+  zusammengefasst; der "+"-Knopf für neue Timer sitzt jetzt direkt bei
+  "Timer anzeigen".
+- Neu: Ein Zahnrad-Popover bündelt Speicherverwaltung, Anzeige & Darstellung
+  und Import/Export – die Hauptseite bleibt aufgeräumt.
+- Kartendichte jetzt sauber sortiert mit neuer Stufe "Extra groß".
+- Benachrichtigungskarten: aktiv-Checkbox und Vorlaufzeit stehen nebeneinander,
+  das Sound-Test-Symbol ist jetzt icon-only, das Sound-Dauer-Feld schmaler.
+- 5 neue Sounds: Power-Riff, Sci-Fi-Signal, Retro-Chiptune, Smooth Groove und
+  Kristallklang.
+- Die Andock-Symbole für die Statusleisten-Position sind größer und einheitlich
+  gestaltet.
+- Die Editor-Aktionsleiste passt jetzt in eine Zeile mit kompakten
+  Symbol-Knöpfen samt Tooltip.
+
 ## Version 3.3.2: Einstellungen wieder direkt sichtbar
 
 - Rückmeldung nach 3.3.1: Kategorie, Anzeige & Darstellung, Timer-Werkstatt,

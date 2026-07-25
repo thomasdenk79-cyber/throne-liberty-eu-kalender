@@ -39,7 +39,7 @@
         </button>
       </div>
       <button class="btn alt topbar-link" id="installAppBtn" type="button" hidden>App installieren</button>
-      <button class="btn alt icon-action" id="settingsToggleBtn" type="button" title="Einstellungen ein-/ausblenden" aria-label="Einstellungen ein-/ausblenden" aria-controls="settingsPanel" aria-expanded="true">⚙</button>
+      <button class="btn alt icon-action" id="settingsToggleBtn" type="button" title="Weitere Einstellungen" aria-label="Weitere Einstellungen" aria-haspopup="dialog" aria-controls="settingsPopover">⚙</button>
       <a class="btn alt topbar-link" id="helpDocsLink" href="help/" target="_blank" rel="noopener">Hilfe</a>
     </div>
   </header>
@@ -125,45 +125,45 @@
         <div class="notification-level-card" id="warningNotificationCard">
           <div class="notification-level-head">
             <label class="pill"><input id="editNotifyWarningEnabled" type="checkbox"> <span id="editNotifyWarningEnabledLabel">Warning enabled</span></label>
+            <div class="lead-time-field">
+              <label class="field-caption" id="editNotifyWarningLabel" for="editNotifyWarningSeconds">Warning</label>
+              <input id="editNotifyWarningSeconds" type="number" class="number-compact" min="1" step="1" placeholder="300">
+            </div>
           </div>
-          <div class="row">
-            <label class="field-caption" id="editNotifyWarningLabel" for="editNotifyWarningSeconds">Warning</label>
-            <input id="editNotifyWarningSeconds" type="number" min="1" step="1" placeholder="300">
-            <div class="editor-help" id="editNotifyWarningHelp"></div>
-          </div>
+          <div class="editor-help" id="editNotifyWarningHelp"></div>
           <div class="row">
             <label class="field-caption" id="editNotifyWarningSoundLabel" for="editNotifyWarningSound">Warning sound</label>
             <div class="sound-control">
               <select id="editNotifyWarningSound"></select>
-              <button class="btn alt sound-test-btn" id="testWarningSoundBtn" type="button" aria-label="Test warning sound">▶</button>
-              <button class="btn alt alarm-test-btn" id="testWarningAlarmBtn" type="button">+10s</button>
+              <button class="btn alt icon-action sound-test-btn" id="testWarningSoundBtn" type="button" title="Sound abspielen" aria-label="Sound abspielen">▶</button>
+              <button class="btn alt alarm-test-btn" id="testWarningAlarmBtn" type="button" title="Alarm in 10 Sekunden testen" aria-label="Alarm in 10 Sekunden testen">+10s</button>
             </div>
           </div>
-          <div class="row">
+          <div class="row sound-duration-row">
             <label class="field-caption" id="editNotifyWarningDurationLabel" for="editNotifyWarningDuration">Sound duration</label>
-            <input id="editNotifyWarningDuration" type="number" min="1" max="60" step="1" value="10">
+            <input id="editNotifyWarningDuration" type="number" class="number-compact" min="1" max="60" step="1" value="10">
           </div>
         </div>
         <div class="notification-level-card" id="criticalNotificationCard">
           <div class="notification-level-head">
             <label class="pill"><input id="editNotifyCriticalEnabled" type="checkbox"> <span id="editNotifyCriticalEnabledLabel">Critical enabled</span></label>
+            <div class="lead-time-field">
+              <label class="field-caption" id="editNotifyCriticalLabel" for="editNotifyCriticalSeconds">Critical</label>
+              <input id="editNotifyCriticalSeconds" type="number" class="number-compact" min="1" step="1" placeholder="90">
+            </div>
           </div>
-          <div class="row">
-            <label class="field-caption" id="editNotifyCriticalLabel" for="editNotifyCriticalSeconds">Critical</label>
-            <input id="editNotifyCriticalSeconds" type="number" min="1" step="1" placeholder="90">
-            <div class="editor-help" id="editNotifyCriticalHelp"></div>
-          </div>
+          <div class="editor-help" id="editNotifyCriticalHelp"></div>
           <div class="row">
             <label class="field-caption" id="editNotifyCriticalSoundLabel" for="editNotifyCriticalSound">Critical sound</label>
             <div class="sound-control">
               <select id="editNotifyCriticalSound"></select>
-              <button class="btn alt sound-test-btn" id="testCriticalSoundBtn" type="button" aria-label="Test critical sound">▶</button>
-              <button class="btn alt alarm-test-btn" id="testCriticalAlarmBtn" type="button">+10s</button>
+              <button class="btn alt icon-action sound-test-btn" id="testCriticalSoundBtn" type="button" title="Sound abspielen" aria-label="Sound abspielen">▶</button>
+              <button class="btn alt alarm-test-btn" id="testCriticalAlarmBtn" type="button" title="Alarm in 10 Sekunden testen" aria-label="Alarm in 10 Sekunden testen">+10s</button>
             </div>
           </div>
-          <div class="row">
+          <div class="row sound-duration-row">
             <label class="field-caption" id="editNotifyCriticalDurationLabel" for="editNotifyCriticalDuration">Sound duration</label>
-            <input id="editNotifyCriticalDuration" type="number" min="1" max="60" step="1" value="10">
+            <input id="editNotifyCriticalDuration" type="number" class="number-compact" min="1" max="60" step="1" value="10">
           </div>
         </div>
       </div>
@@ -173,11 +173,11 @@
       </div>
     </div>
     <div class="editor-actions">
-      <button class="btn" id="saveTimerBtn" type="button">Save locally</button>
-      <button class="btn alt" id="duplicateTimerBtn" type="button">Duplicate</button>
-      <button class="btn danger" id="deleteTimerBtn" type="button">Delete local timer</button>
-      <button class="btn alt" id="resetTimerBtn" type="button">Reset to default</button>
-      <button class="btn alt" id="closeEditorBtn" type="button">Close</button>
+      <button class="btn icon-action" id="saveTimerBtn" type="button" title="Lokal speichern">💾</button>
+      <button class="btn alt icon-action" id="duplicateTimerBtn" type="button" title="Duplizieren">⧉</button>
+      <button class="btn danger icon-action" id="deleteTimerBtn" type="button" title="Lokalen Timer löschen">🗑</button>
+      <button class="btn alt icon-action" id="resetTimerBtn" type="button" title="Auf Standard zurücksetzen">↺</button>
+      <button class="btn alt icon-action" id="closeEditorBtn" type="button" title="Schließen">×</button>
     </div>
   </section>
 
@@ -191,102 +191,29 @@
       </section>
 
       <section class="controls" id="settingsPanel">
-      <div class="settings-quickbar">
-        <button class="btn alt" id="storageSettingsBtn" type="button">Speicher</button>
-      </div>
 
       <details class="settings-group" id="settingsGroupCategory" open>
-        <summary class="settings-group-head"><span class="label" id="settingsGroupCategoryLabel">Kategorie verwalten</span></summary>
+        <summary class="settings-group-head"><span class="label" id="settingsGroupCategoryLabel">Verwaltung</span></summary>
         <div class="settings-group-body control-cluster">
           <div class="row">
             <div class="label settings-heading" id="categoryLabel">Category</div>
             <select id="categorySelect"></select>
             <div class="category-row">
               <button class="btn alt icon-action" id="newCategoryBtn" type="button" title="Neue Kategorie" aria-label="Neue Kategorie">＋</button>
+              <button class="btn alt icon-action" id="renameCategoryBtn" type="button" title="Kategorie umbenennen" aria-label="Kategorie umbenennen">✎</button>
               <button class="btn danger icon-action" id="deleteCategoryBtn" type="button" title="Kategorie löschen" aria-label="Kategorie löschen">⌫</button>
             </div>
           </div>
         </div>
       </details>
 
-      <details class="settings-group" id="settingsGroupDisplay" open>
-        <summary class="settings-group-head"><span class="label" id="settingsGroupDisplayLabel">Anzeige &amp; Darstellung</span></summary>
-        <div class="settings-group-body control-cluster">
-          <div class="meta-grid">
-            <div class="row">
-              <div class="label" id="displayZoneLabel">Display Timezone</div>
-              <select id="displayTimezone"></select>
-            </div>
-            <div class="row">
-              <label class="label" id="historyMinutesLabel" for="historyMinutesInput">History after event</label>
-              <input id="historyMinutesInput" type="number" min="0" max="1440" step="1" value="30">
-              <div class="editor-help" id="historyMinutesHelp"></div>
-            </div>
-          </div>
-          <div class="meta-grid compact-settings">
-            <div class="row">
-              <label class="label" id="cardDensityLabel" for="cardDensitySelect">Card density</label>
-              <select id="cardDensitySelect">
-                <option value="comfortable">Comfortable</option>
-                <option value="compact" selected>Compact</option>
-                <option value="ultra">Ultra compact</option>
-                <option value="cinematic">Cinematic</option>
-                <option value="big-picture">Big Picture</option>
-              </select>
-            </div>
-            <div class="row">
-              <label class="label" id="themeLabel" for="themeSelect">Theme</label>
-              <select id="themeSelect">
-                <option value="astral">Astral</option>
-                <option value="bavaria">Bayern</option>
-                <option value="time-vortex">Zeitwirbel</option>
-                <option value="arcade">Arcade</option>
-                <option value="solisium">Solisium</option>
-                <option value="executive">Executive</option>
-              </select>
-            </div>
-          </div>
-          <div class="meta-grid compact-settings">
-            <div class="row">
-              <div class="label" id="accessibilityLabel">Accessibility</div>
-              <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span id="colorblindModeLabel">Colorblind symbols</span></label>
-              <label class="pill"><input id="showThumbnailsInput" type="checkbox" checked> <span id="showThumbnailsLabel">Show event art</span></label>
-            </div>
-            <div class="row">
-              <label class="label" id="imageZoomLabel" for="imageZoomSelect">Bildvorschau</label>
-              <select id="imageZoomSelect">
-                <option value="off">Aus</option>
-                <option value="small">Klein</option>
-                <option value="medium">Mittel</option>
-                <option value="large" selected>Groß</option>
-                <option value="huge">Sehr groß</option>
-              </select>
-            </div>
-          </div>
-          <div class="config-health" id="configHealth">
-            <span id="configUpdatedStatus"></span>
-            <span id="configLiveStatus"></span>
-            <span id="configExpiryStatus"></span>
-          </div>
-        </div>
-      </details>
-
-      <details class="settings-group" id="settingsGroupTools" open>
-        <summary class="settings-group-head"><span class="label" id="quickActionsLabel">Config</span></summary>
-        <div class="settings-group-body control-cluster">
-          <div class="row">
-            <div class="actions">
-              <button class="btn icon-action" id="newTimerBtn" type="button" title="Neuer Timer" aria-label="Neuer Timer">＋</button>
-              <button class="btn alt icon-action" id="exportBtn" type="button" title="INI exportieren" aria-label="INI exportieren">⇩</button>
-              <button class="btn alt icon-action" id="importBtn" type="button" title="INI importieren" aria-label="INI importieren">⇧</button>
-              <input id="importInput" type="file" accept=".ini,text/plain" hidden>
-            </div>
-          </div>
-        </div>
-      </details>
-
       <details class="settings-group" id="settingsGroupVisibility" open>
-        <summary class="settings-group-head"><span class="label" id="visibilityLabel">Visible Timers</span></summary>
+        <summary class="settings-group-head">
+          <span class="settings-group-head-main">
+            <span class="label" id="visibilityLabel">Visible Timers</span>
+            <button class="btn icon-action settings-group-action" id="newTimerBtn" type="button" title="Neuer Timer" aria-label="Neuer Timer">＋</button>
+          </span>
+        </summary>
         <div class="settings-group-body control-cluster control-visibility">
           <div class="toggle" id="timerToggle"></div>
         </div>
@@ -309,21 +236,21 @@
                   <option value="silent">Nur visuell</option>
                   <option value="off">Alle aus</option>
                 </select>
-                <button class="btn alt notification-test-btn" id="enableNotificationsBtn" type="button" title="Benachrichtigungen aktivieren und Ton testen" aria-label="Benachrichtigungen aktivieren und Ton testen">🔊</button>
+                <button class="btn alt icon-action" id="enableNotificationsBtn" type="button" title="Benachrichtigungen aktivieren und Ton testen" aria-label="Benachrichtigungen aktivieren und Ton testen">🔊</button>
               </div>
             </div>
             <div class="dock-launch">
               <div class="label" id="dockLaunchLabel">Statusleiste positionieren</div>
               <div class="dock-pad" id="dockPad" aria-label="Statusleiste positionieren">
-                <button class="dock-direction" type="button" data-dock-side="top-left" title="Oben links">↖</button>
-                <button class="dock-direction" type="button" data-dock-side="top" title="Oben">↑</button>
-                <button class="dock-direction" type="button" data-dock-side="top-right" title="Oben rechts">↗</button>
-                <button class="dock-direction" type="button" data-dock-side="left" title="Links">←</button>
-                <span class="dock-center">✥</span>
-                <button class="dock-direction" type="button" data-dock-side="right" title="Rechts">→</button>
-                <button class="dock-direction" type="button" data-dock-side="bottom-left" title="Unten links">↙</button>
-                <button class="dock-direction" type="button" data-dock-side="bottom" title="Unten">↓</button>
-                <button class="dock-direction" type="button" data-dock-side="bottom-right" title="Unten rechts">↘</button>
+                <button class="dock-direction" type="button" data-dock-side="top-left" title="Oben links" aria-label="Oben links"><span class="dock-arrow" aria-hidden="true"></span></button>
+                <button class="dock-direction" type="button" data-dock-side="top" title="Oben" aria-label="Oben"><span class="dock-arrow" aria-hidden="true"></span></button>
+                <button class="dock-direction" type="button" data-dock-side="top-right" title="Oben rechts" aria-label="Oben rechts"><span class="dock-arrow" aria-hidden="true"></span></button>
+                <button class="dock-direction" type="button" data-dock-side="left" title="Links" aria-label="Links"><span class="dock-arrow" aria-hidden="true"></span></button>
+                <span class="dock-center" aria-hidden="true"></span>
+                <button class="dock-direction" type="button" data-dock-side="right" title="Rechts" aria-label="Rechts"><span class="dock-arrow" aria-hidden="true"></span></button>
+                <button class="dock-direction" type="button" data-dock-side="bottom-left" title="Unten links" aria-label="Unten links"><span class="dock-arrow" aria-hidden="true"></span></button>
+                <button class="dock-direction" type="button" data-dock-side="bottom" title="Unten" aria-label="Unten"><span class="dock-arrow" aria-hidden="true"></span></button>
+                <button class="dock-direction" type="button" data-dock-side="bottom-right" title="Unten rechts" aria-label="Unten rechts"><span class="dock-arrow" aria-hidden="true"></span></button>
               </div>
             </div>
           </div>
@@ -415,6 +342,90 @@
     <div id="privacyContent"></div>
     <button class="btn danger" id="storageResetBtn" type="button">Lokale Daten löschen</button>
     <button class="btn alt" id="privacyCloseBtn" type="button">Close</button>
+  </dialog>
+
+  <dialog class="legal-dialog settings-popover" id="settingsPopover">
+    <div class="settings-popover-head">
+      <span class="label" id="settingsPopoverTitle">Weitere Einstellungen</span>
+      <button class="btn alt icon-action" id="settingsPopoverCloseBtn" type="button" title="Schließen" aria-label="Schließen">×</button>
+    </div>
+    <div class="settings-popover-body">
+      <div class="row">
+        <button class="btn alt" id="storageSettingsBtn" type="button">Speicher verwalten</button>
+      </div>
+
+      <div class="settings-popover-section">
+        <div class="label" id="settingsGroupDisplayLabel">Anzeige &amp; Darstellung</div>
+        <div class="meta-grid">
+          <div class="row">
+            <div class="label" id="displayZoneLabel">Display Timezone</div>
+            <select id="displayTimezone"></select>
+          </div>
+          <div class="row">
+            <label class="label" id="historyMinutesLabel" for="historyMinutesInput">History after event</label>
+            <input id="historyMinutesInput" type="number" min="0" max="1440" step="1" value="30">
+            <div class="editor-help" id="historyMinutesHelp"></div>
+          </div>
+        </div>
+        <div class="meta-grid compact-settings">
+          <div class="row">
+            <label class="label" id="cardDensityLabel" for="cardDensitySelect">Card density</label>
+            <select id="cardDensitySelect">
+              <option value="ultra">Keine</option>
+              <option value="compact" selected>Klein</option>
+              <option value="comfortable">Mittel</option>
+              <option value="cinematic">Groß</option>
+              <option value="big-picture">Sehr groß</option>
+              <option value="mega">Extra groß</option>
+            </select>
+          </div>
+          <div class="row">
+            <label class="label" id="themeLabel" for="themeSelect">Theme</label>
+            <select id="themeSelect">
+              <option value="astral">Astral</option>
+              <option value="bavaria">Bayern</option>
+              <option value="time-vortex">Zeitwirbel</option>
+              <option value="arcade">Arcade</option>
+              <option value="solisium">Solisium</option>
+              <option value="executive">Executive</option>
+            </select>
+          </div>
+        </div>
+        <div class="meta-grid compact-settings">
+          <div class="row">
+            <div class="label" id="accessibilityLabel">Accessibility</div>
+            <label class="pill"><input id="colorblindModeInput" type="checkbox"> <span id="colorblindModeLabel">Colorblind symbols</span></label>
+            <label class="pill"><input id="showThumbnailsInput" type="checkbox" checked> <span id="showThumbnailsLabel">Show event art</span></label>
+          </div>
+          <div class="row">
+            <label class="label" id="imageZoomLabel" for="imageZoomSelect">Bildvorschau</label>
+            <select id="imageZoomSelect">
+              <option value="off">Aus</option>
+              <option value="small">Klein</option>
+              <option value="medium">Mittel</option>
+              <option value="large" selected>Groß</option>
+              <option value="huge">Sehr groß</option>
+            </select>
+          </div>
+        </div>
+        <div class="config-health" id="configHealth">
+          <span id="configUpdatedStatus"></span>
+          <span id="configLiveStatus"></span>
+          <span id="configExpiryStatus"></span>
+        </div>
+      </div>
+
+      <div class="settings-popover-section">
+        <div class="label" id="quickActionsLabel">Config</div>
+        <div class="row">
+          <div class="actions">
+            <button class="btn alt icon-action" id="exportBtn" type="button" title="INI exportieren" aria-label="INI exportieren">⇩</button>
+            <button class="btn alt icon-action" id="importBtn" type="button" title="INI importieren" aria-label="INI importieren">⇧</button>
+            <input id="importInput" type="file" accept=".ini,text/plain" hidden>
+          </div>
+        </div>
+      </div>
+    </div>
   </dialog>
 
   <dialog class="consent-dialog" id="storageConsent">

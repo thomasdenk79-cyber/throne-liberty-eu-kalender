@@ -4,13 +4,17 @@ export const CURATED_SOUNDS = [
   { id: "neon", labelKey: "soundNeon" },
   { id: "action", labelKey: "soundAction" },
   { id: "vortex", labelKey: "soundVortex" },
-  { id: "finale", labelKey: "soundFinale" }
+  { id: "finale", labelKey: "soundFinale" },
+  { id: "riff", labelKey: "soundRiff" },
+  { id: "signal", labelKey: "soundSignal" },
+  { id: "chiptune", labelKey: "soundChiptune" },
+  { id: "smoothwave", labelKey: "soundSmoothwave" },
+  { id: "crystal", labelKey: "soundCrystal" }
 ];
 
 const LEGACY_SOUND_MAP = {
   none: "none",
   gentle: "gentle",
-  crystal: "gentle",
   bell: "gentle",
   harp: "gentle",
   celestial: "gentle",
@@ -30,7 +34,12 @@ const LEGACY_SOUND_MAP = {
   dragon: "action",
   vortex: "vortex",
   arcane: "vortex",
-  finale: "finale"
+  finale: "finale",
+  riff: "riff",
+  signal: "signal",
+  chiptune: "chiptune",
+  smoothwave: "smoothwave",
+  crystal: "crystal"
 };
 
 const PATTERNS = {
@@ -58,6 +67,31 @@ const PATTERNS = {
     type: "triangle",
     gain: 0.044,
     notes: [[0, 392, 0.28], [0.22, 523.25, 0.3], [0.44, 659.25, 0.32], [0.68, 783.99, 0.4], [1.02, 1046.5, 0.65]]
+  },
+  riff: {
+    type: "sawtooth",
+    gain: 0.044,
+    notes: [[0, 82.41, 0.18], [0.2, 82.41, 0.18], [0.4, 110, 0.18], [0.6, 82.41, 0.18], [0.8, 130.81, 0.3]]
+  },
+  signal: {
+    type: "square",
+    gain: 0.034,
+    notes: [[0, 523.25, 0.12], [0.18, 523.25, 0.12], [0.36, 783.99, 0.16], [0.6, 1046.5, 0.3]]
+  },
+  chiptune: {
+    type: "square",
+    gain: 0.032,
+    notes: [[0, 523.25, 0.11], [0.13, 659.25, 0.11], [0.26, 783.99, 0.11], [0.39, 1046.5, 0.11], [0.52, 783.99, 0.11], [0.65, 1046.5, 0.24]]
+  },
+  smoothwave: {
+    type: "sine",
+    gain: 0.04,
+    notes: [[0, 220, 0.4, 246.94], [0.5, 293.66, 0.45, 329.63], [1.05, 369.99, 0.55, 440]]
+  },
+  crystal: {
+    type: "triangle",
+    gain: 0.03,
+    notes: [[0, 1046.5, 0.16], [0.16, 1318.5, 0.16], [0.32, 1568, 0.16], [0.48, 2093, 0.4]]
   }
 };
 

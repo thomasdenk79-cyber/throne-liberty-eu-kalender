@@ -13,9 +13,43 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
-## 3.3.2 – 25. Juli 2026
+## 3.3.3 – 26. Juli 2026
 
 <span class="status-chip status-active">Live</span>
+
+Großes Layout- und Bedien-Feedback nach 3.3.2 umgesetzt: Der Checkbox-Bug,
+die Aufteilung von Verwaltung/Timer-Werkstatt, das Layout der
+Benachrichtigungskarten, die Kartendichte-Stufen, die Andock-Symbole und die
+Aktionsleiste im Editor wurden überarbeitet.
+
+- Fix: Checkboxen (Warning/Critical aktiv, Browser/Popup, Barrierefreiheit)
+  wurden fälschlich auf 100% Breite gestreckt und erschienen dadurch über statt
+  neben ihrem Text. Global behoben für alle Checkboxen der Seite.
+- "Kategorie verwalten" und "Timer-Werkstatt" sind zu einer Gruppe
+  "Verwaltung" zusammengeführt (Kategorie-Auswahl + Neu/Umbenennen/Löschen).
+  Der "+"-Knopf für neue Timer sitzt jetzt platzsparend direkt in der
+  Kopfzeile von "Timer anzeigen".
+- Neu: Ein Zahnrad-Popover bündelt die selteneren Einstellungen (Speicher
+  verwalten, Anzeige & Darstellung inkl. Zeitzone/Kartendichte/Theme/
+  Barrierefreiheit/Bildvorschau, Import & Export) außerhalb der Hauptseite.
+- Kartendichte neu sortiert und um eine Stufe "Extra groß" ergänzt (Keine,
+  Klein, Mittel, Groß, Sehr groß, Extra groß).
+- Benachrichtigungen: Checkbox "aktiv" und "Vorlauf (Sekunden)" stehen jetzt
+  in einer Zeile nebeneinander statt untereinander; das Sound-Test-Symbol
+  (🔊) ist icon-only ohne Begleittext; Sound-Dauer-Feld deutlich schmaler.
+- 5 neue eigenständige Synth-Sounds ergänzt (Power-Riff, Sci-Fi-Signal,
+  Retro-Chiptune, Smooth Groove, Kristallklang) – insgesamt 10 Klänge plus
+  "Kein Sound".
+- Die Andock-Symbole zur Positionierung der Statusleiste sind größer und
+  einheitlich gestaltet (ein durchgängiges Pfeil-Design statt gemischter
+  Unicode-Zeichen).
+- Die Aktionsleiste im Timer-Editor (Speichern/Duplizieren/Löschen/
+  Zurücksetzen/Schließen) passt jetzt auf eine Zeile: kompakte Symbol-Knöpfe
+  mit Tooltip statt Textbeschriftung.
+
+## 3.3.2 – 25. Juli 2026
+
+<span class="status-chip status-done">Done</span>
 
 Direktes Nutzerfeedback nach 3.3.1: Die 3.3.0-Umstellung des
 Einstellungsbereichs (Kategorie verwalten, Anzeige & Darstellung,
