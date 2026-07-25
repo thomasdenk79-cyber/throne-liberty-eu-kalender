@@ -13,9 +13,41 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
-## 3.3.1 – 25. Juli 2026
+## 3.3.2 – 25. Juli 2026
 
 <span class="status-chip status-active">Live</span>
+
+Direktes Nutzerfeedback nach 3.3.1: Die 3.3.0-Umstellung des
+Einstellungsbereichs (Kategorie verwalten, Anzeige & Darstellung,
+Timer-Werkstatt, Timer anzeigen, Benachrichtigungen) auf ein per Zahnrad
+ein-/ausblendbares Overlay mit fixierter Position und abdunkelndem
+Hintergrund wurde als Verschlechterung gegenüber 3.2 empfunden, wo dieser
+Bereich direkt unter dem Hero-Bild sichtbar war und nicht extra geöffnet
+werden musste.
+
+- Revert: Der Einstellungsbereich (`#settingsPanel`) ist kein fixiertes
+  Overlay mit Backdrop, Kopfzeile und ×-Knopf mehr, sondern wieder ein
+  normaler Seitenabschnitt direkt unter dem Hero-Bild – wie in 3.2. Das
+  Zahnrad-Symbol blendet ihn weiterhin ein/aus (jetzt per einfachem
+  `hidden`-Attribut statt Overlay-Logik) und der Zustand wird wie zuvor im
+  Browser gespeichert; standardmäßig ist er sichtbar.
+- Die fünf klar beschrifteten, unabhängig auf-/zuklappbaren Bereiche
+  (Kategorie, Anzeige & Darstellung, Timer-Werkstatt, Timer anzeigen,
+  Benachrichtigungen) aus 3.3.1 bleiben erhalten – nur die Overlay-Hülle
+  drumherum wurde entfernt, sie sind jetzt Karten in einem responsiven Raster
+  innerhalb des immer sichtbaren Bereichs.
+- Der Sprachumschalter (DE/EN/Boarisch) ist wieder direkt in der Kopfzeile
+  statt in der (jetzt entfallenen) Overlay-Kopfzeile.
+- Der „Speicher verwalten"-Schnellzugriff bleibt als kleiner Knopf am Anfang
+  des Einstellungsbereichs erhalten.
+- `tests/runtime-smoke.mjs` prüft jetzt das neue Sichtbarkeits-Verhalten
+  (`hidden`-Attribut, standardmäßig sichtbar, per Zahnrad umschaltbar) statt
+  der entfernten Overlay-Zustände.
+- Versionsnummer im Header von „v3.3.1" auf „v3.3.2" angehoben.
+
+## 3.3.1 – 25. Juli 2026
+
+<span class="status-chip status-done">Done</span>
 
 Zwei Nachbesserungen an der 3.3.0-Modularisierung, gefunden per echtem
 Headless-Browser-Test (Chromium) sowohl gegen `file://` als auch gegen die

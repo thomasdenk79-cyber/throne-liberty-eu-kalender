@@ -9,6 +9,19 @@ canonical: true
 
 # Was ist neu?
 
+## Version 3.3.2: Einstellungen wieder direkt sichtbar
+
+- Rückmeldung nach 3.3.1: Kategorie, Anzeige & Darstellung, Timer-Werkstatt,
+  Timer anzeigen und Benachrichtigungen mussten erst per Zahnrad in einem
+  abgedunkelten Overlay geöffnet werden. Das ist jetzt zurückgebaut – dieser
+  Bereich steht wieder direkt unter dem Hero-Bild, ganz ohne Klick, so wie in
+  Version 3.2.
+- Das Zahnrad blendet den Bereich weiterhin ein/aus, falls mehr Platz
+  gebraucht wird; der Browser merkt sich die Wahl.
+- Die fünf klar beschrifteten, einzeln auf-/zuklappbaren Bereiche aus 3.3.1
+  bleiben erhalten und sind jetzt als Karten nebeneinander angeordnet.
+- Der Sprachumschalter (DE/EN/Boarisch) ist wieder in der Kopfzeile.
+
 ## Version 3.3: mehr Platz und echte Einstellungen
 
 - Das Zahnrad öffnet jetzt ein eigenes Einstellungsfenster mit Sprache und

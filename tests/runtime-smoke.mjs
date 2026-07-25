@@ -82,12 +82,12 @@ assert.equal(window.document.querySelectorAll("#imageZoomSelect option").length,
 assert.equal(window.document.querySelectorAll("#editNotifyWarningSound option").length, 6, "five curated sounds plus silent mode are selectable");
 assert(window.document.querySelector("#editNotifyWarningDuration"), "warning sound duration is editable");
 assert(window.document.querySelector("#editNotifyCriticalDuration"), "critical sound duration is editable");
-assert(window.document.querySelector("#settingsPanel"), "settings drawer exists");
-assert.equal(window.document.querySelector("#settingsPanel").dataset.open, "false", "settings drawer starts closed");
+assert(window.document.querySelector("#settingsPanel"), "settings panel exists");
+assert.equal(window.document.querySelector("#settingsPanel").hidden, false, "settings panel is visible by default (v3.2 layout)");
 window.document.querySelector("#settingsToggleBtn").click();
-assert.equal(window.document.querySelector("#settingsPanel").dataset.open, "true", "settings button opens the drawer");
-window.document.querySelector("#settingsCloseBtn").click();
-assert.equal(window.document.querySelector("#settingsPanel").dataset.open, "false", "settings drawer closes");
+assert.equal(window.document.querySelector("#settingsPanel").hidden, true, "settings button hides the panel");
+window.document.querySelector("#settingsToggleBtn").click();
+assert.equal(window.document.querySelector("#settingsPanel").hidden, false, "settings button shows the panel again");
 assert(window.document.querySelector("#liveCollapseBtn"), "main timer module is collapsible");
 assert(window.document.querySelector("#calendarCollapseBtn"), "calendar module is collapsible");
 assert.equal(window.document.querySelector("#dockSideSelect"), null, "dock dropdown is replaced by direct controls");

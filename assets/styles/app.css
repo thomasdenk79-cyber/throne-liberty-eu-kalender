@@ -2254,26 +2254,6 @@ html.colorblind-mode[data-density="ultra"] .card-phase-progress { height: 7px !i
   white-space: pre-wrap;
 }
 
-.settings-drawer {
-  position: fixed !important;
-  z-index: 70;
-  inset: 78px 12px 12px auto;
-  width: min(470px, calc(100vw - 24px));
-  max-height: none;
-  display: none;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: start;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 12px;
-  background: #091421f7;
-  box-shadow: 0 30px 90px #000d, inset 0 1px 0 #ffffff12;
-}
-
-.settings-drawer[data-open="true"] { display: grid; }
-
-.settings-drawer-head,
 .editor-heading {
   position: sticky;
   z-index: 2;
@@ -2286,31 +2266,23 @@ html.colorblind-mode[data-density="ultra"] .card-phase-progress { height: 7px !i
   background: linear-gradient(180deg, #091421 78%, transparent);
 }
 
-.settings-drawer-head > div:first-child {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.settings-drawer-actions,
 .editor-heading-actions {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.settings-backdrop {
-  position: fixed;
-  z-index: 65;
-  inset: 0;
-  border: 0;
-  background: #02050aa8;
-  cursor: default;
+#settingsPanel {
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 12px;
+  align-items: start;
 }
 
-.settings-backdrop:not([hidden]) { display: block; }
-body.settings-open { overflow: hidden; }
+.settings-quickbar {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+}
 
 .settings-group {
   border: 1px solid #9cdbf524;
@@ -2473,19 +2445,7 @@ html.dock-mode .image-hover-preview {
 }
 
 @media (max-width: 640px) {
-  .settings-drawer {
-    inset: 116px 6px 6px;
-    width: auto;
-  }
-
-  .settings-drawer-head {
-    align-items: flex-start;
-  }
-
-  .settings-drawer-head > div:first-child {
-    align-items: flex-start;
-    flex-direction: column;
-  }
+  #settingsPanel { grid-template-columns: minmax(0, 1fr); }
 
   .editor {
     inset: 116px 6px 6px;

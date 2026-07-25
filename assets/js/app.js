@@ -66,7 +66,7 @@ const state = {
   imageZoom: "large",
   liveCollapsed: false,
   calendarCollapsed: false,
-  settingsOpen: false,
+  settingsOpen: true,
   editorSide: storageGet("timer_editor_side") === "right" ? "right" : "left",
   editorCollapsed: false,
   cardRenderKey: "",
@@ -243,9 +243,6 @@ const dom = {
   installAppBtn: document.getElementById("installAppBtn"),
   settingsToggleBtn: document.getElementById("settingsToggleBtn"),
   settingsPanel: document.getElementById("settingsPanel"),
-  settingsTitle: document.getElementById("settingsTitle"),
-  settingsCloseBtn: document.getElementById("settingsCloseBtn"),
-  settingsBackdrop: document.getElementById("settingsBackdrop"),
   storageSettingsBtn: document.getElementById("storageSettingsBtn"),
   helpDocsLink: document.getElementById("helpDocsLink"),
   imprintBtn: document.getElementById("imprintBtn"),
@@ -297,12 +294,9 @@ function updateInstallButton() {
 
 function setSettingsOpen(open) {
   state.settingsOpen = Boolean(open);
-  dom.settingsPanel.dataset.open = String(state.settingsOpen);
-  dom.settingsPanel.setAttribute("aria-hidden", String(!state.settingsOpen));
+  dom.settingsPanel.hidden = !state.settingsOpen;
   dom.settingsToggleBtn.setAttribute("aria-expanded", String(state.settingsOpen));
-  dom.settingsBackdrop.hidden = !state.settingsOpen;
-  document.body.classList.toggle("settings-open", state.settingsOpen);
-  if (state.settingsOpen) dom.settingsCloseBtn.focus();
+  storageSet("timer_settings_collapsed", String(!state.settingsOpen));
 }
 
 function updateEditorPanelState() {
@@ -1116,10 +1110,7 @@ function renderLabels() {
   dom.calendarCollapseBtn.setAttribute("aria-label", text("collapseCalendar"));
   dom.settingsToggleBtn.title = text("toggleSettings");
   dom.settingsToggleBtn.setAttribute("aria-label", text("toggleSettings"));
-  dom.settingsTitle.textContent = text("settingsTitle");
   dom.storageSettingsBtn.textContent = text("storageSettings");
-  dom.settingsCloseBtn.title = text("close");
-  dom.settingsCloseBtn.setAttribute("aria-label", text("close"));
   dom.eventPopupLabel.textContent = text("eventAlert");
   dom.eventPopupCloseBtn.textContent = text("acknowledge");
   dom.footerSummary.textContent = text("footerSummary");
@@ -2420,7 +2411,9 @@ async function loadConfig() {
     : "large";
   state.liveCollapsed = storageGet("timer_live_collapsed") === "true";
   state.calendarCollapsed = storageGet("timer_calendar_collapsed") === "true";
+  state.settingsOpen = storageGet("timer_settings_collapsed") !== "true";
   updateEditorPanelState();
+  setSettingsOpen(state.settingsOpen);
   const storedVisibleIds = loadVisibleIds();
   state.visibleIds = storedVisibleIds || new Set(state.mergedConfig.timers.map((timer) => timer.id));
   if (storedVisibleIds && storageGet("timer_visibility_schema") !== "2026-07-24") {
@@ -2560,11 +2553,9 @@ function bind() {
 
   dom.settingsToggleBtn.addEventListener("click", () => {
     setSettingsOpen(!state.settingsOpen);
+    if (state.settingsOpen) dom.settingsPanel.scrollIntoView({ behavior: "smooth", block: "start" });
   });
-  dom.settingsCloseBtn.addEventListener("click", () => setSettingsOpen(false));
-  dom.settingsBackdrop.addEventListener("click", () => setSettingsOpen(false));
   dom.storageSettingsBtn.addEventListener("click", () => {
-    setSettingsOpen(false);
     dom.privacyDialog.showModal();
   });
 
@@ -2762,8 +2753,7 @@ function bind() {
   });
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    if (state.settingsOpen) setSettingsOpen(false);
-    else if (state.editingTimerId) closeEditor();
+    if (state.editingTimerId) closeEditor();
   });
 }
 
