@@ -19,3 +19,9 @@ eingereicht. Sichtbares Verhalten benötigt passende Tests, Changelog und
 Anwenderhinweis. Änderungen am Living Brain benötigen Owner-Review; bei
 Unsicherheit ist nur ein Vorschlag mit `Chief-AI-Review erforderlich`
 einzureichen.
+
+Ausnahme (siehe [ADR-0015](docs/engineering/decision-log.md)): Der Local Chief
+Coding Agent ist von Thomas als Product Owner autorisiert, direkt auf `main`
+zu committen und zu pushen, ohne Feature-Branch/PR. Die Qualitätspflicht
+(`npm run check`, Doku-Build) und die Commit-Metadaten-Pflicht aus `AGENTS.md`
+gelten dabei unverändert.

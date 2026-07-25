@@ -38,6 +38,7 @@ Dieses Protokoll verhindert, dass Menschen oder Agenten bereits geklärte Grunds
 | ADR-0012 | accepted | Living-Brain-Grundsatzänderungen benötigen fähigkeitsbasiertes Review und bei Unsicherheit einen Taskboard-Handoff. | verhindert zufällige Regel- und Architekturdrift durch unvollständigen Kontext |
 | ADR-0013 | accepted | Browser Research auditiert mindestens halbjährlich externe Standards; lokale Agenten validieren und implementieren reproduzierbar. | verbindet aktuelle Primärquellen mit tatsächlicher Code- und Testprüfung |
 | ADR-0014 | accepted | Die statische Anwendung verwendet native ES-Module und externes CSS ohne verpflichtenden Build. | klare Verantwortungen und direkte GitHub-Pages-Auslieferung bleiben vereinbar |
+| ADR-0015 | accepted | Der Local Chief Coding Agent darf Commits direkt auf `main` erstellen und pushen, ohne verpflichtenden Feature-Branch/PR-Umweg. | von Thomas als Product Owner autorisiert; Änderungen bleiben per Git-Revert risikofrei rücksetzbar |
 
 ## ADR-0001: Markdown als Quelle, HTML als Ausgabe
 
@@ -62,6 +63,34 @@ Markdown-Dateien unter `docs/` sind die editierbare Quelle. `mkdocs.yml` definie
 - **reines HTML:** gut darstellbar, aber aufwendiger zu pflegen und schlechter als Wissensquelle zu überblicken
 - **XML/DITA/DocBook:** stark strukturiert und validierbar, für dieses kleine Demo-Projekt jedoch unnötig komplex
 - **Wiki:** bequem, aber vom Code und dessen Versionsstand getrennt
+
+## ADR-0015: Direct-Push-Befugnis für den Local Chief Coding Agent
+
+### Kontext
+
+Der reguläre Feature-Branch-plus-Pull-Request-Ablauf (siehe `CONTRIBUTING.md`) erzeugt bei kleinen, vom Product Owner direkt beauftragten Fixes und Iterationen unnötige Wartezeit, ohne dass in der Praxis ein zweites Review stattfindet.
+
+### Entscheidung
+
+Thomas Denk (Product Owner, finale Instanz laut `docs/project/team-governance.md`) autorisiert den Local Chief Coding Agent (Copilot CLI in VS Code) am 2026-07-25, Commits direkt auf `main` zu erstellen und zu pushen, ohne dass dafür zwingend ein Feature-Branch und Pull Request nötig sind. Dies gilt ausschließlich für diesen Agenten in dieser Rolle, nicht pauschal für alle Agenten oder Menschen.
+
+Unverändert bleiben:
+
+- Commit-Metadaten-Pflicht (Was/Warum/Agent/Version/LLM) aus `AGENTS.md`.
+- Living-Brain-Schutz: Grundsatzänderungen an Governance-, Architektur- oder Qualitätsdokumenten benötigen weiterhin einen sichtbaren Vermerk und im Zweifel Thomas' Freigabe (hier bereits erteilt).
+- Qualitätspflicht: `npm run check` und relevante Doku-Builds bleiben vor jedem Push verpflichtend.
+- Server-seitiger GitHub-Branchschutz (falls für `main` aktiviert) kann einen direkten Push weiterhin technisch verhindern; das liegt außerhalb der lokalen Repository-Konfiguration und muss ggf. separat von Thomas angepasst werden.
+
+### Folgen
+
+- Schnellere Iteration bei vom Product Owner direkt beauftragten Änderungen.
+- Kein Vier-Augen-Review durch Dritte mehr vor dem Merge; Rücksetzung erfolgt bei Bedarf per `git revert`/`git reset`.
+- Andere Mitwirkende (Junior Agents, externe Beiträge) folgen weiterhin dem Feature-Branch/PR-Ablauf aus `CONTRIBUTING.md`.
+
+### Alternativen
+
+- **Weiterhin PR-Pflicht für alle:** sicherer, aber unnötig langsam bei Aufgaben, die Thomas direkt und vollständig selbst beauftragt und prüft.
+- **Branch-Schutz clientseitig deaktivieren:** kein sauberer Hebel, da Branchschutz serverseitig auf GitHub verwaltet wird.
 
 ## Neue Entscheidung ergänzen
 

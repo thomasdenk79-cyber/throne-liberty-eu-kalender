@@ -17,7 +17,7 @@ canonical: true
 |---|---|---|
 | Product Owner, Projektleiter und finale Instanz | Thomas Denk | Ziele, Priorität, Konfliktentscheidung, fachliche Abnahme, Veröffentlichung |
 | Browser Research & Chief AI | leistungsfähiger Browser-Chat mit Internetrecherche | periodischer Stand-der-Technik-Audit, Primärquellen, Architektur-/Security-Review |
-| Local Chief Coding Agent | Copilot CLI in VS Code mit leistungsfähigem Modell | tatsächliche Repository-Analyse, Implementierung, lokale Tests, Diffs und CI-Nachweis |
+| Local Chief Coding Agent | Copilot CLI in VS Code mit leistungsfähigem Modell | tatsächliche Repository-Analyse, Implementierung, lokale Tests, Diffs und CI-Nachweis; darf laut [ADR-0015](../engineering/decision-log.md) direkt auf `main` committen und pushen |
 | Junior AI Developer | klar begrenzter Coding-Agent | Umsetzung nach Vorgabe, Tests und Dokumentation; keine unreviewte Living-Brain-Grundsatzänderung |
 | Junior Admin Runner | einfacher Agent | reproduzierbare Builds, Prüfungen und klar begrenzte Wartungsaufgaben |
 | Human Reviewer / QA | Teammitglied | Bedienbarkeit, Spielrealität und Freigabe risikoreicher Änderungen |
