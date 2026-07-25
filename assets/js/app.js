@@ -14,6 +14,8 @@ const CARD_DENSITY_VALUES = ["ultra", "compact", "comfortable", "cinematic", "bi
 const BAVARIA_TIMEZONE = "Bayern/Munich";
 const CONFIG_UPDATED_AT = "2026-07-24T00:00:00Z";
 const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.4";
+const GA4_MEASUREMENT_ID = (document.querySelector('meta[name="ga4-measurement-id"]')?.getAttribute("content") || "").trim();
+const PLAUSIBLE_DOMAIN = (document.querySelector('meta[name="plausible-domain"]')?.getAttribute("content") || "").trim();
 const germanClient = (navigator.language || "").toLowerCase().startsWith("de");
 const clientDefaultLanguage = germanClient ? "bar" : "en";
 const clientDefaultTimezone = germanClient ? BAVARIA_TIMEZONE : "Europe/Berlin";
@@ -27,6 +29,7 @@ const LEGAL_PROFILE = {
 let storageDecision = "";
 let storageConsent = false;
 let deferredInstallPrompt = null;
+let analyticsInitialized = false;
 try {
   storageDecision = localStorage.getItem(STORAGE_CONSENT_KEY) || "";
   storageConsent = storageDecision === "accepted";
@@ -304,6 +307,54 @@ function installFallbackHint() {
   const isSafari = /Safari/.test(ua) && !/Chrome|Chromium|Edg/.test(ua);
   if (isIos || (isMac && isSafari)) return text("installManualHintIos");
   return text("installManualHintDesktop");
+}
+
+function analyticsMode() {
+  const value = (new URLSearchParams(window.location.search).get("analytics") || "ga4").toLowerCase();
+  if (value === "both" || value === "ga4" || value === "plausible") return value;
+  return "ga4";
+}
+
+function injectScript(src, attributes = {}) {
+  const script = document.createElement("script");
+  script.src = src;
+  script.async = true;
+  Object.entries(attributes).forEach(([key, val]) => script.setAttribute(key, val));
+  document.head.appendChild(script);
+}
+
+function setupGa4() {
+  if (!GA4_MEASUREMENT_ID) return false;
+  injectScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA4_MEASUREMENT_ID)}`);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+  window.gtag("js", new Date());
+  window.gtag("config", GA4_MEASUREMENT_ID, {
+    anonymize_ip: true,
+    send_page_view: true
+  });
+  return true;
+}
+
+function setupPlausible() {
+  if (!PLAUSIBLE_DOMAIN) return false;
+  injectScript("https://plausible.io/js/script.js", { "data-domain": PLAUSIBLE_DOMAIN, defer: "defer" });
+  return true;
+}
+
+function setupAnalytics() {
+  if (analyticsInitialized || !storageConsent) return;
+  const mode = analyticsMode();
+  if (mode === "ga4") {
+    analyticsInitialized = setupGa4();
+    return;
+  }
+  if (mode === "plausible") {
+    analyticsInitialized = setupPlausible();
+    return;
+  }
+  analyticsInitialized = (setupGa4() || analyticsInitialized);
+  analyticsInitialized = (setupPlausible() || analyticsInitialized);
 }
 
 function canRegisterServiceWorker() {
@@ -2802,6 +2853,7 @@ async function start() {
     await loadConfig();
     bind();
     setupPwa();
+    setupAnalytics();
     renderBuilderDays();
     renderAll();
     if (state.localConfigError) {
