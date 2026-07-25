@@ -255,9 +255,6 @@ const dom = {
   helpDocsLink: document.getElementById("helpDocsLink"),
   shareLabel: document.getElementById("shareLabel"),
   shareNativeBtn: document.getElementById("shareNativeBtn"),
-  shareXBtn: document.getElementById("shareXBtn"),
-  shareFacebookBtn: document.getElementById("shareFacebookBtn"),
-  shareRedditBtn: document.getElementById("shareRedditBtn"),
   shareTelegramBtn: document.getElementById("shareTelegramBtn"),
   shareWhatsappBtn: document.getElementById("shareWhatsappBtn"),
   shareCopyBtn: document.getElementById("shareCopyBtn"),
@@ -326,6 +323,10 @@ function buildShareData() {
 
 function openShareWindow(url) {
   window.open(url, "_blank", "noopener,noreferrer");
+}
+
+function updateShareButtons() {
+  dom.shareNativeBtn.hidden = !navigator.share;
 }
 
 function analyticsMode() {
@@ -1207,6 +1208,7 @@ function renderLabels() {
   dom.shareLabel.textContent = text("shareLabel");
   dom.shareNativeBtn.textContent = text("shareNative");
   dom.shareCopyBtn.textContent = text("shareCopy");
+  updateShareButtons();
   renderLegalContent();
   updateEditorPanelState();
 
@@ -2587,18 +2589,6 @@ function bind() {
         toast(text("shareFailed"));
       }
     }
-  });
-  dom.shareXBtn.addEventListener("click", () => {
-    const shareData = buildShareData();
-    openShareWindow(`https://x.com/intent/tweet?text=${encodeURIComponent(shareData.summary)}&url=${encodeURIComponent(shareData.url)}`);
-  });
-  dom.shareFacebookBtn.addEventListener("click", () => {
-    const shareData = buildShareData();
-    openShareWindow(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareData.url)}`);
-  });
-  dom.shareRedditBtn.addEventListener("click", () => {
-    const shareData = buildShareData();
-    openShareWindow(`https://www.reddit.com/submit?title=${encodeURIComponent(shareData.title)}&url=${encodeURIComponent(shareData.url)}`);
   });
   dom.shareTelegramBtn.addEventListener("click", () => {
     const shareData = buildShareData();
