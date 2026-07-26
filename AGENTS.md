@@ -37,6 +37,37 @@ npm run check          # Baseline prüfen
 
 ## 🔴 GEDÄCHTNIS-PFLICHT (für jeden Agent, jede Session)
 
+### Schritt 1 — Git-History lesen (BEVOR du irgend etwas tust)
+
+```bash
+cd C:\GIT\throne-liberty-eu-kalender
+
+# Letzte 20 Commits: wer hat wann was gemacht
+git log --oneline --decorate -20
+
+# Was wurde zuletzt geändert (Dateien + Stats)
+git log --stat -5
+
+# Wer hat welche Datei zuletzt angefasst
+git log --oneline --follow -- AGENTS.md
+git log --oneline --follow -- docs/project/taskboard.md
+
+# Uncommittete Änderungen prüfen (gibt es halbfertige Arbeit?)
+git status --short
+git diff --stat
+```
+
+Aus dieser History erkennst du:
+- Welcher Agent zuletzt gearbeitet hat (Commit-Message enthält `agent:` + `llm:`)
+- Was der letzte Schritt war und ob er vollständig war
+- Ob es uncommittete Änderungen gibt die noch fertiggestellt werden müssen
+
+### Schritt 2 — AKTUELLER STAND oben lesen
+
+Der Block "AKTUELLER STAND" sagt dir den genauen Übergabepunkt.
+
+### Schritt 3 — Am Session-Ende aktualisieren
+
 **Regel 0 — Ohne diese Aktualisierung ist die Session wertlos:**
 
 Am Ende jeder Session MUSS der Agent den Block "AKTUELLER STAND" oben aktualisieren:
@@ -49,6 +80,46 @@ Zusätzlich bei Code-Änderungen:
 - `docs/project/taskboard.md` — Task-Status pflegen
 - `docs/project/changelog.md` — Release-Eintrag ergänzen
 - Versionsnummern an allen Pflichtstellen synchron halten (siehe unten)
+- Eintrag in `C:\GIT\.memory\session-log.md` schreiben (repo-übergreifendes Langzeitgedächtnis)
+
+### Das Kern-Prinzip: "Was" ist kostenlos — "Warum" muss geschrieben werden
+
+```
+git diff / git log   → speichert WAS sich geändert hat (automatisch, kostenlos)
+Code selbst          → zeigt WAS er tut (lesbar)
+
+Commit-Message       → erklärt WARUM diese Änderung
+Code-Kommentar       → erklärt WARUM genau diese Zeile so (höchster Detailgrad, letztes Mittel)
+AGENTS.md            → erklärt WARUM diese Richtung / dieses Feature
+```
+
+**Kommentier-Regel für Code:** Nur WARUM schreiben, nie WAS.
+
+```js
+// ❌ WERTLOS — beschreibt nur was man sieht
+const sorted = events.sort((a,b) => b.ts - a.ts)  // sortiert nach Timestamp absteigend
+
+// ✅ WERTVOLL — das steht nirgendwo sonst
+// API liefert älteste Events zuerst; Kalender-UI erwartet neueste oben.
+// Keine Kopie nötig (sort in-place), events wird danach nicht mehr unverändert gebraucht.
+const sorted = events.sort((a,b) => b.ts - a.ts)
+```
+
+### Commit-Message-Format (verbindlich)
+
+Jeder Commit muss enthalten:
+```
+<typ>(<scope>): <was> -- <warum>
+
+<Details falls nötig>
+
+agent: GitHub Copilot CLI | llm: Claude Sonnet 4.6 | llm_version: <version>
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+```
+
+**Typen:** `feat` `fix` `docs` `style` `refactor` `test` `chore`
+**Warum:** Nicht "was" nochmal beschreiben — den Grund nennen.
+**agent/llm:** Damit die History zeigt welches Modell welche Entscheidung getroffen hat.
 
 ---
 
@@ -139,7 +210,8 @@ Jede Umgebung prüft das, was sie nachweisbar ausführen kann:
 - Browser-Chat: Anforderungen, aktuelle externe Quellen, UX und sichtbares
   Verhalten prüfen; nicht ausgeführte lokale Tests als offen kennzeichnen.
 - Lokaler Coding-Agent: Abhängigkeiten reproduzierbar installieren,
-  `npm run check`, Python-Syntax, `mkdocs build --strict` und
+  `npm run check`, Python-Syntax, `mkdocs build --strict`,
+  `python standards/scripts/test_docs.py` und
   `python scripts/build_help.py --site-dir help` ausführen sowie relevante
   manuelle Browserfälle dokumentieren.
 - CI: dieselben deterministischen Anwendungs- und Dokumentationsprüfungen auf

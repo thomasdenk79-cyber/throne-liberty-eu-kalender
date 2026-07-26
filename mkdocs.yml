@@ -1,10 +1,13 @@
+# WHY: standards als Submodule hinterlegt — alle theme/plugin/extension Defaults kommen von dort.
+# Nur homepage-spezifische Overrides stehen hier: Logo, Farben, CSS, eigene Social-Links, Nav.
+INHERIT: standards/mkdocs-base.yml
+
 site_name: Linny's Epic Time Portal – Hilfe und Entwicklerdoku
 site_description: Anwenderhilfe und Projektgedaechtnis fuer KI-gestuetzte Entwicklung
 site_author: Thomas Denk
 
 docs_dir: docs
 site_dir: site
-use_directory_urls: true
 
 repo_name: thomasdenk79-cyber/throne-liberty-eu-kalender
 repo_url: https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender
@@ -36,23 +39,6 @@ theme:
       toggle:
         icon: material/weather-night
         name: Dunkles Design
-
-plugins:
-  - search
-
-markdown_extensions:
-  - admonition
-  - attr_list
-  - fenced_code
-  - tables
-  - toc:
-      permalink: true
-  - pymdownx.details
-  - pymdownx.emoji
-  - pymdownx.highlight
-  - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
 
 extra_css:
   - stylesheets/linny.css
