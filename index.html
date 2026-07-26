@@ -229,31 +229,21 @@
 
       <section class="controls" id="settingsPanel">
 
-      <details class="settings-group" id="settingsGroupCategory" open>
-        <summary class="settings-group-head">
-          <span class="settings-group-head-main">
-            <span class="label" id="settingsGroupCategoryLabel">Verwaltung</span>
-            <button class="btn alt icon-action settings-group-action" id="categorySettingsBtn" type="button" title="Weitere Einstellungen" aria-label="Weitere Einstellungen">⚙</button>
-          </span>
-        </summary>
-        <div class="settings-group-body control-cluster">
-          <div class="row">
-            <div class="label settings-heading" id="categoryLabel">Category</div>
-            <select id="categorySelect"></select>
-            <div class="category-row">
-              <button class="btn alt icon-action" id="newCategoryBtn" type="button" title="Neue Kategorie" aria-label="Neue Kategorie">＋</button>
-              <button class="btn alt icon-action" id="renameCategoryBtn" type="button" title="Kategorie umbenennen" aria-label="Kategorie umbenennen">✎</button>
-              <button class="btn danger icon-action" id="deleteCategoryBtn" type="button" title="Kategorie löschen" aria-label="Kategorie löschen">⌫</button>
-            </div>
-          </div>
-        </div>
-      </details>
-
       <details class="settings-group" id="settingsGroupVisibility" open>
-        <summary class="settings-group-head">
+        <summary class="settings-group-head visibility-group-head">
           <span class="settings-group-head-main">
             <span class="label" id="visibilityLabel">Visible Timers</span>
-            <button class="btn icon-action settings-group-action" id="newTimerBtn" type="button" title="Neuer Timer" aria-label="Neuer Timer">＋</button>
+            <div class="visibility-inline-management">
+              <span class="label visibility-manage-label" id="settingsGroupCategoryLabel">Verwaltung</span>
+              <div class="label settings-heading" id="categoryLabel">Category</div>
+              <select id="categorySelect"></select>
+              <div class="category-row">
+                <button class="btn alt icon-action" id="newCategoryBtn" type="button" title="Neue Kategorie" aria-label="Neue Kategorie">＋</button>
+                <button class="btn alt icon-action" id="renameCategoryBtn" type="button" title="Kategorie umbenennen" aria-label="Kategorie umbenennen">✎</button>
+                <button class="btn danger icon-action" id="deleteCategoryBtn" type="button" title="Kategorie löschen" aria-label="Kategorie löschen">⌫</button>
+                <button class="btn icon-action" id="newTimerBtn" type="button" title="Neuer Timer" aria-label="Neuer Timer">＋</button>
+              </div>
+            </div>
           </span>
         </summary>
         <div class="settings-group-body control-cluster control-visibility">

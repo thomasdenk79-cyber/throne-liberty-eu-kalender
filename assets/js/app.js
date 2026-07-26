@@ -182,7 +182,6 @@ const dom = {
   newCategoryBtn: document.getElementById("newCategoryBtn"),
   renameCategoryBtn: document.getElementById("renameCategoryBtn"),
   deleteCategoryBtn: document.getElementById("deleteCategoryBtn"),
-  categorySettingsBtn: document.getElementById("categorySettingsBtn"),
   cardStack: document.getElementById("cardStack"),
   liveColumn: document.getElementById("liveColumn"),
   liveCollapseBtn: document.getElementById("liveCollapseBtn"),
@@ -1330,7 +1329,6 @@ function renderLabels() {
     [dom.newCategoryBtn, "＋", "newCategory"],
     [dom.renameCategoryBtn, "✎", "renameCategory"],
     [dom.deleteCategoryBtn, "⌫", "deleteCategory"],
-    [dom.categorySettingsBtn, "⚙", "toggleSettings"],
     [dom.settingsPopoverCloseBtn, "×", "close"],
     [dom.saveTimerBtn, "💾", "saveLocal"],
     [dom.duplicateTimerBtn, "⧉", "duplicate"],
@@ -2765,6 +2763,10 @@ function bind() {
     storageSet("timer_category_id", state.categoryId);
     renderAll();
   });
+  for (const control of [dom.categorySelect, dom.newCategoryBtn, dom.renameCategoryBtn, dom.deleteCategoryBtn, dom.newTimerBtn]) {
+    control.addEventListener("pointerdown", (event) => event.stopPropagation());
+    control.addEventListener("click", (event) => event.stopPropagation());
+  }
 
   dom.displayTimezone.addEventListener("change", () => {
     state.displayTimezone = dom.displayTimezone.value || clientDefaultTimezone;
@@ -2842,11 +2844,6 @@ function bind() {
   });
 
   dom.settingsToggleBtn.addEventListener("click", () => {
-    dom.settingsPopover.showModal();
-  });
-  dom.categorySettingsBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
     dom.settingsPopover.showModal();
   });
   dom.settingsPopoverCloseBtn.addEventListener("click", () => dom.settingsPopover.close());

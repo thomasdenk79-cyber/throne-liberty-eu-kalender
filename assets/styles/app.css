@@ -1022,19 +1022,19 @@ html[data-density="ultra"] .card-thumbnail { display: none !important; }
 
 .collapse-btn {
   position: relative;
-  width: 38px;
-  min-width: 38px;
-  height: 34px;
-  min-height: 34px;
+  width: 44px;
+  min-width: 44px;
+  height: 40px;
+  min-height: 40px;
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   border-radius: 999px;
-  border-color: #9ceaffad;
-  background: radial-gradient(circle at 30% 12%, #3a71a8, #132741 58%, #09121f);
-  box-shadow: inset 0 1px 0 #ffffff45, 0 0 18px #6edeff66, 0 8px 22px #020914b8;
+  border-color: #b6f4ffcf;
+  background: radial-gradient(circle at 30% 12%, #4b89c4, #162d4c 58%, #09121f);
+  box-shadow: inset 0 1px 0 #ffffff52, 0 0 24px #79e5ff80, 0 10px 28px #020914cf;
   overflow: hidden;
 }
 
@@ -1043,7 +1043,9 @@ html[data-density="ultra"] .card-thumbnail { display: none !important; }
   position: absolute;
   inset: 1px;
   border-radius: inherit;
-  background: radial-gradient(circle at 70% 24%, #beefff70 0%, #67dcff2b 44%, transparent 70%);
+  background:
+    radial-gradient(circle at 70% 24%, #beefff8f 0%, #67dcff30 44%, transparent 70%),
+    conic-gradient(from 30deg, #8eefff36, transparent 40%, #9f7dff2a 70%, transparent);
   opacity: 0.92;
   transition: opacity 180ms ease, filter 180ms ease;
 }
@@ -1054,11 +1056,11 @@ html[data-density="ultra"] .card-thumbnail { display: none !important; }
 }
 
 .collapse-icon {
-  width: 11px;
-  height: 11px;
+  width: 13px;
+  height: 13px;
   border-right: 3px solid currentColor;
   border-bottom: 3px solid currentColor;
-  filter: drop-shadow(0 0 10px #8eeeff);
+  filter: drop-shadow(0 0 12px #8eeeff);
   transition: transform 200ms ease, filter 200ms ease;
 }
 
@@ -2674,22 +2676,24 @@ html.colorblind-mode[data-density="ultra"] .card-phase-progress { height: 7px !i
 }
 
 #settingsPanel {
-  grid-template-columns: minmax(440px, 1.8fr) minmax(190px, 0.55fr) minmax(190px, 0.55fr);
-  grid-template-areas: "visibility category notifications";
+  grid-template-columns: minmax(560px, 1.7fr) minmax(340px, 1fr);
+  grid-template-areas: "visibility notifications";
   max-width: none;
   margin-inline: 0;
   width: 100%;
   gap: 10px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .settings-group + .settings-group { margin-top: 10px; }
 #settingsPanel .settings-group + .settings-group { margin-top: 0; }
 #settingsGroupVisibility { grid-area: visibility; }
-#settingsGroupCategory { grid-area: category; }
 #settingsGroupNotifications { grid-area: notifications; }
 
 .settings-group {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   border: 1px solid #9cdbf524;
   border-radius: 14px;
   background: linear-gradient(150deg, #101f32, #0a1420);
@@ -2736,9 +2740,48 @@ html.colorblind-mode[data-density="ultra"] .card-phase-progress { height: 7px !i
 .settings-group-head-main {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   width: 100%;
   min-width: 0;
+}
+
+.visibility-group-head .settings-group-head-main {
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+
+.visibility-inline-management {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.visibility-inline-management #categorySelect {
+  width: min(280px, 100%);
+  min-width: 180px;
+}
+
+.visibility-inline-management .category-row {
+  flex-wrap: nowrap;
+}
+
+.visibility-inline-management .icon-action {
+  width: 36px;
+  min-width: 36px;
+  min-height: 34px;
+  font-size: 18px;
+}
+
+.visibility-manage-label {
+  opacity: 0.82;
+}
+
+.settings-group-body {
+  flex: 1 1 auto;
+  padding: 4px 14px 14px;
+  border-top: 1px solid #9cdbf51c;
 }
 
 .settings-group-action {
@@ -2761,12 +2804,8 @@ html.colorblind-mode[data-density="ultra"] .card-phase-progress { height: 7px !i
   box-shadow: inset 0 1px 0 #ffffff70, 0 0 20px #8ae8ff99;
 }
 
-.settings-group-body {
-  padding: 4px 14px 14px;
-  border-top: 1px solid #9cdbf51c;
-}
-
 .settings-group-body.control-visibility { padding-top: 12px; }
+.settings-group-body.notification-setup { min-height: 100%; }
 
 
 .editor {
@@ -2881,7 +2920,7 @@ html.dock-mode .image-hover-preview {
 
 @media (max-width: 640px) {
   #settingsPanel { grid-template-columns: minmax(0, 1fr); }
-  #settingsPanel { grid-template-areas: "visibility" "category" "notifications"; }
+  #settingsPanel { grid-template-areas: "visibility" "notifications"; }
 
   .editor {
     inset: 116px 6px 6px;
@@ -2902,10 +2941,9 @@ html.dock-mode .image-hover-preview {
 
 @media (max-width: 1200px) and (min-width: 641px) {
   #settingsPanel {
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
     grid-template-areas:
-      "visibility visibility"
-      "category notifications";
+      "visibility notifications";
   }
 
   .card.has-thumbnail,
