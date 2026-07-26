@@ -1,5 +1,57 @@
 # AGENTS.md
 
+> **Für jeden Agent — PFLICHTLEKTÜRE ZUERST.**
+> Dieser Block sagt dir sofort wo wir stehen und was zu tun ist.
+> Aktualisiere ihn am Ende jeder Session — das ist nicht optional.
+
+---
+
+## 🔴 AKTUELLER STAND (immer aktuell halten!)
+
+### Stand: 2026-07-26
+
+**Letzter abgeschlossener Commit:** `38fc2ef` — UI: Timer-Management in Sichtbarkeits-Panel gemergt
+
+**Was gerade offen ist:**
+
+| Priorität | Aufgabe | Kontext |
+|---|---|---|
+| 🔵 Review | Juli-Eventdaten im Spiel gegenprüfen | Thomas prüft manuell gegen aktuelle Spieldaten |
+| 🔵 Review | PWA-Installation auf Android/iOS/Windows testen | Manueller QA-Test durch Thomas |
+| 🟡 Next | Browser-E2E-Tests erweitern | Mobile, Wide, PWA im CI fehlt noch |
+| 🟡 Next | Theme-Galerien mit Linny-Motiven füllen | Creative-Task, wartet auf Bildmaterial |
+| 🟡 Next | GitHub-Issues als echtes Teamboard aktivieren | Labels + Templates noch nicht erstellt |
+
+**Nächster Agent — direkt ausführbar:**
+```bash
+cd C:\GIT\throne-liberty-eu-kalender
+npm run check          # Baseline prüfen
+# Dann Aufgabe aus Tabelle oben übernehmen
+# Nach Änderungen: npm run visual:local (Screenshots ansehen!)
+# Commit, dann: git push
+```
+
+**Nichts zu tun wenn:**  kein offener Task zutrifft → erst Thomas fragen.
+
+---
+
+## 🔴 GEDÄCHTNIS-PFLICHT (für jeden Agent, jede Session)
+
+**Regel 0 — Ohne diese Aktualisierung ist die Session wertlos:**
+
+Am Ende jeder Session MUSS der Agent den Block "AKTUELLER STAND" oben aktualisieren:
+- ✅ Was wurde fertig (Commit-Hash + kurze Beschreibung)
+- 🔄 Was ist halb fertig (konkreter nächster Befehl)
+- ❌ Was ist blockiert und warum
+- Neue Aufgaben in die Tabelle eintragen, erledigte rausnehmen
+
+Zusätzlich bei Code-Änderungen:
+- `docs/project/taskboard.md` — Task-Status pflegen
+- `docs/project/changelog.md` — Release-Eintrag ergänzen
+- Versionsnummern an allen Pflichtstellen synchron halten (siehe unten)
+
+---
+
 Dieses Repository dient als kleines Demo-Projekt für KI-unterstützte Entwicklung. Es enthält eine statische Event-Timer-Webseite und gleichzeitig eine dokumentierte Arbeitsweise, wie Menschen, ChatGPT und Coding-Agenten gemeinsam entwickeln können.
 
 ## Rolle der Agenten
