@@ -1,5 +1,10 @@
 # AGENTS.md
 
+- **AI-ACCESS:** allowed
+- **INHERITS:** `C:\GIT\AGENTS.md` and `C:\GIT\standards\AGENTS.md`
+- **OVERRIDES:** adds `agent_version` and project context to commit metadata; local release, public-repo, UI, and visual-test rules below
+- **SCOPE:** this repository
+
 > **Für jeden Agent — PFLICHTLEKTÜRE ZUERST.**
 > Dieser Block sagt dir sofort wo wir stehen und was zu tun ist.
 > Aktualisiere ihn am Ende jeder Session — das ist nicht optional.
@@ -80,7 +85,9 @@ Zusätzlich bei Code-Änderungen:
 - `docs/project/taskboard.md` — Task-Status pflegen
 - `docs/project/changelog.md` — Release-Eintrag ergänzen
 - Versionsnummern an allen Pflichtstellen synchron halten (siehe unten)
-- Eintrag in `C:\GIT\.memory\session-log.md` schreiben (repo-übergreifendes Langzeitgedächtnis)
+- Cross-Repo-Handoff in `C:\GIT\user-memory\session-log.md` schreiben
+- persönliche Erkenntnisse nach `C:\GIT\user-memory\profile.md` routen
+- wiederverwendbare Agent-Erkenntnisse über `C:\GIT\agent-memory\INDEX.md` routen
 
 ### Das Kern-Prinzip: "Was" ist kostenlos — "Warum" muss geschrieben werden
 
@@ -113,7 +120,7 @@ Jeder Commit muss enthalten:
 
 <Details falls nötig>
 
-agent: GitHub Copilot CLI | llm: Claude Sonnet 4.6 | llm_version: <version>
+agent: GitHub Copilot CLI | agent_version: <version> | llm: <model> | llm_version: <version>
 Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 ```
 
@@ -149,6 +156,10 @@ Vor jeder größeren Änderung zuerst lesen:
 - Bestehendes Verhalten erhalten, außer die Aufgabe verlangt explizit etwas anderes.
 - Keine geheimen Zugangsdaten oder Tokens ins Repository schreiben. Personenbezogene Daten sind nur in der ausdrücklich freigegebenen gesetzlichen Anbieterangabe zulässig; niemals in Beispielen, Logs oder Testdaten.
 - Keine Siemens-internen Inhalte in dieses öffentliche Privat-Repository aufnehmen.
+- Keine externen Tracking-Skripte oder unnötigen CDN-Abhängigkeiten ergänzen.
+- UI-Änderungen responsiv und barrierearm halten: Tastatur, Fokus, Kontrast,
+  reduzierte Bewegung, Touch, verständliche Beschriftungen und `aria-label` beachten.
+- `config.ini` rückwärtskompatibel ändern; bestehende Timer dürfen nicht brechen.
 - Dokumentation auf Deutsch schreiben; technische Bezeichner bleiben Englisch.
 - Bei Unsicherheit Annahmen sichtbar dokumentieren.
 - Jede relevante Änderung in der Dokumentation nachziehen.
@@ -184,7 +195,6 @@ Diese Dateien bilden das **Living Brain** des Projekts und steuern Ziele,
 Architektur, Agentenverhalten und Qualitätsregeln:
 
 - `AGENTS.md`
-- `.github/copilot-instructions.md`
 - `.github/agents/` und `.github/instructions/`
 - `docs/project/project-brief.md`
 - `docs/project/architecture.md`
@@ -348,4 +358,9 @@ Beispiel (Kurzform):
 
 `docs/assets: move Linny images to structured folder and update references`
 `why: improve repository clarity and keep links consistent`
-`agent: GitHub Copilot | agent_version: 1.0 | llm: GPT-5.3-Codex | llm_version: GPT-5.3-Codex`
+```text
+<type>(<scope>): <what> -- <why>
+
+agent: <name> | agent_version: <version> | llm: <model> | llm_version: <version>
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+```

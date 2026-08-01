@@ -30,7 +30,7 @@ Chatverläufe sind für langfristige Projektarbeit allein nicht ausreichend. Wic
 
 Das bedeutet nicht, dass ein Agent automatisch alles weiß. Ein Agent erhält zuverlässigen Kontext, wenn:
 
-1. Einstiegspunkte wie `AGENTS.md` und `.github/copilot-instructions.md` vorhanden sind,
+1. `AGENTS.md` als eindeutiger Einstiegspunkt vorhanden ist,
 2. die Wissensbasis klar gegliedert ist,
 3. kanonische Quellen eindeutig benannt sind,
 4. relevante Dateien für die konkrete Aufgabe gelesen werden,
@@ -41,7 +41,6 @@ Das bedeutet nicht, dass ein Agent automatisch alles weiß. Ein Agent erhält zu
 ### Stufe 1: immer laden
 
 - `AGENTS.md`
-- `.github/copilot-instructions.md`
 - `docs/README.md`
 - `docs/project/project-brief.md`
 

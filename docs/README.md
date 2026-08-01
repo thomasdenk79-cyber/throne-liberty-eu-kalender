@@ -94,7 +94,7 @@ serverseitig ohne Uebersetzung neu (Fallback fuer Browser-Edits).
 | Nutzer der Timer-Seite | [Projekt-README auf GitHub](https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender/blob/main/README.md) |
 | neuer Entwickler | [Projektüberblick](project/project-brief.md) und [Architektur](project/architecture.md) |
 | Coding-Agent | [AGENTS.md auf GitHub](https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender/blob/main/AGENTS.md), danach die dort verlinkten Dateien |
-| GitHub Copilot | [Copilot-Instruktionen auf GitHub](https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender/blob/main/.github/copilot-instructions.md) |
+| GitHub Copilot | [AGENTS.md auf GitHub](https://github.com/thomasdenk79-cyber/throne-liberty-eu-kalender/blob/main/AGENTS.md), danach passende `.github/instructions/` |
 | konkrete Implementierung | [Entwicklungsrichtlinien](engineering/development-guidelines.md) |
 | KI-Workflow verstehen | [KI-gestützte Entwicklung](engineering/ai-assisted-development.md) |
 | Markdown lernen | [Markdown-Kurzreferenz](reference/markdown-cheatsheet.md) |

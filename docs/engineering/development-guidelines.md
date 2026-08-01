@@ -36,7 +36,7 @@ Zusätzlich je nach Aufgabe:
 |---|---|
 | Timer oder INI ändern | `README.md`, `config.ini` |
 | UI oder Verhalten ändern | `index.html`, Architektur |
-| Agentenregeln ändern | `.github/copilot-instructions.md`, `AGENTS.md` |
+| Agentenregeln ändern | `AGENTS.md`, `.github/instructions/`, `.github/agents/` |
 | größere technische Entscheidung | `decision-log.md` |
 | Dokumentation ändern | `documentation-guidelines.md` |
 

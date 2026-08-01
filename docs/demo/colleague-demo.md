@@ -140,7 +140,6 @@ Kollegen können folgende Teile kopieren und anschließend durch einen Agenten a
 
 ```text
 AGENTS.md
-.github/copilot-instructions.md
 .github/instructions/
 docs/
 mkdocs.yml

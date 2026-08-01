@@ -144,7 +144,6 @@ letzten Cachewert zurückfallen.
 | `docs/engineering/` | Vorgehen, Qualitätsregeln und Entscheidungen |
 | `docs/demo/` | wiederverwendbares Vorführ- und Lernmaterial |
 | `AGENTS.md` | herstellerneutraler Agenteneinstieg |
-| `.github/copilot-instructions.md` | GitHub-Copilot-spezifische Regeln |
 | `.github/instructions/` | pfadspezifische Copilot-Regeln |
 
 ## Architekturregeln

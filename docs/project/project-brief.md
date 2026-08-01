@@ -56,7 +56,7 @@ Das Repository erfüllt gleichzeitig einen zweiten Zweck: Es ist ein bewusst üb
 | GitHub Pages | statische Veröffentlichung der Anwendung |
 | `docs/` | gemeinsames Projektwissen für Menschen und Agenten |
 | `AGENTS.md` | Einstieg und Arbeitsregeln für Coding-Agenten |
-| `.github/copilot-instructions.md` | automatisch geladene Copilot-Projektregeln |
+| `.github/instructions/` | automatisch geladene pfadspezifische Zusatzregeln |
 
 ## Quellen der Wahrheit
 

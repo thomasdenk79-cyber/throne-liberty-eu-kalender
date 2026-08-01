@@ -18,7 +18,7 @@ Das Repository dient zugleich als kleines Demo-Projekt fuer **KI-gestuetzte Soft
 - [Taskboard](docs/project/taskboard.md)
 - [Rollen und Governance](docs/project/team-governance.md)
 
-Agenten beginnen mit [`AGENTS.md`](AGENTS.md). GitHub Copilot verwendet zusaetzlich [`.github/copilot-instructions.md`](.github/copilot-instructions.md).
+Alle Coding-Agenten beginnen mit [`AGENTS.md`](AGENTS.md); pfadspezifische Ergänzungen liegen unter [`.github/instructions/`](.github/instructions/).
 
 Die Markdown-Dateien sind die gepflegte Quelle. Mit MkDocs kann daraus lokal eine navigierbare HTML-Dokumentation mit Suche und Inhaltsverzeichnissen erzeugt werden:
 
@@ -104,7 +104,7 @@ ohne Uebersetzung neu.
 - `assets/js/`: native ES-Module für Konfiguration, Zeitplan, Sounds, ICS und UI
 - `config.ini`: einzige Standard-Konfiguration fuer Kategorien und Timer
 - `AGENTS.md`: herstellerneutraler Einstieg fuer Coding-Agenten
-- `.github/copilot-instructions.md`: Repository-Regeln fuer GitHub Copilot
+- `.github/instructions/`: pfadspezifische Zusatzregeln fuer Coding-Agenten
 - `docs/`: Projektwissen, Architektur, Entwicklungsregeln und Demo-Material
 - `mkdocs.yml`: Navigation und Build-Konfiguration der HTML-Dokumentation
 

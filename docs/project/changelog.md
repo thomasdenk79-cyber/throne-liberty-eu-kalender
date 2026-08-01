@@ -13,6 +13,16 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
+## Unreleased – 27. Juli 2026
+
+- Agenten-Hierarchie vereinheitlicht: `AGENTS.md` ist die einzige globale
+  Instruktionsquelle des Repositories; pfadspezifische Regeln bleiben unter
+  `.github/instructions/`.
+- Veraltete Verweise auf `.github/copilot-instructions.md` aus Dokumentation und
+  Docs-Workflow entfernt.
+- Explizite Vererbungs-, Override- und `AI-ACCESS`-Marker sowie globales
+  User-/Agent-Memory-Routing ergänzt.
+
 ## 3.3.6 – 25. Juli 2026
 
 <span class="status-chip status-active">Live</span>
@@ -31,8 +41,7 @@ Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. D
   sichtbaren Timern (`[settings].visibleTimerIds` in `config.ini`).
 - Release-Version auf **3.3.6** synchronisiert (UI, Assets, Service Worker,
   Paketmetadaten).
-- Agenten-Dokumentation als SSOT geschärft: `AGENTS.md` als zentrale
-  Regelliste, Copilot-Datei mit Verweis statt doppelter Regelpflege.
+- Agenten-Dokumentation als SSOT geschärft: `AGENTS.md` als zentrale Regelliste.
 
 ## 3.3.3 – 26. Juli 2026
 
