@@ -1,7 +1,7 @@
 # AGENTS.md
 
 - **AI-ACCESS:** allowed
-- **INHERITS:** `C:\GIT\AGENTS.md` and `C:\GIT\standards\AGENTS.md`
+- **INHERITS:** `${ENGINEERING_GOVERNANCE_ROOT}/AGENTS.md`
 - **OVERRIDES:** adds `agent_version` and project context to commit metadata; local release, public-repo, UI, and visual-test rules below
 - **SCOPE:** this repository
 
@@ -29,7 +29,7 @@
 
 **Nächster Agent — direkt ausführbar:**
 ```bash
-cd C:\GIT\throne-liberty-eu-kalender
+cd "${ENGINEERING_REPOS_ROOT}/throne-liberty-eu-kalender"
 npm run check          # Baseline prüfen
 # Dann Aufgabe aus Tabelle oben übernehmen
 # Nach Änderungen: npm run visual:local (Screenshots ansehen!)
@@ -45,7 +45,7 @@ npm run check          # Baseline prüfen
 ### Schritt 1 — Git-History lesen (BEVOR du irgend etwas tust)
 
 ```bash
-cd C:\GIT\throne-liberty-eu-kalender
+cd "${ENGINEERING_REPOS_ROOT}/throne-liberty-eu-kalender"
 
 # Letzte 20 Commits: wer hat wann was gemacht
 git log --oneline --decorate -20
@@ -85,9 +85,8 @@ Zusätzlich bei Code-Änderungen:
 - `docs/project/taskboard.md` — Task-Status pflegen
 - `docs/project/changelog.md` — Release-Eintrag ergänzen
 - Versionsnummern an allen Pflichtstellen synchron halten (siehe unten)
-- Cross-Repo-Handoff in `C:\GIT\user-memory\session-log.md` schreiben
-- persönliche Erkenntnisse nach `C:\GIT\user-memory\profile.md` routen
-- wiederverwendbare Agent-Erkenntnisse über `C:\GIT\agent-memory\INDEX.md` routen
+- Projektwissen im Repository pflegen.
+- Optionales User- oder Semantic-Memory nur nach den Workspace-Einstellungen lesen oder ändern.
 
 ### Das Kern-Prinzip: "Was" ist kostenlos — "Warum" muss geschrieben werden
 
