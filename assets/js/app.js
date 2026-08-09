@@ -13,11 +13,12 @@ import { calendarEntryKey, downloadIcs as downloadCalendarIcs } from "./ics.js";
 const CARD_DENSITY_VALUES = ["ultra", "compact", "comfortable", "cinematic", "big-picture", "mega"];
 const BAVARIA_TIMEZONE = "Bayern/Munich";
 const CONFIG_UPDATED_AT = "2026-07-24T00:00:00Z";
-const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.6";
+const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.7";
 const GA4_MEASUREMENT_ID = (document.querySelector('meta[name="ga4-measurement-id"]')?.getAttribute("content") || "").trim();
 const PLAUSIBLE_DOMAIN = (document.querySelector('meta[name="plausible-domain"]')?.getAttribute("content") || "").trim();
 const COUNTAPI_NAMESPACE = (document.querySelector('meta[name="countapi-namespace"]')?.getAttribute("content") || "").trim();
 const COUNTAPI_KEY = (document.querySelector('meta[name="countapi-key"]')?.getAttribute("content") || "").trim();
+const COUNTAPI_BASE_URL = "https://countapi.mileshilliard.com/api/v1";
 const germanClient = (navigator.language || "").toLowerCase().startsWith("de");
 const clientDefaultLanguage = germanClient ? "bar" : "en";
 const clientDefaultTimezone = germanClient ? BAVARIA_TIMEZONE : "Europe/Berlin";
@@ -165,6 +166,18 @@ const dom = {
   configUpdatedStatus: document.getElementById("configUpdatedStatus"),
   configLiveStatus: document.getElementById("configLiveStatus"),
   configExpiryStatus: document.getElementById("configExpiryStatus"),
+  gateSyncOpenBtn: document.getElementById("gateSyncOpenBtn"),
+  gateSyncDialog: document.getElementById("gateSyncDialog"),
+  gateSyncTitle: document.getElementById("gateSyncTitle"),
+  gateSyncDescription: document.getElementById("gateSyncDescription"),
+  gateSyncDateLabel: document.getElementById("gateSyncDateLabel"),
+  gateSyncDate: document.getElementById("gateSyncDate"),
+  gateSyncTimeLabel: document.getElementById("gateSyncTimeLabel"),
+  gateSyncTime: document.getElementById("gateSyncTime"),
+  gateSyncTimezoneLabel: document.getElementById("gateSyncTimezoneLabel"),
+  gateSyncTimezone: document.getElementById("gateSyncTimezone"),
+  gateSyncCancelBtn: document.getElementById("gateSyncCancelBtn"),
+  gateSyncSubmitBtn: document.getElementById("gateSyncSubmitBtn"),
   quickActionsLabel: document.getElementById("quickActionsLabel"),
   visibilityLabel: document.getElementById("visibilityLabel"),
   stackLabel: document.getElementById("stackLabel"),
@@ -448,19 +461,28 @@ function renderVisitorCounter() {
 
 async function refreshVisitorCounter() {
   if (!COUNTAPI_NAMESPACE || !COUNTAPI_KEY) return;
+  const counterKey = `${COUNTAPI_NAMESPACE}_${COUNTAPI_KEY}`;
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), 8000);
   try {
-    const endpoint = `https://api.countapi.xyz/hit/${encodeURIComponent(COUNTAPI_NAMESPACE)}/${encodeURIComponent(COUNTAPI_KEY)}`;
-    const response = await fetch(endpoint, { cache: "no-store" });
+    const endpoint = `${COUNTAPI_BASE_URL}/hit/${encodeURIComponent(counterKey)}`;
+    const response = await fetch(endpoint, { cache: "no-store", signal: controller.signal });
     if (!response.ok) throw new Error(`Visitor counter failed (HTTP ${response.status})`);
-    if (typeof response.json !== "function") return;
+    if (typeof response.json !== "function") throw new Error("Visitor counter returned no JSON response.");
     const payload = await response.json();
-    if (!Number.isFinite(payload?.value)) throw new Error("Visitor counter payload missing numeric value.");
-    state.visitorCount = Number(payload.value);
+    const count = Number(payload?.value);
+    if (!Number.isFinite(count) || count < 0) throw new Error("Visitor counter payload missing numeric value.");
+    state.visitorCount = count;
     state.visitorCounterFailed = false;
+    storageSet("timer_visitor_count", String(count));
   } catch (error) {
     console.warn("Visitor counter unavailable.", error);
-    state.visitorCount = null;
+    const cachedValue = storageGet("timer_visitor_count");
+    const cachedCount = Number(cachedValue);
+    state.visitorCount = cachedValue !== null && Number.isFinite(cachedCount) && cachedCount >= 0 ? cachedCount : null;
     state.visitorCounterFailed = true;
+  } finally {
+    window.clearTimeout(timeoutId);
   }
   renderVisitorCounter();
 }
@@ -707,14 +729,17 @@ function migrateLegacyMemoryInterval(localConfig) {
   let changed = false;
   const fixedRules = ["0 1,5,9,13,17,21 * * *"];
   const intervalRules = ["@every 11806s"];
-  const intervalAnchor = "2026-07-24T14:56:16Z";
+  const legacyIntervalAnchor = "2026-07-24T14:56:16Z";
+  const intervalAnchor = "2026-08-09T12:58:16Z";
   for (const timer of localConfig.timers || []) {
     if (timer.id !== "gate_memory_eu" || timer.deleted) continue;
     const rules = (timer.rules || []).map((rule) => String(rule).trim());
     const hasFixed = rules.some((rule) => fixedRules.includes(rule));
     const hasLegacyEvery = rules.some((rule) => /^@every\s+197m$/i.test(rule));
-    const hasOldInterval = rules.some((rule) => /^@every\s+1180[68]s$/i.test(rule));
-    if (hasFixed || hasLegacyEvery || hasOldInterval) {
+    const hasOldInterval = rules.some((rule) => /^@every\s+11808s$/i.test(rule));
+    const hasLegacyDefaultAnchor = rules.some((rule) => /^@every\s+11806s$/i.test(rule))
+      && timer.anchorUtc === legacyIntervalAnchor;
+    if (hasFixed || hasLegacyEvery || hasOldInterval || hasLegacyDefaultAnchor) {
       const needsRuleUpdate = !(rules.length === 1 && /^@every\s+11806s$/i.test(rules[0] || ""));
       const needsAnchorUpdate = timer.anchorUtc !== intervalAnchor;
       if (needsRuleUpdate) timer.rules = intervalRules.slice();
@@ -897,6 +922,99 @@ function toDateTimeLocal(value) {
   if (Number.isNaN(date.getTime())) return "";
   const pad = (x) => String(x).padStart(2, "0");
   return date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) + "T" + pad(date.getHours()) + ":" + pad(date.getMinutes());
+}
+
+function zonedDateParts(date, timeZone) {
+  const formatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: resolveTimeZone(timeZone),
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23"
+  });
+  return Object.fromEntries(formatter.formatToParts(date)
+    .filter((part) => part.type !== "literal")
+    .map((part) => [part.type, part.value]));
+}
+
+function zonedDateTimeToIso(dateValue, timeValue, timeZone) {
+  const dateMatch = String(dateValue || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const timeMatch = String(timeValue || "").match(/^(\d{2}):(\d{2})(?::(\d{2}))?$/);
+  if (!dateMatch || !timeMatch) return "";
+  const desired = Date.UTC(
+    Number(dateMatch[1]), Number(dateMatch[2]) - 1, Number(dateMatch[3]),
+    Number(timeMatch[1]), Number(timeMatch[2]), Number(timeMatch[3] || 0)
+  );
+  let guess = desired;
+  for (let pass = 0; pass < 3; pass += 1) {
+    const parts = zonedDateParts(new Date(guess), timeZone);
+    const displayed = Date.UTC(
+      Number(parts.year), Number(parts.month) - 1, Number(parts.day),
+      Number(parts.hour), Number(parts.minute), Number(parts.second)
+    );
+    guess += desired - displayed;
+  }
+  const result = new Date(guess);
+  const check = zonedDateParts(result, timeZone);
+  const expectedSecond = String(timeMatch[3] || "0").padStart(2, "0");
+  if (`${check.year}-${check.month}-${check.day}` !== dateValue
+    || `${check.hour}:${check.minute}:${check.second}` !== `${timeMatch[1]}:${timeMatch[2]}:${expectedSecond}`) return "";
+  return result.toISOString();
+}
+
+function openGateSyncDialog() {
+  const timezone = state.displayTimezone || "Europe/Berlin";
+  const parts = zonedDateParts(new Date(), timezone);
+  dom.gateSyncDate.value = `${parts.year}-${parts.month}-${parts.day}`;
+  dom.gateSyncTime.value = "";
+  dom.gateSyncTimezone.innerHTML = "";
+  for (const zone of supportedTimezones()) {
+    const option = document.createElement("option");
+    option.value = zone;
+    option.textContent = displayTimeZoneName(zone);
+    option.selected = zone === timezone;
+    dom.gateSyncTimezone.appendChild(option);
+  }
+  if (!dom.gateSyncDialog.open) dom.gateSyncDialog.showModal();
+}
+
+function submitGateSync() {
+  const anchorUtc = zonedDateTimeToIso(
+    dom.gateSyncDate.value,
+    dom.gateSyncTime.value,
+    dom.gateSyncTimezone.value || "Europe/Berlin"
+  );
+  if (!anchorUtc) {
+    toast(text("gateSyncInvalid"));
+    return;
+  }
+  const anchorMs = Date.parse(anchorUtc);
+  if (anchorMs > Date.now() + 5 * 60 * 1000) {
+    toast(text("gateSyncFuture"));
+    return;
+  }
+  if (Date.now() - anchorMs > 48 * 60 * 60 * 1000) {
+    toast(text("gateSyncTooOld"));
+    return;
+  }
+  const current = state.mergedConfig.timers.find((timer) => timer.id === "gate_memory_eu");
+  if (!current) return;
+  const timer = clone(current);
+  timer.rules = ["@every 11806s"];
+  timer.anchorUtc = anchorUtc;
+  timer.liveVerifiedAt = new Date().toISOString();
+  timer.liveSourceUrl = "local-user";
+  upsertLocalTimer(timer);
+  dom.gateSyncDialog.close();
+  state.cardRenderKey = "";
+  renderAll();
+  toast(text("gateSyncSaved").replace("{date}", new Date(anchorUtc).toLocaleString(
+    state.lang === "en" ? "en-GB" : "de-DE",
+    { timeZone: resolveTimeZone(dom.gateSyncTimezone.value || "Europe/Berlin") }
+  )));
 }
 
 function formatTime(date, timeZone, withSeconds = true) {
@@ -1174,6 +1292,9 @@ function renderConfigHealth() {
     : Number.isFinite(liveVerified)
       ? text("configLive").replace("{date}", configDate(new Date(liveVerified)))
       : text("configLiveUnavailable");
+  if (gate?.liveSourceUrl === "local-user" && Number.isFinite(liveVerified)) {
+    dom.configLiveStatus.textContent = text("configLiveLocal").replace("{date}", configDate(new Date(liveVerified)));
+  }
   const now = Date.now();
   const ranges = (state.mergedConfig?.timers || [])
     .map((timer) => timer.activeUntil ? Date.parse(timer.activeUntil) : NaN)
@@ -1297,6 +1418,14 @@ function renderLabels() {
   dom.settingsToggleBtn.setAttribute("aria-label", text("toggleSettings"));
   dom.settingsPopoverTitle.textContent = text("settingsPopoverTitle");
   dom.storageSettingsBtn.textContent = text("storageSettings");
+  dom.gateSyncOpenBtn.textContent = text("gateSyncOpen");
+  dom.gateSyncTitle.textContent = text("gateSyncTitle");
+  dom.gateSyncDescription.textContent = text("gateSyncDescription");
+  dom.gateSyncDateLabel.textContent = text("gateSyncDate");
+  dom.gateSyncTimeLabel.textContent = text("gateSyncTime");
+  dom.gateSyncTimezoneLabel.textContent = text("gateSyncTimezone");
+  dom.gateSyncCancelBtn.textContent = text("cancel");
+  dom.gateSyncSubmitBtn.textContent = text("gateSyncSubmit");
   dom.eventPopupLabel.textContent = text("eventAlert");
   dom.eventPopupCloseBtn.textContent = text("acknowledge");
   dom.footerSummary.textContent = text("footerSummary");
@@ -2852,6 +2981,12 @@ function bind() {
   });
   dom.storageSettingsBtn.addEventListener("click", () => {
     dom.privacyDialog.showModal();
+  });
+  dom.gateSyncOpenBtn.addEventListener("click", openGateSyncDialog);
+  dom.gateSyncCancelBtn.addEventListener("click", () => dom.gateSyncDialog.close());
+  dom.gateSyncSubmitBtn.addEventListener("click", submitGateSync);
+  dom.gateSyncDialog.addEventListener("click", (event) => {
+    if (event.target === dom.gateSyncDialog) dom.gateSyncDialog.close();
   });
 
   document.addEventListener("visibilitychange", renderPageActivityStatus);

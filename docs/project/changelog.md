@@ -13,6 +13,24 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
+## 3.3.7 – 9. August 2026
+
+<span class="status-chip status-active">Release-Kandidat</span>
+
+- Gate of Memory auf den am 9. August sichtbaren MetaForge-Zeitplan neu
+  ausgerichtet; `11806` Sekunden und vier Minuten Dauer bleiben erhalten.
+- Alte Browser-Konfigurationen mit dem Anchor vom 24. Juli werden einmalig
+  migriert. Bereits aktuelle oder bewusst gesetzte Anchor werden nicht mehr
+  pauschal überschrieben.
+- Besucher können über „Gate-Timer falsch?“ den letzten bekannten Gate-Start
+  mit Datum, Uhrzeit und Zeitzone eingeben und den Zyklus lokal neu ausrichten.
+- GitHub Pages und der separate Dokumentations-Check laden das
+  `standards`-Submodul, bevor MkDocs die geerbte Basiskonfiguration verwendet.
+- Der ausgefallene Besucherzähler `api.countapi.xyz` wurde durch den
+  browserkompatiblen CountAPI-Dienst von Miles Hilliard ersetzt. Bei kurzen
+  Ausfällen bleibt der zuletzt erfolgreich geladene Stand lokal sichtbar.
+- Release-Version auf **3.3.7** synchronisiert.
+
 ## Unreleased – 27. Juli 2026
 
 - Agenten-Hierarchie vereinheitlicht: `AGENTS.md` ist die einzige globale

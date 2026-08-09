@@ -28,6 +28,9 @@ window.Notification = class {
 };
 window.fetch = async (resource) => {
   const url = String(resource);
+  if (url.includes("countapi.mileshilliard.com")) {
+    return { ok: true, status: 200, json: async () => ({ value: "42" }) };
+  }
   const body = url.includes("live-timers.ini") ? liveTimers : config;
   return { ok: true, status: 200, text: async () => body };
 };
@@ -83,6 +86,24 @@ assert.equal(window.document.querySelectorAll("#editNotifyWarningSound option").
 assert(window.document.querySelector("#editNotifyWarningDuration"), "warning sound duration is editable");
 assert(window.document.querySelector("#editNotifyCriticalDuration"), "critical sound duration is editable");
 assert(window.document.querySelector("#settingsPanel"), "settings panel exists");
+assert(window.document.querySelector("#gateSyncDialog"), "Gate timer can be corrected locally from a dedicated dialog");
+assert(window.document.querySelector("#gateSyncOpenBtn"), "Gate sync dialog has a visible entry point");
+window.document.querySelector("#gateSyncOpenBtn").click();
+const knownStart = new Date(Date.now() - 60 * 60 * 1000);
+const knownParts = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Berlin",
+  year: "numeric", month: "2-digit", day: "2-digit",
+  hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23"
+}).formatToParts(knownStart).filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
+window.document.querySelector("#gateSyncDate").value = `${knownParts.year}-${knownParts.month}-${knownParts.day}`;
+window.document.querySelector("#gateSyncTime").value = `${knownParts.hour}:${knownParts.minute}:${knownParts.second}`;
+window.document.querySelector("#gateSyncTimezone").value = "Europe/Berlin";
+window.document.querySelector("#gateSyncSubmitBtn").click();
+assert.equal(window.document.querySelector("#gateSyncDialog").open, false, "valid last-known Gate time closes the sync dialog");
+const locallySyncedGate = JSON.parse(window.localStorage.getItem("timer_local_config"))
+  .timers.find((timer) => timer.id === "gate_memory_eu");
+assert.deepEqual(locallySyncedGate.rules, ["@every 11806s"], "local Gate correction keeps the exact interval");
+assert.equal(locallySyncedGate.liveSourceUrl, "local-user", "local Gate correction records its source");
 assert.equal(window.document.querySelector("#settingsPanel").hidden, false, "settings panel is always visible (v3.2 layout)");
 assert.equal(window.document.querySelector("#settingsPopover").open, false, "secondary settings popover starts closed");
 window.document.querySelector("#settingsToggleBtn").click();
@@ -95,9 +116,11 @@ assert.equal(window.document.querySelector("#dockSideSelect"), null, "dock dropd
 assert(window.document.querySelectorAll("#calendarGroups .calendar-group").length >= 4, "calendar groups render");
 assert.equal(window.document.documentElement.lang, "en", "stored language is applied");
 assert.equal(window.document.querySelector("#storageConsent").open, false, "accepted consent is not shown again");
+assert.match(window.document.querySelector("#visitorCounter").textContent, /42/, "visitor counter uses the replacement CountAPI response");
 
 const applicationSource = fs.readFileSync(new URL("../assets/js/app.js", import.meta.url), "utf8");
 assert.match(applicationSource, /11806s/, "new Gate of Memory interval is compiled into migrations");
+assert.match(applicationSource, /countapi\.mileshilliard\.com\/api\/v1/, "visitor counter no longer calls the unavailable countapi.xyz service");
 assert.doesNotMatch(applicationSource, /row\.innerHTML\s*=\s*""\s*\+\s*"<div class=\\"current-event/, "current events avoid imported HTML");
 assert.match(config, /\[timer:archboss_eu\][\s\S]*?rules=0 22 \* \* 2 \|\| 0 19,22 \* \* 3,6/, "Archboss weekly schedule");
 assert.match(config, /\[timer:boonstones_eu\][\s\S]*?rules=0 21 \* \* 1,5/, "Boonstone weekly schedule");
@@ -105,7 +128,7 @@ assert.match(config, /\[timer:riftstones_eu\][\s\S]*?rules=0 21 \* \* 2,6/, "Rif
 assert.match(config, /\[timer:innerspace_guild_boss\][\s\S]*?rules=10 20 \* \* 4/, "Guild Raid weekly schedule");
 assert.match(config, /\[timer:interserver_eu\][\s\S]*?rules=30 21 \* \* 5,6/, "conditional Interserver schedule");
 assert.match(config, /\[timer:gate_memory_eu\][\s\S]*?notifications\.warning\.seconds=360[\s\S]*?notifications\.critical\.seconds=120/, "Gate reminders allow login and travel time");
-assert.match(liveTimers, /rules=@every 11806s[\s\S]*?anchorUtc=2026-07-24T14:56:16Z[\s\S]*?durationMinutes=4/, "Gate live values");
+assert.match(liveTimers, /rules=@every 11806s[\s\S]*?anchorUtc=2026-08-09T12:58:16Z[\s\S]*?durationMinutes=4/, "Gate live values");
 
 console.log("runtime smoke: modules, cards, panels, schedules, consent, localization and XSS guard OK");
 await window.happyDOM.cancelAsync();
