@@ -9,6 +9,16 @@ canonical: true
 
 # Was ist neu?
 
+## Version 3.3.7: Gate-Zeit und Veröffentlichung repariert
+
+- Der Gate-of-Memory-Timer verwendet wieder den aktuellen Zeitanker vom
+  9. August 2026.
+- Ein alter gespeicherter Browserwert vom 24. Juli wird automatisch korrigiert.
+- Neue, bereits gültige Zeitanker werden nicht mehr von der Migration
+  überschrieben.
+- Die GitHub-Pages-Veröffentlichung kann die gemeinsame Dokumentationsbasis
+  wieder laden und bleibt nicht mehr im MkDocs-Prüfschritt hängen.
+
 ## Version 3.3.6: Mehr Platz, klarere Bedienung, sauberere Agentenregeln
 
 - Die Bereiche unter dem Titelbild sind neu sortiert:

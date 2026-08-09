@@ -13,14 +13,15 @@
 
 ## 🔴 AKTUELLER STAND (immer aktuell halten!)
 
-### Stand: 2026-07-26
+### Stand: 2026-08-09
 
-**Letzter abgeschlossener Commit:** `38fc2ef` — UI: Timer-Management in Sichtbarkeits-Panel gemergt
+**Letzter abgeschlossener Commit:** `2d5fcd0` — portables Workspace-Routing ohne Legacy-Memory-Writes
 
 **Was gerade offen ist:**
 
 | Priorität | Aufgabe | Kontext |
 |---|---|---|
+| 🔴 Review | Release 3.3.7 veröffentlichen und Pages prüfen | Lokaler Fix: Gate-Anchor 09.08., Legacy-Migration und Submodule-Checkout; `npm run check`, MkDocs und Hilfe-Build grün; visueller Lauf mangels Browser-Binary offen |
 | 🔵 Review | Juli-Eventdaten im Spiel gegenprüfen | Thomas prüft manuell gegen aktuelle Spieldaten |
 | 🔵 Review | PWA-Installation auf Android/iOS/Windows testen | Manueller QA-Test durch Thomas |
 | 🟡 Next | Browser-E2E-Tests erweitern | Mobile, Wide, PWA im CI fehlt noch |
@@ -31,7 +32,7 @@
 ```bash
 cd "${ENGINEERING_REPOS_ROOT}/throne-liberty-eu-kalender"
 npm run check          # Baseline prüfen
-# Dann Aufgabe aus Tabelle oben übernehmen
+# Danach lokale 3.3.7-Änderungen reviewen, veröffentlichen und Pages-Run prüfen
 # Nach Änderungen: npm run visual:local (Screenshots ansehen!)
 # Commit, dann: git push
 ```

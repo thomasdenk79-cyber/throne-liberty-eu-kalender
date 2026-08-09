@@ -26,15 +26,15 @@
     AGENTS.md ("Verbindliche Release-Versionierung (Pflicht)").
     Keep this meta value and the cache-busting ?v=... values in sync.
   -->
-  <meta name="app-version" content="3.3.6">
+  <meta name="app-version" content="3.3.7">
   <meta name="ga4-measurement-id" content="G-SBCTZL1VGK">
   <meta name="plausible-domain" content="">
   <meta name="countapi-namespace" content="throne-liberty-eu-kalender">
   <meta name="countapi-key" content="home">
-  <link rel="manifest" href="manifest.webmanifest?v=3.3.6">
+  <link rel="manifest" href="manifest.webmanifest?v=3.3.7">
   <link rel="icon" href="assets/icons/linny-192.png">
   <link rel="apple-touch-icon" href="assets/icons/linny-192.png">
-  <link rel="stylesheet" href="assets/styles/app.css?v=3.3.6">
+  <link rel="stylesheet" href="assets/styles/app.css?v=3.3.7">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -306,9 +306,12 @@
       <section class="stack">
         <div class="stack-heading">
           <div class="label" id="stackLabel">Upcoming Timers</div>
-          <button class="btn alt collapse-btn" id="liveCollapseBtn" type="button" title="Timer ein-/ausklappen" aria-label="Timer ein-/ausklappen">
-            <span class="collapse-icon" aria-hidden="true"></span>
-          </button>
+          <div class="stack-heading-actions">
+            <button class="btn alt gate-sync-button" id="gateSyncOpenBtn" type="button">Gate-Timer falsch?</button>
+            <button class="btn alt collapse-btn" id="liveCollapseBtn" type="button" title="Timer ein-/ausklappen" aria-label="Timer ein-/ausklappen">
+              <span class="collapse-icon" aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
         <div id="cardStack"></div>
       </section>
@@ -483,6 +486,29 @@
     </div>
   </dialog>
 
+  <dialog class="legal-dialog gate-sync-dialog" id="gateSyncDialog">
+    <h2 id="gateSyncTitle">Letzten bekannten Gate-Start eingeben</h2>
+    <p id="gateSyncDescription">Wenn du ungefähr weißt, wann sich Gate of Memory zuletzt geöffnet hat, kann die Seite den Timer sofort neu ausrichten.</p>
+    <div class="meta-grid">
+      <div class="row">
+        <label class="label" id="gateSyncDateLabel" for="gateSyncDate">Datum</label>
+        <input id="gateSyncDate" type="date">
+      </div>
+      <div class="row">
+        <label class="label" id="gateSyncTimeLabel" for="gateSyncTime">Uhrzeit</label>
+        <input id="gateSyncTime" type="time" step="1" required>
+      </div>
+    </div>
+    <div class="row">
+      <label class="label" id="gateSyncTimezoneLabel" for="gateSyncTimezone">Zeitzone</label>
+      <select id="gateSyncTimezone"></select>
+    </div>
+    <div class="gate-sync-actions">
+      <button class="btn alt" id="gateSyncCancelBtn" type="button">Abbrechen</button>
+      <button class="btn" id="gateSyncSubmitBtn" type="button">Timer synchronisieren</button>
+    </div>
+  </dialog>
+
   <dialog class="consent-dialog" id="storageConsent">
     <div class="consent-copy">
       <strong id="storageConsentTitle">Lokale Einstellungen speichern?</strong>
@@ -519,6 +545,6 @@
       if (appModule) appModule.addEventListener("error", showModuleLoadFailure);
     })();
   </script>
-  <script type="module" src="assets/js/app.js?v=3.3.6" id="appModuleScript"></script>
+  <script type="module" src="assets/js/app.js?v=3.3.7" id="appModuleScript"></script>
 </body>
 </html>

@@ -28,6 +28,7 @@ Dieses Repository-Board ist die portable Demo-Quelle. Es funktioniert ohne exter
 
 | Status | Arbeitspaket | Verantwortlich | Ziel |
 |---|---|---|---|
+| <span class="status-chip status-active">Review</span> | Gate-Anchor und Pages-Dokumentationsbuild reparieren | Codex / Thomas | Tests grün; Veröffentlichung und Live-Abnahme offen |
 | <span class="status-chip status-active">Review</span> | Juli-Eventdaten im Spiel gegenprüfen | Thomas · Product Owner | nächste Spielsession |
 | <span class="status-chip status-active">Review</span> | PWA-Installation auf Android, iOS und Windows prüfen | Human QA | nächster Release |
 | <span class="status-chip status-active">Review</span> | Linny Portal 3.2: modulare Oberfläche und Dock-Layout | Chief AI Developer | automatisierte und visuelle Abnahme |

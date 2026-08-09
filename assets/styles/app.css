@@ -1267,6 +1267,33 @@ html[data-theme="executive"] .calendar {
 
 .settings-popover-section:first-child { padding-top: 0; border-top: none; }
 
+.gate-sync-button {
+  min-height: 36px;
+  padding: 7px 11px;
+  white-space: nowrap;
+}
+
+.stack-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.gate-sync-dialog {
+  width: min(560px, calc(100vw - 24px));
+}
+
+.gate-sync-dialog > p {
+  margin: 0 0 18px;
+}
+
+.gate-sync-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 18px;
+}
+
   min-height: min(72vh, 650px);
   background:
     linear-gradient(90deg, #06101df7 0%, #06101de8 48%, #06101d42 76%, #06101d12 100%),
@@ -2870,6 +2897,7 @@ html.colorblind-mode[data-density="ultra"] .card-phase-progress { height: 7px !i
 }
 
 .live-column.is-collapsed .stack-heading .label { display: none; }
+.live-column.is-collapsed .gate-sync-button { display: none; }
 
 .live-column.is-collapsed .collapse-btn { transform: none; }
 
