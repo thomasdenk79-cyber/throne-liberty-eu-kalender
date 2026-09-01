@@ -14,7 +14,7 @@
     "visual:live": "node scripts/visual_check.mjs --target=live --label=live --url=https://thomasdenk79-cyber.github.io/throne-liberty-eu-kalender/"
   },
   "devDependencies": {
-    "happy-dom": "^20.0.10",
+    "happy-dom": "^20.11.15",
     "playwright": "^1.62.0"
   }
 }
