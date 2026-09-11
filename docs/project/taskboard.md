@@ -26,6 +26,14 @@ Dieses Repository-Board ist die portable Demo-Quelle. Es funktioniert ohne exter
 
 ## In Arbeit
 
+**Linny-Überarbeitung 3.4.0 (10.09.2026):** Oberfläche, Galerie, drei neue Motive
+und Funktionstests umgesetzt. Visuelle Desktop-/Mobilabnahme wegen fehlendem
+Chromium und gescheitertem Browserdownload offen. GitHub-Übertragung erfolgt über die direkte Anbindung; dem lokalen Git fehlt
+ein Schreibcredential. Keine Veröffentlichung auf GitHub Pages erfolgt.
+Separater geerbter Dokumentationstest hat einen bestehenden Projektwurzel-Fehler;
+der direkt im Hauptprojekt ausgeführte strikte MkDocs-Build funktioniert.
+
+
 | Status | Arbeitspaket | Verantwortlich | Ziel |
 |---|---|---|---|
 | <span class="status-chip status-active">Review</span> | Gate-Anchor und Pages-Dokumentationsbuild reparieren | Codex / Thomas | Tests grün; Veröffentlichung und Live-Abnahme offen |

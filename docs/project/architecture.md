@@ -64,6 +64,13 @@ Die strukturelle Karte wird nur bei Kategorie-, Sprach-, Sichtbarkeits-,
 Termin- oder Bildwechsel neu aufgebaut. Eventbilder wechseln in einem stabilen
 Zehn-Minuten-Zeitfenster.
 
+Die Galerie verwendet denselben Bildbestand und dieselbe Großansicht wie die
+Timer. Zusätzliche Motive werden in `NEW_ART` deklariert und bei mehrfacher
+Verwendung anhand ihres Pfades dedupliziert. Filter und Diashowzustand sind
+sitzungslokal; die Themenwahl läuft über die bestehende einwilligungsabhängige
+Einstellung. Galerie-DOM wird bei Filter-/Sprach-/Themenwechsel aufgebaut,
+nicht im Sekundentick. Eine geschlossene Großansicht beendet ihren Diashow-Timer.
+
 Themes verändern die visuelle Inszenierung, nicht Timerdaten oder Alarmsemantik.
 Fehlende Theme-Bilder fallen auf den passenden Epic- oder Fun-Assetpool zurück.
 
@@ -135,6 +142,8 @@ letzten Cachewert zurückfallen.
 | `assets/js/sounds.js` | kuratierte Web-Audio-Synthese und Dauern |
 | `assets/js/ics.js` | sicherer ICS-Aufbau und Download |
 | `assets/js/i18n.js` | lokalisierte UI-Texte |
+| `assets/js/gallery.js` | Bildkatalog, Filter, Themen-Direktwahl und pausierbare Galerie-Navigation |
+| `assets/styles/portal.css` | Präsentationsschicht der Überarbeitung 3.4; nach den bestehenden Komponenten geladen |
 | `config.ini` | Standarddaten und Standardbenachrichtigungen |
 | `live-timers.ini` | letzte validierte Live-Überlagerung für restart-sensitive Timer |
 | `scripts/sync_gate_memory.py` | validierter MetaForge-Abgleich im Pages-Build |

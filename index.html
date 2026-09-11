@@ -26,15 +26,16 @@
     AGENTS.md ("Verbindliche Release-Versionierung (Pflicht)").
     Keep this meta value and the cache-busting ?v=... values in sync.
   -->
-  <meta name="app-version" content="3.3.7">
+  <meta name="app-version" content="3.4.0">
   <meta name="ga4-measurement-id" content="G-SBCTZL1VGK">
   <meta name="plausible-domain" content="">
   <meta name="countapi-namespace" content="throne-liberty-eu-kalender">
   <meta name="countapi-key" content="home">
-  <link rel="manifest" href="manifest.webmanifest?v=3.3.7">
+  <link rel="manifest" href="manifest.webmanifest?v=3.4.0">
   <link rel="icon" href="assets/icons/linny-192.png">
   <link rel="apple-touch-icon" href="assets/icons/linny-192.png">
-  <link rel="stylesheet" href="assets/styles/app.css?v=3.3.7">
+  <link rel="stylesheet" href="assets/styles/app.css?v=3.4.0">
+  <link rel="stylesheet" href="assets/styles/portal.css?v=3.4.0">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -46,6 +47,7 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#liveColumn">Zu den Live-Timern</a>
   <header class="topbar">
     <div class="brand">
       <div class="mark"><b>TL</b></div>
@@ -220,12 +222,15 @@
         <span class="hero-character" id="heroCharacter">Linny · Server Sophia</span>
         <h1 id="heroTitle">Linny's Epic Time Portal</h1>
         <p id="heroText">Alle wichtigen Eventfenster, präzise Countdowns und Erinnerungen auf einen Blick.</p>
+        <div class="hero-actions"><a id="heroGalleryLink" href="#artGallery" class="btn">Galerie entdecken</a><button id="heroArtBtn" type="button" class="btn alt">Bild ansehen</button></div>
         <div class="hero-showcase" aria-label="Feature highlights">
           <span class="hero-chip" id="heroChipAi">AI Fanpage Showcase</span>
           <span class="hero-chip" id="heroChipLive">Live Countdown Engine</span>
           <span class="hero-chip" id="heroChipPwa">PWA &amp; Offline Ready</span>
         </div>
       </section>
+
+      <nav class="world-nav" id="worldNav" aria-label="Themenwelt wählen"></nav>
 
       <section class="controls" id="settingsPanel">
 
@@ -291,7 +296,7 @@
       </section>
     </div>
 
-    <div class="live-column" id="liveColumn">
+    <div class="live-column" id="liveColumn" tabindex="-1">
       <section class="current-events" id="currentEventsSection" hidden>
         <div class="current-events-heading">
           <div class="label" id="currentEventsLabel">Currently running</div>
@@ -316,6 +321,12 @@
         <div id="cardStack"></div>
       </section>
     </div>
+
+    <section class="art-gallery" id="artGallery" aria-labelledby="galleryTitle" hidden>
+      <div class="gallery-heading"><div><span class="gallery-eyebrow">THE LINNY COLLECTION</span><h2 id="galleryTitle">Linnys Welten</h2><p id="galleryNote">Ein Zauberbuch. Unzählige Abenteuer.</p></div><span class="gallery-count" id="galleryCount"></span></div>
+      <div class="gallery-filters" id="galleryFilters" role="group" aria-label="Galeriefilter"></div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
 
     <section class="calendar" id="calendarSection">
       <div class="section-heading">
@@ -377,8 +388,11 @@
       <img id="imageLightboxImage" alt="">
     </div>
     <div class="image-lightbox-caption">
-      <b id="imageLightboxTitle"></b>
+      <b id="imageLightboxTitle"></b><span id="galleryPosition" aria-live="polite"></span>
       <div class="image-lightbox-actions">
+        <button class="btn alt" id="galleryPrev" type="button" aria-label="Vorheriges Bild" hidden>←</button>
+        <button class="btn alt" id="galleryPlay" type="button" aria-pressed="false" hidden>Diashow starten</button>
+        <button class="btn alt" id="galleryNext" type="button" aria-label="Nächstes Bild" hidden>→</button>
         <button class="btn alt" id="imageLightboxZoomBtn" type="button" aria-pressed="false">🔍 Lupe</button>
         <button class="btn alt" id="imageLightboxWallpaperBtn" type="button">🖼 Als Hintergrund speichern</button>
         <button class="btn alt" id="imageLightboxCloseBtn" type="button">Close</button>
@@ -545,6 +559,6 @@
       if (appModule) appModule.addEventListener("error", showModuleLoadFailure);
     })();
   </script>
-  <script type="module" src="assets/js/app.js?v=3.3.7" id="appModuleScript"></script>
+  <script type="module" src="assets/js/app.js?v=3.4.0" id="appModuleScript"></script>
 </body>
 </html>

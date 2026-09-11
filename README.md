@@ -70,6 +70,10 @@ ohne Uebersetzung neu.
 
 ## Features
 
+- Galerie mit kompletter Linny-Sammlung, drei neuen Illustrationen und Themenfiltern
+- Direkte Themenwahl, Bild-Großansicht und bewusst startbare Diashow mit Pfeilnavigation
+- Überarbeitete Fantasy-Bildbühne auf Desktop und Smartphone
+
 - Boarisch, Deutsch und Englisch; deutsche Clients starten boarisch, alle anderen englisch
 - Eigene Anzeigezeitzone `Bayern/Munich`, intern DST-sicher auf `Europe/Berlin` abgebildet
 - Live-Countdowns fuer Cron-Zeitplaene und exakte Intervalle
