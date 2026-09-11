@@ -130,6 +130,35 @@ assert.match(config, /\[timer:interserver_eu\][\s\S]*?rules=30 21 \* \* 5,6/, "c
 assert.match(config, /\[timer:gate_memory_eu\][\s\S]*?notifications\.warning\.seconds=360[\s\S]*?notifications\.critical\.seconds=120/, "Gate reminders allow login and travel time");
 assert.match(liveTimers, /rules=@every 11806s[\s\S]*?anchorUtc=2026-08-09T12:58:16Z[\s\S]*?durationMinutes=4/, "Gate live values");
 
-console.log("runtime smoke: modules, cards, panels, schedules, consent, localization and XSS guard OK");
+const galleryImages = () => Array.from(window.document.querySelectorAll('#galleryGrid img'));
+assert.equal(galleryImages().length, 3, 'new artwork is visible without filling the page with the entire archive');
+assert.equal(window.document.querySelectorAll('#worldNav button').length, 6, 'all existing themes have direct controls');
+window.document.querySelector('#worldNav [data-world="time-vortex"]').click();
+assert.equal(window.document.documentElement.dataset.theme, 'time-vortex', 'world controls change the actual app theme');
+assert.equal(window.localStorage.getItem('timer_theme'), 'time-vortex', 'world controls respect existing consent-aware persistence');
+window.document.querySelector('#galleryFilters [data-group="all"]').click();
+assert(galleryImages().length > 30, 'the complete existing art collection is accessible');
+const sources = galleryImages().map(img => img.getAttribute('src'));
+assert.equal(new Set(sources).size, sources.length, 'gallery never duplicates artwork also used by timer cards');
+for (const src of sources) assert(fs.existsSync(new URL('../' + src, import.meta.url)), `gallery asset exists: ${src}`);
+window.document.querySelector('#galleryFilters [data-group="fresh"]').click();
+window.document.querySelector('#galleryGrid button').click();
+assert.equal(window.document.querySelector('#imageLightbox').open, true, 'gallery opens the existing accessible image dialog');
+const firstArt = window.document.querySelector('#imageLightboxImage').src;
+window.document.querySelector('#galleryNext').click();
+assert.notEqual(window.document.querySelector('#imageLightboxImage').src, firstArt, 'next artwork changes the image');
+window.document.querySelector('#galleryPrev').click();
+assert.equal(window.document.querySelector('#imageLightboxImage').src, firstArt, 'previous artwork restores it');
+window.document.querySelector('#galleryPlay').click();
+assert.equal(window.document.querySelector('#galleryPlay').getAttribute('aria-pressed'), 'true', 'slideshow is explicitly enabled');
+window.document.querySelector('#imageLightboxCloseBtn').click();
+await new Promise(resolve => setTimeout(resolve, 20));
+assert.equal(window.document.querySelector('#galleryPlay').getAttribute('aria-pressed'), 'false', 'closing the dialog stops the slideshow');
+window.document.querySelector('#heroArtBtn').click();
+assert.equal(window.document.querySelector('#imageLightbox').open, true, 'hero artwork can be inspected at full size');
+assert.equal(window.document.querySelector('#galleryNext').hidden, true, 'standalone hero preview does not retain gallery controls');
+window.document.querySelector('#imageLightboxCloseBtn').click();
+
+console.log("runtime smoke: modules, cards, panels, schedules, consent, localization, gallery and XSS guard OK");
 await window.happyDOM.cancelAsync();
 window.close();

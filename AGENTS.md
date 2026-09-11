@@ -13,31 +13,34 @@
 
 ## 🔴 AKTUELLER STAND (immer aktuell halten!)
 
-### Stand: 2026-08-09
+### Stand: 2026-09-10
 
-**Letzter abgeschlossener Commit:** `2d5fcd0` — portables Workspace-Routing ohne Legacy-Memory-Writes
+**Ausgangscommit:** `167da4bff47d92080950695cc73497aa852d71dc`.
+**Aktueller Änderungssatz:** 3.4.0 auf `design/linny-portal-2026-09`;
+Commit dieses Übergabeblocks über `git log -1 -- AGENTS.md` ermitteln.
 
-**Was gerade offen ist:**
+**Umgesetzt:** Fantasy-Oberfläche, sechs direkte Themenwahltasten, Galerie mit
+bestehender Sammlung und drei neuen Illustrationen, manuell startbare Diashow,
+Themenrotation, Offline-Assets und Galerie-Integrationstests.
 
 | Priorität | Aufgabe | Kontext |
 |---|---|---|
-| 🔴 Review | Release 3.3.7 veröffentlichen und Pages prüfen | Lokaler Fix: Gate-Anchor 09.08., Legacy-Migration und Submodule-Checkout; `npm run check`, MkDocs und Hilfe-Build grün; visueller Lauf mangels Browser-Binary offen |
-| 🔵 Review | Juli-Eventdaten im Spiel gegenprüfen | Thomas prüft manuell gegen aktuelle Spieldaten |
-| 🔵 Review | PWA-Installation auf Android/iOS/Windows testen | Manueller QA-Test durch Thomas |
-| 🟡 Next | Browser-E2E-Tests erweitern | Mobile, Wide, PWA im CI fehlt noch |
-| 🟡 Next | Theme-Galerien mit Linny-Motiven füllen | Creative-Task, wartet auf Bildmaterial |
-| 🟡 Next | GitHub-Issues als echtes Teamboard aktivieren | Labels + Templates noch nicht erstellt |
+| 🔴 Review | Visuelle Abnahme 3.4.0 | `npm run visual:local` benötigt Chromium; Download hier mit Timeout gescheitert, alte Baselines nicht als neue ausgegeben |
+| 🔴 Review | GitHub-Übernahme | Lokaler Git-Push ohne Credential fehlgeschlagen; direkte GitHub-Anbindung verfügbar; Backup-Branch `backup/pre-linny-redesign-2026-09-10`, vollständige Ausgangshistorie erhalten |
+| 🟡 Fix | Gemeinsamer Dokumentationstest | `standards/scripts/test_docs.py` setzt Projektwurzel auf das Submodul, daher fehlt dort `mkdocs.yml`; eigener strikter MkDocs-Build funktioniert |
+| 🔵 Review | Eventdaten im Spiel gegenprüfen | Keine Eventzeiten im Designauftrag geändert |
+| 🔵 Review | PWA-Geräteabnahme | Android/iOS/Windows weiterhin manuell prüfen |
+| 🟡 Next | Zusätzliche Theme-Bilder | Neue Motive sind malerisch-semi-realistisch; weitere Anime-Stilvarianten bei Bedarf |
 
-**Nächster Agent — direkt ausführbar:**
-```bash
-cd "${ENGINEERING_REPOS_ROOT}/throne-liberty-eu-kalender"
-npm run check          # Baseline prüfen
-# Danach lokale 3.3.7-Änderungen reviewen, veröffentlichen und Pages-Run prüfen
-# Nach Änderungen: npm run visual:local (Screenshots ansehen!)
-# Commit, dann: git push
-```
+**Nächster Schritt:** `npm ci`, `npx playwright install chromium`, dann
+`npm run check` und `npm run visual:local`; neue Screenshots tatsächlich ansehen.
+Erst nach visueller Abnahme als vollständig geprüft behandeln. GitHub Pages
+wurde in dieser Session nicht aktualisiert.
 
-**Nichts zu tun wenn:**  kein offener Task zutrifft → erst Thomas fragen.
+**Prüfstand:** Anwendungs-/Modul-/Galerietests bestanden. Strikter MkDocs-Build
+bestanden; geerbter Doku-Test hat oben beschriebenen bestehenden Pfadfehler.
+Die Variable `ENGINEERING_GOVERNANCE_ROOT` war in dieser Umgebung nicht gesetzt;
+kein fremder Ersatzpfad wurde als globale Governance angenommen.
 
 ---
 

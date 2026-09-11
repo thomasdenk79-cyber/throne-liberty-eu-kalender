@@ -18,3 +18,8 @@ Thumbs.db
 # them, but don't commit the timestamped history/ trail to avoid unbounded
 # repo growth over time.
 tests/visual-baselines/history/
+
+# Local static packaging and generated help
+dist/
+help/
+.sites-runtime/

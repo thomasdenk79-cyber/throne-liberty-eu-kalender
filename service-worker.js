@@ -1,17 +1,22 @@
-const CACHE_NAME = "linny-epic-time-portal-v3-3-7";
+const CACHE_NAME = "linny-epic-time-portal-v3-4-0";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./assets/styles/app.css?v=3.3.7",
-  "./assets/js/app.js?v=3.3.7",
+  "./assets/styles/app.css?v=3.4.0",
+  "./assets/js/app.js?v=3.4.0",
   "./assets/js/config.js",
+  "./assets/js/gallery.js",
+  "./assets/styles/portal.css?v=3.4.0",
+  "./assets/events/gallery/linny-astral-atelier-v2.webp",
+  "./assets/events/gallery/linny-summer-reverie-v2.webp",
+  "./assets/events/themes/time-vortex/linny-time-traveller-v2.webp",
   "./assets/js/i18n.js",
   "./assets/js/ics.js",
   "./assets/js/schedule.js",
   "./assets/js/sounds.js",
   "./config.ini",
   "./live-timers.ini",
-  "./manifest.webmanifest?v=3.3.7",
+  "./manifest.webmanifest?v=3.4.0",
   "./assets/icons/linny-192.png",
   "./assets/icons/linny-512.png",
   "./assets/images/linny/linny-hero-v2.webp",
@@ -48,6 +53,8 @@ self.addEventListener("fetch", (event) => {
     || url.pathname.endsWith("/index.html")
     || url.pathname.endsWith("/assets/styles/app.css")
     || url.pathname.endsWith("/assets/js/app.js")
+    || url.pathname.endsWith("/assets/js/gallery.js")
+    || url.pathname.endsWith("/assets/styles/portal.css")
     || url.pathname.endsWith("/assets/js/config.js")
     || url.pathname.endsWith("/assets/js/i18n.js")
     || url.pathname.endsWith("/assets/js/ics.js")

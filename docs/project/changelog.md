@@ -13,6 +13,31 @@ canonical: true
 
 Alle relevanten Produktänderungen werden hier menschenlesbar zusammengefasst. Das Git-Log bleibt die technische Detailhistorie.
 
+## 3.4.0 – 10. September 2026
+
+<span class="status-chip status-active">Review-Kandidat</span>
+
+- Neues Fantasy-Layout mit ruhigen Oberflächen, warmer Astral-Farbwelt,
+  Serifentitel, sichtbarer Bildbühne auch auf dem Smartphone und direkter Themenwahl.
+- Galerie integriert alle bestehenden Event- und Freizeitbilder ohne Duplikate.
+  Zum Einstieg erscheinen drei neue Motive; Filter erschließen die Sammlung.
+- Drei neue, nicht explizite Linny-Illustrationen: Astrales Atelier, Sommerstrand,
+  Zeitreise. Die Ergebnisse sind malerisch-semi-realistisch; ein stärkerer
+  Cel-Shading-Anime-Stil bleibt eine mögliche spätere kreative Verfeinerung.
+- Großansicht verwendet den vorhandenen Zoom und Wallpaper-Download. Dazu kommen
+  Vor/Zurück, Pfeiltasten und eine bewusst startbare Diashow; Schließen stoppt sie.
+- Theme-Hero rotiert jetzt innerhalb eines passenden Themenpools. Der Zehn-Minuten-
+  Wechsel aktualisiert tatsächlich auch die Bildbühne, ohne Timerdaten zu ändern.
+- Neue Module und Bilder in den Offline-Cache aufgenommen; Version synchronisiert.
+- Ausgangsstand: `167da4bff47d92080950695cc73497aa852d71dc`, lokales Sicherungstag
+  `backup/pre-linny-redesign-2026-09-10`. Überarbeitung auf
+  `design/linny-portal-2026-09`; GitHub-Übertragung über die direkte Anbindung; lokales Git ohne Schreibcredential.
+- `npm run check` einschließlich Galerie-Integration bestanden. Visuelle Abnahme
+  offen: Chromium fehlt; Download vom Playwright-CDN endet im Timeout.
+- Eigenständiger strikter MkDocs-Build bestanden. Der geerbte `test_docs.py`
+  wählt fälschlich das Submodul als Projektwurzel; sein Build-Test scheitert
+  dort an der fehlenden `mkdocs.yml`. Keine Änderung am gemeinsamen Standard.
+
 ## 3.3.7 – 9. August 2026
 
 <span class="status-chip status-active">Release-Kandidat</span>

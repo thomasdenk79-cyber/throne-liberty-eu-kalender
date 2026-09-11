@@ -1,3 +1,7 @@
+import { createGallery, NEW_ART } from "./gallery.js";
+let gallery;
+let currentHeroArt;
+const INITIAL_ART_ROTATION_BUCKET = Math.floor(Date.now() / 600000);
 import { UI } from "./i18n.js";
 import {
   clone, mergeConfig, normalizeConfig, notificationSettings, positiveSeconds,
@@ -13,7 +17,7 @@ import { calendarEntryKey, downloadIcs as downloadCalendarIcs } from "./ics.js";
 const CARD_DENSITY_VALUES = ["ultra", "compact", "comfortable", "cinematic", "big-picture", "mega"];
 const BAVARIA_TIMEZONE = "Bayern/Munich";
 const CONFIG_UPDATED_AT = "2026-07-24T00:00:00Z";
-const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.3.7";
+const APP_VERSION = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "3.4.0";
 const GA4_MEASUREMENT_ID = (document.querySelector('meta[name="ga4-measurement-id"]')?.getAttribute("content") || "").trim();
 const PLAUSIBLE_DOMAIN = (document.querySelector('meta[name="plausible-domain"]')?.getAttribute("content") || "").trim();
 const COUNTAPI_NAMESPACE = (document.querySelector('meta[name="countapi-namespace"]')?.getAttribute("content") || "").trim();
@@ -540,6 +544,7 @@ const SOUND_LABEL_KEYS = Object.fromEntries(
 
 const art = (src, de, en, bar = de) => ({ src, title: { de, en, bar } });
 const EPIC_EVENT_ART = [
+  NEW_ART[0], NEW_ART[2],
   art("assets/events/linny-arkeum-invasion-v1.webp", "Linny erklärt dem Arkeum-Boss sehr höflich den Ruhestand", "Linny politely retires the Arkeum boss"),
   art("assets/events/linny-gate-memory-v1.webp", "Linny schwebt durchs Erinnerungsquiz – Wissen braucht keinen Boden", "Linny floats through the Memory Quiz – knowledge needs no floor"),
   art("assets/events/linny-summer-festival-v1.webp", "Linny reitet ins Sommerfest – Wasserbomben verneigen sich bereits", "Linny rides into Summer Festival – even water balloons bow"),
@@ -572,6 +577,7 @@ const EPIC_EVENT_ART = [
   art("assets/events/gallery/linny-royal-victory-v1.webp", "Solisium feiert Linnys vollkommen überraschenden nächsten Sieg", "Solisium celebrates Linny's completely unexpected next victory")
 ];
 const FUN_EVENT_ART = [
+  NEW_ART[1],
   art("assets/events/fun/linny-baggersee-v1.webp", "Baden mit Linny am Baggersee – der Drache hat Schwimmflügel", "Swimming with Linny at the lake – the dragon brought floaties", "Bodn mit da Linny am Baggersee – da Drach hod Schwimmflügl"),
   art("assets/events/fun/linny-alone-at-home-v1.webp", "Linny allein zu Haus – die Goblins bereuen bereits alles", "Linny alone at home – the goblins already regret everything", "Linny alloa dahoam – de Goblins berein scho ois"),
   art("assets/events/fun/linny-grand-mmo-city-v1.webp", "Linny besucht die große MMO-Stadt – die Wachen wechseln die Seiten", "Linny visits the grand MMO city – the guards switch sides", "Linny kimmt in d'große MMO-Stodt – de Wacha wechsln d'Seitn"),
@@ -1182,16 +1188,24 @@ function applyAppearanceSettings() {
   dom.calendarSection.classList.toggle("is-collapsed", state.calendarCollapsed);
   updateCollapseButtons();
   const heroByTheme = {
-    astral: "assets/events/gallery/linny-celestial-observatory-v1.webp",
-    bavaria: "assets/events/gallery/linny-white-stag-v1.webp",
-    "time-vortex": "assets/events/themes/time-vortex/linny-time-lady-gallifrey-v1.webp",
+    astral: NEW_ART[0].src,
+    bavaria: NEW_ART[1].src,
+    "time-vortex": NEW_ART[2].src,
     arcade: "assets/events/themes/arcade/linny-turbo-hedgehog-v1.webp",
     solisium: "assets/events/gallery/linny-felswacht-conqueror-v1.webp",
     executive: "assets/events/gallery/linny-astral-oracle-v1.webp"
   };
-  const themePool = state.categoryId === "personal" ? FUN_EVENT_ART : EPIC_EVENT_ART;
-  const rotated = themePool[stableHash(theme + "|" + state.artRotationBucket) % themePool.length]?.src;
-  const heroImage = state.artRotationBucket % 2 === 0 ? rotated : heroByTheme[theme];
+  const themePools = {
+    astral: [NEW_ART[0].src, "assets/events/gallery/linny-celestial-observatory-v1.webp"],
+    bavaria: [NEW_ART[1].src, "assets/events/fun/linny-baggersee-v1.webp"],
+    "time-vortex": [NEW_ART[2].src, "assets/events/themes/time-vortex/linny-time-lady-gallifrey-v1.webp"],
+    arcade: [heroByTheme.arcade, "assets/events/fun/linny-kart-race-v1.webp"],
+    solisium: [heroByTheme.solisium, "assets/events/gallery/linny-royal-victory-v1.webp"],
+    executive: [heroByTheme.executive, "assets/events/gallery/linny-infinite-library-v1.webp"]
+  };
+  const themePool = themePools[theme];
+  const heroImage = themePool[((state.artRotationBucket - INITIAL_ART_ROTATION_BUCKET) % themePool.length + themePool.length) % themePool.length];
+  currentHeroArt = [...NEW_ART, ...EPIC_EVENT_ART, ...FUN_EVENT_ART].find(item => item.src === heroImage);
   // Resolve to an absolute URL before writing the custom property: browsers
   // resolve relative url() references inside a custom property's value
   // against the stylesheet that consumes it via var() (assets/styles/app.css),
@@ -2722,6 +2736,7 @@ function renderAll() {
   renderCalendar();
   renderNotificationPermissionStatus();
   updateClocks();
+  gallery?.update(state.lang, state.theme);
   window.requestAnimationFrame(syncDashboardHeight);
 }
 
@@ -2930,6 +2945,7 @@ function bind() {
       : "astral";
     storageSet("timer_theme", state.theme);
     applyAppearanceSettings();
+    gallery?.update(state.lang, state.theme);
   });
 
   dom.notificationOverrideSelect.addEventListener("change", () => {
@@ -3213,6 +3229,8 @@ async function start() {
     bind();
     setupPwa();
     setupHeroEffects();
+    gallery = createGallery({ epic: EPIC_EVENT_ART, fun: FUN_EVENT_ART, themeSelect: dom.themeSelect, openImage: item => openEventImage(null, item) });
+    document.getElementById("heroArtBtn").addEventListener("click", () => openEventImage(null, currentHeroArt));
     setupAnalytics();
     renderBuilderDays();
     renderAll();
@@ -3240,6 +3258,7 @@ async function start() {
     if (artRotationBucket !== state.artRotationBucket) {
       state.artRotationBucket = artRotationBucket;
       state.cardRenderKey = "";
+      applyAppearanceSettings();
     }
     renderCurrentEvents();
     renderCards();

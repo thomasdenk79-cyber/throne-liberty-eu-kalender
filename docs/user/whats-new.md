@@ -9,6 +9,19 @@ canonical: true
 
 # Was ist neu?
 
+## Version 3.4.0: Linnys Welten entdecken
+
+- Die neue Bildbühne bringt Linny auch auf dein Smartphone. Auf dem Desktop
+  stehen die Event-Countdowns direkt daneben.
+- Unter dem Titelbild wechselst du mit einem Klick zwischen den sechs Themenwelten.
+- „Galerie entdecken“ führt zu drei neuen Bildern. Über „Alle Motive“, „Solisium“
+  und „Auszeit“ erreichst du die komplette bisherige Sammlung.
+- Ein Bild öffnet die Großansicht: Pfeile wechseln das Motiv, die Lupe vergrößert,
+  „Als Hintergrund speichern“ lädt das Bild herunter.
+- Die Diashow startest und pausierst du selbst. Sie wechselt alle sieben Sekunden,
+  pausiert im Hintergrund und endet beim Schließen der Großansicht.
+- Timer, persönliche Einstellungen, Alarme und Kalenderexport bleiben erhalten.
+
 ## Version 3.3.7: Gate-Zeit und Veröffentlichung repariert
 
 - Der Gate-of-Memory-Timer verwendet wieder den aktuellen Zeitanker vom
